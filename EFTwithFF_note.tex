@@ -246,7 +246,7 @@
 % keywords for search
 \keywords{Large-scale structure, Perturbation theory, Effective field theory, FFTLog}
 
-\abstract{A pedagogical note of 1-loop PT and EFTofLSS calculations using \codefont{FFTLog}, derived for ``slow'' readers by the slowest EFTofLSS practitioner. Specifically, I (re)derive the explicit expressions of integrals involved in the PT loop calculations using \codefont{FFTLog} proposed in \cite{Simonovic:2017mhp}. These loop integrals are the key ingredients to evaluate the 1-loop power spectrum and bispectrum of matter and biased tracers in real and redshift space. In the first half of the note, I consider matter and biased tracers in redshift space with pure Gaussian initial conditions \cite{Chudaykin:2020aoj} and with primordial non-Gaussianity in the initial conditions \cite{Cabass:2022wjy}. In the second half, I make connections to a new \codefont{JAX} code---\codefont{ps\_1loop\_jax}, described in \cite{Kobayashi:2026inprep}, that computes the redshift-space 1-loop power spectrum with Gaussian and PNG initial conditions.}
+\abstract{A pedagogical note of 1-loop PT and EFTofLSS calculations using \codefont{FFTLog}, derived for ``slow'' readers by the slowest EFTofLSS practitioner. Specifically, I (re)derive the explicit expressions of integrals involved in the PT loop calculations using \codefont{FFTLog} proposed in \cite{Simonovic:2017mhp}. These loop integrals are the key ingredients to evaluate the 1-loop power spectrum and bispectrum of matter and biased tracers in real and redshift space. A central theme of the note is the hierarchy from the scalar master integral to tensor and line-of-sight (LOS) master integrals and their coefficient functions, which organizes the matter, galaxy, and Lyman-\(\alpha\) cases in a uniform way. In the first half of the note, I consider matter and biased tracers in redshift space with pure Gaussian initial conditions \cite{Chudaykin:2020aoj} and with primordial non-Gaussianity in the initial conditions \cite{Cabass:2022wjy}. In the second half, I make connections to a new \codefont{JAX} code---\codefont{ps\_1loop\_jax}, described in \cite{Kobayashi:2026inprep}, that computes the redshift-space 1-loop power spectrum with Gaussian and PNG initial conditions.}
 
 
 \begin{document}
@@ -811,6 +811,77 @@ which is \cref{eq:master_int}.
 \end{enumerate}
 
 So the role of the master integral is twofold. First, it makes explicit the universal \(k\)-scaling of each mode contribution. Second, it allows the finite kernel sums to be carried out analytically in exponent space, leaving the numerical evaluation to perform only the discrete FFTLog contractions.
+
+\subsection{From the scalar master to tensor and LOS master integrals}
+
+The real-space matter case is the cleanest entry point because all loop terms may be reduced directly to the scalar master integral \(I(\alpha,\beta)\) of \cref{eq:master_int}. However, once one moves to redshift space, the kernels contain explicit contractions with the LOS direction \(\vnhat\), and it becomes useful to organize the calculation in a larger master-integral hierarchy.
+
+At the tensor level, the basic objects are integrals with explicit powers of the loop momentum in the numerator, for example
+\begin{equation}
+\int_{\vq}\frac{q^i q^j}{q^{2\nu_1}|\vk-\vq|^{2\nu_2}}
+=
+k^{3-2(\nu_1+\nu_2)}
+\left[
+k^2 A_2(\nu_1,\nu_2)\,\delta^{ij}
++B_2(\nu_1,\nu_2)\,k^i k^j
+\right],
+\label{eq:tensor_master_rank2_note}
+\end{equation}
+with analogous decompositions at rank 1, 3, and 4. The coefficient functions \(A_1\), \(A_2\), \(B_2\), \(\ldots\), \(C_4\) are what we will call the \emph{master-integral coefficients}. The tensor integrals themselves are the master integrals proper, while the coefficient functions are the scalar functions multiplying the irreducible tensor basis.
+
+For the redshift-space applications discussed in this note, it is often more convenient to project these tensor integrals directly onto the LOS direction and define
+\begin{equation}
+\mathcal I_n(\nu_1,\nu_2;k,\mu)
+\equiv
+\int_{\vq}
+\frac{(\vnhat\cdot \vq)^n}{q^{2\nu_1}|\vk-\vq|^{2\nu_2}},
+\qquad
+\mu\equiv \hat{\vk}\cdot \vnhat.
+\label{eq:los_master_def_note}
+\end{equation}
+Rotational invariance implies that this object must be a polynomial in \(\mu\) of degree \(n\), with parity fixed by \(n\). Hence one may write
+\begin{equation}
+\mathcal I_n(\nu_1,\nu_2;k,\mu)
+=
+k^{3-2(\nu_1+\nu_2)}\,k^n
+\sum_{m=0}^{\lfloor n/2 \rfloor}
+\mu^{n-2m}\,
+C_{n,m}(\nu_1,\nu_2),
+\label{eq:los_master_poly_note}
+\end{equation}
+where the coefficient functions \(C_{n,m}\) may be derived efficiently with a Schwinger-parameter generating function. Introducing a source \(t\) for \((\vnhat\cdot \vq)^n\), one obtains the closed expression
+\begin{equation}
+C_{n,m}(\nu_1,\nu_2)
+=
+\frac{n!}{m!(n-2m)!4^m}\,
+\frac{
+\Gamma\!\left(\nu_1+\nu_2-\frac32-m\right)
+\Gamma\!\left(\frac32-\nu_2+m\right)
+\Gamma\!\left(n-m+\frac32-\nu_1\right)
+}{
+8\pi^{3/2}\,
+\Gamma(\nu_1)\Gamma(\nu_2)\Gamma(n+3-\nu_1-\nu_2)
+}.
+\label{eq:los_master_coeff_note}
+\end{equation}
+
+This formula is the main conceptual bridge between the scalar real-space matter case and the redshift-space galaxy and Lyman-\(\alpha\) cases. Once \cref{eq:los_master_coeff_note} is known, the named coefficient families are simply book-keeping devices for the allowed \(\mu\)-powers at fixed \(n\):
+\begin{align}
+\mathcal I_1 &= k^{3-2(\nu_1+\nu_2)}k\,\mu\,A_1,\\
+\mathcal I_2 &= k^{3-2(\nu_1+\nu_2)}k^2\left(A_2+\mu^2 B_2\right),\\
+\mathcal I_3 &= k^{3-2(\nu_1+\nu_2)}k^3\left(\mu A_3+\mu^3 B_3\right),\\
+\mathcal I_4 &= k^{3-2(\nu_1+\nu_2)}k^4\left(A_4+\mu^2 B_4+\mu^4 C_4\right),
+\label{eq:los_master_galaxy_families_note}
+\end{align}
+for the CLASS-PT matter/galaxy case, and
+\begin{align}
+\mathcal I_5 &= k^{3-2(\nu_1+\nu_2)}k^5\left(\mu A_5+\mu^3 B_5+\mu^5 C_5\right),\\
+\mathcal I_6 &= k^{3-2(\nu_1+\nu_2)}k^6\left(A_6+\mu^2 B_6+\mu^4 C_6+\mu^6 D_6\right),\\
+\mathcal I_7 &= k^{3-2(\nu_1+\nu_2)}k^7\left(\mu A_7+\mu^3 B_7+\mu^5 C_7+\mu^7 D_7\right),\\
+\mathcal I_8 &= k^{3-2(\nu_1+\nu_2)}k^8\left(A_8+\mu^2 B_8+\mu^4 C_8+\mu^6 D_8+\mu^8 E_8\right),
+\label{eq:los_master_lya_families_note}
+\end{align}
+for the higher-order Lyman-\(\alpha\) extension. In other words, the matter, galaxy, and Lyman-\(\alpha\) applications are not separate FFTLog methods. They are different truncations of the same master-integral hierarchy.
 
 \subsection{Tracers in redshift space}
 
@@ -1478,11 +1549,108 @@ P_{XY,\ell}^{s,\mathrm{IR}}(z,k).
 \end{equation}
 This is the most transparent way to connect the mathematical derivation and the FFTLog factorization of the one-loop redshift-space power spectrum.
 
+\subsection{Lyman-\(\alpha\) as a higher-order LOS extension}
+
+The Lyman-\(\alpha\) forest case does not require a new FFTLog philosophy. It requires a larger LOS operator basis. The scalar master integral of \cref{eq:master_int} remains the basic analytic building block, and the Schwinger-derived coefficient formula \cref{eq:los_master_coeff_note} remains the efficient way to generate the LOS coefficient functions. What changes is only the highest power of \((\vnhat\cdot \vq)\) that must be retained.
+
+For the Gaussian redshift-space matter and galaxy case, the hierarchy stops at the CLASS-PT family \((A_1,\ldots,C_4)\), or equivalently at \(n\leq 4\) in \cref{eq:los_master_galaxy_families_note}. In the Lyman-\(\alpha\) case, extra LOS structures enlarge the basis and force one to continue the same logic to \(n=5,\ldots,8\), namely to the family \((A_5,\ldots,E_8)\) summarized in \cref{eq:los_master_lya_families_note}.
+
+This is the most useful way to compare the galaxy and Lyman-\(\alpha\) calculations. The Lyman-\(\alpha\) formulas are not a separate class of loop integrals. They are the same master-integral hierarchy pushed to a higher truncation order because the observable contains more LOS structure. In the notebook suite, this is made explicit by keeping the CLASS-PT-style galaxy notebook at the \(A_1,\ldots,C_4\) level and the dedicated Lyman-\(\alpha\) notebook at the \(A_5,\ldots,E_8\) level, while deriving both from the same scalar and Schwinger-generated ingredients.
+
 \section{Algorithm implementation}
 \label{sec:impl}
 
 \clearpage
 \appendix
+
+\section{Scalar, tensor, and LOS master integrals}
+\label{app:master_hierarchy}
+
+For convenience, let us collect here the analytic objects that organize the notebook suite.
+
+The scalar FFTLog master integral is
+\begin{equation}
+I(\nu_1,\nu_2)
+\equiv
+\int_{\vq}\frac{1}{q^{2\nu_1}|\vk-\vq|^{2\nu_2}}
+=
+\frac{1}{8\pi^{3/2}}
+\frac{
+\Gamma\!\left(\frac32-\nu_1\right)
+\Gamma\!\left(\frac32-\nu_2\right)
+\Gamma\!\left(\nu_1+\nu_2-\frac32\right)
+}{
+\Gamma(\nu_1)\Gamma(\nu_2)\Gamma(3-\nu_1-\nu_2)
+}
+k^{3-2(\nu_1+\nu_2)}.
+\label{eq:scalar_master_appendix_note}
+\end{equation}
+This is the universal analytic object behind the real-space matter notebook and the starting point for all higher master-integral reductions.
+
+The LOS master hierarchy is
+\begin{equation}
+\mathcal I_n(\nu_1,\nu_2;k,\mu)
+\equiv
+\int_{\vq}
+\frac{(\vnhat\cdot \vq)^n}{q^{2\nu_1}|\vk-\vq|^{2\nu_2}}
+=
+k^{3-2(\nu_1+\nu_2)}\,k^n
+\sum_{m=0}^{\lfloor n/2\rfloor}
+\mu^{n-2m}\,C_{n,m}(\nu_1,\nu_2),
+\end{equation}
+with the closed coefficient formula
+\begin{equation}
+C_{n,m}(\nu_1,\nu_2)
+=
+\frac{n!}{m!(n-2m)!4^m}\,
+\frac{
+\Gamma\!\left(\nu_1+\nu_2-\frac32-m\right)
+\Gamma\!\left(\frac32-\nu_2+m\right)
+\Gamma\!\left(n-m+\frac32-\nu_1\right)
+}{
+8\pi^{3/2}\,
+\Gamma(\nu_1)\Gamma(\nu_2)\Gamma(n+3-\nu_1-\nu_2)
+}.
+\label{eq:los_coeff_appendix_note}
+\end{equation}
+This is the compact derivation formula implemented in the Mathematica helper \codefont{DerivedLOSCoefficientByM}.
+
+The named coefficient families used in practice are then:
+\begin{align}
+n=1 &: \quad A_1, \nonumber\\
+n=2 &: \quad A_2,\;B_2, \nonumber\\
+n=3 &: \quad A_3,\;B_3, \nonumber\\
+n=4 &: \quad A_4,\;B_4,\;C_4, \nonumber\\
+n=5 &: \quad A_5,\;B_5,\;C_5, \nonumber\\
+n=6 &: \quad A_6,\;B_6,\;C_6,\;D_6, \nonumber\\
+n=7 &: \quad A_7,\;B_7,\;C_7,\;D_7, \nonumber\\
+n=8 &: \quad A_8,\;B_8,\;C_8,\;D_8,\;E_8.
+\label{eq:master_family_catalog_note}
+\end{align}
+The CLASS-PT matter and galaxy case stops at \(n=4\), while the Lyman-\(\alpha\) case requires the higher \(n=5,\ldots,8\) sector.
+
+\section{Notation map between the note and the Mathematica notebooks}
+\label{app:notation_map}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{0.18\textwidth}p{0.21\textwidth}p{0.47\textwidth}}
+\hline
+Object in the note & Meaning & Notebook implementation \\
+\hline
+\(I(\nu_1,\nu_2)\) & scalar master integral & \specialcell[l]{\codefont{ScalarIMaster}\\\codefont{MatterScalarMaster}} \\
+\(J(\nu_1,\nu_2)\) in the Lya discussion & same scalar master, Lya notation & \specialcell[l]{\codefont{ScalarJMaster}\\\codefont{ScalarJ}} \\
+\(C_{n,m}(\nu_1,\nu_2)\) & general LOS coefficient & \codefont{DerivedLOSCoefficientByM} \\
+\(A_n,B_n,C_n,\ldots\) & named master-integral coefficients & \specialcell[l]{\codefont{GalaxyAppendixADerivedCoefficient}\\\codefont{DerivedCoefficient}} \\
+\(M_{13}\), \(M_{22}\) & reduced FFTLog kernels / one-line tables & \specialcell[l]{\codefont{MatterReducedKernelExpression}\\\codefont{ExportLocalNotebookEvaluationTables}} \\
+\hline
+\end{tabular}
+\caption{Minimal notation map between the analytic notation of this note and the Mathematica notebook suite.}
+\label{tab:notation_map_note}
+\end{table}
+
+Two implementation comments are worth recording explicitly. First, the galaxy notebook keeps the paper transcription of the CLASS-PT Appendix A coefficients separate from the independent Schwinger-derived formulas, so any residual mismatch remains visible rather than being silently absorbed into the code path. Second, for the real-space matter matrix export at \(N=256\), the correct CLASS-PT runtime reference for \(M_{22}\) is the packed \codefont{N256} file, not the plain \codefont{M22oneline\_N256\_CLASS-PTreference.dat} table.
 
 \section{Nominal coefficients \(g(a_1,a_2)\) of the \(F_2\) kernel}
 \label{app:g_a1a2}
