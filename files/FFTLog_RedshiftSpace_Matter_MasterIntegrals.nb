@@ -1,0 +1,2077 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     67362,       2067]
+NotebookOptionsPosition[     61807,       1954]
+NotebookOutlinePosition[     62201,       1970]
+CellTagsIndexPosition[     62158,       1967]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["FFTLog Redshift-Space Matter Master Integrals", "Title",ExpressionUUID->"d75358bb-771c-4f9d-90c3-c3e18ae8eaf0"],
+
+Cell["\<\
+This notebook is the redshift-space continuation of the real-space matter \
+flow. It first checks the low-order CLASS-PT line-of-sight master integrals \
+`A1..C4` against the generic Gamma-function derivation, then validates the \
+pure-matter Gaussian redshift-space sector subset against the local \
+`pt_matrix/redshift_space/gauss` files.\
+\>", "Text",ExpressionUUID->"bbd8469e-73d1-404a-bc78-e6e09941d5e9"],
+
+Cell[CellGroupData[{
+
+Cell["Setup", "Section",ExpressionUUID->"4d2d2f17-d63b-4f39-bcc5-67135b61c09b"],
+
+Cell["\<\
+Get[FileNameJoin[{NotebookDirectory[], \
+\"FFTLog_RedshiftSpace_Matter_MasterIntegrals.wl\"}]]\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[87]:=",ExpressionUUID->"a4d36c9d-e4fa-4c00-bdd8-ef5c6e82d229"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Inspect The Low-Order LOS Coefficients", "Section",ExpressionUUID->"8db45865-a320-4b40-ab83-7a3814dafd2f"],
+
+Cell[CellGroupData[{
+
+Cell["$RedshiftSpaceMatterPaper", "Input",
+ CellLabel->
+  "(Debug) In[88]:=",ExpressionUUID->"f4061448-e892-4189-b550-2c31321d4ec4"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Title\"\>", 
+    "\[Rule]", "\<\"Non-linear perturbation theory extension of the Boltzmann \
+code CLASS\"\>"}], ",", 
+   RowBox[{"\<\"ArXiv\"\>", "\[Rule]", "\<\"2004.10607\"\>"}], ",", 
+   RowBox[{"\<\"Section\"\>", 
+    "\[Rule]", "\<\"Redshift-space matter master integrals and Gaussian \
+sector subset\"\>"}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.985334983843671*^9},
+ CellLabel->
+  "(Debug) Out[88]=",ExpressionUUID->"1fa6be73-a8f8-4ecc-9e4d-8b9da14632ea"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Table[RSDMatterDerivedCoefficient[name][nu1, nu2] // TraditionalForm, {name, \
+Keys[$RSDMatterCoefficientMap]}]\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[89]:=",ExpressionUUID->"08002650-2377-4776-a39a-c58a337f9356"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["3", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "4"}]},
+        "Gamma"]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["5", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"16", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "5"}]},
+        "Gamma"]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["3", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "5"}]},
+        "Gamma"]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{"3", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["5", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"16", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "6"}]},
+        "Gamma"]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["9", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["3", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "6"}]},
+        "Gamma"]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{"3", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["7", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"32", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+        "Gamma"]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{"3", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["9", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["5", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+        "Gamma"]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["11", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["3", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+        "Gamma"]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}], "}"}]], "Output",
+ CellChangeTimes->{3.9853349838574266`*^9},
+ CellLabel->
+  "(Debug) Out[89]=",ExpressionUUID->"78dc8f6a-8d19-48c6-9b9f-c8ccbfaaab02"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+RSDMatterReferenceCoefficient[\"C4\"][nu1, nu2] // TraditionalForm\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[90]:=",ExpressionUUID->"0e4305d1-e721-467f-b595-48159cecffef"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   FractionBox["1", "128"], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"35", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["11", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["11", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "4"}]},
+        "Gamma"]}]], "-", 
+     FractionBox[
+      RowBox[{"35", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["9", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["11", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"2", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "3"}]},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{"105", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["11", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"4", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "2"}]},
+        "Gamma"]}]], "-", 
+     FractionBox[
+      RowBox[{"35", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["9", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["11", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"2", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "3"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "1"}]},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{"35", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["11", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["11", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "4"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"]}]], "-", 
+     FractionBox[
+      RowBox[{"35", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["9", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["9", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"2", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "6"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "3"}]},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{"75", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["9", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"2", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "6"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "2"}]},
+        "Gamma"]}]], "-", 
+     FractionBox[
+      RowBox[{"45", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["9", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"2", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "6"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "1"}]},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{"5", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["9", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["9", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"2", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "3"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "6"}]},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{"105", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["7", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"4", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "5"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "2"}]},
+        "Gamma"]}]], "-", 
+     FractionBox[
+      RowBox[{"45", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["7", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"2", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "5"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "1"}]},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{"9", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["7", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"4", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "5"}]},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"]}]], "-", 
+     FractionBox[
+      RowBox[{"35", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["5", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"2", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "4"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "1"}]},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{"5", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["5", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"2", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "4"}]},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{"35", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["3", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "3"}]},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"]}]]}], ")"}]}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.985334983864458*^9},
+ CellLabel->
+  "(Debug) Out[90]//TraditionalForm=",ExpressionUUID->"ad568823-e6d7-4ef3-\
+bc8e-be64e49e9fe3"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Assemble The n=1..4 LOS Master Integrals", "Section",ExpressionUUID->"383ab7c6-423c-44bf-b97b-8b4c9ab7551c"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Table[RSDMatterDerivedMasterIntegral[n, nu1, nu2, mu, k] // TraditionalForm, \
+{n, 1, 4}]\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[91]:=",ExpressionUUID->"1e95f422-5a80-4e4c-84e5-a9f071692fea"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{"mu", " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       SuperscriptBox["k", 
+        RowBox[{"4", "-", 
+         RowBox[{"2", " ", 
+          RowBox[{"(", 
+           RowBox[{"nu1", "+", "nu2"}], ")"}]}]}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["3", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "4"}]},
+        "Gamma"]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      SuperscriptBox["k", 
+       RowBox[{"5", "-", 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{"nu1", "+", "nu2"}], ")"}]}]}]], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox[
+         RowBox[{
+          SuperscriptBox["mu", "2"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["7", "2"], "-", "nu1"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["3", "2"], "-", "nu2"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{"nu1", "+", "nu2", "-", 
+              FractionBox["3", "2"]}]},
+           "Gamma"]}], 
+         RowBox[{"8", " ", 
+          SuperscriptBox["\[Pi]", 
+           RowBox[{"3", "/", "2"}]], " ", 
+          TemplateBox[{"nu1"},
+           "Gamma"], " ", 
+          TemplateBox[{"nu2"},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              RowBox[{"-", "nu1"}], "-", "nu2", "+", "5"}]},
+           "Gamma"]}]], "+", 
+        FractionBox[
+         RowBox[{
+          TemplateBox[{
+            RowBox[{
+              FractionBox["5", "2"], "-", "nu1"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["5", "2"], "-", "nu2"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{"nu1", "+", "nu2", "-", 
+              FractionBox["5", "2"]}]},
+           "Gamma"]}], 
+         RowBox[{"16", " ", 
+          SuperscriptBox["\[Pi]", 
+           RowBox[{"3", "/", "2"}]], " ", 
+          TemplateBox[{"nu1"},
+           "Gamma"], " ", 
+          TemplateBox[{"nu2"},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              RowBox[{"-", "nu1"}], "-", "nu2", "+", "5"}]},
+           "Gamma"]}]]}], ")"}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      SuperscriptBox["k", 
+       RowBox[{"6", "-", 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{"nu1", "+", "nu2"}], ")"}]}]}]], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox[
+         RowBox[{
+          SuperscriptBox["mu", "3"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["9", "2"], "-", "nu1"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["3", "2"], "-", "nu2"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{"nu1", "+", "nu2", "-", 
+              FractionBox["3", "2"]}]},
+           "Gamma"]}], 
+         RowBox[{"8", " ", 
+          SuperscriptBox["\[Pi]", 
+           RowBox[{"3", "/", "2"}]], " ", 
+          TemplateBox[{"nu1"},
+           "Gamma"], " ", 
+          TemplateBox[{"nu2"},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              RowBox[{"-", "nu1"}], "-", "nu2", "+", "6"}]},
+           "Gamma"]}]], "+", 
+        FractionBox[
+         RowBox[{"3", " ", "mu", " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["7", "2"], "-", "nu1"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["5", "2"], "-", "nu2"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{"nu1", "+", "nu2", "-", 
+              FractionBox["5", "2"]}]},
+           "Gamma"]}], 
+         RowBox[{"16", " ", 
+          SuperscriptBox["\[Pi]", 
+           RowBox[{"3", "/", "2"}]], " ", 
+          TemplateBox[{"nu1"},
+           "Gamma"], " ", 
+          TemplateBox[{"nu2"},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              RowBox[{"-", "nu1"}], "-", "nu2", "+", "6"}]},
+           "Gamma"]}]]}], ")"}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      SuperscriptBox["k", 
+       RowBox[{"7", "-", 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{"nu1", "+", "nu2"}], ")"}]}]}]], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox[
+         RowBox[{
+          SuperscriptBox["mu", "4"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["11", "2"], "-", "nu1"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["3", "2"], "-", "nu2"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{"nu1", "+", "nu2", "-", 
+              FractionBox["3", "2"]}]},
+           "Gamma"]}], 
+         RowBox[{"8", " ", 
+          SuperscriptBox["\[Pi]", 
+           RowBox[{"3", "/", "2"}]], " ", 
+          TemplateBox[{"nu1"},
+           "Gamma"], " ", 
+          TemplateBox[{"nu2"},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+           "Gamma"]}]], "+", 
+        FractionBox[
+         RowBox[{"3", " ", 
+          SuperscriptBox["mu", "2"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["9", "2"], "-", "nu1"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["5", "2"], "-", "nu2"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{"nu1", "+", "nu2", "-", 
+              FractionBox["5", "2"]}]},
+           "Gamma"]}], 
+         RowBox[{"8", " ", 
+          SuperscriptBox["\[Pi]", 
+           RowBox[{"3", "/", "2"}]], " ", 
+          TemplateBox[{"nu1"},
+           "Gamma"], " ", 
+          TemplateBox[{"nu2"},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+           "Gamma"]}]], "+", 
+        FractionBox[
+         RowBox[{"3", " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["7", "2"], "-", "nu1"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              FractionBox["7", "2"], "-", "nu2"}]},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{"nu1", "+", "nu2", "-", 
+              FractionBox["7", "2"]}]},
+           "Gamma"]}], 
+         RowBox[{"32", " ", 
+          SuperscriptBox["\[Pi]", 
+           RowBox[{"3", "/", "2"}]], " ", 
+          TemplateBox[{"nu1"},
+           "Gamma"], " ", 
+          TemplateBox[{"nu2"},
+           "Gamma"], " ", 
+          TemplateBox[{
+            RowBox[{
+              RowBox[{"-", "nu1"}], "-", "nu2", "+", "7"}]},
+           "Gamma"]}]]}], ")"}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}], "}"}]], "Output",
+ CellChangeTimes->{3.9853349838877974`*^9},
+ CellLabel->
+  "(Debug) Out[91]=",ExpressionUUID->"f069c53f-5084-4aa7-b542-00ab896faece"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Exact Checks For The LOS Basis", "Section",ExpressionUUID->"4edd306a-4058-409b-9410-c02ec3e6010f"],
+
+Cell[CellGroupData[{
+
+Cell["RSDMatterCoefficientValidationSummary[10]", "Input",
+ CellLabel->
+  "(Debug) In[92]:=",ExpressionUUID->"92cb283c-2214-43da-a18b-46531baa0504"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"A1\"\>", "\[Rule]", "True"}], ",", 
+   RowBox[{"\<\"A2\"\>", "\[Rule]", "True"}], ",", 
+   RowBox[{"\<\"B2\"\>", "\[Rule]", "False"}], ",", 
+   RowBox[{"\<\"A3\"\>", "\[Rule]", "True"}], ",", 
+   RowBox[{"\<\"B3\"\>", "\[Rule]", "$Aborted"}], ",", 
+   RowBox[{"\<\"A4\"\>", "\[Rule]", "True"}], ",", 
+   RowBox[{"\<\"B4\"\>", "\[Rule]", "True"}], ",", 
+   RowBox[{"\<\"C4\"\>", "\[Rule]", "True"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.985335011728682*^9},
+ CellLabel->
+  "(Debug) Out[92]=",ExpressionUUID->"370a2eed-4404-4aa6-b16f-fa4e35a853df"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"RSDMatterReferenceCoefficient", "[", "\"\<B2\>\"", "]"}], "[", 
+   RowBox[{"nu1", ",", "nu2"}], "]"}], "//", "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.985333822661484*^9, 3.985333831823041*^9}, 
+   3.985334115219021*^9, {3.985334145668638*^9, 3.9853341671753387`*^9}},
+ CellLabel->
+  "(Debug) In[93]:=",ExpressionUUID->"19da1bef-dfad-4ed9-a7c0-3b7cd44c4ced"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"3", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["7", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "5"}]},
+        "Gamma"]}]], "-", 
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["7", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"4", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "5"}]},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["7", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["7", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "5"}]},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["5", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"12", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu2", "-", "1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "4"}]},
+        "Gamma"]}]], "-", 
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["5", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["5", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"4", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "-", "1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "4"}]},
+        "Gamma"]}]], "+", 
+     FractionBox[
+      RowBox[{
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu1"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           FractionBox["3", "2"], "-", "nu2"}]},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{"nu1", "+", "nu2", "-", 
+           FractionBox["3", "2"]}]},
+        "Gamma"]}], 
+      RowBox[{"8", " ", 
+       SuperscriptBox["\[Pi]", 
+        RowBox[{"3", "/", "2"}]], " ", 
+       TemplateBox[{"nu1"},
+        "Gamma"], " ", 
+       TemplateBox[{"nu2"},
+        "Gamma"], " ", 
+       TemplateBox[{
+         RowBox[{
+           RowBox[{"-", "nu1"}], "-", "nu2", "+", "3"}]},
+        "Gamma"]}]]}], ")"}]}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.985335011766732*^9},
+ CellLabel->
+  "(Debug) Out[93]//TraditionalForm=",ExpressionUUID->"e3bdcb41-aba2-4842-\
+a003-fd955b8c2af7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["RSDMatterMasterIntegralValidationSummary[10]", "Input",
+ CellLabel->
+  "(Debug) In[94]:=",ExpressionUUID->"a78591fe-eced-4bf8-86fb-1d79e1213caa"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"1", "\[Rule]", "True"}], ",", 
+   RowBox[{"2", "\[Rule]", "False"}], ",", 
+   RowBox[{"3", "\[Rule]", "True"}], ",", 
+   RowBox[{"4", "\[Rule]", "$Aborted"}]}], "\[RightAssociation]"}]], "Output",\
+
+ CellChangeTimes->{3.9853350399604187`*^9},
+ CellLabel->
+  "(Debug) Out[94]=",ExpressionUUID->"55aaa118-fbfb-4e93-a489-2685b4c35048"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Fast Rational Spot Checks For The LOS Basis", "Section",ExpressionUUID->"8081f45e-9d84-43ed-adb8-73c9af3cb16e"],
+
+Cell[CellGroupData[{
+
+Cell["RSDMatterCoefficientNumericResidualSummary[]", "Input",
+ CellLabel->
+  "(Debug) In[95]:=",ExpressionUUID->"41931868-faba-457f-81e5-7bdb6e8ee688"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"A1\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"A2\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"B2\"\>", "\[Rule]", 
+    "0.4045647964460242993718698658157854079496507861670246006493`40."}], ",", 
+   RowBox[{"\<\"A3\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"B3\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"A4\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"B4\"\>", "\[Rule]", "0"}], ",", 
+   RowBox[{"\<\"C4\"\>", "\[Rule]", "0"}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.985335066031389*^9},
+ CellLabel->
+  "(Debug) Out[95]=",ExpressionUUID->"82dbca4a-ded1-4977-b233-c5354426bca9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["RSDMatterMasterIntegralNumericResidualSummary[]", "Input",
+ CellLabel->
+  "(Debug) In[96]:=",ExpressionUUID->"620255b5-1c1e-4e96-857b-89b43fb73e9a"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"1", "\[Rule]", "0"}], ",", 
+   RowBox[{
+   "2", "\[Rule]", 
+    "8.6444622009975425108830840488523648224231251669643151131724`40."}], ",", 
+   RowBox[{"3", "\[Rule]", "0"}], ",", 
+   RowBox[{"4", "\[Rule]", "0"}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9853351164556932`*^9},
+ CellLabel->
+  "(Debug) Out[96]=",ExpressionUUID->"c1c84e9b-7903-4a09-8957-be574587a2fa"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Inspect The Pure-Matter Sector Subset", "Section",ExpressionUUID->"9045f9f9-8db3-4ef2-a571-0a987c9ff505"],
+
+Cell[CellGroupData[{
+
+Cell["RSDMatterM13SectorFiles[]", "Input",
+ CellLabel->
+  "(Debug) In[97]:=",ExpressionUUID->"37bfeef8-4b0c-4cbd-95d0-c86a94c8cfef"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-4.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-6.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-2.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.985335116564229*^9},
+ CellLabel->
+  "(Debug) Out[97]=",ExpressionUUID->"df8b64bb-e059-4585-8c01-445362b74708"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["RSDMatterM22SectorFiles[]", "Input",
+ CellLabel->
+  "(Debug) In[98]:=",ExpressionUUID->"6881154f-b646-4a5f-b832-8f7b5874a8c0"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-2_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-6.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-6.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-8.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-6.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-4.txt\"\>"}], "}"}]], "Output",\
+
+ CellChangeTimes->{3.985335116571363*^9},
+ CellLabel->
+  "(Debug) Out[98]=",ExpressionUUID->"af5d0c91-750e-4047-aeae-9ee39ead5b6f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Table[RSDMatterDerivedSectorExpression[file] // TraditionalForm, {file, \
+Take[RSDMatterM13SectorFiles[], 3]}]\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[99]:=",ExpressionUUID->"37341aa8-0797-44c8-833a-d3c3cd839468"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{"3", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"3", " ", "nu1"}], "-", "5"}], ")"}], " ", 
+       RowBox[{"tan", "(", 
+        RowBox[{"\[Pi]", " ", "nu1"}], ")"}]}], 
+      RowBox[{"112", " ", "\[Pi]", " ", "nu1", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         SuperscriptBox["nu1", "4"], "-", 
+         RowBox[{"5", " ", 
+          SuperscriptBox["nu1", "3"]}], "+", 
+         RowBox[{"5", " ", 
+          SuperscriptBox["nu1", "2"]}], "+", 
+         RowBox[{"5", " ", "nu1"}], "-", "6"}], ")"}]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{"9", " ", 
+        RowBox[{"tan", "(", 
+         RowBox[{"\[Pi]", " ", "nu1"}], ")"}]}], 
+       RowBox[{"56", " ", "\[Pi]", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["nu1", "4"], "-", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "3"]}], "+", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "2"]}], "+", 
+          RowBox[{"5", " ", "nu1"}], "-", "6"}], ")"}]}]]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"9", " ", "nu1"}], "-", "7"}], ")"}], " ", 
+        RowBox[{"tan", "(", 
+         RowBox[{"\[Pi]", " ", "nu1"}], ")"}]}], 
+       RowBox[{"56", " ", "\[Pi]", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["nu1", "4"], "-", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "3"]}], "+", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "2"]}], "+", 
+          RowBox[{"5", " ", "nu1"}], "-", "6"}], ")"}]}]], "+", 
+      FractionBox[
+       RowBox[{"tan", "(", 
+        RowBox[{"\[Pi]", " ", "nu1"}], ")"}], 
+       RowBox[{"8", " ", "\[Pi]", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["nu1", "4"], "-", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "3"]}], "+", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "2"]}], "+", 
+          RowBox[{"5", " ", "nu1"}], "-", "6"}], ")"}]}]]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}], "}"}]], "Output",
+ CellChangeTimes->{3.9853351165864677`*^9},
+ CellLabel->
+  "(Debug) Out[99]=",ExpressionUUID->"4779f3b0-140b-4513-b92e-a50815cc332c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Table[RSDMatterDerivedSectorExpression[file] // TraditionalForm, {file, \
+Take[RSDMatterM22SectorFiles[], 3]}]\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[100]:=",ExpressionUUID->"9c027599-c7bb-44be-9226-ce52473b7b56"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"2", " ", "nu1"}], "+", 
+         RowBox[{"2", " ", "nu2"}], "-", "3"}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"2", " ", "nu1"}], "+", 
+         RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"98", " ", 
+          SuperscriptBox["nu1", "3"], " ", "nu2"}], "+", 
+         RowBox[{"7", " ", 
+          SuperscriptBox["nu1", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "nu2", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"14", " ", "nu2"}], "-", "9"}], ")"}]}], "-", "5"}], 
+           ")"}]}], "+", 
+         RowBox[{"nu1", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "nu2", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"7", " ", "nu2", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"7", " ", "nu2"}], "-", "9"}], ")"}]}], "-", "33"}],
+               ")"}]}], "-", "9"}], ")"}]}], "-", 
+         RowBox[{"nu2", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"35", " ", "nu2"}], "+", "9"}], ")"}]}], "+", "50"}], 
+        ")"}]}], 
+      RowBox[{"196", " ", "nu1", " ", 
+       RowBox[{"(", 
+        RowBox[{"nu1", "+", "1"}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"2", " ", "nu1"}], "-", "1"}], ")"}], " ", "nu2", " ", 
+       RowBox[{"(", 
+        RowBox[{"nu2", "+", "1"}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "3"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"98", " ", 
+           SuperscriptBox["nu1", "3"], " ", "nu2"}], "+", 
+          RowBox[{"7", " ", 
+           SuperscriptBox["nu1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"14", " ", "nu2"}], "-", "9"}], ")"}]}], "-", "5"}], 
+            ")"}]}], "+", 
+          RowBox[{"nu1", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"7", " ", "nu2", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"7", " ", "nu2"}], "-", "9"}], ")"}]}], "-", 
+                "33"}], ")"}]}], "-", "9"}], ")"}]}], "-", 
+          RowBox[{"nu2", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"35", " ", "nu2"}], "+", "9"}], ")"}]}], "+", "50"}], 
+         ")"}]}], 
+       RowBox[{"112", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu1", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "-", "1"}], ")"}], " ", "nu2", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu2", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}]}]], "-", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "3"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"98", " ", 
+           SuperscriptBox["nu1", "3"], " ", "nu2"}], "+", 
+          RowBox[{"7", " ", 
+           SuperscriptBox["nu1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"14", " ", "nu2"}], "-", "5"}], ")"}]}], "-", "9"}], 
+            ")"}]}], "+", 
+          RowBox[{"nu1", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"7", " ", "nu2", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"7", " ", "nu2"}], "-", "5"}], ")"}]}], "-", 
+                "69"}], ")"}]}], "+", "13"}], ")"}]}], "+", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"13", "-", 
+             RowBox[{"63", " ", "nu2"}]}], ")"}], " ", "nu2"}], "+", "46"}], 
+         ")"}]}], 
+       RowBox[{"112", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu1", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "-", "1"}], ")"}], " ", "nu2", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu2", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}]}]]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      FractionBox[
+       RowBox[{"9", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "3"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"98", " ", 
+           SuperscriptBox["nu1", "3"], " ", "nu2"}], "+", 
+          RowBox[{"7", " ", 
+           SuperscriptBox["nu1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"14", " ", "nu2"}], "-", "5"}], ")"}]}], "-", "9"}], 
+            ")"}]}], "+", 
+          RowBox[{"nu1", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"7", " ", "nu2", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"7", " ", "nu2"}], "-", "5"}], ")"}]}], "-", 
+                "69"}], ")"}]}], "+", "13"}], ")"}]}], "+", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"13", "-", 
+             RowBox[{"63", " ", "nu2"}]}], ")"}], " ", "nu2"}], "+", "46"}], 
+         ")"}]}], 
+       RowBox[{"784", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu1", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "-", "1"}], ")"}], " ", "nu2", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu2", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}]}]], "-", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "3"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"98", " ", 
+           SuperscriptBox["nu1", "3"], " ", "nu2"}], "+", 
+          RowBox[{"7", " ", 
+           SuperscriptBox["nu1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"14", " ", "nu2"}], "-", "9"}], ")"}]}], "-", "5"}], 
+            ")"}]}], "+", 
+          RowBox[{"nu1", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"7", " ", "nu2", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"7", " ", "nu2"}], "-", "9"}], ")"}]}], "-", 
+                "33"}], ")"}]}], "-", "9"}], ")"}]}], "-", 
+          RowBox[{"nu2", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"35", " ", "nu2"}], "+", "9"}], ")"}]}], "+", "50"}], 
+         ")"}]}], 
+       RowBox[{"784", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu1", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "-", "1"}], ")"}], " ", "nu2", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu2", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}]}]]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}], "}"}]], "Output",
+ CellChangeTimes->{3.9853351166271772`*^9},
+ CellLabel->
+  "(Debug) Out[100]=",ExpressionUUID->"5bf30b0a-d4a8-4950-88ff-d4c41de13faa"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Exact Sector Checks", "Section",ExpressionUUID->"d61d1442-0904-45c0-ac2c-9df3fa753f24"],
+
+Cell[CellGroupData[{
+
+Cell["RSDMatterSectorValidationSummary[10]", "Input",
+ CellLabel->
+  "(Debug) In[101]:=",ExpressionUUID->"fb62ff52-c738-47a4-8aaf-f1ac4d8ee7da"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"M13\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-4.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-6.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-2.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-0_mu-0.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]",
+        "True"}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"M22\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-6.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-8.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "True"}]}], "\[RightAssociation]"}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.985335116639668*^9},
+ CellLabel->
+  "(Debug) Out[101]=",ExpressionUUID->"83703357-48e5-407b-85b4-3df2a26882bd"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Fast Sector Spot Checks", "Section",ExpressionUUID->"18a8edd7-ef47-48ec-808d-c468f59a1900"],
+
+Cell[CellGroupData[{
+
+Cell["RSDMatterSectorNumericResidualSummary[]", "Input",
+ CellLabel->
+  "(Debug) In[102]:=",ExpressionUUID->"44aca049-b241-421b-b6fc-8f97195674b6"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"M13\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-4.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-6.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-2.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-0_mu-0.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]",
+        "0"}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"M22\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-6.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-8.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "0"}]}], "\[RightAssociation]"}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.985335116653702*^9},
+ CellLabel->
+  "(Debug) Out[102]=",ExpressionUUID->"ec86b878-a8d6-4539-9dd7-5154d1a641c8"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Inspect Any Nonzero Sector Residual Explicitly", "Section",ExpressionUUID->"a91444b3-bf64-4a4b-8d7f-9edfdb479dd5"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+AssociationMap[RSDMatterSectorValidationExpression, \
+Join[RSDMatterM13SectorFiles[], RSDMatterM22SectorFiles[]]]\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[103]:=",ExpressionUUID->"5a21724a-35b5-4850-82dc-fe8a2303640a"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-6.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-8.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9853351166620417`*^9},
+ CellLabel->
+  "(Debug) Out[103]=",ExpressionUUID->"0764f0f0-99bc-41a8-9ff6-fb1cfae38f10"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Notes", "Section",ExpressionUUID->"a41c6e2b-23e1-4078-a8fa-36b400f6c038"],
+
+Cell["\<\
+The low-order `A1..C4` basis is the actual master-integral derivation layer. \
+The closed M13 and M22 sector formulas are then the package-facing reduced \
+contractions built from that basis plus the real-space Gaussian kernels. On \
+the current local validation pass the Gaussian sector subset closes exactly, \
+while the low-order coefficient `B2` stays nonzero against the CLASS-PT \
+appendix transcription and some heavier exact simplifications can time out \
+depending on the chosen `TimeConstrained` budget.\
+\>", "Text",
+ CellChangeTimes->{{3.9853337231222258`*^9, 
+  3.985333724010244*^9}},ExpressionUUID->"933041e5-7913-4380-ac22-\
+8f63cdc37d43"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1200, 900},
+WindowMargins->{{Automatic, 226}, {Automatic, 45}},
+FrontEndVersion->"14.3 for Mac OS X ARM (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"6c477a53-84d9-4ff2-af12-2c73259648d0"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 117, 0, 96, "Title",ExpressionUUID->"d75358bb-771c-4f9d-90c3-c3e18ae8eaf0"],
+Cell[696, 24, 419, 6, 55, "Text",ExpressionUUID->"bbd8469e-73d1-404a-bc78-e6e09941d5e9"],
+Cell[CellGroupData[{
+Cell[1140, 34, 79, 0, 66, "Section",ExpressionUUID->"4d2d2f17-d63b-4f39-bcc5-67135b61c09b"],
+Cell[1222, 36, 209, 5, 43, "Input",ExpressionUUID->"a4d36c9d-e4fa-4c00-bdd8-ef5c6e82d229"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1468, 46, 112, 0, 66, "Section",ExpressionUUID->"8db45865-a320-4b40-ab83-7a3814dafd2f"],
+Cell[CellGroupData[{
+Cell[1605, 50, 132, 2, 43, "Input",ExpressionUUID->"f4061448-e892-4189-b550-2c31321d4ec4"],
+Cell[1740, 54, 556, 12, 67, "Output",ExpressionUUID->"1fa6be73-a8f8-4ecc-9e4d-8b9da14632ea"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2333, 71, 226, 5, 43, "Input",ExpressionUUID->"08002650-2377-4776-a39a-c58a337f9356"],
+Cell[2562, 78, 6557, 245, 189, "Output",ExpressionUUID->"78dc8f6a-8d19-48c6-9b9f-c8ccbfaaab02"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9156, 328, 181, 4, 43, "Input",ExpressionUUID->"0e4305d1-e721-467f-b595-48159cecffef"],
+Cell[9340, 334, 11599, 404, 237, "Output",ExpressionUUID->"ad568823-e6d7-4ef3-bc8e-be64e49e9fe3"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20988, 744, 114, 0, 66, "Section",ExpressionUUID->"383ab7c6-423c-44bf-b97b-8b4c9ab7551c"],
+Cell[CellGroupData[{
+Cell[21127, 748, 204, 5, 43, "Input",ExpressionUUID->"1e95f422-5a80-4e4c-84e5-a9f071692fea"],
+Cell[21334, 755, 7748, 258, 185, "Output",ExpressionUUID->"f069c53f-5084-4aa7-b542-00ab896faece"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29131, 1019, 104, 0, 66, "Section",ExpressionUUID->"4edd306a-4058-409b-9410-c02ec3e6010f"],
+Cell[CellGroupData[{
+Cell[29260, 1023, 148, 2, 43, "Input",ExpressionUUID->"92cb283c-2214-43da-a18b-46531baa0504"],
+Cell[29411, 1027, 644, 14, 48, "Output",ExpressionUUID->"370a2eed-4404-4aa6-b16f-fa4e35a853df"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30092, 1046, 416, 8, 43, "Input",ExpressionUUID->"19da1bef-dfad-4ed9-a7c0-3b7cd44c4ced"],
+Cell[30511, 1056, 4658, 164, 136, "Output",ExpressionUUID->"e3bdcb41-aba2-4842-a003-fd955b8c2af7"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35206, 1225, 151, 2, 43, "Input",ExpressionUUID->"a78591fe-eced-4bf8-86fb-1d79e1213caa"],
+Cell[35360, 1229, 401, 10, 48, "Output",ExpressionUUID->"55aaa118-fbfb-4e93-a489-2685b4c35048"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35810, 1245, 117, 0, 66, "Section",ExpressionUUID->"8081f45e-9d84-43ed-adb8-73c9af3cb16e"],
+Cell[CellGroupData[{
+Cell[35952, 1249, 151, 2, 43, "Input",ExpressionUUID->"41931868-faba-457f-81e5-7bdb6e8ee688"],
+Cell[36106, 1253, 683, 15, 47, "Output",ExpressionUUID->"82dbca4a-ded1-4977-b233-c5354426bca9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[36826, 1273, 154, 2, 43, "Input",ExpressionUUID->"620255b5-1c1e-4e96-857b-89b43fb73e9a"],
+Cell[36983, 1277, 454, 11, 47, "Output",ExpressionUUID->"c1c84e9b-7903-4a09-8957-be574587a2fa"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[37486, 1294, 111, 0, 66, "Section",ExpressionUUID->"9045f9f9-8db3-4ef2-a571-0a987c9ff505"],
+Cell[CellGroupData[{
+Cell[37622, 1298, 132, 2, 43, "Input",ExpressionUUID->"37bfeef8-4b0c-4cbd-95d0-c86a94c8cfef"],
+Cell[37757, 1302, 704, 13, 87, "Output",ExpressionUUID->"df8b64bb-e059-4585-8c01-445362b74708"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[38498, 1320, 132, 2, 43, "Input",ExpressionUUID->"6881154f-b646-4a5f-b832-8f7b5874a8c0"],
+Cell[38633, 1324, 1083, 20, 128, "Output",ExpressionUUID->"af5d0c91-750e-4047-aeae-9ee39ead5b6f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39753, 1349, 225, 5, 43, "Input",ExpressionUUID->"37341aa8-0797-44c8-833a-d3c3cd839468"],
+Cell[39981, 1356, 2551, 79, 110, "Output",ExpressionUUID->"4779f3b0-140b-4513-b92e-a50815cc332c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[42569, 1440, 226, 5, 43, "Input",ExpressionUUID->"9c027599-c7bb-44be-9226-ce52473b7b56"],
+Cell[42798, 1447, 9245, 272, 246, "Output",ExpressionUUID->"5bf30b0a-d4a8-4950-88ff-d4c41de13faa"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[52092, 1725, 93, 0, 66, "Section",ExpressionUUID->"d61d1442-0904-45c0-ac2c-9df3fa753f24"],
+Cell[CellGroupData[{
+Cell[52210, 1729, 144, 2, 43, "Input",ExpressionUUID->"fb62ff52-c738-47a4-8aaf-f1ac4d8ee7da"],
+Cell[52357, 1733, 2796, 58, 251, "Output",ExpressionUUID->"83703357-48e5-407b-85b4-3df2a26882bd"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[55202, 1797, 97, 0, 66, "Section",ExpressionUUID->"18a8edd7-ef47-48ec-808d-c468f59a1900"],
+Cell[CellGroupData[{
+Cell[55324, 1801, 147, 2, 43, "Input",ExpressionUUID->"44aca049-b241-421b-b6fc-8f97195674b6"],
+Cell[55474, 1805, 2727, 58, 230, "Output",ExpressionUUID->"ec86b878-a8d6-4539-9dd7-5154d1a641c8"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[58250, 1869, 120, 0, 66, "Section",ExpressionUUID->"a91444b3-bf64-4a4b-8d7f-9edfdb479dd5"],
+Cell[CellGroupData[{
+Cell[58395, 1873, 229, 5, 43, "Input",ExpressionUUID->"5a21724a-35b5-4850-82dc-fe8a2303640a"],
+Cell[58627, 1880, 2356, 51, 210, "Output",ExpressionUUID->"0764f0f0-99bc-41a8-9ff6-fb1cfae38f10"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[61032, 1937, 79, 0, 66, "Section",ExpressionUUID->"a41c6e2b-23e1-4078-a8fa-36b400f6c038"],
+Cell[61114, 1939, 665, 11, 77, "Text",ExpressionUUID->"933041e5-7913-4380-ac22-8f63cdc37d43"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

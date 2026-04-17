@@ -1,0 +1,969 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     37242,        959]
+NotebookOptionsPosition[     33471,        879]
+NotebookOutlinePosition[     33864,        895]
+CellTagsIndexPosition[     33821,        892]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["FFTLog Redshift-Space Galaxy Master Integrals", "Title",ExpressionUUID->"67ade176-9f5a-4a5d-832b-fdece0d33d5b"],
+
+Cell["\<\
+This notebook closes the Gaussian matter-to-galaxy chain. The low-order \
+line-of-sight master integrals are already established in the redshift-space \
+matter notebook, so the focus here is the full Gaussian galaxy sector \
+decomposition and its exact agreement with the local redshift-space kernel \
+tables.\
+\>", "Text",ExpressionUUID->"b505ed51-4a94-49f2-97d3-0b03de0bd68d"],
+
+Cell[CellGroupData[{
+
+Cell["Setup", "Section",ExpressionUUID->"a743680a-0437-4912-8179-a960dec1d7d5"],
+
+Cell["\<\
+Get[FileNameJoin[{NotebookDirectory[], \
+\"FFTLog_RedshiftSpace_Galaxy_MasterIntegrals.wl\"}]]\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[104]:=",ExpressionUUID->"15bc808c-30a1-4134-b4b1-b8a4252fa88d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Inspect The Real-Space Basis Reused By The Sector Maps", "Section",ExpressionUUID->"9228fe2d-f949-4346-89ed-39bb066e6f72"],
+
+Cell[CellGroupData[{
+
+Cell["$RedshiftSpaceGalaxyPaper", "Input",
+ CellLabel->
+  "(Debug) In[105]:=",ExpressionUUID->"5b7c0a0c-dadc-4a6b-9b7c-e82168bcc3f5"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Title\"\>", 
+    "\[Rule]", "\<\"Non-linear perturbation theory extension of the Boltzmann \
+code CLASS\"\>"}], ",", 
+   RowBox[{"\<\"ArXiv\"\>", "\[Rule]", "\<\"2004.10607\"\>"}], ",", 
+   RowBox[{"\<\"Section\"\>", 
+    "\[Rule]", "\<\"Gaussian redshift-space galaxy sector \
+decomposition\"\>"}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.98533511674263*^9},
+ CellLabel->
+  "(Debug) Out[105]=",ExpressionUUID->"080eeabb-773b-4f0a-be6b-30c38b41d4a4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["$RedshiftSpaceGalaxyBasisKernelsM13", "Input",
+ CellLabel->
+  "(Debug) In[106]:=",ExpressionUUID->"62f78857-c69f-434c-9a2a-e83c3e1d35a1"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"13_dd\"\>", ",", "\<\"13_dv\"\>", ",", "\<\"13_vv\"\>", 
+   ",", "\<\"F_G2\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.985335116754449*^9},
+ CellLabel->
+  "(Debug) Out[106]=",ExpressionUUID->"efb50aed-b2df-42da-947b-465ea77794eb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["$RedshiftSpaceGalaxyBasisKernelsM22", "Input",
+ CellLabel->
+  "(Debug) In[107]:=",ExpressionUUID->"d6e8da88-38e2-42bc-b234-7fc921e09009"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"22_dd\"\>", ",", "\<\"22_dv\"\>", ",", "\<\"22_vv\"\>", 
+   ",", "\<\"I_d2\"\>", ",", "\<\"I_G2\"\>", ",", "\<\"I_d2_d2\"\>", 
+   ",", "\<\"I_d2_G2\"\>", ",", "\<\"I_G2_G2\"\>", ",", "\<\"I_d2_v\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.985335116762391*^9},
+ CellLabel->
+  "(Debug) Out[107]=",ExpressionUUID->"7f0684a7-fa5c-4753-8e9e-8b038ea0ea3c"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Inspect The Full Gaussian Sector Set", "Section",ExpressionUUID->"4d33d03c-d724-493f-8285-45f56374548b"],
+
+Cell[CellGroupData[{
+
+Cell["RSDGalaxyM13SectorFiles[]", "Input",
+ CellLabel->
+  "(Debug) In[108]:=",ExpressionUUID->"a4beb708-a438-4508-b6b0-e97f68c6dd85"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-4.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-6.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-1_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-0_bG2-1_bGamma3-0_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-2.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-1_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-1_bG2-1_bGamma3-0_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.985335116775791*^9},
+ CellLabel->
+  "(Debug) Out[108]=",ExpressionUUID->"8a729add-d87f-4ce8-bad7-81a1002f21d6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["RSDGalaxyM22SectorFiles[]", "Input",
+ CellLabel->
+  "(Debug) In[109]:=",ExpressionUUID->"5e03edf0-64f0-4809-ad3c-74d81b1c5638"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-2_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-6.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-6.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-8.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-2_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-2_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-0_bG2-2_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-2_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-2_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-1_bG2-1_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-0_b2-2_bG2-0_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-4.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-6.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-1_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-0_bG2-1_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-1_bG2-0_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-1_b2-1_bG2-0_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-0_mu-0.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-1_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-2.txt\"\>", 
+   ",", "\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-4.txt\"\>"}], "}"}]], "Output",\
+
+ CellChangeTimes->{3.985335116778366*^9},
+ CellLabel->
+  "(Debug) Out[109]=",ExpressionUUID->"20c10e85-8240-40f9-9fcc-cb5cc84fa49f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Table[RSDGalaxyDerivedSectorExpression[file] // TraditionalForm, {file, \
+Take[RSDGalaxyM13SectorFiles[], 3]}]\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[110]:=",ExpressionUUID->"c133d751-ee2b-4776-8c6a-d902faefcb64"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{"3", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"3", " ", "nu1"}], "-", "5"}], ")"}], " ", 
+       RowBox[{"tan", "(", 
+        RowBox[{"\[Pi]", " ", "nu1"}], ")"}]}], 
+      RowBox[{"112", " ", "\[Pi]", " ", "nu1", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         SuperscriptBox["nu1", "4"], "-", 
+         RowBox[{"5", " ", 
+          SuperscriptBox["nu1", "3"]}], "+", 
+         RowBox[{"5", " ", 
+          SuperscriptBox["nu1", "2"]}], "+", 
+         RowBox[{"5", " ", "nu1"}], "-", "6"}], ")"}]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{"9", " ", 
+        RowBox[{"tan", "(", 
+         RowBox[{"\[Pi]", " ", "nu1"}], ")"}]}], 
+       RowBox[{"56", " ", "\[Pi]", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["nu1", "4"], "-", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "3"]}], "+", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "2"]}], "+", 
+          RowBox[{"5", " ", "nu1"}], "-", "6"}], ")"}]}]]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"9", " ", "nu1"}], "-", "7"}], ")"}], " ", 
+        RowBox[{"tan", "(", 
+         RowBox[{"\[Pi]", " ", "nu1"}], ")"}]}], 
+       RowBox[{"56", " ", "\[Pi]", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["nu1", "4"], "-", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "3"]}], "+", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "2"]}], "+", 
+          RowBox[{"5", " ", "nu1"}], "-", "6"}], ")"}]}]], "+", 
+      FractionBox[
+       RowBox[{"tan", "(", 
+        RowBox[{"\[Pi]", " ", "nu1"}], ")"}], 
+       RowBox[{"8", " ", "\[Pi]", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["nu1", "4"], "-", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "3"]}], "+", 
+          RowBox[{"5", " ", 
+           SuperscriptBox["nu1", "2"]}], "+", 
+          RowBox[{"5", " ", "nu1"}], "-", "6"}], ")"}]}]]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}], "}"}]], "Output",
+ CellChangeTimes->{3.985335116792411*^9},
+ CellLabel->
+  "(Debug) Out[110]=",ExpressionUUID->"3a180483-1cb0-4f73-9514-78280c622d5e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Table[RSDGalaxyDerivedSectorExpression[file] // TraditionalForm, {file, \
+Take[RSDGalaxyM22SectorFiles[], 3]}]\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[111]:=",ExpressionUUID->"866fa9de-5828-4fe5-a56d-d6b9214e9906"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"2", " ", "nu1"}], "+", 
+         RowBox[{"2", " ", "nu2"}], "-", "3"}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"2", " ", "nu1"}], "+", 
+         RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"98", " ", 
+          SuperscriptBox["nu1", "3"], " ", "nu2"}], "+", 
+         RowBox[{"7", " ", 
+          SuperscriptBox["nu1", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "nu2", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"14", " ", "nu2"}], "-", "9"}], ")"}]}], "-", "5"}], 
+           ")"}]}], "+", 
+         RowBox[{"nu1", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", "nu2", " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"7", " ", "nu2", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"7", " ", "nu2"}], "-", "9"}], ")"}]}], "-", "33"}],
+               ")"}]}], "-", "9"}], ")"}]}], "-", 
+         RowBox[{"nu2", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"35", " ", "nu2"}], "+", "9"}], ")"}]}], "+", "50"}], 
+        ")"}]}], 
+      RowBox[{"196", " ", "nu1", " ", 
+       RowBox[{"(", 
+        RowBox[{"nu1", "+", "1"}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"2", " ", "nu1"}], "-", "1"}], ")"}], " ", "nu2", " ", 
+       RowBox[{"(", 
+        RowBox[{"nu2", "+", "1"}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}]}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "3"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"98", " ", 
+           SuperscriptBox["nu1", "3"], " ", "nu2"}], "+", 
+          RowBox[{"7", " ", 
+           SuperscriptBox["nu1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"14", " ", "nu2"}], "-", "9"}], ")"}]}], "-", "5"}], 
+            ")"}]}], "+", 
+          RowBox[{"nu1", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"7", " ", "nu2", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"7", " ", "nu2"}], "-", "9"}], ")"}]}], "-", 
+                "33"}], ")"}]}], "-", "9"}], ")"}]}], "-", 
+          RowBox[{"nu2", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"35", " ", "nu2"}], "+", "9"}], ")"}]}], "+", "50"}], 
+         ")"}]}], 
+       RowBox[{"112", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu1", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "-", "1"}], ")"}], " ", "nu2", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu2", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}]}]], "-", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "3"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"98", " ", 
+           SuperscriptBox["nu1", "3"], " ", "nu2"}], "+", 
+          RowBox[{"7", " ", 
+           SuperscriptBox["nu1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"14", " ", "nu2"}], "-", "5"}], ")"}]}], "-", "9"}], 
+            ")"}]}], "+", 
+          RowBox[{"nu1", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"7", " ", "nu2", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"7", " ", "nu2"}], "-", "5"}], ")"}]}], "-", 
+                "69"}], ")"}]}], "+", "13"}], ")"}]}], "+", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"13", "-", 
+             RowBox[{"63", " ", "nu2"}]}], ")"}], " ", "nu2"}], "+", "46"}], 
+         ")"}]}], 
+       RowBox[{"112", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu1", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "-", "1"}], ")"}], " ", "nu2", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu2", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}]}]]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], ",", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      FractionBox[
+       RowBox[{"9", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "3"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"98", " ", 
+           SuperscriptBox["nu1", "3"], " ", "nu2"}], "+", 
+          RowBox[{"7", " ", 
+           SuperscriptBox["nu1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"14", " ", "nu2"}], "-", "5"}], ")"}]}], "-", "9"}], 
+            ")"}]}], "+", 
+          RowBox[{"nu1", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"7", " ", "nu2", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"7", " ", "nu2"}], "-", "5"}], ")"}]}], "-", 
+                "69"}], ")"}]}], "+", "13"}], ")"}]}], "+", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"13", "-", 
+             RowBox[{"63", " ", "nu2"}]}], ")"}], " ", "nu2"}], "+", "46"}], 
+         ")"}]}], 
+       RowBox[{"784", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu1", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "-", "1"}], ")"}], " ", "nu2", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu2", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}]}]], "-", 
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "3"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "+", 
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"98", " ", 
+           SuperscriptBox["nu1", "3"], " ", "nu2"}], "+", 
+          RowBox[{"7", " ", 
+           SuperscriptBox["nu1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"14", " ", "nu2"}], "-", "9"}], ")"}]}], "-", "5"}], 
+            ")"}]}], "+", 
+          RowBox[{"nu1", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"2", " ", "nu2", " ", 
+              RowBox[{"(", 
+               RowBox[{
+                RowBox[{"7", " ", "nu2", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"7", " ", "nu2"}], "-", "9"}], ")"}]}], "-", 
+                "33"}], ")"}]}], "-", "9"}], ")"}]}], "-", 
+          RowBox[{"nu2", " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"35", " ", "nu2"}], "+", "9"}], ")"}]}], "+", "50"}], 
+         ")"}]}], 
+       RowBox[{"784", " ", "nu1", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu1", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu1"}], "-", "1"}], ")"}], " ", "nu2", " ", 
+        RowBox[{"(", 
+         RowBox[{"nu2", "+", "1"}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "nu2"}], "-", "1"}], ")"}]}]]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}], "}"}]], "Output",
+ CellChangeTimes->{3.985335116829392*^9},
+ CellLabel->
+  "(Debug) Out[111]=",ExpressionUUID->"7c877ab7-5a7f-40a4-b04c-d17653e2e5d6"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Exact Sector Checks", "Section",ExpressionUUID->"9118006d-2e9c-4a2b-9899-69e70f42fefa"],
+
+Cell[CellGroupData[{
+
+Cell["RSDGalaxySectorValidationSummary[10]", "Input",
+ CellLabel->
+  "(Debug) In[112]:=",ExpressionUUID->"20940353-1584-4fbf-9656-dc001b2c681d"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"M13\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-4.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-6.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-1_f-1_mu-2.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-1_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-2.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-1_f-0_mu-0.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-1_bGamma3-0_f-0_mu-0.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-0_mu-0.txt\"\>", "\[Rule]",
+        "True"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]",
+        "True"}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"M22\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-6.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-8.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-2_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-1_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-2_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-1_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-1_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-1_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-1_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "True"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "True"}]}], "\[RightAssociation]"}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.9853351168467903`*^9},
+ CellLabel->
+  "(Debug) Out[112]=",ExpressionUUID->"15cb2d6b-6649-4af0-8158-72a984b79234"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Fast Rational Spot Checks", "Section",ExpressionUUID->"2b11f0e3-a92e-48f3-97be-69f02e6bccc1"],
+
+Cell[CellGroupData[{
+
+Cell["RSDGalaxySectorNumericResidualSummary[]", "Input",
+ CellLabel->
+  "(Debug) In[113]:=",ExpressionUUID->"0979466e-0d80-4b2c-a08d-cf2ff1143568"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"M13\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-4.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-6.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-1_f-1_mu-2.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-1_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-2.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-1_f-0_mu-0.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-1_bGamma3-0_f-0_mu-0.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-0_mu-0.txt\"\>", "\[Rule]",
+        "0"}], ",", 
+      RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]",
+        "0"}]}], "\[RightAssociation]"}]}], ",", 
+   RowBox[{"\<\"M22\"\>", "\[Rule]", 
+    RowBox[{"\[LeftAssociation]", 
+     RowBox[{
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-6.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-8.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-2_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-1_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-0_b2-2_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-1_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-1_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-1_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-1_b2-1_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+       "0"}], ",", 
+      RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+       "0"}]}], "\[RightAssociation]"}]}]}], 
+  "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.985335116853867*^9},
+ CellLabel->
+  "(Debug) Out[113]=",ExpressionUUID->"0f397678-365f-4a68-9c82-b7b228739615"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Inspect Any Nonzero Sector Residual Explicitly", "Section",ExpressionUUID->"15c339d6-fe91-446c-9acc-6cba93200ffa"],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+AssociationMap[RSDGalaxySectorValidationExpression, \
+Join[RSDGalaxyM13SectorFiles[], RSDGalaxyM22SectorFiles[]]]\
+\>", "Input",
+ CellLabel->
+  "(Debug) In[114]:=",ExpressionUUID->"3784e1ff-5406-4f1f-9c20-514722b7e80d"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-0_bGamma3-1_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-0_bG2-1_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-0_bGamma3-1_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-1_bG2-1_bGamma3-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M13_gg_rsd=b1-2_bG2-0_bGamma3-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-6.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-0_f-4_mu-8.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-2_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-1_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-0_bG2-2_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-1_bG2-1_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-0_b2-2_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-4.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-0_f-3_mu-6.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-1_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-0_bG2-1_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-1_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-1_b2-1_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-0_mu-0.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-1_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-2.txt\"\>", "\[Rule]", 
+    "0"}], ",", 
+   RowBox[{"\<\"M22_gg_rsd=b1-2_b2-0_bG2-0_f-2_mu-4.txt\"\>", "\[Rule]", 
+    "0"}]}], "\[RightAssociation]"}]], "Output",
+ CellChangeTimes->{3.985335116871317*^9},
+ CellLabel->
+  "(Debug) Out[114]=",ExpressionUUID->"9959194f-0d3a-4aef-b646-432d5d6343ec"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Notes", "Section",ExpressionUUID->"06c3ebeb-c198-47f7-9297-7360c76f8ce6"],
+
+Cell["\<\
+The point of this notebook is not to invent a second derivation route for \
+every single sector file. It is to expose the full Gaussian galaxy \
+decomposition in one place, keep it on the same analytic footing as the \
+simpler notebooks, and check that the exact reduced sector expressions line \
+up with the package contract before moving on to the more elaborate Lya case.\
+\
+\>", "Text",ExpressionUUID->"57bec709-f795-49f9-bc96-59e01b3bea9a"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1200, 900},
+WindowMargins->{{Automatic, 235}, {Automatic, 4}},
+FrontEndVersion->"14.3 for Mac OS X ARM (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"682197da-038c-4dcb-9727-05387610d1d4"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 117, 0, 96, "Title",ExpressionUUID->"67ade176-9f5a-4a5d-832b-fdece0d33d5b"],
+Cell[696, 24, 388, 6, 55, "Text",ExpressionUUID->"b505ed51-4a94-49f2-97d3-0b03de0bd68d"],
+Cell[CellGroupData[{
+Cell[1109, 34, 79, 0, 66, "Section",ExpressionUUID->"a743680a-0437-4912-8179-a960dec1d7d5"],
+Cell[1191, 36, 210, 5, 43, "Input",ExpressionUUID->"15bc808c-30a1-4134-b4b1-b8a4252fa88d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1438, 46, 128, 0, 66, "Section",ExpressionUUID->"9228fe2d-f949-4346-89ed-39bb066e6f72"],
+Cell[CellGroupData[{
+Cell[1591, 50, 133, 2, 43, "Input",ExpressionUUID->"5b7c0a0c-dadc-4a6b-9b7c-e82168bcc3f5"],
+Cell[1727, 54, 542, 12, 67, "Output",ExpressionUUID->"080eeabb-773b-4f0a-be6b-30c38b41d4a4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2306, 71, 143, 2, 43, "Input",ExpressionUUID->"62f78857-c69f-434c-9a2a-e83c3e1d35a1"],
+Cell[2452, 75, 277, 6, 47, "Output",ExpressionUUID->"efb50aed-b2df-42da-947b-465ea77794eb"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2766, 86, 143, 2, 43, "Input",ExpressionUUID->"d6e8da88-38e2-42bc-b234-7fc921e09009"],
+Cell[2912, 90, 400, 8, 47, "Output",ExpressionUUID->"7f0684a7-fa5c-4753-8e9e-8b038ea0ea3c"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3361, 104, 110, 0, 66, "Section",ExpressionUUID->"4d33d03c-d724-493f-8285-45f56374548b"],
+Cell[CellGroupData[{
+Cell[3496, 108, 133, 2, 43, "Input",ExpressionUUID->"a4beb708-a438-4508-b6b0-e97f68c6dd85"],
+Cell[3632, 112, 965, 17, 108, "Output",ExpressionUUID->"8a729add-d87f-4ce8-bad7-81a1002f21d6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4634, 134, 133, 2, 43, "Input",ExpressionUUID->"5e03edf0-64f0-4809-ad3c-74d81b1c5638"],
+Cell[4770, 138, 1864, 33, 249, "Output",ExpressionUUID->"20c10e85-8240-40f9-9fcc-cb5cc84fa49f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6671, 176, 226, 5, 43, "Input",ExpressionUUID->"c133d751-ee2b-4776-8c6a-d902faefcb64"],
+Cell[6900, 183, 2550, 79, 110, "Output",ExpressionUUID->"3a180483-1cb0-4f73-9514-78280c622d5e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9487, 267, 226, 5, 43, "Input",ExpressionUUID->"866fa9de-5828-4fe5-a56d-d6b9214e9906"],
+Cell[9716, 274, 9243, 272, 246, "Output",ExpressionUUID->"7c877ab7-5a7f-40a4-b04c-d17653e2e5d6"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19008, 552, 93, 0, 66, "Section",ExpressionUUID->"9118006d-2e9c-4a2b-9899-69e70f42fefa"],
+Cell[CellGroupData[{
+Cell[19126, 556, 144, 2, 43, "Input",ExpressionUUID->"20940353-1584-4fbf-9656-dc001b2c681d"],
+Cell[19273, 560, 4518, 92, 435, "Output",ExpressionUUID->"15cb2d6b-6649-4af0-8158-72a984b79234"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23840, 658, 99, 0, 66, "Section",ExpressionUUID->"2b11f0e3-a92e-48f3-97be-69f02e6bccc1"],
+Cell[CellGroupData[{
+Cell[23964, 662, 147, 2, 43, "Input",ExpressionUUID->"0979466e-0d80-4b2c-a08d-cf2ff1143568"],
+Cell[24114, 666, 4396, 92, 353, "Output",ExpressionUUID->"0f397678-365f-4a68-9c82-b7b228739615"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28559, 764, 120, 0, 66, "Section",ExpressionUUID->"15c339d6-fe91-446c-9acc-6cba93200ffa"],
+Cell[CellGroupData[{
+Cell[28704, 768, 229, 5, 43, "Input",ExpressionUUID->"3784e1ff-5406-4f1f-9c20-514722b7e80d"],
+Cell[28936, 775, 3921, 85, 353, "Output",ExpressionUUID->"9959194f-0d3a-4aef-b646-432d5d6343ec"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32906, 866, 79, 0, 66, "Section",ExpressionUUID->"06c3ebeb-c198-47f7-9297-7360c76f8ce6"],
+Cell[32988, 868, 455, 7, 77, "Text",ExpressionUUID->"57bec709-f795-49f9-bc96-59e01b3bea9a"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

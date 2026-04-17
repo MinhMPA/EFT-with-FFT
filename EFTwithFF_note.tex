@@ -1,0 +1,1517 @@
+\documentclass[a4paper,11pt]{article}
+\pdfoutput=1 % if your are submitting a pdflatex (i.e. if you have
+    % images in pdf, png or jpg format)
+\usepackage{jcappub} % for details on the use of the package, please
+                     % see the JCAP-author-manual
+\usepackage{aas_macros}
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{mwe,bm,verbatim,cprotect,xcolor,xspace}
+\usepackage{orcidlink}
+\usepackage{subfig,csquotes,float, ulem}
+\usepackage{bbold}
+\usepackage[export]{adjustbox}
+\graphicspath{{figs/}}
+%\usepackage[allfiguresdraft]{draftfigure}
+
+
+%%%%%%%%%%%%%%%
+%% Reference %%
+%%%%%%%%%%%%%%%
+
+\usepackage[nameinlink,noabbrev]{cleveref}
+\crefname{equation}{Eq.}{Eqs.}
+\crefname{section}{Sec.}{Secs.}
+\crefname{figure}{Fig.}{Figs.}
+\crefname{table}{Tab.}{Tabs.}
+\crefname{appendix}{App.}{Apps.}
+\Crefname{figure}{Figure}{Figures}
+\Crefname{equation}{Equation}{Equations}
+\Crefname{section}{Section}{Sections}
+\Crefname{table}{Table}{Tables}
+\Crefname{appendix}{Appendix}{Appendices}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%%	  Environment   %%
+%%%%%%%%%%%%%%%%%%%%%%
+
+\def\be{\begin{equation}}
+\def\ee{\end{equation}}
+\newcommand{\vs}{\nonumber\\}
+\def\ba#1\ea{\begin{align*}#1\end{align*}}
+\def\bg#1\eg{\begin{gather}#1\end{gather}}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\newcommand{\twofig}[4]{%
+ \begin{figure}%
+    \centering
+    \subfloat{{\includegraphics[width=.4\textwidth]{#1} }}%
+    \qquad
+    \subfloat{{\includegraphics[width=.4\textwidth]{#2} }}%
+    \caption{#4}%
+    \label{#3}%
+\end{figure}}
+
+\def\switch#1#2{#2}  %1: old 2: revtex4
+\newlength{\diagramwidth}
+\switch{
+\setlength{\diagramwidth}{3.0em}
+}{
+\setlength{\diagramwidth}{1cm}
+}
+
+
+%%%%%%%%%%%%%%%
+%% Reference %%
+%%%%%%%%%%%%%%%
+
+\newcommand{\refeq}[1]{Eq.~(\ref{eqn:#1})}          
+\newcommand{\refeqs}[2]{Eqs.~(\ref{eqn:#1})--(\ref{eqn:#2})}          
+\newcommand{\refEq}[1]{Equation~(\ref{eqn:#1})}          
+\newcommand{\reffig}[1]{Fig.~\ref{fig:#1}}  
+\newcommand{\reffigs}[2]{Fig.~\ref{fig:#1}--\ref{fig:#2}}  
+\newcommand{\refFig}[1]{Figure~\ref{fig:#1}}          
+\newcommand{\reftab}[1]{Tab.~\ref{tab:#1}}          
+\newcommand{\refsec}[1]{Sec.~\ref{sec:#1}}
+\newcommand{\refapp}[1]{App.~\ref{app:#1}}
+\newcommand{\specialcell}[2][c]{%
+	\begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+
+%%%%%%%%%%%%%%
+%% Notation %%
+%%%%%%%%%%%%%%
+
+\newcommand{\codefont}[1]{{\texttt{#1}}}
+
+\newcommand{\g}{\gamma}
+\newcommand{\s}{\sigma}
+
+\def\freeIC{\textsc{freeIC}}
+\def\fixedIC{\textsc{fixedIC}}
+
+\newcommand{\fsky}{f_{\rm sky}}
+\def\cH{\mathcal{H}}
+\def\FMV{\mathcal{F}_{\textsc{mv}}}
+
+\def\Plin{P_{\rm L}}
+\def\dlin{\delta_{\rm L}}
+\def\knl{k_\text{NL}}
+\def\Pnl{P_{\rm m}}
+
+% VECTOR -> bold face
+
+\renewcommand{\emph}[1]{\textit{#1}}
+
+\newcommand{\vn}{\bm{n}}
+\newcommand{\nhat}{\hat{n}}
+\newcommand{\vnhat}{\bm{\nhat}}
+\newcommand{\vx}{\bm{x}}
+\newcommand{\vy}{\bm{y}}
+\newcommand{\vu}{\bm{u}}
+\newcommand{\vr}{\bm{r}}
+\newcommand{\vk}{\bm{k}}
+\newcommand{\vq}{\bm{q}}
+\newcommand{\vp}{\bm{p}}
+\newcommand{\Deg}{^{\circ}}
+
+\newcommand{\<}{\langle}
+\renewcommand{\>}{\rangle}
+
+\renewcommand{\d}{\delta}
+\newcommand{\D}{\Delta}
+\newcommand{\dLambda}{\d^{(1)}_\Lambda}
+\newcommand{\dLambdazero}{\d^{(1)}_{\Lambda_0}}
+\newcommand{\ddet}{\delta_{\mathrm{det}}}
+\newcommand{\ddetLambda}{\delta_{\mathrm{det},\Lambda}}
+
+\newcommand{\eps}{\epsilon}
+\newcommand{\Om}{\Omega_m}
+\newcommand{\OK}{\Omega_K}
+\newcommand{\OL}{\Omega_\Lambda}
+\def\rhocr{\rho_{\rm cr,0}}
+\newcommand{\rhob}{\bar\rho}
+\newcommand{\hubble}{\mathcal{H}}
+
+\def\Mpch{\,h^{-1}\text{Mpc}}
+\def\iMpch{\,h\,\text{Mpc}^{-1}}
+\def\Mpchcubed{\, h^{-3} \, \text{Mpc}^{3}}
+\def\Msunh{\,h^{-1} M_\odot}
+\def\Plin{P_\text{L}}
+
+\def\shat{\hat{s}}
+\def\epshat{\hat{\eps}}
+\def\shatMV{\hat{s}_{\textsc{mv}}}
+\def\L{\Lambda}
+\def\kmax{k_{\rm max}}
+\def\LL{\mathcal{L}}
+\def\M{\mathcal{M}}
+\def\N{\mathcal{N}}
+\def\O{\mathcal{O}}
+\def\P{\mathcal{P}}
+\def\R{\mathcal{R}}
+\def\G{\mathcal{G}}
+\def\J{\mathcal{J}}
+\def\NGeul{\verb!NGeul!}
+
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\diag}{diag}
+\newcommand{\resp}[2]{R^{#1}_{\,\,\,#2}}
+\newcommand{\resptwo}[3]{{R_2}^{#1}_{\,\,\,#2,#3}}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\UnitM}{\mathbb{1}}
+
+% bias parameters
+\newcommand{\bdelta}{b_{\delta}}
+\newcommand{\bdeltatwo}{b_{\delta^2}}
+\newcommand{\blapldelta}{b_{\nabla^2\delta}}
+\newcommand{\btrMoneMone}{b_{\tr [M^{(1)}M^{(1)}]}}
+\newcommand{\bsigmasigma}{b_{\sigma^2}}
+
+
+% functional derivative
+\def\Del{\mathcal{D}}
+% tidal derivativ operator
+\def\DT{\mathfrak{D}}
+
+% window function / mask
+\def\Wi{\mathcal{W}}
+
+% Dirac distribution in nD
+\def\dirac#1{\delta_{\mathrm{D}}^{(#1)}}
+
+% notation for third order operator from conv. time derivative
+\def\otd{\text{td}}
+\def\Otd{O_{\otd}}
+
+% (un)checked boxes
+\def\topen{$\square$}
+\protected\def\tpass{\textcolor{ForestGreen}{$\checkmark$}}
+\def\tfail{\protect\textcolor{red}{$X$}}
+
+% to denote permutations within equations
+% - uses 'etoolbox' package
+% \perm{n} -> ``$n$ perm.''
+% \perm{}  -> ``perm.''
+\newcommand{\perm}[1]{ \expandafter\ifstrempty\expandafter{#1} {\mbox{perm.}} {\mbox{$#1$ perm.}} }
+
+\newcommand{\lcdm}{$\Lambda${\rm CDM}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Cov}{Cov}
+\let\Re\relax
+\DeclareMathOperator{\Re}{Re}
+\let\Im\relax
+\DeclareMathOperator{\Im}{Im}
+\def\lapl{\nabla^2}
+\newcommand{\levicivita}{}% initialize
+\def\levicivita#1#{\tensor#1{\epsilon}}
+
+\newcommand{\se}{\ensuremath{\sigma_\mathrm{8}}\xspace}
+
+\definecolor{RoyalBlue}{rgb}{0.25,.41,.88}
+\definecolor{ForestGreen}{rgb}{.13,.54,.13}
+\definecolor{DeepPurple}{rgb}{.45,.1,.75}
+
+\newcommand{\hl}[1]{\textcolor{ForestGreen}{#1}}
+\newcommand{\chg}[1]{\textcolor{RoyalBlue}{#1}}
+\newcommand{\mn}[1]{\textcolor{DeepPurple}{[\textbf{MN:}~#1]}}
+\newcommand{\mnedit}[1]{\textcolor{ForestGreen}{#1}}
+\newcommand{\slackcomments}[1]{{\leavevmode\color{blue}[#1]}}
+
+\def\mnras{MNRAS}
+\def\jcap{JCAP}
+\def\physrep{Phys.~Rep.}
+
+% Use arabic numbering instead of Roman (to avoid mixing with chain label)
+\makeatletter
+\renewcommand*{\thesection}{\arabic{section}}
+\renewcommand*{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand*{\p@subsection}{}
+\makeatother
+
+%%%%%%%%%%%%%%%%
+% RESULTS PATH %
+%%%%%%%%%%%%%%%%
+\newcommand{\figurespath}{figs}
+
+
+\title{One-loop effective-field-theory of biased tracers in redshift space: ideas and insights behind the \codefont{FFTLog} decomposition and factorization}
+\author[a,b,c]{Nhat-Minh Nguyen\orcidlink{0000-0002-2542-7233}}
+\affiliation[a]{Center for Data-Driven Discovery, Kavli IPMU (WPI), UTIAS, The University of Tokyo, Kashiwa, Chiba 277-8583, Japan}
+\affiliation[b]{Kavli IPMU (WPI), UTIAS, The University of Tokyo, 5-1-5 Kashiwanoha, Kashiwa, Chiba 277-8583, Japan}
+\affiliation[c]{Institute For Interdisciplinary Research in Science and Education, ICISE, Quy Nhon, 55121, Vietnam}
+\emailAdd{nhat.minh.nguyen@ipmu.jp}
+% keywords for search
+\keywords{Large-scale structure, Perturbation theory, Effective field theory, FFTLog}
+
+\abstract{A pedagogical note of 1-loop PT and EFTofLSS calculations using \codefont{FFTLog}, derived for ``slow'' readers by the slowest EFTofLSS practitioner. Specifically, I (re)derive the explicit expressions of integrals involved in the PT loop calculations using \codefont{FFTLog} proposed in \cite{Simonovic:2017mhp}. These loop integrals are the key ingredients to evaluate the 1-loop power spectrum and bispectrum of matter and biased tracers in real and redshift space. In the first half of the note, I consider matter and biased tracers in redshift space with pure Gaussian initial conditions \cite{Chudaykin:2020aoj} and with primordial non-Gaussianity in the initial conditions \cite{Cabass:2022wjy}. In the second half, I make connections to a new \codefont{JAX} code---\codefont{ps\_1loop\_jax}, described in \cite{Kobayashi:2026inprep}, that computes the redshift-space 1-loop power spectrum with Gaussian and PNG initial conditions.}
+
+
+\begin{document}
+\date{\today}
+
+\maketitle
+\flushbottom
+
+\clearpage
+
+\section{Introduction}
+
+ Loops in perturbation theory (PT) are hard...
+
+\section{Mathematical derivation}
+\label{sec:deriv}
+
+In Standard Perturbation Theory (SPT), or more precisely Eulerian Perturbation Theory, one expands the matter density fluctuation field as
+\begin{equation}
+    \delta=\delta^{(1)}+\delta^{(2)}+\delta^{(3)}+\O(\delta^4),
+\end{equation}
+where the leading-order (LO) term \(\delta^{(1)}\) is often denoted by \(\dlin\).
+
+Schematically, the power spectrum at next-to-leading order (NLO), i.e. at 1-loop order, can be written as
+\begin{align}
+    P
+    &\sim \left\langle \delta\delta \right\rangle
+    \sim \left\langle \delta^{(1)}\delta^{(1)} \right\rangle
+    +2\left\langle \delta^{(1)}\delta^{(3)} \right\rangle
+    +\left\langle \delta^{(2)}\delta^{(2)} \right\rangle
+    +\O\!\left(\left\langle \delta^{(1)}\delta^{(1)} \right\rangle^2\right)
+    \nonumber\\
+    &\sim P_{\rm LO}+P_{\rm NLO}+\O(P_{\rm LO}^2),
+\end{align}
+where \(P_{\rm LO}\equiv P_{\rm tree}=\Plin\sim \left\langle \delta^{(1)}\delta^{(1)} \right\rangle\) and
+\(P_{\rm NLO}\equiv P_{\rm 1-loop}=P_{13}+P_{22}\).
+
+The names ``tree'' and ``1-loop'' stem from the use of Feynman diagrams to describe these contributions. There, \(P_{\rm LO}\) corresponds to a diagram with a single straight line, while \(P_{13}\) and \(P_{22}\) each correspond to a diagram containing one momentum loop. In other words, each of the two 1-loop contributions is a convolution in Fourier space. Specifically,
+\begin{align}
+P_{22}(k)
+&=
+2\int_{\mathbf q}
+F_2^2(\mathbf q,\mathbf k-\mathbf q)\,
+\Plin(q)\,
+\Plin(|\mathbf k-\mathbf q|),
+\label{eq:1loopP_22_int}
+\\
+P_{13}(k)
+&=
+6\,\Plin(k)
+\int_{\mathbf q}
+F_3(\mathbf q,-\mathbf q,\mathbf k)\,
+\Plin(q),
+\label{eq:1loopP_13_int}
+\end{align}
+with
+\[
+\int_{\mathbf q}\equiv \int \frac{d^3 q}{(2\pi)^3}.
+\]
+
+For a fixed set of cosmological parameters \(\theta_{\rm cosmo}\), one may decompose the mapping
+\(k\mapsto \Plin(k,\theta_{\rm cosmo})\) as
+\begin{equation}
+\Plin(k,\theta_{\rm cosmo})
+=
+\sum_m c_m(\theta_{\rm cosmo})\,k^{\nu+i\eta_m},
+\end{equation}
+where \(\nu\) is the \codefont{FFTLog} bias and the coefficients \(c_m(\theta_{\rm cosmo})\) depend on the cosmology but not on \(k\).
+
+For convenience, let us define the \codefont{FFTLog} Fourier-mode exponent
+\begin{equation}
+\nu_m \equiv -\frac12(\nu+i\eta_m),
+\qquad\Rightarrow\qquad
+k^{\nu+i\eta_m}=k^{-2\nu_m},
+\end{equation}
+so that
+\begin{equation}
+\Plin(k)
+=
+\sum_m c_m\,k^{-2\nu_m}
+\end{equation}
+where we have dropped the cosmology dependence of \(\Plin\) and \(c_m\) for readability.
+
+\subsection{Matter in real space}
+
+\subsubsection{The \(P_{13}\) term for matter in real space}
+
+Let us start with \(P_{13}\), since it is the simpler of the two 1-loop contributions. The reason is that only one factor of \(\Plin\) appears inside the loop integral:
+\begin{equation}
+P_{13}(k)
+=
+6\,\Plin(k)
+\int_{\mathbf q}
+F_3(\mathbf q,-\mathbf q,\mathbf k)\,
+\Plin(q).
+\end{equation}
+
+Let us define
+\begin{equation}
+p_-^2\equiv |\mathbf k-\mathbf q|^2,
+\qquad
+p_+^2\equiv |\mathbf k+\mathbf q|^2.
+\label{eq:p_pm}
+\end{equation}
+\cite{Simonovic:2017mhp} noted that in the expansion of \(F_3(\mathbf q,-\mathbf q,\mathbf k)\), some terms contain \(p_+^2\), but since the kernel is integrated over \(\mathbf q\), one may use the change of variables \(\mathbf q\to-\mathbf q\) to turn those terms into the same form with \(p_-^2\). This is the key step behind their Eq.~(2.30).
+
+A fully explicit symmetrized EdS kernel for this special configuration is
+\begin{equation}
+F_3^{\rm s}(\mathbf q,-\mathbf q,\mathbf k)
+=
+\frac{k^2\!\left[
+-21 k^4\mu^2
++76 k^2 q^2\mu^4
+-44 k^2 q^2\mu^2
++10 k^2 q^2
++28 q^4\mu^4
+-59 q^4\mu^2
++10 q^4
+\right]}
+{126\,q^2\left(k^4-4k^2 q^2\mu^2+2k^2 q^2+q^4\right)},
+\end{equation}
+where \(\mu=\hat{\mathbf k}\cdot\hat{\mathbf q}\).
+Using
+\[
+p_-^2 = k^2+q^2-2kq\mu,
+\qquad
+p_+^2 = k^2+q^2+2kq\mu,
+\]
+this may be rewritten as a rational function of \(k^2\), \(q^2\), \(p_-^2\), and \(p_+^2\).
+
+There is no unique pointwise table of coefficients \(f_{13}(n_1,n_2)\) for this rational function, because one may distribute terms between the \(p_-\)- and \(p_+\)-representations in different but equivalent ways. The unique statement is the one under the integral:
+\begin{align}
+P_{13}(k)
+&=
+6 \Plin(k)\int_{\mathbf q}F_3(\mathbf q,-\mathbf q,\mathbf k)\,\Plin(q)
+\nonumber\\
+&=
+6 \Plin(k)
+\sum_{m_1} c_{m_1}
+\int_{\mathbf q}
+F_3(\mathbf q,-\mathbf q,\mathbf k)\,q^{-2\nu_{m_1}}.
+\label{eq:P13_FFTLog_decomp}
+\end{align}
+
+After expanding \(F_3\) in integer powers of \(k^2\), \(q^2\), and either \(p_-^2\) or \(p_+^2\), and then using \(\mathbf q\to-\mathbf q\) on all \(p_+\)-terms, the integrand can be written in the uniform basis
+\begin{equation}
+F_3(\mathbf q,-\mathbf q,\mathbf k)
+\;\Longrightarrow\;
+\sum_{n_1,n_2}
+f_{13}(n_1,n_2)\,
+k^{-2(n_1+n_2)} q^{2n_1} p_-^{2n_2},
+\end{equation}
+where \(f_{13}(n_1,n_2)\) now means the effective under-the-integral coefficient after that change of variables.
+
+Substituting this into \cref{eq:P13_FFTLog_decomp} gives
+\begin{align}
+P_{13}(k)
+&=
+6 \Plin(k)
+\sum_{m_1} c_{m_1}
+\sum_{n_1,n_2}
+f_{13}(n_1,n_2)\,
+k^{-2(n_1+n_2)}
+\int_{\mathbf q}
+q^{2n_1} p_-^{2n_2} q^{-2\nu_{m_1}}
+\nonumber\\
+&=
+6 \Plin(k)
+\sum_{m_1} c_{m_1}
+\sum_{n_1,n_2}
+f_{13}(n_1,n_2)\,
+k^{-2(n_1+n_2)}
+\int_{\mathbf q}
+q^{-2\nu_{m_1}+2n_1} p_-^{2n_2}
+\nonumber\\
+&=
+6 \Plin(k)
+\sum_{m_1} c_{m_1}
+\sum_{n_1,n_2}
+f_{13}(n_1,n_2)\,
+k^{-2(n_1+n_2)}
+\int_{\mathbf q}
+\frac{1}{q^{2\nu_{m_1}-2n_1}\,p_-^{-2n_2}}.
+\end{align}
+
+Since \(p_-^2=|\mathbf k-\mathbf q|^2\), we obtain
+\begin{equation}
+P_{13}(k)
+=
+6 \Plin(k)
+\sum_{m_1} c_{m_1}
+\sum_{n_1,n_2}
+f_{13}(n_1,n_2)\,
+k^{-2(n_1+n_2)}
+\int_{\mathbf q}
+\frac{1}{q^{2\nu_{m_1}-2n_1}\,|\mathbf k-\mathbf q|^{-2n_2}}.
+\label{eq:P13_before_master}
+\end{equation}
+This is exactly Eq.~(2.30) of \cite{Simonovic:2017mhp}.
+
+At first sight, \cref{eq:P13_before_master} still looks complicated: there is a sum over the \codefont{FFTLog} basis functions \(m_1\), a sum over the finite set of kernel-expansion terms labeled by \((n_1,n_2)\), and a loop integral over the momentum \(\mathbf q\). The key observation is that the \(\mathbf q\)-integral always has the same form. Namely, every term can be written as
+\begin{equation}
+\int_{\mathbf q}
+\frac{1}{q^{2\alpha}\,|\mathbf k-\mathbf q|^{2\beta}}
+=
+k^{3-2\alpha-2\beta}\,I(\alpha,\beta),
+\label{eq:master_int}
+\end{equation}
+with
+\begin{equation}
+\alpha=\nu_{m_1}-n_1,
+\qquad
+\beta=-n_2.
+\end{equation}
+The function \(I(\alpha,\beta)\) is the dimensionless coefficient left over after factoring out the explicit power of \(k\). In other words, all the dependence on the loop momentum \(\mathbf q\) has been reduced to one universal function \(I\) that depends only on the exponents and not on \(k\).
+
+Better yet, this universal function admits the closed-form expression
+\begin{equation}
+I(\alpha,\beta)
+=
+\frac{1}{8\pi^{3/2}}
+\frac{
+\Gamma\!\left(\frac32-\alpha\right)
+\Gamma\!\left(\frac32-\beta\right)
+\Gamma\!\left(\alpha+\beta-\frac32\right)
+}{
+\Gamma(\alpha)\Gamma(\beta)\Gamma(3-\alpha-\beta)
+}.
+\end{equation}
+
+Substituting \cref{eq:master_int} into \cref{eq:P13_before_master} gives
+\begin{align}
+P_{13}(k)
+&=
+6 \Plin(k)
+\sum_{m_1} c_{m_1}
+\sum_{n_1,n_2}
+f_{13}(n_1,n_2)\,
+k^{-2(n_1+n_2)}
+k^{3-2(\nu_{m_1}-n_1)-2(-n_2)}
+I(\nu_{m_1}-n_1,-n_2)
+\nonumber\\
+&=
+6 \Plin(k)
+\sum_{m_1} c_{m_1}\,
+k^{3-2\nu_{m_1}}
+\sum_{n_1,n_2}
+f_{13}(n_1,n_2)\,
+I(\nu_{m_1}-n_1,-n_2).
+\label{eq:P13_after_master}
+\end{align}
+
+This is the crucial simplification. For a fixed \codefont{FFTLog} basis index \(m_1\), the kernel-expansion indices \((n_1,n_2)\) have dropped out from the explicit power of \(k\). Therefore every term in the finite sum over \((n_1,n_2)\) contributes the same power law,
+\begin{equation}
+k^{3-2\nu_{m_1}},
+\end{equation}
+and differs only in the dimensionless coefficient multiplying it. Put differently, once the loop integral has been reduced to the master function \(I(\alpha,\beta)\), the only remaining role of \((n_1,n_2)\) is to shift the arguments of \(I\).
+
+This means that the entire finite sum over \((n_1,n_2)\) may be packaged into a single analytic function of the \codefont{FFTLog} exponent. We therefore define
+\begin{equation}
+K_{13}(\nu_1)
+\equiv
+\sum_{n_1,n_2}
+f_{13}(n_1,n_2)\,
+I(\nu_1-n_1,-n_2).
+\label{eq:K13}
+\end{equation}
+
+This is the central idea of the method:
+
+\begin{quote}
+\emph{The complicated-looking kernel algebra is computed analytically once and for all. What remains is a simple function \(K_{13}(\nu)\) of the \codefont{FFTLog} exponent.}
+\end{quote}
+
+With this definition, \cref{eq:P13_after_master} becomes
+\begin{equation}
+P_{13}(k)
+=
+6 \Plin(k)
+\sum_{m_1}
+c_{m_1}\,
+K_{13}(\nu_{m_1})\,
+k^{3-2\nu_{m_1}},
+\label{eq:P13_kernel_form}
+\end{equation}
+All kernel monomials contribute the same explicit power of \(k\).
+
+On a computer, the computation of the 1-loop terms with \codefont{FFTLog} proceeds through the following steps:
+\begin{enumerate}
+\item decompose each factor of \(\Plin\) into a sum of power laws \(k^{-2\nu_m}\);
+\item expand the PT kernel into a finite sum of monomials in \(k^2\), \(q^2\), and \(|\mathbf k-\mathbf q|^2\);
+\item reduce each loop integral to the master function \(I(\alpha,\beta)\);
+\item combine the resulting finite kernel sum into an analytic kernel \(K\) in exponent space;
+\item derive the explicit symbolic form of the kernel \(K\);
+\item evaluate the kernel on the discrete \codefont{FFTLog} exponent grid;
+\item perform the remaining discrete sum over the \codefont{FFTLog} basis functions.
+\end{enumerate}
+
+It is useful to interpret the sampled function \(K_{13}\) as a vector,
+\begin{equation}
+M_{m_1}^{13}\equiv K_{13}(\nu_{m_1}),
+\label{eq:M13}
+\end{equation}
+which implies that the evaluation of \(P_{13}\) amounts to a contraction of the form
+\begin{equation}
+P_{13}(k)=6 \Plin(k)\sum_{m_1}c_{m_1}\,M_{m_1}^{13}\,k^{3-2\nu_{m_1}}.
+\label{eq:P13_vector_form}
+\end{equation}
+
+Recall that \cref{eq:1loopP_13_int} is a convolution due to mode coupling. The remaining discrete sum over \codefont{FFTLog} basis functions in \cref{eq:P13_vector_form} is the way that coupling is represented once \(\Plin\) has been expanded in the \codefont{FFTLog} basis.
+
+In the case of \(P_{13}\), the sum is over contributions from \emph{individual} \codefont{FFTLog} basis functions. In the case of \(P_{22}\), as we will see below, the sum is over contributions from \emph{pairs of} \codefont{FFTLog} basis functions.
+
+\subsubsection{The \(P_{22}\) term for matter in real space}
+
+We now turn to \(P_{22}\), where the same logic applies, but with two instances of \(\Plin\) inside the loop and hence two \codefont{FFTLog} basis indices.
+
+The PT kernel \(F_2\) is given by
+\begin{equation}
+F_2(\mathbf q,\mathbf k-\mathbf q)
+=
+\frac{5}{14}
++\frac{3k^2}{28q^2}
++\frac{3k^2}{28|\mathbf k-\mathbf q|^2}
+-\frac{5q^2}{28|\mathbf k-\mathbf q|^2}
+-\frac{5|\mathbf k-\mathbf q|^2}{28q^2}
++\frac{k^4}{14\,q^2|\mathbf k-\mathbf q|^2}.
+\label{eq:F2_PT}
+\end{equation}
+
+With the shorthand introduced in \cref{eq:p_pm}, \cref{eq:F2_PT} becomes
+\begin{equation}
+F_2(\mathbf q,\mathbf k-\mathbf q)
+=
+\frac{5}{14}
++\frac{3}{28}\frac{k^2}{q^2}
++\frac{3}{28}\frac{k^2}{p_-^2}
+-\frac{5}{28}\frac{q^2}{p_-^2}
+-\frac{5}{28}\frac{p_-^2}{q^2}
++\frac{1}{14}\frac{k^4}{q^2 p_-^2}.
+\label{eq:F2_explicit_form}
+\end{equation}
+
+We now rewrite each monomial of \cref{eq:F2_explicit_form} in the basis
+\begin{equation}
+k^{-2(a_1+a_2)} q^{2a_1} p_-^{2a_2},
+\end{equation}
+such that
+\begin{equation}
+F_2(\mathbf q,\mathbf k-\mathbf q)
+=
+\sum_{a_1,a_2}
+g(a_1,a_2)\,
+k^{-2(a_1+a_2)}q^{2a_1}p_-^{2a_2},
+\label{eq:F2_nominal_form}
+\end{equation}
+where sum runs over the six nonzero contributions of \(F_2\) in \cref{eq:F2_explicit_form}.
+The explicit coefficients are provided in \cref{app:g_a1a2}.
+
+Squaring \cref{eq:F2_nominal_form} yields
+\begin{equation}
+F_2^2(\mathbf q,\mathbf k-\mathbf q)
+=
+\sum_{n_1,n_2} f_{22}(n_1,n_2)\,
+k^{-2(n_1+n_2)}q^{2n_1}p_-^{2n_2},
+\label{eq:F2square_nominal_form}
+\end{equation}
+where
+\begin{equation}
+n_1=a_1+b_1,\qquad n_2=a_2+b_2,
+\end{equation}
+and
+\begin{equation}
+f_{22}(n_1,n_2)
+=
+\sum_{a_1,a_2,b_1,b_2}
+g(a_1,a_2)\,g(b_1,b_2)\,
+\delta_{n_1,a_1+b_1}\,
+\delta_{n_2,a_2+b_2}.
+\end{equation}
+
+For example,
+\begin{align}
+    f_{22}(0,0)
+    &=
+    g(0,0)g(0,0)
+    +g(+1,-1)g(-1,+1)
+    +g(-1,+1)g(+1,-1)
+    \\
+    &=
+    \left(\frac{5}{14}\right)^2
+    +2\left(-\frac{5}{28}\right)^2
+    =
+    \frac{75}{392}.
+\end{align}
+
+The complete nonzero set of \(f_{22}(n_1,n_2)\) coefficients is
+\begin{align}
+f_{22}(-2,-2) &= \frac{1}{196},
+&
+f_{22}(-2,-1) &= \frac{3}{196},
+&
+f_{22}(-2,0) &= -\frac{11}{784},
+&
+f_{22}(-2,1) &= -\frac{15}{392},
+&
+f_{22}(-2,2) &= \frac{25}{784},
+\\
+f_{22}(-1,-2) &= \frac{3}{196},
+&
+f_{22}(-1,-1) &= \frac{29}{392},
+&
+f_{22}(-1,0) &= \frac{15}{392},
+&
+f_{22}(-1,1) &= -\frac{25}{196},
+\\
+f_{22}(0,-2) &= -\frac{11}{784},
+&
+f_{22}(0,-1) &= \frac{15}{392},
+&
+f_{22}(0,0) &= \frac{75}{392},
+\\
+f_{22}(1,-2) &= -\frac{15}{392},
+&
+f_{22}(1,-1) &= -\frac{25}{196},
+\\
+f_{22}(2,-2) &= \frac{25}{784}.
+\end{align}
+All other \(f_{22}(n_1,n_2)\) coefficients vanish.
+
+We now decompose \(\Plin\) in \cref{eq:1loopP_22_int}, insert the nominal form of the \(F_2^2\) kernel, and pull the sums outside of the momentum integral \(\int_{\mathbf q}\). Specifically,
+\begin{align}
+P_{22}(k,\theta_{\rm cosmo})
+&=
+2\int_{\mathbf q}
+\left[
+\sum_{n_1,n_2} f_{22}(n_1,n_2)\,
+k^{-2(n_1+n_2)}q^{2n_1}p_-^{2n_2}
+\right]
+\left[
+\sum_{m_1} c_{m_1} q^{-2\nu_{m_1}}
+\right]
+\left[
+\sum_{m_2} c_{m_2} p_-^{-2\nu_{m_2}}
+\right]
+\nonumber\\
+&=
+2\sum_{m_1,m_2} c_{m_1}c_{m_2}
+\sum_{n_1,n_2}
+f_{22}(n_1,n_2)\,
+k^{-2(n_1+n_2)}
+\int_{\mathbf q}
+q^{-2\nu_{m_1}+2n_1}\,
+p_-^{-2\nu_{m_2}+2n_2}.
+\end{align}
+
+Rewriting the powers as inverse powers,
+\begin{equation}
+q^{-2\nu_{m_1}+2n_1}\,p_-^{-2\nu_{m_2}+2n_2}
+=
+\frac{1}{q^{2(\nu_{m_1}-n_1)}\,p_-^{2(\nu_{m_2}-n_2)}},
+\end{equation}
+we obtain
+\begin{equation}
+P_{22}(k)
+=
+2\sum_{m_1,m_2} c_{m_1}c_{m_2}
+\sum_{n_1,n_2}
+f_{22}(n_1,n_2)\,
+k^{-2(n_1+n_2)}
+\int_{\mathbf q}
+\frac{1}{q^{2\nu_{m_1}-2n_1}\,|\mathbf k-\mathbf q|^{2\nu_{m_2}-2n_2}}.
+\end{equation}
+
+That is, we end up with the master integral of \cref{eq:master_int}, such that
+\begin{align}
+P_{22}(k)
+&=
+2\sum_{m_1,m_2} c_{m_1}c_{m_2}
+\sum_{n_1,n_2}
+f_{22}(n_1,n_2)\,
+k^{-2(n_1+n_2)}
+k^{3-2(\nu_{m_1}-n_1)-2(\nu_{m_2}-n_2)}
+I(\nu_{m_1}-n_1,\nu_{m_2}-n_2)
+\nonumber\\
+&=
+2\sum_{m_1,m_2} c_{m_1}c_{m_2}
+\sum_{n_1,n_2}
+f_{22}(n_1,n_2)\,
+k^{3-2(\nu_{m_1}+\nu_{m_2})}\,
+I(\nu_{m_1}-n_1,\nu_{m_2}-n_2).
+\label{eq:P22_explicit_sums_over_coefficients}
+\end{align}
+
+This is exactly the same simplification as in the \(P_{13}\) case, but now for a fixed pair of
+\codefont{FFTLog} basis indices \((m_1,m_2)\). All kernel monomials contribute the same explicit
+power of \(k\), namely \(k^{3-2(\nu_{m_1}+\nu_{m_2})}\), and the only remaining role of
+\((n_1,n_2)\) is to shift the arguments of the master function \(I\). The finite sum over
+\((n_1,n_2)\) may therefore be packaged into a single two-variable kernel \(K_{22}(\nu_1,\nu_2)\).
+
+This is precisely the step that allows one to define an analytic kernel in exponent space:
+\begin{equation}
+K_{22}^{dd}(\nu_1,\nu_2)
+\equiv
+\sum_{n_1,n_2}
+f_{22}(n_1,n_2)\,
+I(\nu_1-n_1,\nu_2-n_2).
+\label{eq:K22dd}
+\end{equation}
+In terms of this kernel,
+\begin{equation}
+P_{22}(k)
+=
+2\sum_{m_1,m_2}
+c_{m_1}\,
+K_{22}^{dd}(\nu_{m_1},\nu_{m_2})\,
+c_{m_2}\,
+k^{3-2(\nu_{m_1}+\nu_{m_2})}.
+\label{eq:P22_kernel_form}
+\end{equation}
+
+It is useful to interpret the sampled two-variable kernel as a matrix,
+\begin{equation}
+M_{m_1m_2}^{22,dd}
+\equiv
+K_{22}^{dd}(\nu_{m_1},\nu_{m_2}).
+\label{eq:M22dd}
+\end{equation}
+
+So for \(P_{22}\), the derivation leads naturally to
+\[
+\text{explicit kernel coefficients } f_{22}(n_1,n_2)
+\quad\Longrightarrow\quad
+K_{22}^{dd}(\nu_1,\nu_2)
+\quad\Longrightarrow\quad
+M_{m_1m_2}^{22,dd}.
+\]
+
+\subsubsection{Summary of the logic}
+
+The route from Eqs.~(2.2)–(2.3) to Eqs.~(2.21) and (2.30) is:
+
+\begin{enumerate}
+\item Expand each \(\Plin\) as a sum of complex power laws,
+\[
+\Plin(p)=\sum_m c_m p^{-2\nu_m}.
+\]
+
+\item Expand each SPT kernel in integer powers of \(k^2\), \(q^2\), and \(|\mathbf k-\mathbf q|^2\) (for \(F_3\), possibly first with some \(|\mathbf k+\mathbf q|^2\) terms).
+
+\item Collect the exponents of \(q^2\) and \(|\mathbf k-\mathbf q|^2\).
+
+\item Each term becomes a master integral of the form
+\[
+\int_{\mathbf q}\frac{1}{q^{2\alpha}|\mathbf k-\mathbf q|^{2\beta}},
+\]
+which is \cref{eq:master_int}.
+
+\item For \(P_{13}\), the finite kernel sum may be absorbed into a one-variable exponent-space kernel \(K_{13}^{dd}(\nu_1)\), which is then sampled on the \codefont{FFTLog} exponent grid to define the vector \(M_{m_1}^{13,dd}\).
+
+\item For \(P_{22}\), the finite kernel sum may be absorbed into a two-variable exponent-space kernel \(K_{22}^{dd}(\nu_1,\nu_2)\), which is then sampled on the \codefont{FFTLog} exponent grid to define the matrix \(M_{m_1m_2}^{22,dd}\).
+\end{enumerate}
+
+So the role of the master integral is twofold. First, it makes explicit the universal \(k\)-scaling of each mode contribution. Second, it allows the finite kernel sums to be carried out analytically in exponent space, leaving the numerical evaluation to perform only the discrete FFTLog contractions.
+
+\subsection{Tracers in redshift space}
+
+We now move from matter in real space to biased tracers in redshift space. The FFTLog strategy is unchanged: we again decompose \(\Plin\) in the FFTLog basis, reduce the loop integrals to the same master function \(I(\alpha,\beta)\), and absorb the finite kernel sums into analytic kernels in exponent space. What changes is the perturbative content. In redshift space, the spectrum depends not only on the matter kernels, but also on the tracer bias parameters, the linear growth rate \(f\), and the LOS cosine \(\mu\equiv \hat{\vk}\cdot \vnhat\).
+
+\subsubsection{From matter in real space to tracers in redshift space}
+
+In real space, the matter density field is expanded perturbatively as
+\begin{equation}
+\delta(\vk)
+=
+\sum_{n=1}^{\infty}\delta^{(n)}(\vk),
+\qquad
+\delta^{(n)}(\vk)
+=
+\int_{\vk_1\cdots \vk_n}
+(2\pi)^3\delta_D(\vk-\vk_{1\cdots n})
+\,F_n(\vk_1,\ldots,\vk_n)\,
+\delta^{(1)}(\vk_1)\cdots \delta^{(1)}(\vk_n),
+\end{equation}
+where \(\vk_{1\cdots n}\equiv \vk_1+\cdots+\vk_n\), and we use the shorthand
+\begin{equation}
+\int_{\vq}\equiv \int \frac{d^3 q}{(2\pi)^3}.
+\end{equation}
+At next-to-leading order (NLO), the real-space matter power spectrum is
+\begin{equation}
+P_{mm}(k)
+=
+P_{\mathrm{tree}}^{mm}(k)+P_{13}^{mm}(k)+P_{22}^{mm}(k),
+\end{equation}
+with
+\begin{align}
+P_{\mathrm{tree}}^{mm}(k)&=P_L(k),\\
+P_{13}^{mm}(k)&=6\,P_L(k)\int_{\vq}F_3(\vq,-\vq,\vk)\,P_L(q),\\
+P_{22}^{mm}(k)&=2\int_{\vq}F_2^2(\vq,\vk-\vq)\,P_L(q)\,P_L(|\vk-\vq|).
+\end{align}
+This is the starting point for the FFTLog treatment in real space.
+
+On quasi-linear scales, the galaxy tracer density field \(\delta_g\) is related to the underlying matter field through a bias expansion in local gravitational observables,
+\begin{equation}
+\delta_g
+=
+\sum_O b_O\,O
+=
+b_1\,\delta
++\frac{1}{2}b_2\,\delta^2
++b_{\mathcal G_2}\,\mathcal G_2
++\frac{1}{6}b_3\,\delta^3
++b_{\delta\mathcal G_2}\,\delta\,\mathcal G_2
++b_{\Gamma_3}\,\Gamma_3
+-R_*^2\nabla^2\delta.
+\end{equation}
+We truncate the expansion at cubic order because this is the order relevant for the 1-loop power spectrum, recall that \(P_{13}\sim \langle \delta^{(1)}\delta^{(3)}\rangle\) and \(P_{22}\sim \langle \delta^{(2)}\delta^{(2)}\rangle\). There are several equivalent operator bases for the bias expansion \citep[see, e.g.,][]{Desjacques:2016bnm,Desjacques:2018pfv}; here we adopt the basis of \cite{Chudaykin:2020aoj} to match the convention used throughout this note.
+
+In observations, galaxies are measured in redshift space. In the plane-parallel approximation, the mapping from real-space position \(\vx\) to redshift-space position \(\vs\) is
+\begin{equation}
+\vs
+=
+\vx
++
+\frac{v_\parallel(\vx)}{aH}\,\vnhat,
+\end{equation}
+where \(\vnhat\) denotes the line-of-sight (LOS) direction and \(v_\parallel\equiv \mathbf v\cdot\vnhat\). The Jacobian of this mapping induces anisotropies in Fourier space through
+\begin{equation}
+\mu\equiv \hat{\vk}\cdot\vnhat.
+\end{equation}
+
+It is convenient to organize the perturbative redshift-space density field in terms of redshift-space kernels \(Z_n\),
+\begin{equation}
+\delta_X^s(\vk)
+=
+\sum_{n=1}^{\infty}
+\int_{\vk_1\cdots \vk_n}
+(2\pi)^3\delta_D(\vk-\vk_{1\cdots n})
+\,Z_n^X(\vk_1,\ldots,\vk_n)\,
+\delta^{(1)}(\vk_1)\cdots \delta^{(1)}(\vk_n),
+\label{eq:deltaXs_Zn_expansion}
+\end{equation}
+where \(X\in\{m,g\}\) labels matter or tracer. The linear kernels are
+\begin{equation}
+Z_1^g(\vk)=b_1+f\mu^2,
+\qquad
+Z_1^m(\vk)=1+f\mu^2,
+\label{eq:Z1gm}
+\end{equation}
+with \(f\equiv d\ln D/d\ln a\) the linear growth rate.
+
+For galaxies, the higher-order kernels are
+\begin{align}
+Z_2^g(\vk_1,\vk_2)
+&=
+\frac{b_2}{2}
++b_{\mathcal G_2}\left[\frac{(\vk_1\cdot \vk_2)^2}{k_1^2k_2^2}-1\right]
++b_1 F_2(\vk_1,\vk_2)
++f\mu^2 G_2(\vk_1,\vk_2)
+\notag\\
+&\quad
++\frac{f\mu k}{2}
+\left[
+\frac{\mu_1}{k_1}\bigl(b_1+f\mu_2^2\bigr)
++
+\frac{\mu_2}{k_2}\bigl(b_1+f\mu_1^2\bigr)
+\right],
+\label{eq:Z2g}
+\\[0.5em]
+Z_3^g(\vk_1,\vk_2,\vk_3)
+&=
+2b_{\Gamma_3}
+\left[
+\frac{\bigl(\vk_1\cdot (\vk_2+\vk_3)\bigr)^2}
+{k_1^2|\vk_2+\vk_3|^2}
+-1
+\right]
+\bigl[F_2(\vk_2,\vk_3)-G_2(\vk_2,\vk_3)\bigr]
+\notag\\
+&\quad
++b_1 F_3(\vk_1,\vk_2,\vk_3)
++f\mu^2 G_3(\vk_1,\vk_2,\vk_3)
++\frac{(f\mu k)^2}{2}(b_1+f\mu_1^2)\frac{\mu_2}{k_2}\frac{\mu_3}{k_3}
+\notag\\
+&\quad
++f\mu k\,\frac{\mu_3}{k_3}
+\left[
+ b_1 F_2(\vk_1,\vk_2)
+ +f\mu_{12}^2 G_2(\vk_1,\vk_2)
+\right]
++f\mu k\,(b_1+f\mu_1^2)\frac{\mu_{23}}{k_{23}}G_2(\vk_2,\vk_3)
+\notag\\
+&\quad
++b_2 F_2(\vk_1,\vk_2)
++2b_{\mathcal G_2}
+\left[
+\frac{\bigl(\vk_1\cdot (\vk_2+\vk_3)\bigr)^2}
+{k_1^2|\vk_2+\vk_3|^2}
+-1
+\right]
+F_2(\vk_2,\vk_3)
++\frac{b_2 f\mu k}{2}\frac{\mu_1}{k_1}
+\notag\\
+&\quad
++b_{\mathcal G_2}f\mu k\frac{\mu_1}{k_1}
+\left[
+\frac{(\vk_2\cdot \vk_3)^2}{k_2^2k_3^2}-1
+\right].
+\label{eq:Z3g}
+\end{align}
+Here \(\mu_i\equiv \hat{\vk}_i\cdot\vnhat\), \(\vk\equiv \vk_1+\vk_2\) in \(Z_2^g\), and in \(Z_3^g\) we define \(k_{ij}\equiv |\vk_i+\vk_j|\) and \(\mu_{ij}\equiv \widehat{\vk_i+\vk_j}\cdot\vnhat\). The matter kernels \(Z_2^m\) and \(Z_3^m\) are obtained by setting \(b_1=1\) and all higher-order bias parameters to zero.
+
+The redshift-space power spectrum of two fields \(X,Y\in\{m,g\}\) is defined by
+\begin{equation}
+\langle \delta_X^s(\vk)\,\delta_Y^s(\vk')\rangle
+=
+(2\pi)^3\delta_D(\vk+\vk')\,P_{XY}^s(k,\mu).
+\end{equation}
+At NLO,
+\begin{equation}
+P_{XY}^s(k,\mu)
+=
+P_{XY}^{s,\mathrm{tree}}(k,\mu)
++
+P_{XY}^{s,13}(k,\mu)
++
+P_{XY}^{s,22}(k,\mu),
+\label{eq:PXYs_NLO}
+\end{equation}
+with
+\begin{align}
+P_{XY}^{s,\mathrm{tree}}(k,\mu)
+&=
+Z_1^X(\vk)\,Z_1^Y(\vk)\,P_L(k),
+\label{eq:PXY_tree_general}
+\\
+P_{XY}^{s,13}(k,\mu)
+&=
+3\,P_L(k)\,Z_1^X(\vk)
+\int_{\vq} Z_3^Y(\vq,-\vq,\vk)\,P_L(q)
++
+3\,P_L(k)\,Z_1^Y(\vk)
+\int_{\vq} Z_3^X(\vq,-\vq,\vk)\,P_L(q),
+\label{eq:PXY_13_general}
+\\
+P_{XY}^{s,22}(k,\mu)
+&=
+2\int_{\vq}
+Z_2^X(\vq,\vk-\vq)\,
+Z_2^Y(\vq,\vk-\vq)\,
+P_L(q)\,P_L(|\vk-\vq|).
+\label{eq:PXY_22_general}
+\end{align}
+This provides the general bridge from real-space matter perturbation theory to biased tracers in redshift space. The FFTLog strategy itself does not change; what changes is the kernel content and the number of perturbative sectors.
+
+\subsubsection{The \(P_{13}\) term for tracer--matter in redshift space}
+
+We first consider the tracer--matter cross-spectrum,
+\begin{equation}
+P_{gm}^{s,13}(k,\mu)
+=
+3\,P_L(k)\,Z_1^g(\vk)
+\int_{\vq} Z_3^m(\vq,-\vq,\vk)\,P_L(q)
++
+3\,P_L(k)\,Z_1^m(\vk)
+\int_{\vq} Z_3^g(\vq,-\vq,\vk)\,P_L(q).
+\label{eq:P13_gm_start}
+\end{equation}
+Because one side carries the tracer kernel and the other the matter kernel, this term naturally splits into two classes of sectors,
+\begin{equation}
+P_{gm}^{s,13}
+=
+P_{gm}^{s,13}[Z_1^g Z_3^m]
++
+P_{gm}^{s,13}[Z_1^m Z_3^g].
+\end{equation}
+For a fixed redshift-space sector \(\lambda\), we therefore write schematically
+\begin{equation}
+P_{gm}^{s,13;(\lambda)}(k,\mu)
+=
+3\,P_L(k)\,\mathcal C_{gm}^{13;(\lambda)}(k,\mu)
+\int_{\vq}\mathcal Z_{3,gm}^{(\lambda)}(\vq,-\vq,\vk)\,P_L(q),
+\label{eq:P13_gm_lambda_start}
+\end{equation}
+where \(\mathcal C_{gm}^{13;(\lambda)}\) denotes the prefactor extracted from \(Z_1^g\) or \(Z_1^m\), and \(\mathcal Z_{3,gm}^{(\lambda)}\) denotes the corresponding sector of the internal \(Z_3\) kernel.
+
+At this stage the logic is the same as in the real-space matter case. We expand the linear spectrum in the FFTLog basis,
+\begin{equation}
+P_L(q)=\sum_{m_1} c_{m_1} q^{-2\nu_{m_1}},
+\end{equation}
+and rewrite the sector kernel \(\mathcal Z_{3,gm}^{(\lambda)}(\vq,-\vq,\vk)\) as a finite sum of monomials in \(k^2\), \(q^2\), and \(|\vk-\vq|^2\). After reduction to the same master integral \(I(\alpha,\beta)\), one obtains
+\begin{equation}
+P_{gm}^{s,13;(\lambda)}(k,\mu)
+=
+3\,P_L(k)\,\mathcal C_{gm}^{13;(\lambda)}(k,\mu)
+\sum_{m_1} c_{m_1}\,k^{3-2\nu_{m_1}}
+\sum_{n_1,n_2}
+f_{13,gm}^{(\lambda)}(n_1,n_2)\,
+I(\nu_{m_1}-n_1,-n_2).
+\label{eq:P13_gm_after_master}
+\end{equation}
+For fixed FFTLog index \(m_1\), every kernel-expansion term contributes the same explicit power \(k^{3-2\nu_{m_1}}\). We may therefore define a sector-specific one-variable kernel
+\begin{equation}
+K_{13}^{gm,\mathrm{rsd};\,\lambda}(\nu_1)
+\equiv
+\sum_{n_1,n_2}
+f_{13,gm}^{(\lambda)}(n_1,n_2)\,
+I(\nu_1-n_1,-n_2),
+\label{eq:K13_gm_lambda}
+\end{equation}
+such that
+\begin{equation}
+P_{gm}^{s,13;(\lambda)}(k,\mu)
+=
+3\,P_L(k)\,\mathcal C_{gm}^{13;(\lambda)}(k,\mu)
+\sum_{m_1}
+c_{m_1}\,
+K_{13}^{gm,\mathrm{rsd};\,\lambda}(\nu_{m_1})\,
+k^{3-2\nu_{m_1}}.
+\label{eq:P13_gm_kernel_form}
+\end{equation}
+Sampling this analytic kernel on the discrete FFTLog exponent grid defines the numerical vector
+\begin{equation}
+M_{m_1}^{13,\,gm,\mathrm{rsd};\,\lambda}
+\equiv
+K_{13}^{gm,\mathrm{rsd};\,\lambda}(\nu_{m_1}).
+\end{equation}
+
+\subsubsection{The \(P_{22}\) term for tracer--matter in redshift space}
+
+For the \(22\)-type tracer--matter contribution we start from
+\begin{equation}
+P_{gm}^{s,22}(k,\mu)
+=
+2\int_{\vq}
+Z_2^g(\vq,\vk-\vq)\,
+Z_2^m(\vq,\vk-\vq)\,
+P_L(q)\,P_L(|\vk-\vq|).
+\label{eq:P22_gm_start}
+\end{equation}
+For a fixed sector \(\lambda\), this becomes
+\begin{equation}
+P_{gm}^{s,22;(\lambda)}(k,\mu)
+=
+2\int_{\vq}
+\mathcal Z_{2,gm}^{(\lambda)}(\vq,\vk-\vq)\,
+P_L(q)\,P_L(|\vk-\vq|),
+\end{equation}
+where \(\mathcal Z_{2,gm}^{(\lambda)}\) denotes the corresponding sector of the product \(Z_2^g Z_2^m\).
+
+Expanding both linear spectra in the FFTLog basis and reducing to the master function \(I(\alpha,\beta)\) gives
+\begin{equation}
+P_{gm}^{s,22;(\lambda)}(k,\mu)
+=
+2\sum_{m_1,m_2} c_{m_1}c_{m_2}\,
+k^{3-2(\nu_{m_1}+\nu_{m_2})}
+\sum_{n_1,n_2}
+f_{22,gm}^{(\lambda)}(n_1,n_2)\,
+I(\nu_{m_1}-n_1,\nu_{m_2}-n_2).
+\label{eq:P22_gm_after_master}
+\end{equation}
+Again, for a fixed pair \((m_1,m_2)\), all monomials contribute the same explicit power of \(k\). We may therefore define
+\begin{equation}
+K_{22}^{gm,\mathrm{rsd};\,\lambda}(\nu_1,\nu_2)
+\equiv
+\sum_{n_1,n_2}
+f_{22,gm}^{(\lambda)}(n_1,n_2)\,
+I(\nu_1-n_1,\nu_2-n_2),
+\label{eq:K22_gm_lambda}
+\end{equation}
+so that
+\begin{equation}
+P_{gm}^{s,22;(\lambda)}(k,\mu)
+=
+2\sum_{m_1,m_2}
+c_{m_1}\,
+K_{22}^{gm,\mathrm{rsd};\,\lambda}(\nu_{m_1},\nu_{m_2})\,
+c_{m_2}\,
+k^{3-2(\nu_{m_1}+\nu_{m_2})}.
+\label{eq:P22_gm_kernel_form}
+\end{equation}
+Sampling this kernel on the FFTLog exponent grid defines the numerical matrix
+\begin{equation}
+M_{m_1m_2}^{22,\,gm,\mathrm{rsd};\,\lambda}
+\equiv
+K_{22}^{gm,\mathrm{rsd};\,\lambda}(\nu_{m_1},\nu_{m_2}).
+\end{equation}
+
+\subsubsection{The \(P_{13}\) term for tracer--tracer in redshift space}
+
+We now move to the tracer auto-spectrum. Its \(13\)-type contribution reads
+\begin{equation}
+P_{gg}^{s,13}(k,\mu)
+=
+6\,P_L(k)\,Z_1^g(\vk)
+\int_{\vq} Z_3^g(\vq,-\vq,\vk)\,P_L(q).
+\label{eq:P13_gg_start}
+\end{equation}
+For a fixed redshift-space galaxy sector \(\lambda\), we write
+\begin{equation}
+P_{gg}^{s,13;(\lambda)}(k,\mu)
+=
+6\,P_L(k)\,\mathcal C_{gg}^{13;(\lambda)}(k,\mu)
+\int_{\vq}
+\mathcal Z_{3,gg}^{(\lambda)}(\vq,-\vq,\vk)\,
+P_L(q),
+\label{eq:P13_gg_lambda_start}
+\end{equation}
+where \(\mathcal C_{gg}^{13;(\lambda)}\) is the corresponding prefactor from the external \(Z_1^g\), and \(\mathcal Z_{3,gg}^{(\lambda)}\) denotes the selected sector of the internal \(Z_3^g\) kernel.
+
+Expanding \(P_L(q)\) in the FFTLog basis and reducing the loop integral to the master function gives
+\begin{equation}
+P_{gg}^{s,13;(\lambda)}(k,\mu)
+=
+6\,P_L(k)\,\mathcal C_{gg}^{13;(\lambda)}(k,\mu)
+\sum_{m_1} c_{m_1}\,
+k^{3-2\nu_{m_1}}
+\sum_{n_1,n_2}
+f_{13,gg}^{(\lambda)}(n_1,n_2)\,
+I(\nu_{m_1}-n_1,-n_2).
+\label{eq:P13_gg_after_master}
+\end{equation}
+As before, the finite kernel sum may be absorbed into an analytic function of one variable,
+\begin{equation}
+K_{13}^{gg,\mathrm{rsd};\,\lambda}(\nu_1)
+\equiv
+\sum_{n_1,n_2}
+f_{13,gg}^{(\lambda)}(n_1,n_2)\,
+I(\nu_1-n_1,-n_2).
+\label{eq:K13_gg_lambda}
+\end{equation}
+Thus
+\begin{equation}
+P_{gg}^{s,13;(\lambda)}(k,\mu)
+=
+6\,P_L(k)\,\mathcal C_{gg}^{13;(\lambda)}(k,\mu)
+\sum_{m_1}
+c_{m_1}\,
+K_{13}^{gg,\mathrm{rsd};\,\lambda}(\nu_{m_1})\,
+k^{3-2\nu_{m_1}}.
+\label{eq:P13_gg_kernel_form}
+\end{equation}
+Equivalently, one defines the vector
+\begin{equation}
+M_{m_1}^{13,\,gg,\mathrm{rsd};\,\lambda}
+\equiv
+K_{13}^{gg,\mathrm{rsd};\,\lambda}(\nu_{m_1}).
+\end{equation}
+
+This expression already makes clear which bias structures can appear in the \(13\)-type contribution. Since \(P_{13}^{gg}\) is built from the product of the linear tracer kernel \(Z_1^g\) and the cubic kernel \(Z_3^g\), the relevant sectors are those associated with the bias and redshift-space structures present in \(Z_3^g(\vq,-\vq,\vk)\). In particular, the \(13\)-type contribution probes the cubic-bias sector, whereas the quadratic-bias structures enter more directly through the \(22\)-type term discussed next.
+
+\subsubsection{The \(P_{22}\) term for tracer--tracer in redshift space}
+
+Finally, the \(22\)-type contribution to the tracer auto-spectrum is
+\begin{equation}
+P_{gg}^{s,22}(k,\mu)
+=
+2\int_{\vq}
+Z_2^g(\vq,\vk-\vq)\,
+Z_2^g(\vq,\vk-\vq)\,
+P_L(q)\,P_L(|\vk-\vq|).
+\label{eq:P22_gg_start}
+\end{equation}
+For a fixed sector \(\lambda\),
+\begin{equation}
+P_{gg}^{s,22;(\lambda)}(k,\mu)
+=
+2\int_{\vq}
+\mathcal Z_{2,gg}^{(\lambda)}(\vq,\vk-\vq)\,
+P_L(q)\,P_L(|\vk-\vq|),
+\label{eq:P22_gg_lambda_start}
+\end{equation}
+where \(\mathcal Z_{2,gg}^{(\lambda)}\) denotes the chosen sector of the product \(Z_2^g Z_2^g\).
+
+After FFTLog expansion of the two linear spectra and reduction to the master function, one obtains
+\begin{equation}
+P_{gg}^{s,22;(\lambda)}(k,\mu)
+=
+2\sum_{m_1,m_2} c_{m_1}c_{m_2}\,
+k^{3-2(\nu_{m_1}+\nu_{m_2})}
+\sum_{n_1,n_2}
+f_{22,gg}^{(\lambda)}(n_1,n_2)\,
+I(\nu_{m_1}-n_1,\nu_{m_2}-n_2).
+\label{eq:P22_gg_after_master}
+\end{equation}
+The finite monomial sum is then absorbed into the two-variable kernel
+\begin{equation}
+K_{22}^{gg,\mathrm{rsd};\,\lambda}(\nu_1,\nu_2)
+\equiv
+\sum_{n_1,n_2}
+f_{22,gg}^{(\lambda)}(n_1,n_2)\,
+I(\nu_1-n_1,\nu_2-n_2).
+\label{eq:K22_gg_lambda}
+\end{equation}
+Thus
+\begin{equation}
+P_{gg}^{s,22;(\lambda)}(k,\mu)
+=
+2\sum_{m_1,m_2}
+c_{m_1}\,
+K_{22}^{gg,\mathrm{rsd};\,\lambda}(\nu_{m_1},\nu_{m_2})\,
+c_{m_2}\,
+k^{3-2(\nu_{m_1}+\nu_{m_2})}.
+\label{eq:P22_gg_kernel_form}
+\end{equation}
+Sampling on the discrete FFTLog grid defines the matrix
+\begin{equation}
+M_{m_1m_2}^{22,\,gg,\mathrm{rsd};\,\lambda}
+\equiv
+K_{22}^{gg,\mathrm{rsd};\,\lambda}(\nu_{m_1},\nu_{m_2}).
+\end{equation}
+
+This expression also makes transparent which operator structures can contribute to the \(22\)-type term. Since \(P_{22}^{gg}\) is built from the product \(Z_2^g Z_2^g\), it only depends on the bias and redshift-space structures already present in the quadratic kernel \(Z_2^g\). In particular, the cubic-bias contribution proportional to \(b_{\Gamma_3}\) is absent from \(P_{22}^{gg}\), since it belongs to the cubic kernel \(Z_3^g\) and therefore enters the \(13\)-type term instead.
+
+\subsubsection{Summary of the organization}
+
+The reorganization from real-space matter to tracer spectra in redshift space therefore proceeds in three stages.
+
+First, one replaces the real-space matter kernels \(F_n\) by the redshift-space kernels \(Z_n^X\), with \(X=m\) or \(g\). This introduces explicit dependence on the bias parameters, the linear growth rate \(f\), and the line-of-sight direction through powers of \(\mu\).
+
+Second, one distinguishes between the tracer--matter and tracer--tracer spectra. At the level of the \(13\)- and \(22\)-type loop corrections, this amounts to replacing
+\[
+(F_2,F_3)
+\quad\longrightarrow\quad
+(Z_2^g Z_2^m,\; Z_3^g \text{ or } Z_3^m)
+\qquad \text{for } P_{gm}^s,
+\]
+and
+\[
+(F_2,F_3)
+\quad\longrightarrow\quad
+(Z_2^g Z_2^g,\; Z_3^g)
+\qquad \text{for } P_{gg}^s.
+\]
+
+Third, for each resulting redshift-space sector \(\lambda\), one applies exactly the same FFTLog factorization as in the real-space matter case:
+\begin{enumerate}
+\item expand \(P_L\) in the FFTLog basis;
+\item rewrite the perturbative kernel in a finite monomial basis;
+\item reduce the loop integral to the master function \(I(\alpha,\beta)\);
+\item absorb the finite monomial sum into an analytic kernel in exponent space;
+\item sample this kernel on the discrete FFTLog exponent grid.
+\end{enumerate}
+
+The main conceptual point is therefore simple. The redshift-space treatment does not introduce a new FFTLog method. It uses the same FFTLog factorization as in the real-space matter case, but applied to a larger set of perturbative sectors associated with matter, tracer bias, and redshift-space distortions. The only additional layer is that one must keep track of which sectors belong to the matter auto-spectrum, the tracer--matter cross-spectrum, and the tracer auto-spectrum before assembling the final anisotropic power spectrum.
+
+Thus the redshift-space treatment does not introduce a new FFTLog method. It is the same FFTLog factorization applied to a richer set of perturbative sectors, now organized according to whether one is computing the matter--matter, tracer--matter, or tracer--tracer spectrum. What remains is to explain how these raw perturbative building blocks are combined into the final physical redshift-space spectrum once IR resummation and anisotropic BAO damping are included.
+
+\subsubsection{IR resummation and anisotropic BAO damping}
+
+The raw perturbative expressions derived above provide the redshift-space spectra
+\begin{equation}
+P_{XY}^{s,\mathrm{raw}}(z,k,\mu)
+=
+P_{XY}^{s,\mathrm{tree}}(z,k,\mu)
++
+P_{XY}^{s,13}(z,k,\mu)
++
+P_{XY}^{s,22}(z,k,\mu),
+\qquad X,Y\in\{m,g\}.
+\label{eq:PXYs_raw}
+\end{equation}
+These expressions already contain the nonlinear mode-coupling structure at 1-loop order, but they do not yet account for the nonperturbative smearing of the BAO feature by long-wavelength bulk flows. To include this effect, we follow the standard IR-resummation strategy and split the linear spectrum into a smooth and a wiggly part,
+\begin{equation}
+P_L(z,k)=P_{\rm nw}(z,k)+P_{\rm w}(z,k).
+\label{eq:Plin_split_note}
+\end{equation}
+
+The physical motivation is simple. Large-scale displacements have only a mild effect on the smooth broadband spectrum, but they significantly wash out the oscillatory BAO feature. It is therefore natural to resum the displacement effect only for the wiggly part. In practice, this is implemented through the real-space damping scale
+\begin{equation}
+\Sigma^2(z)
+=
+\frac{1}{6\pi^2}
+\int_0^{k_S}\!dq\,P_{\rm nw}(z,q)
+\left[
+1-j_0\!\left(\frac{q}{k_{\rm osc}}\right)
++2j_2\!\left(\frac{q}{k_{\rm osc}}\right)
+\right],
+\label{eq:Sigma2_note}
+\end{equation}
+and the anisotropic correction
+\begin{equation}
+\delta\Sigma^2(z)
+=
+\frac{1}{2\pi^2}
+\int_0^{k_S}\!dq\,P_{\rm nw}(z,q)\,
+j_2\!\left(\frac{q}{k_{\rm osc}}\right).
+\label{eq:dSigma2_note}
+\end{equation}
+These combine into the redshift-space damping scale
+\begin{equation}
+\Sigma_{\rm tot}^2(z,\mu)
+=
+\bigl[1+f(z)\mu^2(2+f(z))\bigr]\Sigma^2(z)
++
+f^2(z)\mu^2(\mu^2-1)\,\delta\Sigma^2(z),
+\label{eq:SigmaTot_note}
+\end{equation}
+so that the anisotropic BAO damping factor is
+\begin{equation}
+D_{\rm IR}(z,k,\mu)
+\equiv
+\exp\!\bigl[-k^2\Sigma_{\rm tot}^2(z,\mu)\bigr].
+\label{eq:DIR_note}
+\end{equation}
+
+For the purposes of this note, it is important to emphasize that IR resummation does \emph{not} modify the FFTLog reduction itself. The FFTLog machinery still computes the raw tree-level and 1-loop building blocks. IR resummation only changes how these building blocks are combined into the final physical spectrum.
+
+\subsubsection{Constructing the full redshift-space spectrum \(P(z,k,\mu)\)}
+
+Rather than organizing the discussion around separate runtime branches, we adopt the following physics-first flow:
+\begin{equation}
+P_L(z,k)
+\;\longrightarrow\;
+\bigl(P_{\rm nw}(z,k),P_{\rm w}(z,k)\bigr)
+\;\longrightarrow\;
+P_{XY}^s(z,k,\mu)
+\;\longrightarrow\;
+P_{XY,\ell}^s(z,k).
+\end{equation}
+That is, we first construct the full anisotropic spectrum \(P_{XY}^s(z,k,\mu)\), including IR resummation if desired, and only at the very end project onto multipoles.
+
+At tree level, the IR-resummed redshift-space spectra are
+\begin{align}
+P_{mm}^{s,\mathrm{tree,IR}}(z,k,\mu)
+&=
+\bigl(Z_1^m(\vk)\bigr)^2
+\left[
+P_{\rm nw}(z,k)
++
+D_{\rm IR}(z,k,\mu)\,
+\bigl(1+k^2\Sigma_{\rm tot}^2(z,\mu)\bigr)\,
+P_{\rm w}(z,k)
+\right],
+\label{eq:Pmm_tree_IR_note}
+\\
+P_{gm}^{s,\mathrm{tree,IR}}(z,k,\mu)
+&=
+Z_1^g(\vk)\,Z_1^m(\vk)
+\left[
+P_{\rm nw}(z,k)
++
+D_{\rm IR}(z,k,\mu)\,
+\bigl(1+k^2\Sigma_{\rm tot}^2(z,\mu)\bigr)\,
+P_{\rm w}(z,k)
+\right],
+\label{eq:Pgm_tree_IR_note}
+\\
+P_{gg}^{s,\mathrm{tree,IR}}(z,k,\mu)
+&=
+\bigl(Z_1^g(\vk)\bigr)^2
+\left[
+P_{\rm nw}(z,k)
++
+D_{\rm IR}(z,k,\mu)\,
+\bigl(1+k^2\Sigma_{\rm tot}^2(z,\mu)\bigr)\,
+P_{\rm w}(z,k)
+\right].
+\label{eq:Pgg_tree_IR_note}
+\end{align}
+The factor \(1+k^2\Sigma_{\rm tot}^2\) appears because the leading displacement contribution already contained in the perturbative expansion must be subtracted to avoid double counting.
+
+At 1-loop order, the practical implementation is to construct separately
+\begin{align}
+P_{XY,\mathrm{nw},1\text{-loop}}^s(z,k,\mu)
+&\equiv
+P_{XY,1\text{-loop}}^s[P_{\rm nw}],
+\label{eq:PXY_1loop_nw_note}
+\\
+P_{XY,\mathrm{w},1\text{-loop}}^s(z,k,\mu)
+&\equiv
+P_{XY,1\text{-loop}}^s[P_L]
+-
+P_{XY,1\text{-loop}}^s[P_{\rm nw}],
+\label{eq:PXY_1loop_w_note}
+\end{align}
+where \(P_{XY,1\text{-loop}}^s[P]\) means that the raw \(13\)- and \(22\)-type formulas are evaluated with the chosen linear input spectrum \(P\). In other words, the smooth 1-loop piece is obtained by feeding \(P_{\rm nw}\) through the same FFTLog pipeline as before, while the wiggly 1-loop piece is obtained as the difference between the full and no-wiggle evaluations.
+
+The final IR-resummed redshift-space spectrum is then assembled as
+\begin{equation}
+P_{XY}^{s,\mathrm{IR}}(z,k,\mu)
+=
+P_{XY}^{s,\mathrm{tree,IR}}(z,k,\mu)
++
+P_{XY,\mathrm{nw},1\text{-loop}}^s(z,k,\mu)
++
+D_{\rm IR}(z,k,\mu)\,
+P_{XY,\mathrm{w},1\text{-loop}}^s(z,k,\mu).
+\label{eq:PXY_IR_final_note}
+\end{equation}
+This expression applies equally to \(XY=mm\), \(gm\), and \(gg\). The only difference between the three cases lies in the corresponding tree-level kernels \(Z_1^X Z_1^Y\) and in the raw 1-loop sectors used to build \(P_{XY,1\text{-loop}}^s\).
+
+This organization is physically transparent. The FFTLog sector kernels are first used to construct the full anisotropic spectrum \(P_{XY}^s(z,k,\mu)\); only afterward is the IR damping applied to the wiggly pieces. In this sense, the same basic logic underlies both the raw and IR-resummed constructions: the perturbative building blocks are computed first, and the final physical spectrum is assembled only afterward.
+
+\subsubsection{Projection to multipoles}
+
+Once the full anisotropic spectrum \(P_{XY}^{s,\mathrm{IR}}(z,k,\mu)\) has been assembled, the power-spectrum multipoles are obtained in the standard way by Legendre projection,
+\begin{equation}
+P_{XY,\ell}^{s,\mathrm{IR}}(z,k)
+=
+\frac{2\ell+1}{2}
+\int_{-1}^{1}d\mu\,
+P_{XY}^{s,\mathrm{IR}}(z,k,\mu)\,
+\mathcal L_\ell(\mu),
+\qquad \ell=0,2,4,\dots
+\label{eq:Pell_projection_note}
+\end{equation}
+where \(\mathcal L_\ell(\mu)\) is the Legendre polynomial of order \(\ell\).
+
+This is the final step of the construction. In particular, the multipoles are \emph{not} the primary perturbative objects. The primary object is the full anisotropic redshift-space spectrum \(P_{XY}^s(z,k,\mu)\). The multipoles are obtained only after all of the following ingredients have been assembled:
+\begin{enumerate}
+\item the tree-level and 1-loop perturbative contributions,
+\item the bias and redshift-space sector decomposition,
+\item the wiggle/no-wiggle split,
+\item the anisotropic IR damping.
+\end{enumerate}
+
+For the rest of this note, this will be our guiding logic:
+\begin{equation}
+P_L(z,k)
+\;\longrightarrow\;
+P_{XY}^{s,\mathrm{tree}}(z,k,\mu),\;
+P_{XY}^{s,13}(z,k,\mu),\;
+P_{XY}^{s,22}(z,k,\mu)
+\;\longrightarrow\;
+P_{XY}^{s,\mathrm{IR}}(z,k,\mu)
+\;\longrightarrow\;
+P_{XY,\ell}^{s,\mathrm{IR}}(z,k).
+\end{equation}
+This is the most transparent way to connect the mathematical derivation and the FFTLog factorization of the one-loop redshift-space power spectrum.
+
+\section{Algorithm implementation}
+\label{sec:impl}
+
+\clearpage
+\appendix
+
+\section{Nominal coefficients \(g(a_1,a_2)\) of the \(F_2\) kernel}
+\label{app:g_a1a2}
+
+The nonzero terms in the sum on the right hand side of \cref{eq:F2_nominal_form} are
+\[
+\begin{alignedat}{2}
+(a_1=0,\,a_2=0)    &:\quad & +\frac{5}{14}k^0q^0p_-^0      &= +\frac{5}{14}, \\
+(a_1=-1,\,a_2=0)   &:\quad & +\frac{3}{28}k^2q^{-2}p_-^0   &= +\frac{3}{28}\frac{k^2}{q^2}, \\
+(a_1=0,\,a_2=-1)   &:\quad & +\frac{3}{28}k^2q^0p_-^{-2}   &= +\frac{3}{28}\frac{k^2}{p_-^2}, \\
+(a_1=+1,\,a_2=-1)  &:\quad & -\frac{5}{28}k^0q^2p_-^{-2}   &= -\frac{5}{28}\frac{q^2}{p_-^2}, \\
+(a_1=-1,\,a_2=+1)  &:\quad & -\frac{5}{28}k^0q^{-2}p_-^2   &= -\frac{5}{28}\frac{p_-^2}{q^2}, \\
+(a_1=-1,\,a_2=-1)  &:\quad & +\frac{1}{14}k^4q^{-2}p_-^{-2} &= +\frac{1}{14}\frac{k^4}{q^2 p_-^2},
+\end{alignedat}
+\]
+hence the nonzero nominal coefficients are
+\begin{align}
+    g(0,0)&=+\frac{5}{14},\\
+    g(-1,0)&=+\frac{3}{28},\\
+    g(0,-1)&=+\frac{3}{28},\\
+    g(+1,-1)&=-\frac{5}{28},\\
+    g(-1,+1)&=-\frac{5}{28},\\
+    g(-1,-1)&=+\frac{1}{14}.
+\end{align}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\bibliographystyle{JHEP}
+\bibliography{EFTwithFFT_note}
+
+\end{document}

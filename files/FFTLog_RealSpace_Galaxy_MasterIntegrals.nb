@@ -1,0 +1,26 @@
+Notebook[{
+  Cell["FFTLog Real-Space Galaxy Master Integrals", "Title"],
+  Cell["This notebook extends the real-space matter case to the Gaussian biased-tracer basis of arXiv:1708.08130. The goal is to keep the reader-facing flow simple: inspect the six reduced bias kernels, inspect the bias-weight structure of the galaxy spectra, and then verify the exact local kernel contract.", "Text"],
+  Cell["Setup", "Section"],
+  Cell["Get[FileNameJoin[{NotebookDirectory[], \"FFTLog_RealSpace_Galaxy_MasterIntegrals.wl\"}]]", "Input"],
+  Cell["Inspect The Biased-Tracer Basis", "Section"],
+  Cell["$RealSpaceGalaxyPaper", "Input"],
+  Cell["AssociationMap[RealSpaceGalaxyReducedKernelExpression, $RealSpaceGalaxyKernelNames]", "Input"],
+  Cell["Inspect The Spectrum Weight Structure", "Section"],
+  Cell["RealSpaceGalaxyAutoSpectrumWeights[b1, b2, bG2, bGamma3]", "Input"],
+  Cell["RealSpaceGalaxyCrossSpectrumWeights[b1, b2, bG2, bGamma3]", "Input"],
+  Cell["Compare To The Local Reference Kernels", "Section"],
+  Cell["AssociationMap[RealSpaceGalaxyReferenceKernelExpression, $RealSpaceGalaxyKernelNames]", "Input"],
+  Cell["Exact Symbolic Checks", "Section"],
+  Cell["RealSpaceGalaxyKernelValidationSummary[10]", "Input"],
+  Cell["Fast Rational Spot Checks", "Section"],
+  Cell["RealSpaceGalaxyKernelNumericResidualSummary[]", "Input"],
+  Cell["Inspect Any Nonzero Residual Explicitly", "Section"],
+  Cell["AssociationMap[RealSpaceGalaxyKernelValidationExpression, $RealSpaceGalaxyKernelNames]", "Input"],
+  Cell["Notes", "Section"],
+  Cell["This notebook intentionally stops at the six real-space galaxy kernels that appear explicitly in the Gaussian auto- and cross-spectrum formulas. The mixed density-velocity kernel `I_d2_v` is left for the redshift-space notebooks, where it enters the actual line-of-sight sector decomposition.", "Text"]
+  },
+ WindowSize -> {1200, 900},
+ WindowMargins -> {{Automatic, 100}, {Automatic, 40}},
+ StyleDefinitions -> "Default.nb"
+]
