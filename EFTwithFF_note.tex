@@ -883,11 +883,11 @@ for the CLASS-PT matter/galaxy case, and
 \end{align}
 for the higher-order Lyman-\(\alpha\) extension. In other words, the matter, galaxy, and Lyman-\(\alpha\) applications are not separate FFTLog methods. They are different truncations of the same master-integral hierarchy.
 
-\subsection{Tracers in redshift space}
+\subsection{Matter in redshift space}
 
-We now move from matter in real space to biased tracers in redshift space. The FFTLog strategy is unchanged: we again decompose \(\Plin\) in the FFTLog basis, reduce the loop integrals to the same master function \(I(\alpha,\beta)\), and absorb the finite kernel sums into analytic kernels in exponent space. What changes is the perturbative content. In redshift space, the spectrum depends not only on the matter kernels, but also on the tracer bias parameters, the linear growth rate \(f\), and the LOS cosine \(\mu\equiv \hat{\vk}\cdot \vnhat\).
+The first conceptual upgrade beyond the real-space matter case is to add redshift-space distortions while keeping the field content as simple as possible, namely matter only. This is the cleanest way to isolate what redshift space really changes. The FFTLog strategy itself is unchanged: we still decompose \(\Plin\) in the FFTLog basis, reduce loop integrals to the same scalar master \(I(\alpha,\beta)\), and absorb the finite kernel sums into analytic kernels in exponent space. What changes is that the kernels now depend explicitly on the line-of-sight direction through powers of \(\mu\equiv \hat{\vk}\cdot\vnhat\). That is precisely why the tensor and LOS master-integral hierarchy introduced above becomes useful.
 
-\subsubsection{From matter in real space to tracers in redshift space}
+\subsubsection{From matter in real space to matter in redshift space}
 
 In real space, the matter density field is expanded perturbatively as
 \begin{equation}
@@ -920,6 +920,77 @@ P_{22}^{mm}(k)&=2\int_{\vq}F_2^2(\vq,\vk-\vq)\,P_L(q)\,P_L(|\vk-\vq|).
 \end{align}
 This is the starting point for the FFTLog treatment in real space.
 
+In observations, galaxies are measured in redshift space. In the plane-parallel approximation, the mapping from real-space position \(\vx\) to redshift-space position \(\vs\) is
+\begin{equation}
+\vs
+=
+\vx
++
+\frac{v_\parallel(\vx)}{aH}\,\vnhat,
+\end{equation}
+where \(\vnhat\) denotes the line-of-sight (LOS) direction and \(v_\parallel\equiv \mathbf v\cdot\vnhat\). The Jacobian of this mapping induces anisotropies in Fourier space through
+\begin{equation}
+\mu\equiv \hat{\vk}\cdot\vnhat.
+\end{equation}
+
+It is convenient to organize the perturbative redshift-space density field in terms of redshift-space kernels \(Z_n\). For matter,
+\begin{equation}
+Z_1^m(\vk)=1+f\mu^2,
+\label{eq:Z1m_note}
+\end{equation}
+with \(f\equiv d\ln D/d\ln a\) the linear growth rate. The higher-order matter kernels \(Z_2^m\) and \(Z_3^m\) are the bias-free specialization of the corresponding galaxy kernels, i.e. they are obtained by setting \(b_1=1\) and all higher-order bias parameters to zero in the formulas written below for \(Z_2^g\) and \(Z_3^g\).
+
+The redshift-space matter density field is then expanded as
+\begin{equation}
+\delta_m^s(\vk)
+=
+\sum_{n=1}^{\infty}
+\int_{\vk_1\cdots \vk_n}
+(2\pi)^3\delta_D(\vk-\vk_{1\cdots n})
+\,Z_n^m(\vk_1,\ldots,\vk_n)\,
+\delta^{(1)}(\vk_1)\cdots \delta^{(1)}(\vk_n).
+\label{eq:deltaMs_Zn_expansion}
+\end{equation}
+Accordingly, the matter power spectrum in redshift space is
+\begin{equation}
+P_{mm}^s(k,\mu)
+=
+P_{mm}^{s,\mathrm{tree}}(k,\mu)
++
+P_{mm}^{s,13}(k,\mu)
++
+P_{mm}^{s,22}(k,\mu),
+\label{eq:Pmms_NLO}
+\end{equation}
+with
+\begin{align}
+P_{mm}^{s,\mathrm{tree}}(k,\mu)
+&=
+\bigl(Z_1^m(\vk)\bigr)^2\,P_L(k),
+\label{eq:Pmm_tree_note}
+\\
+P_{mm}^{s,13}(k,\mu)
+&=
+6\,P_L(k)\,Z_1^m(\vk)
+\int_{\vq} Z_3^m(\vq,-\vq,\vk)\,P_L(q),
+\label{eq:Pmm_13_note}
+\\
+P_{mm}^{s,22}(k,\mu)
+&=
+2\int_{\vq}
+\bigl(Z_2^m(\vq,\vk-\vq)\bigr)^2
+P_L(q)\,P_L(|\vk-\vq|).
+\label{eq:Pmm_22_note}
+\end{align}
+
+This matter-only redshift-space case is already enough to show why the LOS master-integral hierarchy matters. Even before bias is introduced, the kernels contain explicit LOS contractions, and the loop reduction naturally produces the coefficient families \(A_1,\ldots,C_4\) discussed above. In this sense, redshift space and tracer bias are logically distinct complications: redshift space enlarges the tensor structure, while bias enlarges the operator content.
+
+\subsection{Biased tracers in redshift space}
+
+Once the LOS structure is understood in the matter-only case, the next step is to add biased tracers. Conceptually, this is simpler than learning redshift space and bias at the same time: one now keeps the redshift-space machinery fixed and only enlarges the operator basis.
+
+\subsubsection{From redshift-space matter to biased tracers}
+
 On quasi-linear scales, the galaxy tracer density field \(\delta_g\) is related to the underlying matter field through a bias expansion in local gravitational observables,
 \begin{equation}
 \delta_g
@@ -936,20 +1007,7 @@ b_1\,\delta
 \end{equation}
 We truncate the expansion at cubic order because this is the order relevant for the 1-loop power spectrum, recall that \(P_{13}\sim \langle \delta^{(1)}\delta^{(3)}\rangle\) and \(P_{22}\sim \langle \delta^{(2)}\delta^{(2)}\rangle\). There are several equivalent operator bases for the bias expansion \citep[see, e.g.,][]{Desjacques:2016bnm,Desjacques:2018pfv}; here we adopt the basis of \cite{Chudaykin:2020aoj} to match the convention used throughout this note.
 
-In observations, galaxies are measured in redshift space. In the plane-parallel approximation, the mapping from real-space position \(\vx\) to redshift-space position \(\vs\) is
-\begin{equation}
-\vs
-=
-\vx
-+
-\frac{v_\parallel(\vx)}{aH}\,\vnhat,
-\end{equation}
-where \(\vnhat\) denotes the line-of-sight (LOS) direction and \(v_\parallel\equiv \mathbf v\cdot\vnhat\). The Jacobian of this mapping induces anisotropies in Fourier space through
-\begin{equation}
-\mu\equiv \hat{\vk}\cdot\vnhat.
-\end{equation}
-
-It is convenient to organize the perturbative redshift-space density field in terms of redshift-space kernels \(Z_n\),
+It is convenient to organize the perturbative redshift-space density field of matter or tracers in the uniform form
 \begin{equation}
 \delta_X^s(\vk)
 =
@@ -960,16 +1018,14 @@ It is convenient to organize the perturbative redshift-space density field in te
 \delta^{(1)}(\vk_1)\cdots \delta^{(1)}(\vk_n),
 \label{eq:deltaXs_Zn_expansion}
 \end{equation}
-where \(X\in\{m,g\}\) labels matter or tracer. The linear kernels are
+where \(X\in\{m,g\}\) labels matter or tracer. The linear galaxy and matter kernels are
 \begin{equation}
 Z_1^g(\vk)=b_1+f\mu^2,
 \qquad
 Z_1^m(\vk)=1+f\mu^2,
 \label{eq:Z1gm}
 \end{equation}
-with \(f\equiv d\ln D/d\ln a\) the linear growth rate.
-
-For galaxies, the higher-order kernels are
+and for galaxies the higher-order kernels are
 \begin{align}
 Z_2^g(\vk_1,\vk_2)
 &=
@@ -1071,7 +1127,7 @@ Z_2^Y(\vq,\vk-\vq)\,
 P_L(q)\,P_L(|\vk-\vq|).
 \label{eq:PXY_22_general}
 \end{align}
-This provides the general bridge from real-space matter perturbation theory to biased tracers in redshift space. The FFTLog strategy itself does not change; what changes is the kernel content and the number of perturbative sectors.
+This provides the general bridge from redshift-space matter to biased tracers. The FFTLog strategy itself does not change; what changes is the kernel content and the number of perturbative sectors.
 
 \subsubsection{The \(P_{13}\) term for tracer--matter in redshift space}
 
@@ -1334,11 +1390,13 @@ This expression also makes transparent which operator structures can contribute 
 
 \subsubsection{Summary of the organization}
 
-The reorganization from real-space matter to tracer spectra in redshift space therefore proceeds in three stages.
+The reorganization from real-space matter to biased tracers in redshift space therefore proceeds in four stages.
 
-First, one replaces the real-space matter kernels \(F_n\) by the redshift-space kernels \(Z_n^X\), with \(X=m\) or \(g\). This introduces explicit dependence on the bias parameters, the linear growth rate \(f\), and the line-of-sight direction through powers of \(\mu\).
+First, one moves from real-space matter to redshift-space matter by replacing the kernels \(F_n\) by the matter kernels \(Z_n^m\). This introduces explicit dependence on the linear growth rate \(f\) and the line-of-sight direction through powers of \(\mu\), even before any tracer bias is introduced.
 
-Second, one distinguishes between the tracer--matter and tracer--tracer spectra. At the level of the \(13\)- and \(22\)-type loop corrections, this amounts to replacing
+Second, one introduces tracer bias and upgrades the matter kernels to the tracer kernels \(Z_n^g\). At this stage the LOS machinery is unchanged; what changes is the operator content carried by the kernels.
+
+Third, one distinguishes between the tracer--matter and tracer--tracer spectra. At the level of the \(13\)- and \(22\)-type loop corrections, this amounts to replacing
 \[
 (F_2,F_3)
 \quad\longrightarrow\quad
@@ -1353,7 +1411,7 @@ and
 \qquad \text{for } P_{gg}^s.
 \]
 
-Third, for each resulting redshift-space sector \(\lambda\), one applies exactly the same FFTLog factorization as in the real-space matter case:
+Fourth, for each resulting redshift-space sector \(\lambda\), one applies exactly the same FFTLog factorization as in the real-space matter case:
 \begin{enumerate}
 \item expand \(P_L\) in the FFTLog basis;
 \item rewrite the perturbative kernel in a finite monomial basis;
@@ -1362,7 +1420,7 @@ Third, for each resulting redshift-space sector \(\lambda\), one applies exactly
 \item sample this kernel on the discrete FFTLog exponent grid.
 \end{enumerate}
 
-The main conceptual point is therefore simple. The redshift-space treatment does not introduce a new FFTLog method. It uses the same FFTLog factorization as in the real-space matter case, but applied to a larger set of perturbative sectors associated with matter, tracer bias, and redshift-space distortions. The only additional layer is that one must keep track of which sectors belong to the matter auto-spectrum, the tracer--matter cross-spectrum, and the tracer auto-spectrum before assembling the final anisotropic power spectrum.
+The main conceptual point is therefore simple. The redshift-space treatment does not introduce a new FFTLog method. It uses the same FFTLog factorization as in the real-space matter case, but applied first to a larger LOS tensor structure and then to a richer set of bias sectors. The only additional layer is that one must keep track of which sectors belong to the matter auto-spectrum, the tracer--matter cross-spectrum, and the tracer auto-spectrum before assembling the final anisotropic power spectrum.
 
 Thus the redshift-space treatment does not introduce a new FFTLog method. It is the same FFTLog factorization applied to a richer set of perturbative sectors, now organized according to whether one is computing the matter--matter, tracer--matter, or tracer--tracer spectrum. What remains is to explain how these raw perturbative building blocks are combined into the final physical redshift-space spectrum once IR resummation and anisotropic BAO damping are included.
 
