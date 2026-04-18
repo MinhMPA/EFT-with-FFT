@@ -246,7 +246,7 @@
 % keywords for search
 \keywords{Large-scale structure, Perturbation theory, Effective field theory, FFTLog}
 
-\abstract{A pedagogical note of 1-loop PT and EFTofLSS calculations using \codefont{FFTLog}, derived for ``slow'' readers by the slowest EFTofLSS practitioner. Specifically, I (re)derive the explicit expressions of integrals involved in the PT loop calculations using \codefont{FFTLog} proposed in \cite{Simonovic:2017mhp}. These loop integrals are the key ingredients to evaluate the 1-loop power spectrum and bispectrum of matter, galaxies, and Lyman-\(\alpha\) observables in real and redshift space. A central theme of the note is the hierarchy from the scalar master integral to tensor and line-of-sight (LOS) master integrals and their coefficient functions, which organizes the matter, galaxy, and Lyman-\(\alpha\) cases in a uniform way. In the first half of the note, I consider matter and galaxies in redshift space with pure Gaussian initial conditions \cite{Chudaykin:2020aoj} and with primordial non-Gaussianity in the initial conditions \cite{Cabass:2022wjy}. In the second half, I make connections to a new \codefont{JAX} code---\codefont{ps\_1loop\_jax}, described in \cite{Kobayashi:2026inprep}, that computes the redshift-space 1-loop power spectrum with Gaussian and PNG initial conditions.}
+\abstract{A pedagogical note of 1-loop PT and EFTofLSS calculations using \codefont{FFTLog}, derived for ``slow'' readers by the slowest EFTofLSS practitioner. I (re)derive the formalism and integrals of loop calculations in PT and EFToFLSS---using the \codefont{FFTLog} decomposition and factorization, as first proposed in \cite{Simonovic:2017mhp}. These loop integrals are the key ingredients to evaluate the 1-loop power spectrum and bispectrum of matter, galaxies, and Lyman-\(\alpha\) observables in real and redshift space. A central theme of the note is the hierarchy from the scalar master integral to tensor and line-of-sight (LOS) master integrals and their coefficient functions, which organizes the matter, galaxy, and Lyman-alpha cases in a consistent and coherent fashion. I consider matter and galaxies in redshift space with pure Gaussian initial conditions \cite{Chudaykin:2020aoj} and with primordial non-Gaussianity in the initial conditions \cite{Cabass:2022wjy}.}
 
 
 \begin{document}
@@ -403,7 +403,7 @@ for the higher-order Lyman-\(\alpha\) extension. In other words, the matter, gal
 
 \section{Matter}
 
-\subsection{Real-space matter}
+\subsection{Matter in real space}
 
 \subsubsection{The \(P_{13}\) term for matter in real space}
 
@@ -858,7 +858,7 @@ K_{22}^{dd}(\nu_1,\nu_2)
 M_{m_1m_2}^{22,dd}.
 \]
 
-\subsubsection{Summary of the logic}
+\subsection{Summary}
 
 The route from Eqs.~(2.2)–(2.3) to Eqs.~(2.21) and (2.30) is:
 
@@ -889,7 +889,7 @@ So the role of the master integral is twofold. First, it makes explicit the univ
 
 The first conceptual upgrade beyond the real-space matter case is to add redshift-space distortions while keeping the field content as simple as possible, namely matter only. This is the cleanest way to isolate what redshift space really changes. The FFTLog strategy itself is unchanged: we still decompose \(\Plin\) in the FFTLog basis, reduce loop integrals to the same scalar master \(I(\alpha,\beta)\), and absorb the finite kernel sums into analytic kernels in exponent space. What changes is that the kernels now depend explicitly on the line-of-sight direction through powers of \(\mu\equiv \hat{\vk}\cdot\vnhat\). That is precisely why the tensor and LOS master-integral hierarchy introduced above becomes useful.
 
-\subsubsection{From matter in real space to matter in redshift space}
+\subsubsection{From real space to redshift space}
 
 In real space, the matter density field is expanded perturbatively as
 \begin{equation}
@@ -989,11 +989,9 @@ This matter-only redshift-space case is already enough to show why the LOS maste
 
 \section{Galaxies}
 
-\subsection{Galaxies in redshift space}
-
 Once the LOS structure is understood in the matter-only case, the next step is to add galaxies. Conceptually, this is simpler than learning redshift space and bias at the same time: one now keeps the redshift-space machinery fixed and only enlarges the operator basis.
 
-\subsubsection{From redshift-space matter to galaxies}
+\subsection{From matter to galaxies in redshift space}
 
 On quasi-linear scales, the galaxy tracer density field \(\delta_g\) is related to the underlying matter field through a bias expansion in local gravitational observables,
 \begin{equation}
@@ -1392,7 +1390,7 @@ K_{22}^{gg,\mathrm{rsd};\,\lambda}(\nu_{m_1},\nu_{m_2}).
 
 This expression also makes transparent which operator structures can contribute to the \(22\)-type term. Since \(P_{22}^{gg}\) is built from the product \(Z_2^g Z_2^g\), it only depends on the bias and redshift-space structures already present in the quadratic kernel \(Z_2^g\). In particular, the cubic-bias contribution proportional to \(b_{\Gamma_3}\) is absent from \(P_{22}^{gg}\), since it belongs to the cubic kernel \(Z_3^g\) and therefore enters the \(13\)-type term instead.
 
-\subsubsection{Summary of the organization}
+\subsection{Summary}
 
 The reorganization from real-space matter to galaxies in redshift space therefore proceeds in four stages.
 
@@ -1428,7 +1426,7 @@ The main conceptual point is therefore simple. The redshift-space treatment does
 
 Thus the redshift-space treatment does not introduce a new FFTLog method. It is the same FFTLog factorization applied to a richer set of perturbative sectors, now organized according to whether one is computing the matter--matter, tracer--matter, or tracer--tracer spectrum. What remains is to explain how these raw perturbative building blocks are combined into the final physical redshift-space spectrum once IR resummation and anisotropic BAO damping are included.
 
-\subsubsection{IR resummation and anisotropic BAO damping}
+\subsection{IR resummation and anisotropic BAO damping}
 
 The raw perturbative expressions derived above provide the redshift-space spectra
 \begin{equation}
@@ -1488,7 +1486,7 @@ D_{\rm IR}(z,k,\mu)
 
 For the purposes of this note, it is important to emphasize that IR resummation does \emph{not} modify the FFTLog reduction itself. The FFTLog machinery still computes the raw tree-level and 1-loop building blocks. IR resummation only changes how these building blocks are combined into the final physical spectrum.
 
-\subsubsection{Constructing the full redshift-space spectrum \(P(z,k,\mu)\)}
+\subsection{Constructing the full redshift-space spectrum \(P(z,k,\mu)\)}
 
 Rather than organizing the discussion around separate runtime branches, we adopt the following physics-first flow:
 \begin{equation}
@@ -1574,7 +1572,7 @@ This expression applies equally to \(XY=mm\), \(gm\), and \(gg\). The only diffe
 
 This organization is physically transparent. The FFTLog sector kernels are first used to construct the full anisotropic spectrum \(P_{XY}^s(z,k,\mu)\); only afterward is the IR damping applied to the wiggly pieces. In this sense, the same basic logic underlies both the raw and IR-resummed constructions: the perturbative building blocks are computed first, and the final physical spectrum is assembled only afterward.
 
-\subsubsection{Projection to multipoles}
+\subsection{Projection to multipoles}
 
 Once the full anisotropic spectrum \(P_{XY}^{s,\mathrm{IR}}(z,k,\mu)\) has been assembled, the power-spectrum multipoles are obtained in the standard way by Legendre projection,
 \begin{equation}
@@ -1611,13 +1609,17 @@ P_{XY,\ell}^{s,\mathrm{IR}}(z,k).
 \end{equation}
 This is the most transparent way to connect the mathematical derivation and the FFTLog factorization of the one-loop redshift-space power spectrum.
 
-\section{Lyman-\(\alpha\)}
+\section{Lyman-alpha}
 
 The Lyman-\(\alpha\) forest case does not require a new FFTLog philosophy. It requires a larger LOS operator basis. The scalar master integral of \cref{eq:master_int} remains the basic analytic building block, and the Schwinger-derived coefficient formula \cref{eq:los_master_coeff_note} remains the efficient way to generate the LOS coefficient functions. What changes is only the highest power of \((\vnhat\cdot \vq)\) that must be retained.
 
 For the Gaussian redshift-space matter and galaxy case, the hierarchy stops at the CLASS-PT family \((A_1,\ldots,C_4)\), or equivalently at \(n\leq 4\) in \cref{eq:los_master_galaxy_families_note}. In the Lyman-\(\alpha\) case, extra LOS structures enlarge the basis and force one to continue the same logic to \(n=5,\ldots,8\), namely to the family \((A_5,\ldots,E_8)\) summarized in \cref{eq:los_master_lya_families_note}.
 
 This is the most useful way to compare the galaxy and Lyman-\(\alpha\) calculations. The Lyman-\(\alpha\) formulas are not a separate class of loop integrals. They are the same master-integral hierarchy pushed to a higher truncation order because the observable contains more LOS structure. In the notebook suite, this is made explicit by keeping the CLASS-PT-style galaxy notebook at the \(A_1,\ldots,C_4\) level and the dedicated Lyman-\(\alpha\) notebook at the \(A_5,\ldots,E_8\) level, while deriving both from the same scalar and Schwinger-generated ingredients.
+
+\begin{acknowledgments}
+This document started as a note when Ben Horowitz and I decided to dive head first into a field-level Lyman-alpha project. I thank Kazuyuki Akitsu, Ben Horowitz and Yosuke Kobayashi for helpful discussions.
+\end{acknowledgments}
 
 \clearpage
 \appendix
