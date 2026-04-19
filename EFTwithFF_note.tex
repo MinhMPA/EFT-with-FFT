@@ -1611,11 +1611,141 @@ This is the most transparent way to connect the mathematical derivation and the 
 
 \section{Lyman-alpha}
 
-The Lyman-\(\alpha\) forest case does not require a new FFTLog philosophy. It requires a larger LOS operator basis. The scalar master integral of \cref{eq:master_int} remains the basic analytic building block, and the Schwinger-derived coefficient formula \cref{eq:los_master_coeff_note} remains the efficient way to generate the LOS coefficient functions. What changes is only the highest power of \((\vnhat\cdot \vq)\) that must be retained.
+The cleanest way to think about the Lyman-\(\alpha\) forest is that the observable is
+the transmitted-flux contrast,
+\begin{equation}
+\delta_F \equiv \frac{F-\bar F}{\bar F},
+\end{equation}
+rather than the overdensity of a conserved number-density tracer. This is the first
+precise difference from galaxies. The second is that the observable is intrinsically
+line-of-sight dependent. In other words, the Lyman-\(\alpha\) tracer is already a
+selection-dependent tracer before one starts the loop calculation. The useful EFT
+statement, emphasized in \cite{Ivanov:2023yla}, is that this does \emph{not} require
+a new perturbative philosophy. The same SO(2) symmetry around the LOS and the
+same equivalence-principle reasoning used for galaxies still organize the theory.
+What changes is the operator basis.
 
-For the Gaussian redshift-space matter and galaxy case, the hierarchy stops at the CLASS-PT family \((A_1,\ldots,C_4)\), or equivalently at \(n\leq 4\) in \cref{eq:los_master_galaxy_families_note}. In the Lyman-\(\alpha\) case, extra LOS structures enlarge the basis and force one to continue the same logic to \(n=5,\ldots,8\), namely to the family \((A_5,\ldots,E_8)\) summarized in \cref{eq:los_master_lya_families_note}.
+At linear order, the rest-frame flux bias expansion contains the density and the
+LOS velocity-gradient operator \(\eta\),
+\begin{equation}
+\delta_F = b_1\delta + b_\eta \eta,
+\qquad
+P_F^{\rm tree}(z,k,\mu)
+=
+\bigl(b_1-b_\eta f\mu^2\bigr)^2 P_L(z,k).
+\label{eq:lya_tree_note}
+\end{equation}
+This should be compared directly with the galaxy Kaiser formula. Formally it looks
+similar, but conceptually it plays a different role. For idealized galaxies, the
+\(\mu\)-dependence is produced by the redshift-space mapping of a selection-free
+tracer. For Lyman-\(\alpha\), the LOS sensitivity is already part of the tracer
+expansion itself. In the top-down language one may motivate this from the
+exponential map \(F=e^{-\tau}\), but \cite{Ivanov:2023yla} shows that a naive
+tree-level expansion of that map is not closed under loops. Once renormalization is
+imposed, one is led back to the full symmetry-allowed EFT basis.
 
-This is the most useful way to compare the galaxy and Lyman-\(\alpha\) calculations. The Lyman-\(\alpha\) formulas are not a separate class of loop integrals. They are the same master-integral hierarchy pushed to a higher truncation order because the observable contains more LOS structure. In the notebook suite, this is made explicit by keeping the CLASS-PT-style galaxy notebook at the \(A_1,\ldots,C_4\) level and the dedicated Lyman-\(\alpha\) notebook at the \(A_5,\ldots,E_8\) level, while deriving both from the same scalar and Schwinger-generated ingredients.
+Up to the order needed for the one-loop power spectrum, the deterministic bias model
+therefore contains not only the familiar scalar operators
+\(\delta,\delta^2,G_2,\Gamma_3\), but also genuinely projected LOS operators.
+Schematically,
+\begin{equation}
+\delta_F
+=
+b_1\delta
++\frac{b_2}{2}\delta^2
++b_{G_2}G_2
++b_{\Gamma_3}\Gamma_3
++b_\eta \eta
++b_{\delta\eta}\delta\eta
++b_{\eta^2}\eta^2
++b_{(KK)_\parallel}(KK)_\parallel
++b_{\Pi_\parallel^{[2]}}\Pi_\parallel^{[2]}
++\cdots ,
+\label{eq:lya_bias_schematic_note}
+\end{equation}
+where the ellipsis stands for the remaining projected operators required by
+renormalization, such as \(\delta\Pi_\parallel^{[2]}\),
+\(\eta\Pi_\parallel^{[2]}\), \((K\Pi^{[2]})_\parallel\), and
+\(\Pi_\parallel^{[3]}\) \cite{Ivanov:2023yla}. This is the sharpest conceptual
+contrast with the galaxy case: once the observable is a generic selection-dependent
+flux tracer, the EFT is not exhausted by the usual scalar bias basis.
+
+From the point of view of the actual 1-loop construction, however, the logic is the
+same as for galaxies:
+\begin{enumerate}
+\item write the linear, quadratic, and cubic redshift-space kernels for the flux
+field from the operator basis above;
+\item build the raw anisotropic spectrum as
+\begin{equation}
+P_F^{\rm raw}(z,k,\mu)
+=
+P_F^{\rm tree}(z,k,\mu)
++P_F^{13}(z,k,\mu)
++P_F^{22}(z,k,\mu)
++P_{F,\rm ct}(z,k,\mu)
++P_{F,\rm stoch}(z,k,\mu);
+\label{eq:lya_raw_note}
+\end{equation}
+\item expand each factor of \(P_L\) in FFTLog modes and reduce every monomial in the
+loop integrand to the same scalar master integral of \cref{eq:master_int} and its
+LOS descendants;
+\item assemble the final 3D spectrum and, if desired, apply the same IR resummation
+logic discussed in the previous section.
+\end{enumerate}
+
+This is where the comparison to galaxies becomes especially transparent. The galaxy
+case stops at the CLASS-PT family \((A_1,\ldots,C_4)\), or equivalently at
+\(n\leq 4\) in \cref{eq:los_master_galaxy_families_note}. The Lyman-\(\alpha\)
+operators carry additional powers of the LOS projections and force one to continue
+the same master-integral hierarchy to \(n=5,\ldots,8\), namely to the family
+\((A_5,\ldots,E_8)\) summarized in \cref{eq:los_master_lya_families_note}. Hence
+the Lyman-\(\alpha\) formulas are not a separate class of loop integrals. They are
+the same FFTLog reduction pushed to a higher truncation order because the observable
+contains more LOS structure.
+
+Two further comments are important for building the right mental picture.
+
+First, IR resummation is essentially unchanged. The new selection operators do not
+introduce new IR singularities, so the BAO damping structure is the same as in the
+redshift-space galaxy case \cite{Ivanov:2023yla}. Thus the technical novelty of the
+Lyman-\(\alpha\) calculation is \emph{not} the IR treatment; it is the enlarged
+operator basis and the corresponding larger LOS master-integral tower.
+
+Second, the one-dimensional flux power spectrum is conceptually different from the
+galaxy multipole projection. The observed 1D spectrum is
+\begin{equation}
+P_{1{\rm D}}(z,k_\parallel)
+=
+\frac{1}{2\pi}
+\int_{k_\parallel}^{\infty} dk\,k\,P_F^{3{\rm D}}(z,k,k_\parallel),
+\label{eq:lya_p1d_note}
+\end{equation}
+so it is an integral over the 3D spectrum rather than a finite-angle projection.
+This makes the 1D observable explicitly UV-sensitive: modes above the perturbative
+trust scale feed into \(P_{1{\rm D}}\). In EFT language, this means that stochastic
+and higher-derivative terms are not optional book-keeping details but part of the
+renormalized definition of the 1D prediction \cite{Ivanov:2023yla}. This is another
+important difference from the galaxy case, where the multipole projection itself
+does not create a new UV problem.
+
+It is useful to summarize the comparison as follows. The similarities are structural:
+same perturbative expansion, same \(P^{13}+P^{22}\) decomposition, same FFTLog
+factorization, same scalar master integral, and same IR-resummation logic. The
+differences are physical: the Lyman-\(\alpha\) observable is a flux, not a conserved
+number-density tracer; its EFT bias expansion is intrinsically LOS-dependent; the
+operator basis is larger and requires the \(n=5,\ldots,8\) LOS sectors; and the 1D
+observable introduces an additional UV-sensitivity that must be absorbed by EFT
+counterterms.
+
+This EFT picture has now been developed beyond the original one-loop 3D power
+spectrum calculation. The same framework has been used to measure EFT parameters and
+BAO peak shifts in simulations \cite{deBelsunce:2024rvv}, extended to
+Lyman-\(\alpha\)-halo cross-correlations \cite{Chudaykin:2025gsh}, and pushed toward
+field-level and hybrid modeling of the Lyman-\(\alpha\) forest
+\cite{deBelsunce:2025bqc,deBelsunce:2025gci}. These later works reinforce the main
+lesson relevant for this note: the Lyman-\(\alpha\) problem is not a different loop
+calculus from galaxies, but the same EFTofLSS logic applied to a richer LOS-sensitive
+observable.
 
 \begin{acknowledgments}
 This document started as a note when Ben Horowitz and I decided to dive head first into a field-level Lyman-alpha project. I thank Kazuyuki Akitsu, Ben Horowitz and Yosuke Kobayashi for helpful discussions.
