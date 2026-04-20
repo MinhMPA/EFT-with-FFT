@@ -1,6 +1,6 @@
 ClearAll["Global`*"];
 
-Get[FileNameJoin[{DirectoryName[$InputFileName], "FFTLog_MasterIntegrals_Common.wl"}]];
+Get[FileNameJoin[{DirectoryName[$InputFileName], "FFTLog_MasterIntegrals_DerivationCommon.wl"}]];
 
 $RedshiftSpaceGalaxyPaper = <|
    "Title" -> "Non-linear perturbation theory extension of the Boltzmann code CLASS",

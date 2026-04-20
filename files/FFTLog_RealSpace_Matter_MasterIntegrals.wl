@@ -1,6 +1,6 @@
 ClearAll["Global`*"];
 
-Get[FileNameJoin[{DirectoryName[$InputFileName], "FFTLog_MasterIntegrals_Common.wl"}]];
+Get[FileNameJoin[{DirectoryName[$InputFileName], "FFTLog_MasterIntegrals_DerivationCommon.wl"}]];
 
 $RealSpaceMatterPaper = <|
    "Title" -> "Cosmological Perturbation Theory Using the FFTLog: Formalism and Connection to QFT Loop Integrals",
