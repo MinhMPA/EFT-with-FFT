@@ -306,7 +306,7 @@ Assembled, at linear order:
 \begin{equation}
 \dot\delta = -\theta,
 \qquad
-\dot\theta = -\cH\,\theta - \frac{3}{2}\Om(\tau)\cH^2\delta,
+\dot\theta = -\cH\,\theta - \nabla^2\Phi,
 \qquad
 \nabla^2\Phi = \frac{3}{2}\Om(\tau)\cH^2\delta .
 \label{eq:newtonian_linear}
@@ -324,9 +324,7 @@ relativistic dilation term $3\dot\phi$. \emph{Euler}, in the form
 $\dot\theta = -\cH\theta - \nabla^2\Phi$, needs the matter to be cold ---
 pressureless and single-stream --- plus $u \ll 1$ and $|\Phi| \ll 1$, but
 \emph{no} sub-horizon limit at all: for cold matter it is exact at linear order
-in this gauge. (As written in \eqref{eq:newtonian_linear} it has Poisson
-substituted into $\nabla^2\Phi$, so the sub-horizon limit rides in with the
-substitution.) \emph{Poisson} is where $k \gg \cH$ does its real work: the
+in this gauge. \emph{Poisson} is where $k \gg \cH$ does its real work: the
 relativistic energy constraint carries extra terms of relative size
 $(\cH/k)^2$, and dropping them is what turns a constraint of general relativity
 into Newton's field equation --- Exercise~\ref{ex:subhorizon} makes this
@@ -408,10 +406,10 @@ Everything needed is already in \eqref{eq:newtonian_linear}. One check first:
 the curl of \eqref{eq:newtonian_eom} at linear order gives
 $\dot{\bm{w}} + \cH\,\bm{w} = 0$ for the vorticity $\bm{w} = \nabla\times\vu$,
 so rotation decays as $1/a$ and stays zero if it starts zero --- the velocity
-field is fully specified by its divergence $\theta$. Now combine the pair:
-differentiate $\dot\delta = -\theta$, substitute $\dot\theta$, and note that no
-coefficient carries a $k$, so the position dependence factors out and every mode
-grows by one common factor,
+field is fully specified by its divergence $\theta$. Now combine all three:
+differentiate $\dot\delta = -\theta$, substitute $\dot\theta$, and eliminate
+$\nabla^2\Phi$ with Poisson. No coefficient in the result carries a $k$, so the
+position dependence factors out and every mode grows by one common factor,
 \begin{equation}
 \ddot D + \cH\,\dot D - \frac{3}{2}\Om(\tau)\,\cH^2 D = 0 .
 \label{eq:growth}
