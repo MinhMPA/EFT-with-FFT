@@ -54,6 +54,9 @@
    \textbf{Ask the room.}\ \itshape}
   {\endgroup\par\medskip}
 \newcommand{\nudge}[1]{\upshape\par\smallskip\hspace*{1.2em}\textbf{If nobody bites:}\ \itshape #1}
+% Where the discussion should end up. Upright, so it reads as the resolution
+% rather than as one more prompt.
+\newcommand{\answer}[1]{\upshape\par\smallskip\hspace*{1.2em}\textbf{Where it lands:}\ #1}
 
 % Exercises
 \newcounter{exercise}[section]
@@ -80,6 +83,17 @@ with two hands-on sessions}
 \int_{\vk} \equiv \int\!\frac{\dd^3k}{(2\pi)^3},
 \end{equation*}
 so that $\langle\delta(\vk)\delta(\vk')\rangle = (2\pi)^3\dirac(\vk+\vk')P(k)$. A primed correlator, $\langle\cdots\rangle'$, strips the factor $(2\pi)^3\dirac$. This is the convention of both Dodelson \& Schmidt \cite[Eqs.~(5.26)--(5.27)]{DodelsonSchmidt} and Jeong \cite[App.~A.1]{Jeong2010} --- the two sources these lectures lean on hardest --- so formulae can be carried across from either without adjustment. Not every reference agrees: some place the $(2\pi)^{-3}$ on $\dd^3x$ instead, and their power spectra then differ by factors of $(2\pi)^3$.
+
+\medskip
+\noindent\textbf{How the blocks work.} Four kinds of set-off text.
+\textbf{Comment} is an aside that deepens the argument without carrying it.
+\textbf{Read, not lectured} is written for you but skipped at the board ---
+about a third of these notes, and none of it needed to follow the thread.
+\textbf{Ask the room} is a question to stop on: each carries an
+\emph{If nobody bites} fallback, which breaks the question into a smaller one
+rather than giving it away, and a \emph{Where it lands} note saying what the
+discussion is supposed to reach. \textbf{Exercises} are at the end of each
+lecture, with solutions in the companion note.
 
 \medskip
 \noindent\textbf{Notation.} One table to refer back to; each entry is defined where it first appears.
@@ -111,13 +125,13 @@ $D_+,\ f$ & linear growth factor and rate
 \setcounter{exercise}{0}
 
 \begin{plan}
-\noindent\textbf{Plan (70 min at the board, 20 for questions).} The setting,
+\noindent\textbf{Plan (71 min at the board, 19 for questions).} The setting,
 and two ways to hold a perturbation (0--8) $\rightarrow$ the equations we may
 use, and what $(\cH/k)^2$ buys (8--25) $\rightarrow$ the pressureless fluid, and
 how perturbations grow (25--34) $\rightarrow$ Gaussian random fields and what a
 power spectrum is (34--41) $\rightarrow$ the spectrum inflation hands us
 (41--45) $\rightarrow$ horizon crossing, and how it carves the shape of
-$\Plin(k)$ (45--70). \emph{Read, not lectured:} everything in a grey block or a
+$\Plin(k)$ (45--71). \emph{Read, not lectured:} everything in a grey block or a
 Comment --- roughly a third of what is written here, including the Vlasov
 hierarchy, the recipe for drawing a Gaussian field, the definition of
 $\sigma_8$, and why $n_s \neq 1$.
@@ -127,9 +141,10 @@ words, equations, figures and questions separately at a deliberately slow board
 pace; run it with your own numbers rather than trusting mine. Note what it says:
 this lecture is five minutes longer than its sibling and has the tighter
 question budget, because the machinery has to be built before any of it pays
-off. To recover time, drop the boxed questions ($2.5$ min each) --- Lecture~2
-has more room for them --- or quote the Einstein--de Sitter growing and decaying
-modes instead of solving the indicial equation ($3$ min). Do \emph{not} compress
+off. To recover time, drop a boxed question ($2.5$ min each, and its
+\emph{Where it lands} note can be stated flat in thirty seconds) or quote the
+Einstein--de Sitter growing and decaying modes instead of solving the indicial
+equation ($3$ min). Do \emph{not} compress
 Section~\ref{sec:linearpk}: the horizon argument is the one thing this lecture
 exists to deliver, and the hands-on session assumes it.
 Sources:~\cite{MaBertschinger1995,DodelsonSchmidt}.
@@ -238,8 +253,15 @@ Gravity is weak everywhere in the universe --- the potential is of order
 $10^{-5}$ on every scale. So why is ``gravity is weak'' not enough to justify
 using Newtonian dynamics?
 \nudge{Split it. Is a super-horizon mode weakly gravitating? Yes. Can you write
-down a Newtonian description of one? Then weakness cannot be the thing that
-licenses it, and something else must be.}
+down a Newtonian description of one? Then weakness cannot be what licenses it.}
+\answer{On $k \gg \cH$, which has nothing to do with weakness. A weak field
+licenses \emph{linearizing} the metric; it does not supply a Newtonian
+\emph{description}. Newtonian gravity acts instantaneously --- Poisson is a
+constraint, not a wave equation --- which is only sensible if light crosses the
+scale of interest in far less than an expansion time. Super-horizon it does not,
+and $\delta$ is gauge-dependent there besides, so there is nothing for the
+description to describe. Two independent conditions, and only one of them is
+``gravity is weak''.}
 \end{quiz}
 \end{reading}
 
@@ -302,9 +324,12 @@ horizon entry \cite[\S 7]{MaBertschinger1995} --- which is why ``do perturbation
 grow outside the horizon?'' has no gauge-independent answer. Sub-horizon that
 ambiguity is suppressed by the same $(\cH/k)^2$, so in the regime of
 \eqref{eq:newtonian_linear}, and only there, $\delta$ becomes something
-unambiguous to compute, correlate and measure --- and so does $\Phi$, in the
-gauge just fixed. Section~\ref{sec:linearpk} will follow $\Phi$ for exactly this
-reason.
+unambiguous to compute, correlate and measure. $\Phi$ carries no such
+restriction: \eqref{eq:newtonian_gauge} fixes the gauge completely, leaving no
+residual freedom, so $\Phi$ is physical on \emph{every} scale --- it is the
+Bardeen potential under another name. That is exactly why
+Section~\ref{sec:linearpk} follows $\Phi$ and not $\delta$ when it has to cross
+the horizon.
 \end{reading}
 
 
@@ -423,9 +448,15 @@ every spectrum you will plot. Measured, $\sigma_8 \simeq 0.81$.
 Two realizations of the same $\Plin(k)$ with different seeds look completely
 different. In what sense, then, is $\Plin$ a prediction of the theory at all?
 \nudge{Which of these could you measure from one universe: the amplitude of the
-mode at some particular $\vk$, or the average of $|\delta(\vk)|^2$ over all modes
-of the same $|\vk|$? We only have one universe --- so which of the two had better
-be the thing theory predicts?}
+mode at one particular $\vk$, or the average of $|\delta(\vk)|^2$ over all modes
+of the same $|\vk|$? Which had better be the thing theory predicts?}
+\answer{On the ensemble, not the realization. $\Plin$ is a variance, and the
+phases --- everything that makes two seeds look different --- are exactly what it
+does not predict. We recover it from one universe by averaging $|\delta(\vk)|^2$
+over modes of equal $|\vk|$, which works because those modes are independent
+draws from the same distribution. The price is cosmic variance: the fewer modes
+in a shell, the noisier the estimate, which is why the largest scales are the
+worst measured.}
 \end{quiz}
 
 \subsection{The spectrum inflation hands us}
@@ -477,10 +508,17 @@ question now is what shapes $T$.
 The primordial spectrum is a featureless power law. The observed one has a
 turnover, a falloff and wiggles. Where does a \emph{scale} come from, when the
 initial conditions contain none?
-\nudge{Two scales enter after inflation and neither is primordial. One is set by
-the expansion --- when did a given mode come into causal contact? The other is
-set by the contents --- when did matter take over from radiation? Guess which
-feature each is responsible for.}
+\nudge{No scale is primordial, so every one of them entered afterwards. One is
+set by the expansion: when did a given mode come into causal contact? Another is
+set by the contents: when did matter take over from radiation? A third is a
+distance a wave could travel. Match each to a feature.}
+\answer{On horizon entry, timed against two clocks. A mode's fate depends on
+whether it entered before or after matter--radiation equality, and that
+comparison defines $k_{\rm eq}$ --- the turnover, and the $k^{-2}$ falloff above
+it. The wiggles have a separate origin: the sound horizon at recombination,
+$r_d \simeq 100\,h^{-1}$Mpc, the furthest a pressure wave got before the photons
+left. Inflation supplies only an amplitude and a tilt; every feature you can
+point to was stamped on later.}
 \end{quiz}
 
 One thing does: \textbf{when a mode entered the horizon}.
@@ -535,7 +573,12 @@ Follow the potential $\Phi$ rather than the density. It is unambiguous, since
 Section~\ref{sec:bridge} fixed the gauge completely, and it obeys three rules.
 
 \emph{Outside the horizon, $\Phi$ holds still.} No causal process operates across
-the mode, so nothing can reshape it.
+the mode, so nothing can reshape it. This does not follow from
+\eqref{eq:newtonian_linear} --- those equations assumed $k \gg \cH$ --- and it is
+not used to \emph{evolve} anything: it says there is nothing to evolve, so the
+mode reaches entry still carrying the primordial amplitude of
+Section~\ref{sec:primordial}. Super-horizon is where the initial condition sits,
+not a phase we integrate through.
 
 \emph{Inside the horizon during radiation domination, $\Phi$ decays.} Sub-horizon
 the Poisson equation of \eqref{eq:newtonian_linear} applies, $-k^2\Phi = 4\pi
@@ -660,14 +703,14 @@ easier to turn into a number?
 \setcounter{exercise}{0}
 
 \begin{plan}
-\noindent\textbf{Plan (65 min at the board, 25 for questions --- this one does
-fit).} The Lagrangian picture: label a fluid element and follow it (0--13)
+\noindent\textbf{Plan (64 min at the board, 26 for questions --- this one has
+room).} The Lagrangian picture: label a fluid element and follow it (0--13)
 $\rightarrow$ the Zel'dovich approximation, its recipe and its velocities
-(13--22) $\rightarrow$ \emph{why a web and not a collection of spheres}: three
-unequal eigenvalues, and how the volume divides (22--38) $\rightarrow$ shell
-crossing, where the approximation dies (38--45) $\rightarrow$ 2LPT and what it
-fixes (45--56) $\rightarrow$ linear galaxy bias, as a bridge to what surveys
-measure (56--65). \emph{Read, not
+(13--19) $\rightarrow$ \emph{why a web and not a collection of spheres}: three
+unequal eigenvalues, and how the volume divides (19--36) $\rightarrow$ shell
+crossing, where the approximation dies (36--43) $\rightarrow$ 2LPT and what it
+fixes (43--54) $\rightarrow$ linear galaxy bias, as a bridge to what surveys
+measure (54--64). \emph{Read, not
 lectured:} the one-dimensional exactness proof (Exercise~\ref{ex:1dza}), the
 Comments, and the practical business of generating initial conditions --- the
 hands-on session does that experimentally. \emph{If you are running behind:} the
@@ -713,8 +756,14 @@ At first order, \eqref{eq:lpt_master} with $\delta = -\nabla_q\cdot\vPsi^{(1)}$ 
 The density is $1+\delta = 1/J$, with no equation of its own. What happens when
 $J \to 0$, and what does that correspond to physically?
 \nudge{$J$ is the volume of a fluid element. What does zero volume mean for the
-matter inside it, and for the map $\vq \mapsto \vx$? Try it in one dimension
-first, with two particles approaching each other.}
+matter inside it, and for the map $\vq \mapsto \vx$? Try one dimension first,
+with two particles approaching each other.}
+\answer{On shell crossing. $J \to 0$ is a fluid element squeezed to zero volume,
+so $\delta$ formally diverges and the map $\vq \mapsto \vx$ stops being
+one-to-one: two Lagrangian labels arrive at the same place. This is the first
+caustic, and it is where the single-stream closure of Section~\ref{sec:vlasov}
+fails --- not an artefact of the ZA but a real feature of collisionless collapse.
+Section~\ref{sec:shellcross} is what happens next.}
 \end{quiz}
 
 \subsection{The Zel'dovich approximation}
@@ -757,16 +806,6 @@ that is the right thing to get right. It is why the ZA follows matter into
 sheets, where linear theory only says $\delta$ is growing, and why it remains a
 serviceable description well past the point where $\delta = 1$.
 \end{remark}
-\begin{quiz}
-You know the spherical collapse model. Look at \eqref{eq:za_density} and ask what
-a sphere requires of $\lambda_1,\lambda_2,\lambda_3$. Then ask how often a random
-symmetric matrix obliges.
-\nudge{Take it in two steps. First: for the patch to stay spherical, how must the
-three eigenvalues be related? Second, forget cosmology --- write down any
-$3\times3$ symmetric matrix off the top of your head and compute its
-eigenvalues. Were two of them equal? Would you expect them to be?}
-\end{quiz}
-
 \subsection{Why a web, and not a collection of spheres}
 \label{sec:web}
 
@@ -811,13 +850,22 @@ positive eigenvalues & fraction of volume & fate \\
 \end{tabular}
 \end{center}
 \begin{quiz}
-Before looking at the numbers: the four fates are void, sheet, filament, knot.
-Which two do you expect to be commonest, and why should the table be symmetric?
-\nudge{Each eigenvalue is roughly as likely to be positive as negative. If they
-were independent coin flips, what would the four fractions be? The real numbers
-are close to that --- and the small discrepancy is because they are not quite
-independent.}
-\end{quiz}
+You know the spherical collapse model. What does a sphere require of
+$\lambda_1,\lambda_2,\lambda_3$, and how often does a random symmetric matrix
+oblige? Then, before looking at the numbers: of void, sheet, filament and knot,
+which two should be commonest, and why should the table be symmetric?
+\nudge{For the patch to stay spherical, how must the three eigenvalues be
+related? Now write down any $3\times3$ symmetric matrix off the top of your head
+--- were two of its eigenvalues equal? Would you ever expect them to be? For the
+second half, treat each eigenvalue's sign as a coin flip and count.}
+\answer{A sphere needs $\lambda_1 = \lambda_2 = \lambda_3$, which is a set of
+measure zero: no matrix you write down will oblige, and spherical collapse
+describes an event that never happens. Generic collapse is anisotropic and runs
+along the largest eigenvalue first --- sheet, then filament, then knot. Three
+fair coins would give $12.5/37.5/37.5/12.5$, and the true values
+$8/42/42/8$ are symmetric for the reason the coins are (a Gaussian field
+prefers no sign of $\delta$) but pushed toward the mixed cases, because the
+eigenvalues repel rather than being independent.}
 
 Read the middle rows: \textbf{$84\%$ of the volume is headed for a sheet or a
 filament, and only $8\%$ ever collapses along all three axes.} The web is not
@@ -981,11 +1029,17 @@ measured alongside the cosmology.
 \begin{quiz}
 Why should $b_1$ be greater than one? Galaxies are made of matter, so why do they
 not simply trace it?
-\nudge{Galaxies form where the density crosses some threshold. Now add a
-long-wavelength mode that raises the background slightly across a large region.
-The density did not change much --- but how much did the \emph{number of places
-above threshold} change? Sketch a Gaussian with a cut near its tail and slide it
-right.}
+\nudge{Galaxies form where the density crosses a threshold. Add a long-wavelength
+mode that lifts the background slightly across a large region: the density barely
+moved, but how much did the \emph{number of places above threshold} move? Sketch
+a Gaussian with a cut near its tail and slide it right.}
+\answer{On the threshold, not the matter. This is the peak--background split: a
+long mode shifts the whole local field, and because the threshold sits in the
+tail of the Gaussian, a small shift in the mean makes a large fractional change
+in the number of sites above it. So $\delta_g$ responds more strongly than
+$\delta$, giving $b_1 > 1$ --- and more strongly still for rarer tracers, which
+is why massive and luminous galaxies are the most biased. Nothing here requires
+galaxies to be made of anything but matter.}
 \end{quiz}
 
 Two things are worth knowing about \eqref{eq:linear_bias}. It is the first term
