@@ -88,7 +88,7 @@ so that $\langle\delta(\vk)\delta(\vk')\rangle = (2\pi)^3\dirac(\vk+\vk')P(k)$. 
 \noindent\textbf{How the blocks work.} Four kinds of set-off text.
 \textbf{Comment} is an aside that deepens the argument without carrying it.
 \textbf{Read, not lectured} is written for you but skipped at the board ---
-about a third of these notes, and none of it needed to follow the thread.
+about a fifth of these notes, and none of it needed to follow the thread.
 \textbf{Ask the room} is a question to stop on: each carries an
 \emph{If nobody bites} fallback, which breaks the question into a smaller one
 rather than giving it away, and an \emph{Answer} stating the resolution
@@ -132,9 +132,9 @@ buys (8--32) $\rightarrow$ the pressureless fluid, and how perturbations grow
 (32--43) $\rightarrow$ Gaussian random fields and what a power spectrum is
 (43--49) $\rightarrow$ the spectrum inflation hands us (49--53) $\rightarrow$
 horizon crossing, and how it carves the shape of $\Plin(k)$ (53--80). \emph{Read, not lectured:} everything in a grey block or a
-Comment --- roughly a third of what is written here, including the Vlasov
-hierarchy, the recipe for drawing a Gaussian field, the definition of
-$\sigma_8$, and why $n_s \neq 1$.
+Comment --- roughly a fifth of what is written here, including the recipe
+for drawing a Gaussian field, the definition of $\sigma_8$, and why
+$n_s \neq 1$.
 
 \emph{On the timings.} They come from \texttt{lecture\_timing.py}, which prices
 words, equations, figures and questions separately at a deliberately slow board
@@ -405,22 +405,6 @@ is the three equations above.
 \subsection{The pressureless fluid, and how perturbations grow}
 \label{sec:vlasov}
 
-\begin{reading}
-We now set up the nonlinear problem in the Newtonian regime, following \cite[\S 2]{Bernardeau2002}. Particles obey \eqref{eq:newtonian_eom}, with $\Phi$ the peculiar potential of \eqref{eq:newtonian_linear}. Collisionless matter is then described by its phase-space density $f(\vx,\vp,\tau)$, with $\vp = am\vu$; phase-space conservation gives the Vlasov equation,
-\begin{equation}
-\frac{\partial f}{\partial\tau} + \frac{\vp}{ma}\cdot\nabla f - am\,\nabla\Phi\cdot\frac{\partial f}{\partial\vp} = 0 .
-\label{eq:vlasov}
-\end{equation}
-Taking velocity moments produces a hierarchy: the zeroth moment gives continuity, the first gives the Euler equation, and each couples to the next through the velocity-dispersion tensor $\sigma_{ij} \equiv \langle u_iu_j\rangle_p - \langle u_i\rangle_p\langle u_j\rangle_p$, where $\langle\cdot\rangle_p$ denotes the momentum average over $f$ at fixed $(\vx,\tau)$ (not the ensemble average of Section~\ref{sec:stats}):
-\begin{align}
-\dot\delta + \nabla\cdot\left[(1+\delta)\,\vu\right] &= 0 ,
-\label{eq:continuity}\\
-\dot{\vu} + \cH\,\vu + (\vu\cdot\nabla)\,\vu &= -\nabla\Phi - \frac{1}{\rho}\,\nabla_j\!\left(\rho\,\sigma_{ij}\right).
-\label{eq:euler}
-\end{align}
-Cold matter starts cold: before orbits cross, each position hosts a single stream and $\sigma_{ij} = 0$. This \emph{single-stream closure} truncates the hierarchy into a pressureless perfect fluid. It is a closure rather than a controlled approximation: exact until shell crossing, and completely wrong after. Where it fails is where Lecture~2 stops.
-\end{reading}
-
 Everything needed is already in \eqref{eq:newtonian_linear}. One check first:
 the curl of \eqref{eq:newtonian_eom} at linear order gives
 $\dot{\bm{w}} + \cH\,\bm{w} = 0$ for the vorticity $\bm{w} = \nabla\times\vu$,
@@ -433,7 +417,7 @@ position dependence factors out and every mode grows by one common factor,
 \ddot D + \cH\,\dot D - \frac{3}{2}\Om(\tau)\,\cH^2 D = 0 .
 \label{eq:growth}
 \end{equation}
-The growing solution $D_+(\tau)$ defines linear growth, $\delta^{(1)}(\vx,\tau) = D_+(\tau)\,\delta_0(\vx)$; in Einstein--de Sitter (EdS, $\Om = 1$) $D_+ = a$ and the decaying mode is $a^{-3/2}$. The velocity follows from continuity, and introduces the growth rate $f$ (not to be confused with the phase-space density, the one unfortunate collision in the standard notation),
+The growing solution $D_+(\tau)$ defines linear growth, $\delta^{(1)}(\vx,\tau) = D_+(\tau)\,\delta_0(\vx)$; in Einstein--de Sitter (EdS, $\Om = 1$) $D_+ = a$ and the decaying mode is $a^{-3/2}$. The velocity follows from continuity, and introduces the growth rate $f$,
 \begin{equation}
 \theta^{(1)} = -\cH f\,\delta^{(1)},
 \qquad
@@ -985,9 +969,10 @@ The first of those collapses is also the end of the theory. When
 $D_+\lambda_1 \to 1$ the first factor in \eqref{eq:za_density} vanishes, the
 density formally diverges, and $J \to 0$. That moment is \emph{shell crossing}:
 particle trajectories intersect, the map $\vq \mapsto \vx$ stops being
-invertible, several streams with different velocities occupy the same point, and
-both the single-stream description of Section~\ref{sec:vlasov} and the Zel'dovich
-solution itself cease to be valid.
+invertible, and several streams with different velocities occupy the same
+point. The fluid description of Section~\ref{sec:bridge} assumed exactly one
+velocity at each position --- that is what cold meant --- so it ends here, and
+the Zel'dovich solution ends with it.
 
 Be clear, then, about what the later stages of Fig.~\ref{fig:collapse} are.
 Formally the second factor vanishes later wherever $\lambda_2>0$ and the third
