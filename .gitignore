@@ -1,0 +1,21 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
+# macOS, Python
+.DS_Store
+__pycache__/
+*.pyc
+
+# PDFs: reference papers and built documents are not tracked.
+# Figures are, because the LaTeX will not build without them.
+*.pdf
+!figs/*.pdf
+!PT_lecture_expert_review.pdf

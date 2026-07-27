@@ -1,0 +1,586 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{xr}
+\externaldocument{PT_lectures}   % equation numbers refer to the lecture notes
+\usepackage[colorlinks=true,linkcolor=RoyalBlue,citecolor=ForestGreen]{hyperref}
+
+\newcommand{\vx}{\bm{x}}
+\newcommand{\vq}{\bm{q}}
+\newcommand{\vk}{\bm{k}}
+\newcommand{\vu}{\bm{u}}
+\newcommand{\vPsi}{\bm{\Psi}}
+\newcommand{\nhat}{\hat{\bm{z}}}
+\newcommand{\khat}{\hat{\bm{k}}}
+\def\cH{\mathcal{H}}
+\def\Plin{P_{\rm L}}
+\def\knl{k_{\rm NL}}
+\newcommand{\dd}{\mathrm{d}}
+\def\dirac{\delta_{\rm D}}
+\def\Om{\Omega_m}
+\def\G{\mathcal{G}}
+\def\lcdm{$\Lambda$CDM}
+\def\vsv{\bm{s}}
+
+\newenvironment{solution}[1]
+  {\par\medskip\noindent\textbf{#1}\par\nobreak\smallskip}
+  {\par\medskip}
+
+\title{Cosmological Perturbation Theory from Matter to Galaxies\\[2mm]
+\large Exercise solutions}
+\author{Nhat-Minh Nguyen}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent Solutions to the exercises in the lecture notes. Equation numbers
+refer to the notes; equations numbered here are local to each solution.
+
+%=====================================================================
+\section*{Lecture 1}
+
+\begin{solution}{Exercise 1.1 (the Newtonian equation of motion).}
+Conformal time is not an affine parameter, so we cannot use the affine form of
+the geodesic equation directly. Parametrizing the worldline by $x^0 = \tau$ and
+eliminating the affine parameter gives the standard result
+\begin{equation*}
+\ddot x^i + \Gamma^i{}_{\alpha\beta}\dot x^\alpha\dot x^\beta
+- \dot x^i\,\Gamma^0{}_{\alpha\beta}\dot x^\alpha\dot x^\beta = 0 ,
+\end{equation*}
+with overdots denoting $\dd/\dd\tau$ and $\dot x^0 = 1$. The last term is the
+one that is easy to forget; dropping it doubles the Hubble drag. For the metric
+$\dd s^2 = a^2[-(1+2\Phi)\dd\tau^2 + (1-2\Phi)\dd\vx^2]$, to first order in
+$\Phi$ and leading order in $u \ll 1$, the relevant symbols are
+\begin{equation*}
+\Gamma^i{}_{00} = \partial_i\Phi ,
+\qquad
+\Gamma^i{}_{0j} = \left(\cH - \dot\Phi\right)\delta^i{}_j ,
+\qquad
+\Gamma^0{}_{00} = \cH + \dot\Phi .
+\end{equation*}
+Substituting,
+\begin{equation*}
+\ddot x^i + 2\left(\cH-\dot\Phi\right)\dot x^i + \partial_i\Phi
+- \left(\cH+\dot\Phi\right)\dot x^i = 0
+\qquad\Longrightarrow\qquad
+\ddot{\vx} + \cH\,\dot{\vx} = -\nabla\Phi + 3\dot\Phi\,\dot{\vx} .
+\end{equation*}
+The final term carries one power of the potential and one of the velocity, so it
+is higher order and we drop it, leaving
+\begin{equation*}
+\ddot{\vx} + \cH\,\dot{\vx} = -\nabla\Phi ,
+\end{equation*}
+the Newtonian equation for a particle in an expanding background, with $\cH\dot{\vx}$
+the Hubble drag. A quick check on the drag coefficient: with $\Phi = 0$ the
+solution is $\dot{\vx} \propto 1/a$, the familiar decay of peculiar velocities.
+Nothing here required $k \gg \cH$; that limit was used earlier to reduce the
+Einstein constraint to the Poisson equation, which is what makes $\Phi$ the
+Newtonian potential.
+\end{solution}
+
+\begin{solution}{Exercise 1.2 ($D_2$ in EdS).}
+In EdS, $a \propto \tau^2$, $\cH = 2/\tau$, $\Om = 1$, and $D_+ = a$. Try
+$D_2 = C a^2 \propto \tau^4$. Then $\dot D_2 = 4C\tau^3$ and
+$\ddot D_2 = 12C\tau^2$, while $D_+^2 = a^2 \propto \tau^4$. Normalising
+$a = \tau^2$, equation \eqref{eq:D2} reads
+\begin{equation*}
+12C\tau^2 + \frac{2}{\tau}\,4C\tau^3 - \frac{3}{2}\cdot\frac{4}{\tau^2}\,C\tau^4
+= -\frac{3}{2}\cdot\frac{4}{\tau^2}\,\tau^4 ,
+\end{equation*}
+that is $12C + 8C - 6C = -6$, so $14C = -6$ and $C = -3/7$. Hence
+$D_2 = -\tfrac37 D_+^2$, the EdS limit quoted in \eqref{eq:D2}. Note that the
+associated growth rate must be defined as $f_2 = \dd\ln|D_2|/\dd\ln a$, cf.\
+\eqref{eq:f2_def}: with this sign convention $D_2<0$ and $\ln D_2$ does not
+exist. In EdS, $|D_2| \propto a^2$ gives $f_2 = 2$.
+
+The negative sign is a bookkeeping artifact of the convention
+$\vPsi^{(2)} = +\nabla_q\varphi^{(2)}$, not a statement that second order opposes
+first. Check with a spherical patch, where $\varphi^{(1)}_{,ij} = (\delta_1/3)\delta_{ij}$
+and the tidal invariant is $\delta_1^2/3$, so \eqref{eq:2lpt_potential} gives
+$\nabla_q\cdot\vPsi^{(2)} = \nabla^2_q\varphi^{(2)} = -\delta_1^2/7$. This has the
+\emph{same} sign as $\nabla_q\cdot\vPsi^{(1)} = -\delta_1$: the second-order
+displacement reinforces the infall. Equivalently, expanding the spherical
+Zel'dovich density $(1-D_+\delta_1/3)^{-3}$ gives $\delta^{(2)} = \tfrac23\delta_1^2$,
+whereas the correct second-order result --- the angular average of the
+second-order Eulerian kernel $F_2$ of \eqref{eq:F2G2}, which you meet in
+Lecture~2 --- is $\tfrac{17}{21}\delta_1^2$. Since $17/21 > 2/3$, adding the tidal term makes
+collapse \emph{faster} than the straight-line Zel'dovich estimate, not slower.
+\end{solution}
+
+\begin{solution}{Exercise 1.3 (the Zel'dovich approximation is exact in 1D).}
+In one dimension, Gauss's law says the gravitational field at a point depends
+only on the total mass on either side of it. Consider a sheet with Lagrangian
+coordinate $q$ displaced to $x = q + \Psi(q,\tau)$. Before shell crossing the
+ordering of sheets is preserved, so the mass on either side of our sheet is the
+same as it was initially: it does not depend on how far anything has moved.
+
+The peculiar force is therefore fixed by the initial configuration alone. Make
+this explicit by integrating the 1D Poisson equation
+$\partial_x^2\Phi = \tfrac32\Om\cH^2\delta$ once. Using
+$1 + \delta = (1 + \partial_q\Psi)^{-1}$ and $\dd x = (1+\partial_q\Psi)\dd q$,
+the mass integral collapses exactly:
+\begin{equation*}
+\int \delta\,\dd x
+= \int \left[\frac{1}{1+\partial_q\Psi} - 1\right](1+\partial_q\Psi)\,\dd q
+= -\int \partial_q\Psi\,\dd q = -\Psi ,
+\end{equation*}
+measuring $\Psi$ from a point where it vanishes. Note that every power of
+$\partial_q\Psi$ cancels: this is the algebraic content of the statement that the
+enclosed mass does not change. Hence
+\begin{equation*}
+\partial_x\Phi = -\frac{3}{2}\Om\cH^2\,\Psi(q,\tau) ,
+\end{equation*}
+with no higher-order corrections. The sign is the physically sensible one: a
+sheet displaced to $\Psi < 0$, having fallen inward, feels an inward force
+$-\partial_x\Phi < 0$. Substituting into the exact equation of motion
+\eqref{eq:newtonian_eom} gives
+\begin{equation*}
+\ddot\Psi + \cH\dot\Psi - \frac{3}{2}\Om\cH^2\Psi = 0 ,
+\end{equation*}
+which is exactly the linear growth equation \eqref{eq:growth}. So
+$\Psi = D_+(\tau)\,\Psi_0(q)$ solves the full nonlinear problem, and the
+Zel'dovich displacement is exact until trajectories first cross.
+
+In three dimensions this fails because the force depends on the full
+three-dimensional mass distribution, which the displacement itself changes: the
+tidal term of \eqref{eq:2lpt_potential} is precisely the leading correction.
+\end{solution}
+
+%=====================================================================
+\section*{Lecture 2}
+
+\begin{solution}{Exercise 2.1 ($F_2$ from the recursion).}
+At $n = 2$ only $m = 1$ contributes to \eqref{eq:Fn_recursion}, and
+$F_1 = G_1 = 1$. With $(2n+3)(n-1) = 7$ and $2n+1 = 5$,
+\begin{equation*}
+F_2(\vq_1,\vq_2) = \frac{5\,\alpha(\vq_1,\vq_2) + 2\,\beta(\vq_1,\vq_2)}{7},
+\qquad
+G_2(\vq_1,\vq_2) = \frac{3\,\alpha(\vq_1,\vq_2) + 4\,\beta(\vq_1,\vq_2)}{7}.
+\end{equation*}
+Now symmetrize. Writing $\mu \equiv \hat{\vq}_1\cdot\hat{\vq}_2$,
+\begin{equation*}
+\frac{\alpha(\vq_1,\vq_2)+\alpha(\vq_2,\vq_1)}{2}
+= 1 + \frac{\mu}{2}\left(\frac{q_1}{q_2}+\frac{q_2}{q_1}\right),
+\qquad
+\beta(\vq_1,\vq_2) = \frac{\mu}{2}\left(\frac{q_1}{q_2}+\frac{q_2}{q_1}\right)
++ \mu^2 ,
+\end{equation*}
+where the second follows from
+$|\vq_1+\vq_2|^2 = q_1^2+q_2^2+2q_1q_2\mu$. Substituting,
+\begin{equation*}
+F_2^{\rm s} = \frac57 + \frac{\mu}{2}\left(\frac{q_1}{q_2}+\frac{q_2}{q_1}\right)
++ \frac{2}{7}\mu^2 ,
+\end{equation*}
+and likewise $G_2^{\rm s}$ with $5/7 \to 3/7$ and $2/7 \to 4/7$, which is
+\eqref{eq:F2G2}.
+
+For the soft limit set $\vq_1 = \vq \to 0$ and $\vq_2 = \vk-\vq \to \vk$. The
+dipole term dominates because $q_2/q_1 \to \infty$:
+\begin{equation*}
+F_2^{\rm s}(\vq,\vk-\vq) \simeq \frac{\mu}{2}\frac{q_2}{q_1}
+= \frac{1}{2}\frac{\vq\cdot\vk}{qk}\cdot\frac{k}{q}
+= \frac{\vk\cdot\vq}{2q^2} ,
+\end{equation*}
+which is kernel property 3. It diverges as $1/q$: a long-wavelength mode moves
+short-wavelength structure bodily, and the displacement grows as the mode gets
+longer.
+\end{solution}
+
+\begin{solution}{Exercise 2.2 (the infrared cancellation).}
+\emph{The $P_{22}$ side.} Insert the soft limit of Exercise 2.1 into
+\eqref{eq:P22}. For $q \ll k$ the second spectrum is
+$\Plin(|\vk-\vq|) \to \Plin(k)$, so
+\begin{equation*}
+P_{22}(k) \supset 2\int_{\vq} \frac{(\vk\cdot\vq)^2}{4q^4}\,
+\Plin(q)\,\Plin(k)
+= \frac{\Plin(k)}{2}\int\!\frac{\dd^3q}{(2\pi)^3}\,
+\frac{k^2q^2\mu_q^2}{q^4}\,\Plin(q) ,
+\end{equation*}
+with $\mu_q$ the angle between $\vq$ and $\vk$. Using
+$\int \dd\Omega\,\mu_q^2 = 4\pi/3$,
+\begin{equation*}
+P_{22}(k) \supset \frac{\Plin(k)k^2}{2}\cdot\frac{1}{3}\cdot
+\frac{1}{2\pi^2}\int\!\dd q\,\Plin(q)
+= \frac{1}{2}\,k^2\sigma_v^2\,\Plin(k) ,
+\end{equation*}
+with $\sigma_v^2$ as defined in \eqref{eq:P13_UV}. The same contribution comes
+from the mirror region $|\vk-\vq| \to 0$, where the roles of the two spectra are
+exchanged, so the total soft contribution is
+$+\,k^2\sigma_v^2\,\Plin(k)$.
+
+\emph{The $P_{13}$ side.} The angle-averaged kernel in the same limit is
+$\langle F_3(\vk,\vq,-\vq)\rangle \to -k^2/(18q^2)$, so from \eqref{eq:P13}
+\begin{equation*}
+P_{13}(k) \supset 6\,\Plin(k)\,\frac{1}{2\pi^2}\int\!\dd q\;q^2\,
+\left(-\frac{k^2}{18q^2}\right)\Plin(q)
+= -\,\frac{k^2}{6\pi^2}\,\Plin(k)\int\!\dd q\,\Plin(q)
+= -\,k^2\sigma_v^2\,\Plin(k) ,
+\end{equation*}
+where the factor $1/2\pi^2$ comes from $\int\dd^3q/(2\pi)^3$ after the angular
+average. The two contributions cancel exactly in $P_{22}+P_{13}$.
+
+The physical statement is that $\sigma_v^2$ measures a uniform displacement of
+everything, which cannot affect a correlation function evaluated at a single
+time. This is the equivalence principle, and the cancellation it enforces is
+exact for any shape of $\Plin$ --- including one with BAO.
+
+What it removes is the strictly uniform piece. A feature of intrinsic scale
+$k_{\rm osc}$ supplies a second scale, and a mode with $q \gtrsim k_{\rm osc}$
+can be soft relative to $k$ while $q/k_{\rm osc}$ is of order unity. Expanding
+in $q/k_{\rm osc}$ then does not terminate: an infinite set of finite
+IR-enhanced terms survives the cancellation, and resumming them is what damps
+the acoustic peak (Lecture 3). Note the logic --- the BAO feature does not
+violate the cancellation; it makes the \emph{finite} remainder large.
+\end{solution}
+
+\begin{solution}{Exercise 2.3 (LPT reproduces $F_2$).}
+Work in EdS and drop the growth factors, i.e. set $D_+ = 1$ and
+$D_2 = -3/7$. In Fourier space the first-order displacement is
+$\vPsi^{(1)}(\vk) = (i\vk/k^2)\,\delta^{(1)}(\vk)$, so for two modes
+$\vq_1, \vq_2$ summing to $\vk$,
+\begin{equation*}
+\Psi^{(1)}_{k,k}(\vq_i) \to -\delta^{(1)}(\vq_i) ,
+\qquad
+\Psi^{(1)}_{i,j}(\vq) \to -\frac{q_iq_j}{q^2}\,\delta^{(1)}(\vq) .
+\end{equation*}
+Take the four terms of \eqref{eq:delta2_lpt} in turn, symmetrizing in
+$\vq_1 \leftrightarrow \vq_2$ and writing $\mu = \hat{\vq}_1\cdot\hat{\vq}_2$.
+
+\emph{(i) $\tfrac12(\Psi^{(1)}_{k,k})^2$} contributes $\tfrac12$, a pure
+constant.
+
+\emph{(ii) $\tfrac12\Psi^{(1)}_{i,j}\Psi^{(1)}_{j,i}$} contributes
+$\tfrac12(\hat{\vq}_1\cdot\hat{\vq}_2)^2 = \tfrac12\mu^2$.
+
+\emph{(iii) $-\Psi^{(2)}_{k,k}$.} Since $\vPsi^{(2)} = \nabla_q\varphi^{(2)}$,
+we need $\Psi^{(2)}_{k,k} = \nabla_q^2\varphi^{(2)}$, which
+\eqref{eq:2lpt_potential} gives as $D_2/D_+^2$ times the tidal invariant. Write
+that invariant as
+$\sum_{i>j}[\varphi_{,ii}\varphi_{,jj} - \varphi_{,ij}^2]
+= \tfrac12[(\nabla^2\varphi)^2 - \varphi_{,ij}\varphi_{,ij}]$. The first square
+has Fourier kernel $1$ and the second $\mu^2$, so the invariant has kernel
+$\tfrac12(1-\mu^2)$. With $D_2/D_+^2 = -3/7$,
+\begin{equation*}
+-\Psi^{(2)}_{k,k} \;\longrightarrow\; \frac{3}{7}\cdot\frac12\left(1-\mu^2\right)
+= \frac{3}{14}\left(1-\mu^2\right).
+\end{equation*}
+Adding (i), (ii) and (iii),
+\begin{equation*}
+\frac12 + \frac12\mu^2 + \frac{3}{14}\left(1-\mu^2\right)
+= \frac{7+3}{14} + \frac{7-3}{14}\,\mu^2
+= \frac{5}{7} + \frac{2}{7}\mu^2 ,
+\end{equation*}
+which is the monopole and quadrupole of $F_2$.
+
+\emph{(iv) The transport term $\Psi^{(1)}_j\partial_j\Psi^{(1)}_{k,k}$} is the
+one that supplies the dipole. In Fourier space
+$\Psi^{(1)}_j(\vq_1)\,(iq_{2j})\,(-\delta^{(1)}(\vq_2))$ gives, after
+symmetrizing,
+\begin{equation*}
+\frac{1}{2}\left(\frac{\vq_1\cdot\vq_2}{q_1^2} + \frac{\vq_1\cdot\vq_2}{q_2^2}\right)
+= \frac{\mu}{2}\left(\frac{q_2}{q_1}+\frac{q_1}{q_2}\right).
+\end{equation*}
+
+Adding the four pieces reproduces $F_2$ of \eqref{eq:F2G2} exactly. The lesson
+is worth stating: the constant and $\mu^2$ parts come from the volume
+distortion encoded in the Jacobian, while the dipole comes entirely from
+evaluating the field at the displaced position. That dipole is the advection
+term whose infrared behaviour drove Exercise 2.2.
+
+If the bookkeeping above feels fragile, the cleanest route is the exact map
+\begin{equation*}
+\delta(\vk) = \int\!\dd^3q\; e^{-i\vk\cdot\vq}
+\left(e^{-i\vk\cdot\vPsi(\vq)}-1\right),
+\end{equation*}
+which follows from \eqref{eq:jacobian} by Fourier transforming
+$1+\delta$. Expanding the exponential to second order in $\vPsi$ and inserting
+$\vPsi^{(1)}$, $\vPsi^{(2)}$ produces $F_2$ with no separate transport term,
+because the Eulerian position is built in from the start.
+\end{solution}
+
+\begin{solution}{Exercise 2.4 (the running of $c_s^2$).}
+Collect the terms in \eqref{eq:renormalized} that carry the shape $k^2\Plin(k)$.
+$P_{22}$ has none: its leading UV behaviour goes as $k^4$ with no factor of
+$\Plin(k)$, because momentum conservation forces $F_2 \propto k^2$ in the
+squeezed limit and the kernel enters squared. So at this order only two terms
+depend on $\Lambda$, the UV limit \eqref{eq:P13_UV} of the loop and the
+counterterm:
+\begin{equation*}
+P_{\rm 1\text{-}loop}\Big|_{k^2\Plin}
+= -\frac{61}{105}\,k^2\sigma_v^2(\Lambda)\,\Plin(k)
+\;-\; 2\,c_s^2(\Lambda)\,k^2\,\Plin(k) .
+\end{equation*}
+Demanding $\partial P_{\rm 1\text{-}loop}/\partial\ln\Lambda = 0$ and dividing
+out the common $k^2\Plin(k)$,
+\begin{equation*}
+-\frac{61}{105}\,\frac{\dd\sigma_v^2}{\dd\ln\Lambda}
+- 2\,\frac{\dd c_s^2}{\dd\ln\Lambda} = 0
+\qquad\Longrightarrow\qquad
+\frac{\dd c_s^2}{\dd\ln\Lambda} = -\frac{61}{210}\,\frac{\dd\sigma_v^2}{\dd\ln\Lambda} .
+\end{equation*}
+With $\sigma_v^2(\Lambda) = \tfrac{1}{6\pi^2}\int_0^\Lambda\!\dd q\,\Plin(q)$
+the derivative is $\dd\sigma_v^2/\dd\ln\Lambda = \Lambda\Plin(\Lambda)/6\pi^2$,
+which is the quoted running. Integrating,
+\begin{equation*}
+c_s^2(\Lambda) = c_{s,\rm ren}^2 - \frac{61}{210}\,\sigma_v^2(\Lambda) ,
+\end{equation*}
+with $c_{s,\rm ren}^2$ an integration constant. Substituting back,
+\begin{equation*}
+P_{13} + P_{\rm ctr}
+= -\frac{61}{105}k^2\sigma_v^2\Plin
+- 2k^2\Plin\left[c_{s,\rm ren}^2 - \frac{61}{210}\sigma_v^2\right]
+= -2\,c_{s,\rm ren}^2\,k^2\,\Plin(k) ,
+\end{equation*}
+and every trace of $\Lambda$ has cancelled.
+
+What is predicted and what is not: the \emph{shape} $k^2\Plin$ and the
+\emph{coefficient of the running}, $61/210$, both follow from $F_3$ and are
+genuine predictions of the theory. The finite constant $c_{s,\rm ren}^2$ is not.
+It is an integration constant, and no manipulation of the dust equations can
+produce it, because it encodes the response of scales where those equations do
+not hold. Renormalization predicts the cutoff dependence, never the value. That
+one number has to be measured --- from simulations, or from the data alongside
+the cosmology.
+\end{solution}
+
+\begin{solution}{Exercise 2.5 (matter stochasticity starts at $k^4$).}
+Expand the Fourier transform of the stochastic density at small $k$:
+\begin{equation*}
+\delta_\varepsilon(\vk) = \int\!\dd^3x\;e^{-i\vk\cdot\vx}\,\delta_\varepsilon(\vx)
+= \int\!\dd^3x\,\delta_\varepsilon
+- i k_i\!\int\!\dd^3x\;x_i\,\delta_\varepsilon
+- \frac{k_ik_j}{2}\!\int\!\dd^3x\;x_ix_j\,\delta_\varepsilon
++ \ldots
+\end{equation*}
+Mass conservation kills the first integral and momentum conservation the second,
+so the series starts at $\mathcal{O}(k^2)$. The auto-power is quadratic in the
+field, hence $P_\varepsilon(k) = \mathcal{O}(k^4)$. Physically: a small-scale
+rearrangement of matter that neither creates mass nor shifts the centre of mass
+of a patch cannot imprint anything on the patch's monopole or dipole, and the
+leading residual costs two powers of $k$. (The surviving second
+moment has an unconstrained trace, so that residual is generically an isotropic
+$k^2$ piece plus a quadrupole; only the $k^4$ scaling of the power matters
+here.)
+
+For galaxies the first constraint is simply false. Galaxy number is not
+conserved --- galaxies form, merge, and drop out of a sample --- so
+$\int\!\dd^3x\,\delta_\varepsilon \ne 0$, nothing forbids a $k^0$ term, and the
+stochastic spectrum starts at a constant. That constant is shot noise. This is
+the sense in which shot noise is not a nuisance imported from Poisson counting
+but the leading term of an expansion whose matter counterpart happens to be
+forbidden.
+\end{solution}
+
+%=====================================================================
+\section*{Lecture 3}
+
+\begin{solution}{Exercise 3.1 (the Kaiser formula).}
+Expand \eqref{eq:rsd_exact} to linear order. The exponential contributes
+$-i(k\mu/\cH)u_z(\vx)$, and the factor $[1+\delta_g]$ can be set to unity since
+the velocity term is already first order:
+\begin{equation*}
+\delta_g^s(\vk) = \delta_g(\vk)
+- \frac{ik\mu}{\cH}\int\!\dd^3x\;e^{-i\vk\cdot\vx}u_z(\vx)
+= \delta_g(\vk) - \frac{ik\mu}{\cH}\,u_z(\vk) .
+\end{equation*}
+For an irrotational flow $\vu(\vk) = -i\hat{\vk}\,\theta(\vk)/k$, so the
+line-of-sight component is $u_z(\vk) = -i\mu\,\theta(\vk)/k$. Then
+\begin{equation*}
+-\frac{ik\mu}{\cH}\cdot\left(-\frac{i\mu\theta}{k}\right)
+= -\frac{\mu^2}{\cH}\,\theta(\vk) .
+\end{equation*}
+Using $\theta = -f\cH\delta$ from \eqref{eq:growth_rate} this becomes
+$+f\mu^2\delta$, and with $\delta_g = b_1\delta$ at linear order,
+\begin{equation*}
+\delta_g^s(\vk) = \left(b_1 + f\mu^2\right)\delta^{(1)}(\vk) ,
+\end{equation*}
+which squares to \eqref{eq:kaiser}. The sign is worth checking carefully: it is
+positive, so infall enhances clustering along the line of sight. This is what
+makes the quadrupole sensitive to the growth rate --- though what it actually
+measures is $\beta = f/b_1$, and with the amplitude restored, $f\sigma_8$; see
+the solution to Exercise 3.3.
+\end{solution}
+
+\begin{solution}{Exercise 3.2 (deriving $Z_2$).}
+\emph{(i)} Setting $f = 0$ in \eqref{eq:Z2} kills the $f\mu^2G_2$ term and the
+whole second line, leaving
+\begin{equation*}
+Z_2 \to b_1F_2(\vk_1,\vk_2) + \frac{b_2}{2}
++ b_{\G_2}\left[(\khat_1\cdot\khat_2)^2-1\right] ,
+\end{equation*}
+the real-space galaxy kernel: gravitational evolution of the linear density
+weighted by $b_1$, plus the quadratic bias operators. Redshift space adds no
+new bias, only new kinematics.
+
+\emph{(ii)} Now do the algebra. Expand the exponential in \eqref{eq:rsd_exact},
+writing $A \equiv (k\mu/\cH)u_z$, so that $e^{-iA}-1 = -iA - \tfrac12 A^2 +
+\ldots$, and collect everything second order in $\delta^{(1)}$:
+\begin{equation*}
+\delta_g^{s(2)}
+= \underbrace{\delta_g^{(2)}}_{\rm (a)}
+\;\underbrace{-\,\frac{ik\mu}{\cH}\,u_z^{(2)}}_{\rm (b)}
+\;\underbrace{-\,\frac{ik\mu}{\cH}\left[u_z\,\delta_g\right]^{(1\times1)}}_{\rm (c)}
+\;\underbrace{-\,\frac12\left(\frac{k\mu}{\cH}\right)^{\!2}
+\left[u_z u_z\right]^{(1\times1)}}_{\rm (d)} .
+\end{equation*}
+The one ingredient needed throughout is the linear line-of-sight velocity in
+Fourier space. From $u_z(\vk) = -i\mu\,\theta(\vk)/k$ and
+$\theta = -\cH f\delta$,
+\begin{equation*}
+u_z^{(1)}(\vk_i) = -\frac{i\mu_i}{k_i}\left(-\cH f\,\delta^{(1)}_i\right)
+= \frac{i\cH f\mu_i}{k_i}\,\delta^{(1)}_i ,
+\qquad \mu_i \equiv \khat_i\cdot\nhat .
+\end{equation*}
+
+\emph{(a)} The real-space galaxy field at second order gives, as in part (i),
+$b_1F_2 + \tfrac{b_2}{2} + b_{\G_2}[(\khat_1\cdot\khat_2)^2-1]$. For matter only
+$F_2$ survives.
+
+\emph{(b)} With $u_z^{(2)}(\vk) = -i\mu\,\theta^{(2)}(\vk)/k$ and
+$\theta^{(2)} = -\cH f\,\Theta^{(2)}$,
+\begin{equation*}
+-\frac{ik\mu}{\cH}\cdot\left(-\frac{i\mu}{k}\right)\theta^{(2)}
+= -\frac{\mu^2}{\cH}\,\theta^{(2)}
+= f\mu^2\,\Theta^{(2)}
+\;\longrightarrow\; f\mu^2 G_2(\vk_1,\vk_2) ,
+\end{equation*}
+using \eqref{eq:Theta_def}: it is $\Theta$, not $\theta$, whose kernel is $G_2$.
+
+\emph{(c)} The cross term. In the convolution one leg supplies the velocity and
+the other the density:
+\begin{equation*}
+-\frac{ik\mu}{\cH}\cdot\frac{i\cH f\mu_1}{k_1}\cdot b_1
+= f k\mu\,\frac{\mu_1}{k_1}\,b_1 .
+\end{equation*}
+This is not symmetric in $1\leftrightarrow2$, and $Z_2$ is defined symmetrized,
+so replace it by half the sum of the two orderings:
+\begin{equation*}
+{\rm (c)} \;\to\; \frac{f\mu k}{2}\,b_1
+\left[\frac{\mu_1}{k_1} + \frac{\mu_2}{k_2}\right] .
+\end{equation*}
+These are exactly the $b_1$ pieces of the second line of \eqref{eq:Z2}. The
+factor of $\tfrac12$ is the symmetrization, not a Taylor coefficient.
+
+\emph{(d)} Both legs supply a velocity:
+\begin{equation*}
+-\frac12\left(\frac{k\mu}{\cH}\right)^{\!2}
+\left(\frac{i\cH f\mu_1}{k_1}\right)\!\left(\frac{i\cH f\mu_2}{k_2}\right)
+= -\frac12\,k^2\mu^2\,(i^2)\,\frac{f^2\mu_1\mu_2}{k_1k_2}
+= \frac{f^2\mu^2k^2}{2}\,\frac{\mu_1\mu_2}{k_1k_2} ,
+\end{equation*}
+already symmetric. Here the $\tfrac12$ \emph{is} the Taylor coefficient of the
+exponential, and the sign flip comes from $i^2 = -1$.
+
+\emph{Matching.} It remains to check that (d) equals the $f^2$ pieces of
+\eqref{eq:Z2}. Those pieces are
+\begin{equation*}
+\frac{f\mu k}{2}\left[\frac{\mu_1}{k_1}f\mu_2^2
++ \frac{\mu_2}{k_2}f\mu_1^2\right]
+= \frac{f^2\mu k}{2}\,\frac{\mu_1\mu_2}{k_1k_2}
+\Big[k_2\mu_2 + k_1\mu_1\Big] .
+\end{equation*}
+Since $\vk = \vk_1+\vk_2$, contracting with $\nhat$ gives the identity
+$k\mu = k_1\mu_1 + k_2\mu_2$. The bracket is therefore $k\mu$, and the whole
+expression collapses to $\tfrac{f^2\mu^2k^2}{2}\,\mu_1\mu_2/(k_1k_2)$, which is
+(d). The two forms are identical, and \eqref{eq:Z2} is verified term by term.
+
+Reading off the anatomy: $b_1F_2$ is gravity, $f\mu^2G_2$ is the linear map
+acting on the second-order velocity, the $b_1$ part of the second line is
+velocity $\times$ density, and the $f^2$ part is velocity $\times$ velocity. The
+symmetry of the second line under $1\leftrightarrow2$ reflects that either mode
+can supply the velocity.
+\end{solution}
+
+\begin{solution}{Exercise 3.3 (Kaiser multipoles).}
+From \eqref{eq:kaiser},
+$P^s(k,\mu) = (b_1^2 + 2b_1f\mu^2 + f^2\mu^4)\Plin(k)$. The needed moments are
+\begin{equation*}
+\frac12\int_{-1}^{1}\!\dd\mu\;\mu^{2n}
+= \frac{1}{2n+1} ,
+\end{equation*}
+so $\langle\mu^0\rangle = 1$, $\langle\mu^2\rangle = 1/3$,
+$\langle\mu^4\rangle = 1/5$, and for the quadrupole, using
+$\mathcal{L}_2 = (3\mu^2-1)/2$,
+\begin{equation*}
+\frac{5}{2}\int_{-1}^{1}\!\dd\mu\,\mu^2\mathcal{L}_2 = \frac{2}{3},
+\qquad
+\frac{5}{2}\int_{-1}^{1}\!\dd\mu\,\mu^4\mathcal{L}_2 = \frac{4}{7}.
+\end{equation*}
+Hence
+\begin{equation*}
+P_0 = \left(b_1^2 + \frac23 b_1f + \frac15 f^2\right)\Plin ,
+\qquad
+P_2 = \left(\frac43 b_1f + \frac47 f^2\right)\Plin ,
+\end{equation*}
+and for the hexadecapole only the $\mu^4$ term survives the projection,
+\begin{equation*}
+P_4 = \frac{9}{2}\int_{-1}^{1}\!\dd\mu\,\mu^4\mathcal{L}_4 \cdot f^2\Plin
+= \frac{8}{35}f^2\,\Plin .
+\end{equation*}
+Note that $P_2/P_0$ depends only on $\beta \equiv f/b_1$, which is why the
+quadrupole-to-monopole ratio was the classical way to measure the growth rate.
+
+Be careful about what follows from this. Restoring the overall amplitude, the
+three expressions above depend on the cosmology only through $b_1\sigma_8$ and
+$f\sigma_8$: the linear redshift-space spectrum constrains those two products
+and nothing finer. It does not determine $f$, $b_1$, and the primordial
+amplitude separately, and no amount of multipole information changes that,
+because the degeneracy is in the amplitude rather than the angular structure.
+Extracting $f$ itself requires the broadband shape to pin the cosmology, plus a
+model relating $f$ to it (in \lcdm, $f \simeq \Om^{5/9}$) and an external
+amplitude calibration or prior. Higher-order statistics help, but they do not
+remove that dependence on assumptions.
+\end{solution}
+
+%=====================================================================
+\section*{Errors worth recognising}
+
+Not hypothetical. Each of these has been made in this document at some point,
+or in the literature, and each is easier to spot than to debug.
+
+\begin{itemize}[itemsep=3pt,topsep=2pt]
+
+\item \textbf{Forgetting the mirror soft region in $P_{22}$.} The integrand is
+symmetric under $\vq \leftrightarrow \vk-\vq$, so the soft enhancement occurs
+\emph{twice}: once as $q\to0$ and once as $|\vk-\vq|\to0$. Counting it once
+leaves a factor of two adrift in the infrared cancellation, and the miss is
+invisible unless you check against $P_{13}$.
+
+\item \textbf{Confusing $G_2$ with $\G_2$.} The first is the second-order
+velocity kernel of \eqref{eq:F2G2}; the second is the tidal bias operator of
+\eqref{eq:G2_Gamma3}. They appear on adjacent lines of $Z_2$ and are
+distinguished only by typeface. In code, name them differently.
+
+\item \textbf{Taking $\ln D_2$ when $D_2 < 0$.} With the convention used here
+the second-order Lagrangian growth factor is negative, so the growth rate must
+be $f_2 = \dd\ln|D_2|/\dd\ln a$. A library logarithm will return \texttt{nan};
+a hand calculation will silently return a sign error.
+
+\item \textbf{Dropping the Alcock--Paczynski volume Jacobian.} The AP mapping
+rescales the amplitude as well as the wavenumbers. Because that factor is
+independent of $k$ and $\mu$, it is nearly degenerate with the free amplitude,
+so omitting it does not announce itself --- the damage lands on $b_1\sigma_8$
+and $f\sigma_8$, and reaches $\alpha_\parallel,\alpha_\perp$ only through the
+loop terms' different $\sigma_8$ scaling. That is what makes it easy to drop and
+worth not dropping.
+
+\item \textbf{Treating $1/\bar n_g$ as a prediction.} The Poisson value is a
+starting guess, not a theorem: halo exclusion suppresses it and clustering
+enhances it. Fixing $P_{\rm shot}$ to $1/\bar n_g$ imposes a constraint the
+theory does not supply.
+
+\item \textbf{Assuming a counterterm can absorb any missing physics.} It absorbs
+only shapes lying in the retained operator basis. A good fit with a counterterm
+free is not evidence that the omitted terms were harmless.
+
+\item \textbf{Reading the residual of a fitted curve as an accuracy.} If the
+counterterm was fitted to the reference you are comparing against, the agreement
+in the fit range is partly guaranteed. The informative comparison is outside it.
+
+\end{itemize}
+
+\end{document}
