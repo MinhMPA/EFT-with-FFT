@@ -62,7 +62,7 @@ with two hands-on sessions}
 \qquad
 \int_{\vk} \equiv \int\!\frac{\dd^3k}{(2\pi)^3},
 \end{equation*}
-so that $\langle\delta(\vk)\delta(\vk')\rangle = (2\pi)^3\dirac(\vk+\vk')P(k)$. A primed correlator, $\langle\cdots\rangle'$, strips the factor $(2\pi)^3\dirac$. Beware: the review~\cite{Bernardeau2002} places the $(2\pi)^{-3}$ on $\dd^3x$ instead, so its power spectra differ by factors of $(2\pi)^3$.
+so that $\langle\delta(\vk)\delta(\vk')\rangle = (2\pi)^3\dirac(\vk+\vk')P(k)$. A primed correlator, $\langle\cdots\rangle'$, strips the factor $(2\pi)^3\dirac$. This is the convention of both Dodelson \& Schmidt \cite[Eqs.~(5.26)--(5.27)]{DodelsonSchmidt} and Jeong \cite[App.~A.1]{Jeong2010} --- the two sources these lectures lean on hardest --- so formulae can be carried across from either without adjustment. Not every reference agrees: some place the $(2\pi)^{-3}$ on $\dd^3x$ instead, and their power spectra then differ by factors of $(2\pi)^3$.
 
 \medskip
 \noindent\textbf{Notation.} One table to refer back to; each entry is defined where it first appears.
@@ -632,7 +632,14 @@ f_2 \equiv \frac{\dd\ln|D_2|}{\dd\ln a} = \frac{\dot D_2}{\cH D_2} .
 The velocity in \eqref{eq:2lpt_map} is unaffected by this: the sign of $D_2$ already sits in $\varphi^{(2)}$. Physically: Zel'dovich streams are straight; the tide bends them. 2LPT is the standard for setting up initial conditions of $N$-body simulations: starting from the ZA alone leaves slowly decaying transients, and 2LPT strongly suppresses them. How large the residual is depends on the starting redshift, the force resolution, and which statistic you look at \cite[App.~E.5]{Jeong2010}.
 
 \begin{remark}
-Sign conventions differ across the literature: here $D_2<0$ and the map carries $+\nabla_q\varphi^{(2)}$ \cite[App.~E]{Jeong2010}; other references absorb the minus sign into $D_2$. Check before comparing codes.
+Sign conventions differ across the literature, so it is worth saying which one
+this is. Everything in this lecture --- the displacement $\vx = \vq + \vPsi$, the
+Jacobian, the deformation tensor and its eigenvalues, the growth equation for
+$D_2$ and its fit, the second-order source, and the map \eqref{eq:2lpt_map}
+itself --- follows Jeong \cite[App.~E]{Jeong2010} exactly, including $D_2 < 0$
+with $+\nabla_q\varphi^{(2)}$ in the map. Formulae carry across in either
+direction without adjustment. Other references absorb the minus sign into $D_2$
+instead; check before comparing codes.
 \end{remark}
 
 Do the Lagrangian and Eulerian descriptions carry the same information?
