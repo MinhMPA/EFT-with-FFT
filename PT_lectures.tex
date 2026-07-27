@@ -125,13 +125,13 @@ $D_+,\ f$ & linear growth factor and rate
 \setcounter{exercise}{0}
 
 \begin{plan}
-\noindent\textbf{Plan (75 min at the board, 15 for questions).} The setting,
-and two ways to hold a perturbation (0--8) $\rightarrow$ the equations we may
-use, derived one statement at a time, and what $(\cH/k)^2$ buys (8--27)
-$\rightarrow$ the pressureless fluid, and how perturbations grow (27--37)
-$\rightarrow$ Gaussian random fields and what a power spectrum is (37--44)
-$\rightarrow$ the spectrum inflation hands us (44--48) $\rightarrow$ horizon
-crossing, and how it carves the shape of $\Plin(k)$ (48--75). \emph{Read, not lectured:} everything in a grey block or a
+\noindent\textbf{Plan (80 min at the board, 10 for questions).} The setting,
+and two ways to hold a perturbation (0--8) $\rightarrow$ the assumption ledger
+A1--A5, the equations derived one statement at a time, and what $(\cH/k)^2$
+buys (8--32) $\rightarrow$ the pressureless fluid, and how perturbations grow
+(32--43) $\rightarrow$ Gaussian random fields and what a power spectrum is
+(43--49) $\rightarrow$ the spectrum inflation hands us (49--53) $\rightarrow$
+horizon crossing, and how it carves the shape of $\Plin(k)$ (53--80). \emph{Read, not lectured:} everything in a grey block or a
 Comment --- roughly a third of what is written here, including the Vlasov
 hierarchy, the recipe for drawing a Gaussian field, the definition of
 $\sigma_8$, and why $n_s \neq 1$.
@@ -139,12 +139,11 @@ $\sigma_8$, and why $n_s \neq 1$.
 \emph{On the timings.} They come from \texttt{lecture\_timing.py}, which prices
 words, equations, figures and questions separately at a deliberately slow board
 pace; run it with your own numbers rather than trusting mine. Note what it says:
-this lecture is ten minutes longer than its sibling and has the tighter
+this lecture runs a quarter of an hour longer than its sibling and has the tighter
 question budget, because the machinery has to be built before any of it pays
-off. To recover time, drop a boxed question ($2.5$ min each; its \emph{Answer}
-can be stated flat in thirty seconds) or quote the
-Einstein--de Sitter growing and decaying modes instead of solving the indicial
-equation ($3$ min). Do \emph{not} compress
+off. Ten minutes are recoverable on the spot: the three boxed questions ($2.5$ min
+each; each \emph{Answer} can be stated flat in thirty seconds), and the
+Einstein--de Sitter indicial equation, quoted rather than solved ($3$ min). Do \emph{not} compress
 Section~\ref{sec:linearpk}: the horizon argument is the one thing this lecture
 exists to deliver, and the hands-on session assumes it.
 Sources:~\cite{MaBertschinger1995,DodelsonSchmidt}.
@@ -226,12 +225,17 @@ at large $k$.}
 \label{sec:bridge}
 
 From here on everything is Newtonian: a fluid in an expanding box, no metric in
-sight. Three equations do all the work. This section says what they are, what was
-discarded to reach them, and --- more useful than either --- what discarding it
-leaves us free to do.
+sight. Three equations do all the work, and they rest on one choice and five
+numbered assumptions. Keep the ledger in a corner of the board: the
+assumptions do different jobs, fail at different times, and exactly one will be
+dropped in Lecture~2.
 
-\paragraph{The metric, and two potentials.} Fix the gauge completely by writing
-the perturbed metric in conformal Newtonian (longitudinal) form
+\paragraph{The arena (A1), and one choice.} \textbf{A1:} a spatially flat FLRW
+background, carrying \emph{scalar} perturbations only. The three types
+decouple at linear order: vectors decay, and tensors --- gravitational waves ---
+do not source density perturbations, so structure formation is a scalar story.
+Then make a \emph{choice}, which restricts no physics: fix the gauge completely by
+writing the perturbed metric in conformal Newtonian (longitudinal) form
 \cite{MaBertschinger1995},
 \begin{equation}
 \dd s^2 = a^2(\tau)\left[-(1+2\psi)\,\dd\tau^2
@@ -240,46 +244,43 @@ the perturbed metric in conformal Newtonian (longitudinal) form
 \end{equation}
 Here $\psi$ perturbs $g_{00}$ --- it is what a slow particle falls down --- and
 $\phi$ perturbs the spatial metric --- it is what appears in the field equation.
+\paragraph{Weak fields (A2).} \textbf{A2:} $|\phi|,\,|\psi| \ll 1$, and work
+to first order in both. An observation as much as an assumption: the potentials
+are of order $10^{-5}$ on every scale we will meet, at every time. Note what A2
+does \emph{not} mention: the density contrast $\delta$.
+
+\paragraph{Cold matter (A3).} \textbf{A3:} the matter is cold dark matter and
+baryons --- pressureless and slow, $u \ll 1$. Newtonian gravity has one
+potential, not two, and A3 is what closes the gap: the traceless part of
+Einstein's equations sources $\phi - \psi$ through anisotropic stress alone,
+which cold matter does not carry, so for us the two potentials coincide,
+$\phi = \psi \equiv \Phi$.
 \begin{reading}
-Newtonian gravity has one potential, not two, so we need these to coincide. They
-do whenever the total anisotropic stress vanishes
-\cite[Eq.~(23d)]{MaBertschinger1995}, which holds for cold dark matter and
-baryons in the matter era; free-streaming neutrinos spoil it at the $15\%$ level
-during radiation domination, but that contribution fades as matter comes to
-dominate. Write $\phi = \psi \equiv \Phi$.
+The fine print: it is the \emph{total} anisotropic stress that must vanish
+\cite[Eq.~(23d)]{MaBertschinger1995}, and free-streaming neutrinos spoil it at
+the $15\%$ level during radiation domination. That contribution fades as matter
+comes to dominate, so in the matter era $\phi = \psi$ is accurate.
 \end{reading}
 
-\begin{quiz}
-Gravity is weak everywhere in the universe --- the potential is of order
-$10^{-5}$ on every scale. So why is ``gravity is weak'' not enough to justify
-using Newtonian dynamics?
-\nudge{Split it. Is a super-horizon mode weakly gravitating? Yes. Can you write
-down a Newtonian description of one? Then weakness cannot be what licenses it.}
-\answer{Two different approximations are being conflated, and weakness is only
-one of them. A weak field, $|\Phi| \sim 10^{-5}$, licenses linearizing the
-metric --- and that holds on every scale. A Newtonian description needs
-something more: the Poisson equation acts instantaneously, and instantaneous
-action only makes sense if light can cross the scale of interest in much less
-time than the system takes to evolve, which is one expansion time. That is the
-sub-horizon condition $k \gg \cH$. A super-horizon mode fails it no matter how
-weak gravity is: no signal has crossed the mode even once, so there is no
-settled potential for Poisson to describe. So: weak field on all scales,
-Newtonian dynamics only inside the horizon.}
-\end{quiz}
-\paragraph{The equations.} Now take the second limit --- the one the question
-above was pointing at --- and keep only scales far inside the horizon,
-$k \gg \cH$. The system is three physical statements, each worth deriving in
-words before writing it down.
+\paragraph{The equations (A4, A5).} The last two entries arrive with the
+system itself. \textbf{A4:} keep only sub-horizon modes, $k \gg \cH$.
+\textbf{A5:} linearize in the density contrast, $|\delta| \ll 1$. They look
+alike and are not: A4 is permanent, while A5 is scaffolding --- the one
+assumption Lecture~2 drops, for a reason this section ends on. The system is
+three physical statements, each worth deriving in words before writing it
+down.
 
 \emph{Counting matter.} The contrast changes only because matter flows. Mass
 conservation for the peculiar velocity $\vu \equiv \dd\vx/\dd\tau$ reads
 $\dot\delta = -\nabla\cdot[(1+\delta)\vu]$ --- dilution by the expansion is
 already inside $\bar\rho$, so it never appears in $\delta$ --- and at linear
-order $\dot\delta = -\theta$, with $\theta \equiv \nabla\cdot\vu$.
+order (A5) $\dot\delta = -\theta$, with $\theta \equiv \nabla\cdot\vu$. (The
+relativistic version carries one more term, a dilation $3\dot\phi$; A4
+suppresses it, as Exercise~\ref{ex:subhorizon} shows.)
 
-\emph{Pushing matter.} For a pressureless fluid there is no separate Euler
+\emph{Pushing matter.} For a pressureless fluid (A3) there is no separate Euler
 equation to import: Euler \emph{is} Newton's second law applied to fluid
-elements. In comoving coordinates it reads
+elements. In comoving coordinates, to first order in $\Phi$ (A2), it reads
 \begin{equation}
 \ddot\vx + \cH\,\dot\vx = -\nabla\Phi .
 \label{eq:newtonian_eom}
@@ -294,15 +295,14 @@ Lagrangian picture. For now, take its divergence:
 $\dot\theta = -\cH\,\theta - \nabla^2\Phi$.
 
 \emph{Sourcing gravity.} What closes the system is the field equation, and here
-the sub-horizon limit earns its keep: every term carrying a factor of $\cH$
+A4 earns its keep: every term carrying a factor of $\cH$
 where its neighbours carry $k$ is suppressed by $(\cH/k)^2$, and the energy
 constraint of general relativity collapses to the Poisson equation,
 $\nabla^2\Phi = 4\pi Ga^2\bar\rho\,\delta = \tfrac32\Om(\tau)\cH^2\delta$, the
-last equality by the Friedmann equation. (The same suppression removes a
-dilation term $3\dot\phi$ from continuity above.) Exercise~\ref{ex:subhorizon}
+last equality by the Friedmann equation. Exercise~\ref{ex:subhorizon}
 carries out the reduction and puts a number on what was dropped.
 
-Assembled, at linear order:
+Assembled, at linear order (A5):
 \begin{equation}
 \dot\delta = -\theta,
 \qquad
@@ -315,27 +315,45 @@ Ma \& Bertschinger \cite[\S 5]{MaBertschinger1995} give the unapproximated
 system; Dodelson \& Schmidt \cite[Ch.~12]{DodelsonSchmidt} set out this same
 starting point with its assumptions listed.
 
+\begin{quiz}
+The ledger demanded both weak fields (A2) and sub-horizon modes (A4). But
+gravity is weak \emph{everywhere} --- $10^{-5}$ on every scale --- so A2 costs
+nothing. Why is it not enough on its own? Concretely: what goes wrong if you
+apply \eqref{eq:newtonian_linear} to a super-horizon mode?
+\nudge{Split it. Is a super-horizon mode weakly gravitating? Yes. So point at
+the one member of \eqref{eq:newtonian_linear} that cannot be trusted there.
+What does it silently assume?}
+\answer{Two different approximations are being conflated, and weakness is only
+one of them. A weak field licenses linearizing the metric --- and that holds on
+every scale. The Poisson equation is a different kind of statement: it ties
+$\Phi$ at one point to the density everywhere on the same time slice,
+instantaneously, and instantaneous action only makes sense if light can cross
+the scale of interest in much less time than the system takes to evolve, which
+is one expansion time. That is A4. A super-horizon mode fails it no matter how
+weak gravity is: no signal has crossed the mode even once, so there is no
+settled potential for Poisson to describe. Weak field on all scales; Newtonian
+dynamics only inside the horizon.}
+\end{quiz}
+
 \begin{remark}
 Which assumption lives where. The three members of \eqref{eq:newtonian_linear}
-do not lean on the same legs, and it is worth being precise.
-\emph{Continuity} is the most robust: mass conservation, needing only
-$|\delta| \ll 1$ to linearize and one use of $k \gg \cH$, to drop the
+do not lean on the same legs. \emph{Continuity} is the most robust: mass
+conservation, needing only A5 to linearize and one use of A4, to drop the
 relativistic dilation term $3\dot\phi$. \emph{Euler}, in the form
-$\dot\theta = -\cH\theta - \nabla^2\Phi$, needs the matter to be cold ---
-pressureless and single-stream --- plus $u \ll 1$ and $|\Phi| \ll 1$, but
-\emph{no} sub-horizon limit at all: for cold matter it is exact at linear order
-in this gauge. \emph{Poisson} is where $k \gg \cH$ does its real work: the
-relativistic energy constraint carries extra terms of relative size
+$\dot\theta = -\cH\theta - \nabla^2\Phi$, needs A3 and A2 --- cold, slow matter
+in a weak field --- but \emph{no} use of A4 at all: for cold matter it is exact
+at linear order in this gauge. \emph{Poisson} is where A4 does its real work:
+the relativistic energy constraint carries extra terms of relative size
 $(\cH/k)^2$, and dropping them is what turns a constraint of general relativity
 into Newton's field equation --- Exercise~\ref{ex:subhorizon} makes this
-quantitative. Finally, one assumption underwrites the system as a whole rather
-than any single member: $\phi = \psi$, because Euler feels the time--time
-potential while Poisson sources the spatial one.
+quantitative. And the $\phi = \psi$ of A3 underwrites the system as a whole
+rather than any single member: Euler feels the time--time potential while
+Poisson sources the spatial one.
 \end{remark}
 
-\paragraph{What \texorpdfstring{$(\cH/k)^2$}{(H/k)2} buys.} One small parameter
-did the work above, and it does a further job that the whole of Lecture~2 rests
-on.
+\paragraph{What \texorpdfstring{$(\cH/k)^2$}{(H/k)2} buys.} A4 did the work
+above, and it does a further job --- the one promised when A5 was called
+scaffolding --- that the whole of Lecture~2 rests on.
 
 \emph{It keeps the metric linear.} Inverting the Poisson equation,
 \begin{equation}
@@ -349,7 +367,8 @@ precisely where clustering becomes strong --- which is the licence for everythin
 that follows. We will let $\delta$ grow past unity and resum it to all orders
 through displacements, while never going beyond linear order in the metric. Those
 two statements sound contradictory and are not: $\Phi$ and $\delta$ are separated
-by $(\cH/k)^2$, and it is $\delta$ alone that becomes large.
+by $(\cH/k)^2$, and it is $\delta$ alone that becomes large. In ledger terms:
+dropping A5 leaves A2 intact.
 
 \begin{reading}
 \emph{It also makes $\delta$ meaningful.} Relativistically $\delta$ is not a physical
