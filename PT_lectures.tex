@@ -419,17 +419,38 @@ quoted above.
 
 \begin{reading}
 \bait{I keep saying $\Phi$ is unambiguous. Is $\delta$?}
-\emph{It also makes $\delta$ meaningful.} Relativistically $\delta$ is not a physical
-quantity: it depends on how spacetime is sliced. The same mode grows as
-$(k\tau)^2$ in synchronous gauge and sits frozen in the Newtonian gauge until
-horizon entry \cite[\S 7]{MaBertschinger1995} --- which is why ``do perturbations
-grow outside the horizon?'' has no gauge-independent answer. Sub-horizon that
-ambiguity is suppressed by the same $(\cH/k)^2$, so in the regime of
-\eqref{eq:newtonian_linear}, and only there, $\delta$ becomes something
-unambiguous to compute, correlate and measure. $\Phi$ carries no such
-restriction: \eqref{eq:newtonian_gauge} fixes the gauge completely, leaving no
-residual freedom, so $\Phi$ is physical on \emph{every} scale --- it is the
-Bardeen potential under another name. That is exactly why
+\emph{It also makes $\delta$ meaningful.} Here is where the trouble comes from,
+since it is not obvious. Writing $\delta = (\rho - \bar\rho)/\bar\rho$ requires
+$\bar\rho$ \emph{at the same time} as $\rho$ --- and in general relativity
+``the same time'' is a choice of how to slice spacetime into spatial surfaces,
+not a fact about the universe. Shift that slicing infinitesimally,
+$\tau \to \tau + \xi^0(\vx,\tau)$. Since $\bar\rho$ depends on time it moves
+too, by $\dot{\bar\rho}\,\xi^0$, and the background continuity equation
+$\dot{\bar\rho} = -3\cH(1+w)\bar\rho$ then gives
+\begin{equation*}
+\delta \;\longrightarrow\; \delta + 3\cH(1+w)\,\xi^0 .
+\end{equation*}
+That is the whole statement: $\delta$ changes when you re-slice, so it is not by
+itself a physical quantity. It is also why the same mode grows as $(k\tau)^2$ in
+synchronous gauge and sits frozen in the Newtonian gauge until horizon entry
+\cite[\S 7]{MaBertschinger1995}, and why ``do perturbations grow outside the
+horizon?'' has no gauge-independent answer.
+
+There is a repair, and it is worth seeing because it explains A4 from a second
+direction. The combination
+$\Delta \equiv \delta + 3\cH(1+w)\,v$, with $v$ the velocity potential
+($\vu = \nabla v$), is gauge-invariant --- the shift above cancels against the
+one $v$ picks up --- and it obeys
+$-k^2\Phi = \tfrac32\Om\cH^2\Delta$ \emph{exactly}, on all scales, with no
+sub-horizon limit anywhere. Our Poisson equation is that one with $\Delta$
+replaced by $\delta$. The error is the difference: $\theta \sim \cH\delta$ gives
+$v \sim \cH\delta/k^2$, so
+$\Delta - \delta \sim (\cH/k)^2\,\delta$. Sub-horizon the two agree and $\delta$
+is as good as gauge-invariant; super-horizon the correction is the whole answer.
+
+$\Phi$ carries no such disease: \eqref{eq:newtonian_gauge} fixes the slicing
+completely, leaving no residual freedom, so $\Phi$ is physical on \emph{every}
+scale --- it is the Bardeen potential under another name. That is exactly why
 Section~\ref{sec:linearpk} follows $\Phi$ and not $\delta$ when it has to cross
 the horizon.
 \end{reading}
