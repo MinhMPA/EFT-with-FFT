@@ -133,13 +133,19 @@ count. How $\delta$ gets from one to the other is the whole course.
 constantly, so it is worth saying once that they carry identical information.
 In \emph{position space}, $\delta(\vx)$ is a lumpy field filling the universe;
 this is where physical intuition lives, and where the displacements and
-collapsing sheets later in this lecture are easiest to picture. In
+collapsing sheets of Lecture~2 are easiest to picture. In
 \emph{Fourier space}, $\delta(\vk)$ is the amplitude of one plane wave of
 comoving wavelength $\lambda = 2\pi/k$ --- so large $k$ means small scales, and
 $k = 0.1\,h\,{\rm Mpc}^{-1}$ means $\lambda \simeq 63\,h^{-1}{\rm Mpc}$, a few
 cluster diameters. This is where the dynamics and the statistics live. The
-transform convention is in the front matter; nothing below depends on which
-picture you find more natural, only on being fluent in both.
+transform convention is in the front matter.
+
+The linear problem wants the second picture, and not merely for convenience: the
+linearized equations have coefficients that do not depend on position, because
+the background is homogeneous, so a plane wave stays a plane wave and each
+$\delta(\vk)$ evolves independently of every other. One partial differential
+equation in three dimensions becomes one ordinary differential equation per
+$\vk$ --- which is what makes linear theory solvable at all.
 Figure~\ref{fig:fourier} is the same statement drawn.
 
 \begin{figure}[t]
@@ -166,113 +172,36 @@ at large $k$.}
 \label{fig:fourier}
 \end{figure}
 
-\subsection{Why Newtonian dynamics, and which \texorpdfstring{$\delta$}{delta}}
+\subsection{The equations we will use, and why we may}
 \label{sec:bridge}
 
-Newtonian gravity is two statements: particles fall down a potential,
-$\ddot\vx = -\nabla\Phi$, and the potential is sourced by density,
-$\nabla^2\Phi = 4\pi G\rho$. Recovering each from general relativity takes a
-\emph{different} limit, and it is worth seeing which is which.
+From here on everything is Newtonian: a fluid in an expanding box, no metric in
+sight. Three equations do all the work. This section says what they are, what was
+discarded to reach them, and --- more useful than either --- what discarding it
+leaves us free to do.
 
-\paragraph{Why Fourier, for the dynamics.} Of the two pictures, the linear
-problem wants the second one, and not merely for convenience. The linearized
-equations are linear with coefficients that do not depend on position --- the
-background is homogeneous --- so a plane wave stays a plane wave, and each
-$\delta(\vk)$ evolves independently of every other. One partial differential
-equation in three dimensions becomes one ordinary differential equation per
-$\vk$. That is what makes linear theory solvable at all, and losing it is what
-makes everything afterwards hard: nonlinear terms couple modes together, and
-organising that coupling is what perturbation theory beyond linear order is for, and it is the subject of the companion notes \cite{EFTnotes}.
-
-One point about the label. Because $\vk$ is comoving it is fixed once and for
-all; it does not change as the universe expands, and what grows is the physical
-wavelength $a\lambda$. Nothing in the next paragraph happens because a mode
-changes. It happens because the horizon does.
-
-\paragraph{The horizon.} Write $\cH \equiv \dd\ln a/\dd\tau = aH$, the expansion
-rate in conformal time --- not the Hubble parameter $H \equiv \dd\ln a/\dd t$.
-(Overdots in these notes are $\partial/\partial\tau$ throughout, so $\dot a/a$ is
-$\cH$, not $H$. It is also why the growth equation \eqref{eq:growth} below
-carries $\cH\dot D$ where its cosmic-time form carries $2H\,\dd D/\dd t$.)
-Because $\cH$ is a
-\emph{logarithmic} rate --- the fractional growth of $a$ per unit conformal time
---- its definition rearranges to $\Delta\tau = \Delta\ln a/\cH$. One e-fold means
-$\Delta\ln a = 1$, so $1/\cH$ is the conformal time in which $a$ grows by a
-factor $e$: exactly if $\cH$ held still, and to a factor of order one otherwise
-($1.7/\cH$ in radiation domination, $1.3/\cH$ in matter domination; exactly
-$1/\cH$ only in de Sitter, where $\cH$ really is constant). Since light moves at
-unit comoving speed in conformal time, that same number is the comoving distance
-light covers while it happens: the comoving Hubble radius. A time interval and a
-length, one number. Loosely, ``the horizon''; strictly it is the Hubble radius, not
-the particle horizon $\int\!\dd t/a = \tau$, though in power-law eras the two
-agree to a factor of order one ($1/\cH = \tau$ in radiation domination,
-$\tau/2$ in matter domination). A mode of comoving wavenumber $k$ is
-\emph{sub-horizon} when $k \gg \cH$, meaning its wavelength is short compared
-with $1/\cH$, and \emph{super-horizon} when $k \ll \cH$. Inside the horizon a
-signal crosses the perturbation many times per expansion time, so gravity and
-pressure act coherently across it and local physics is meaningful. Outside,
-nothing propagates across the mode at all. You have met the comoving Hubble radius before, running the other way. During
-inflation it \emph{shrinks}, which is how modes exit and how their fluctuations
-are frozen in as initial conditions. Afterwards it grows, through radiation and
-matter domination alike, so a given $k$ starts super-horizon and \emph{enters}
-the horizon when $k = \cH$. That is the decisive event in the life of a mode:
-what happens to it depends almost entirely on when it entered, which is what the
-transfer function of Section~\ref{sec:linearpk} records.
-
-\paragraph{The metric.} Fix the gauge completely with the conformal Newtonian
-(longitudinal) form \cite{MaBertschinger1995},
+\paragraph{The metric, and two potentials.} Fix the gauge completely by writing
+the perturbed metric in conformal Newtonian (longitudinal) form
+\cite{MaBertschinger1995},
 \begin{equation}
-\dd s^2 = a^2(\tau)\left[-(1+2\psi)\,\dd\tau^2 + (1-2\phi)\,\delta_{ij}\,\dd x^i\dd x^j\right] .
+\dd s^2 = a^2(\tau)\left[-(1+2\psi)\,\dd\tau^2
++ (1-2\phi)\,\delta_{ij}\,\dd x^i\dd x^j\right] .
 \label{eq:newtonian_gauge}
 \end{equation}
-Here $\psi$ perturbs $g_{00}$ and $\phi$ perturbs the spatial metric. Keep them
-apart for the moment: the two limits below use different ones, which is the
-point.
+Here $\psi$ perturbs $g_{00}$ --- it is what a slow particle falls down --- and
+$\phi$ perturbs the spatial metric --- it is what appears in the field equation.
+Newtonian gravity has one potential, not two, so we need these to coincide. They
+do whenever the total anisotropic stress vanishes
+\cite[Eq.~(23d)]{MaBertschinger1995}, which holds for cold dark matter and
+baryons in the matter era; free-streaming neutrinos spoil it at the $15\%$ level
+during radiation domination, but that contribution fades as matter comes to
+dominate. Write $\phi = \psi \equiv \Phi$.
 
-\paragraph{First limit: slow motion gives the force law.} For a particle with
-$v \ll 1$, the geodesic equation in the metric \eqref{eq:newtonian_gauge}
-reduces to
-\begin{equation}
-\ddot\vx + \cH\,\dot\vx = -\nabla\psi
-\label{eq:newtonian_eom}
-\end{equation}
-(Exercise~\ref{ex:geodesic}), which is Newton's second law in comoving
-coordinates, with $\cH\dot\vx$ the drag from expansion. So $\psi$, the
-perturbation to $g_{00}$, \emph{is} the Newtonian potential. Note what was
-required: only that the matter moves slowly. Nothing about $k$.
-
-\paragraph{Second limit: sub-horizon gives the field equation.} The horizon
-enters through the field equation instead. One linearized Einstein equation is
-the energy constraint \cite[Eq.~(23a)]{MaBertschinger1995},
-\begin{equation}
-\underbrace{k^2\phi}_{\text{sub-horizon}} +
-\underbrace{3\cH\big(\dot\phi + \cH\psi\big)}_{\text{super-horizon}}
-= -4\pi G a^2\bar\rho\,\delta .
-\label{eq:energy_constraint}
-\end{equation}
-For $k \gg \cH$ the second group is smaller than the first by $(\cH/k)^2$ and
-drops, leaving $-k^2\phi = 4\pi Ga^2\bar\rho\,\delta$: the Poisson equation.
-Super-horizon it is the other way round, and there is no Poisson equation to be
-had.
-
-Two limits, two jobs --- and two \emph{different} potentials. Slow motion gives
-the force law, sourced by $\psi$; sub-horizon gives the field equation, obeyed
-by $\phi$. Newtonian gravity has only one potential, so the last thing needed is
-that these coincide. They do whenever the total anisotropic stress vanishes
-\cite[Eq.~(23d)]{MaBertschinger1995}, which holds for CDM and baryons in the
-matter era; free-streaming neutrinos spoil it at the $15\%$ level during
-radiation domination, but that contribution fades as matter comes to dominate.
-Setting $\phi = \psi \equiv \Phi$ then closes the system --- and two of its three
-equations are already in hand. Write the velocity field as $\vu = \dot\vx$ and
-its divergence as $\theta \equiv \nabla\cdot\vu$. At linear order the derivative
-along a trajectory reduces to $\partial_\tau$, since the advective piece
-$\vu\cdot\nabla$ acting on a first-order quantity is second order, so the force
-law \eqref{eq:newtonian_eom} is already a field equation; taking its divergence
-and substituting the Poisson equation gives the second line below. The third
-line \emph{is} the sub-horizon limit of \eqref{eq:energy_constraint}. Only the
-first is genuinely new, and it is bookkeeping rather than dynamics --- linearized
-mass conservation, whose relativistic dilation term $3\dot\phi$ drops by the same
-$(\cH/k)^2$:
+\paragraph{The equations.} Now keep only scales far inside the horizon,
+$k \gg \cH$. Every term carrying a factor of $\cH$ where its neighbours carry
+$k$ is suppressed by $(\cH/k)^2$: the relativistic energy constraint collapses to
+a Poisson equation, and the dilation term drops out of continuity. What survives
+is a pressureless fluid in an expanding background,
 \begin{equation}
 \dot\delta = -\theta,
 \qquad
@@ -281,51 +210,56 @@ $(\cH/k)^2$:
 \nabla^2\Phi = \frac{3}{2}\Om(\tau)\cH^2\delta ,
 \label{eq:newtonian_linear}
 \end{equation}
-with $\vu \equiv \dd\vx/\dd\tau$,
+with the peculiar velocity $\vu \equiv \dd\vx/\dd\tau$, its divergence
 $\theta \equiv \nabla\cdot\vu$, and $4\pi Ga^2\bar\rho = \tfrac32\Om\cH^2$.
+Exercise~\ref{ex:subhorizon} carries out the reduction and puts a number on what
+was dropped; Ma \& Bertschinger \cite[\S 5]{MaBertschinger1995} give the
+unapproximated system, and Dodelson \& Schmidt \cite[Ch.~12]{DodelsonSchmidt}
+set out this same starting point with its assumptions listed.
 
-\paragraph{Which \texorpdfstring{$\delta$}{delta}.} One more thing is settled by
-$k \gg \cH$, and it is the one students are usually not told. Relativistically
-$\delta$ is not a physical quantity: it depends on how spacetime is sliced. The
-same mode grows as $(k\tau)^2$ in synchronous gauge and sits frozen in the
-Newtonian gauge until horizon entry \cite[\S 7]{MaBertschinger1995} --- which is
-why ``do perturbations grow outside the horizon?'' has no gauge-independent
-answer. Sub-horizon that ambiguity is suppressed by the same $(\cH/k)^2$, and
-$\delta$ becomes something unambiguous to compute, correlate and measure. Every
-power spectrum in these lectures stands on that.
+\paragraph{The same equations, one element at a time.} For a pressureless fluid
+there is no separate Euler equation to import: Euler \emph{is} Newton's second
+law applied to fluid elements. Written for one element rather than for the field,
+\begin{equation}
+\ddot\vx + \cH\,\dot\vx = -\nabla\Phi ,
+\label{eq:newtonian_eom}
+\end{equation}
+whose divergence, with Poisson substituted, is the middle member of
+\eqref{eq:newtonian_linear}. The two are one equation in two costumes. Lecture~2
+wears this one: it follows individual elements rather than fields, and that
+change of variable is the whole of the Lagrangian picture.
+(Exercise~\ref{ex:geodesic} derives it from the geodesic equation, where
+conformal time is not an affine parameter and the Hubble drag is easy to get
+wrong by exactly a factor of two.)
 
-\paragraph{Why the metric stays linear.} One consequence of the Poisson equation
-is worth drawing out now, because everything after this lecture depends on it.
-Inverting $-k^2\Phi = 4\pi Ga^2\bar\rho\,\delta$ gives
+\paragraph{What \texorpdfstring{$(\cH/k)^2$}{(H/k)2} buys.} One small parameter
+did the work above, and it does two further jobs, because the rest of the course
+rests on both.
+
+\emph{It makes $\delta$ meaningful.} Relativistically $\delta$ is not a physical
+quantity: it depends on how spacetime is sliced. The same mode grows as
+$(k\tau)^2$ in synchronous gauge and sits frozen in the Newtonian gauge until
+horizon entry \cite[\S 7]{MaBertschinger1995} --- which is why ``do perturbations
+grow outside the horizon?'' has no gauge-independent answer. Sub-horizon that
+ambiguity is suppressed by the same $(\cH/k)^2$, so in the regime of
+\eqref{eq:newtonian_linear}, and only there, $\delta$ becomes something
+unambiguous to compute, correlate and measure --- and so does $\Phi$, in the
+gauge just fixed. Section~\ref{sec:linearpk} will follow $\Phi$ for exactly this
+reason.
+
+\emph{And it keeps the metric linear.} Inverting the Poisson equation,
 \begin{equation}
 |\Phi| \sim \frac{3}{2}\,\Om\left(\frac{\cH}{k}\right)^{\!2}\delta ,
 \label{eq:phi_small}
 \end{equation}
-so the potential is the density contrast suppressed by two powers of $\cH/k$ ---
-the same factor that licensed the Newtonian limit. At
-$k = 0.1\,h\,{\rm Mpc}^{-1}$ that suppression is about $10^{-5}$, so even a patch
-with $\delta \sim 100$ carries $|\Phi| \sim 5\times10^{-4}$. Gravity stays weak
-precisely where clustering becomes strong.
-
-This is the licence for the rest of the course. We will let $\delta$ grow to
-order unity and beyond, and resum it to all orders through loops and
-displacements, while never going past linear order in the metric. Those two
-statements sound contradictory and are not: $\Phi$ and $\delta$ are separated by
-$(\cH/k)^2$, and it is $\delta$ alone that becomes large.
-
-\begin{remark}
-The window, then. It closes below at $k\sim\cH$, in practice
-$k \sim 10^{-3}\,h\,{\rm Mpc}^{-1}$, where relativistic corrections and the gauge
-question both return \cite{Huterer2023}. It does \emph{not} close from pressure:
-the post-recombination Jeans scale corresponds to a mass of order
-$10^5\,M_\odot$, far below anything here, so cold and pressureless is safe. What
-closes it from above is nonlinearity, and two distinct things fail at different
-points. The \emph{linearization} goes first, near
-$k\sim0.1\,h\,{\rm Mpc}^{-1}$; \eqref{eq:newtonian_linear} is the linearized form
-of equations that are themselves nonlinear, and recovering those is the next
-section's business. The \emph{Newtonian description} survives further but not
-indefinitely, and where it fails is what Lecture~2 is about.
-\end{remark}
+the potential is the density contrast suppressed by two powers of $\cH/k$. At
+$k = 0.1\,h\,{\rm Mpc}^{-1}$ that factor is about $10^{-5}$, so even a patch with
+$\delta \sim 100$ carries $|\Phi| \sim 5\times10^{-4}$. Gravity stays weak
+precisely where clustering becomes strong --- which is the licence for everything
+that follows. We will let $\delta$ grow past unity and resum it to all orders
+through displacements, while never going beyond linear order in the metric. Those
+two statements sound contradictory and are not: $\Phi$ and $\delta$ are separated
+by $(\cH/k)^2$, and it is $\delta$ alone that becomes large.
 
 \subsection{The Vlasov equation and the pressureless fluid}
 \label{sec:vlasov}
@@ -424,6 +358,29 @@ question now is what shapes $T$.
 
 One thing does: \textbf{when a mode entered the horizon}.
 
+\paragraph{The horizon.} Recall $\cH \equiv \dd\ln a/\dd\tau = aH$, the expansion
+rate in conformal time --- not the Hubble parameter $H = \dd\ln a/\dd t$.
+(Overdots here are $\partial/\partial\tau$ throughout, so $\dot a/a$ is $\cH$,
+not $H$; it is also why the growth equation \eqref{eq:growth} carries $\cH\dot D$
+where its cosmic-time form carries $2H\,\dd D/\dd t$.) Because $\cH$ is a
+logarithmic rate, $1/\cH$ is a \emph{time} --- roughly one e-folding of
+expansion. And because light travels at unit comoving speed in conformal time,
+that same number is a \emph{length}: the comoving distance light covers while
+the universe expands appreciably. This is the comoving Hubble radius, loosely
+``the horizon''. A mode is \emph{sub-horizon} when $k \gg \cH$, so that a signal
+crosses it many times per expansion time and gravity acts coherently across it,
+and \emph{super-horizon} when $k \ll \cH$, where nothing propagates across it at
+all.
+
+You met this quantity in the previous lectures, running the other way. During
+inflation $1/\cH$ \emph{shrinks}, which is how modes exit and how their
+fluctuations are frozen in as the initial conditions of
+Section~\ref{sec:primordial}. Afterwards it grows, through radiation and matter
+domination alike, so a mode --- labelled by a comoving $\vk$ that never changes
+--- starts super-horizon and \emph{enters} when $k = \cH$. Nothing about the mode
+changes at that moment; the horizon moves past it. What follows is what that
+crossing does.
+
 Follow the potential $\Phi$ rather than the density. It is unambiguous, since
 Section~\ref{sec:bridge} fixed the gauge completely, and it obeys three rules.
 
@@ -496,8 +453,15 @@ Derive \eqref{eq:newtonian_eom}: write the geodesic equation for a nonrelativist
 \begin{exercise}\label{ex:subhorizon}
 \textbf{The other limit.} Exercise~\ref{ex:geodesic} took $v\ll1$ and produced
 the force law; this one takes $k\gg\cH$ and produces the field equation.
-(i) Reducing \eqref{eq:energy_constraint} to Poisson needs slightly more than
-$k\gg\cH$: it needs $\dot\phi$ not to be anomalously large. Assuming
+The linearized Einstein equation that becomes Poisson is the energy constraint
+\cite[Eq.~(23a)]{MaBertschinger1995},
+\begin{equation*}
+\underbrace{k^2\phi}_{\text{survives}}
+\;+\;\underbrace{3\cH\big(\dot\phi + \cH\psi\big)}_{\text{dropped}}
+\;=\; -4\pi G a^2\bar\rho\,\delta .
+\end{equation*}
+(i) Reducing it to the Poisson equation of \eqref{eq:newtonian_linear} needs
+slightly more than $k\gg\cH$: it needs $\dot\phi$ not to be anomalously large. Assuming
 $\dot\phi \lesssim \cH\phi$, which holds for the growing mode, show that the
 discarded group is smaller than the retained one by
 $\mathcal{O}\big((\cH/k)^2\big)$.
