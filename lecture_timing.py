@@ -29,7 +29,7 @@ BUDGET_MIN      = 65.0
 ENV_EQN = re.compile(r'\\begin\{(equation|align|eqnarray)\*?\}')
 
 def strip_for_words(t):
-    for e in ('figure', 'table', 'exercise', 'quiz', 'center', 'remark', 'reading'):
+    for e in ('figure', 'table', 'exercise', 'quiz', 'center', 'remark', 'reading', 'plan'):
         t = re.sub(r'\\begin\{' + e + r'\}.*?\\end\{' + e + r'\}', '', t, flags=re.S)
     t = re.sub(ENV_EQN.pattern + r'.*?\\end\{\w+\*?\}', '', t, flags=re.S)
     t = re.sub(r'\$[^$]*\$', ' X ', t)
@@ -60,7 +60,8 @@ def main(path):
                    idx(r'\appendix'))
     subs = [(i, l) for i, l in enumerate(lines[L1:app], L1)
             if l.startswith(r'\subsection{')] + [(app, '')]
-    plan = next(i for i in range(L1, L2) if 'textbf{Plan' in lines[i])
+    subs = sorted(subs + [(L2, None)], key=lambda t: t[0])
+    plan = next(i for i in range(L1, L2) if lines[i].startswith(r'\end{plan}'))
 
     print(f"  pace: {WORDS_PER_MIN:.0f} words/min of notes, {SEC_PER_EQN:.0f}s per equation, "
           f"{SEC_PER_FIGURE:.0f}s per figure, {SEC_PER_QUIZ:.0f}s per question, "
@@ -73,8 +74,9 @@ def main(path):
     tot[1] += pre['min']
     cur = 1
     for (i, l), (j, _) in zip(subs, subs[1:]):
-        if i > L2:
+        if l is None:            # the Lecture 2 header: a boundary, not a section
             cur = 2
+            continue
         e = estimate('\n'.join(lines[i:j]))
         name = re.sub(r'\\subsection\{|\}', '', l)
         name = re.sub(r'\\texorpdfstring.*', '...', name)[:44]

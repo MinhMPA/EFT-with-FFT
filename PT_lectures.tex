@@ -38,6 +38,9 @@
   {\par\medskip\noindent\begingroup\small\color{ForestGreen!60!black}\textbf{Comment.}\ }
   {\endgroup\par\medskip}
 
+% The roadmap at the head of each lecture: read beforehand, not delivered.
+\newenvironment{plan}{\par\noindent}{\par}
+
 % Passages the lecture does not cover: present in the notes, skipped at the board.
 \newenvironment{reading}
   {\par\medskip\noindent\begingroup\small\color{black!58}%
@@ -107,19 +110,30 @@ $D_+,\ f$ & linear growth factor and rate
 \setcounter{equation}{0}
 \setcounter{exercise}{0}
 
-\noindent\textbf{Plan (65 min at the board, 25 for questions).} The setting,
+\begin{plan}
+\noindent\textbf{Plan (70 min at the board, 20 for questions).} The setting,
 and two ways to hold a perturbation (0--8) $\rightarrow$ the equations we may
-use, and what $(\cH/k)^2$ buys (8--24) $\rightarrow$ the pressureless fluid, and
-how perturbations grow (24--34) $\rightarrow$ Gaussian random fields and what a
-power spectrum is (34--44) $\rightarrow$ the spectrum inflation hands us
-(44--50) $\rightarrow$ horizon crossing, and how it carves the shape of
-$\Plin(k)$ (50--65). \emph{Read, not lectured:} everything in a grey block or a
-Comment --- about a quarter of what is written here, including the Vlasov
-hierarchy, the \lcdm{} growth numbers, and the definition of $\sigma_8$. These
-timings come from \texttt{lecture\_timing.py} at a deliberately slow pace; run
-it yourself with your own numbers. \emph{If you are running behind:} drop the
-boxed questions first, then the M\'esz\'aros aside --- not the horizon argument,
-which is what the hands-on session needs. Sources:~\cite{MaBertschinger1995,DodelsonSchmidt}.
+use, and what $(\cH/k)^2$ buys (8--25) $\rightarrow$ the pressureless fluid, and
+how perturbations grow (25--34) $\rightarrow$ Gaussian random fields and what a
+power spectrum is (34--41) $\rightarrow$ the spectrum inflation hands us
+(41--45) $\rightarrow$ horizon crossing, and how it carves the shape of
+$\Plin(k)$ (45--70). \emph{Read, not lectured:} everything in a grey block or a
+Comment --- roughly a third of what is written here, including the Vlasov
+hierarchy, the recipe for drawing a Gaussian field, the definition of
+$\sigma_8$, and why $n_s \neq 1$.
+
+\emph{On the timings.} They come from \texttt{lecture\_timing.py}, which prices
+words, equations, figures and questions separately at a deliberately slow board
+pace; run it with your own numbers rather than trusting mine. Note what it says:
+this lecture is five minutes longer than its sibling and has the tighter
+question budget, because the machinery has to be built before any of it pays
+off. To recover time, drop the boxed questions ($2.5$ min each) --- Lecture~2
+has more room for them --- or quote the Einstein--de Sitter growing and decaying
+modes instead of solving the indicial equation ($3$ min). Do \emph{not} compress
+Section~\ref{sec:linearpk}: the horizon argument is the one thing this lecture
+exists to deliver, and the hands-on session assumes it.
+Sources:~\cite{MaBertschinger1995,DodelsonSchmidt}.
+\end{plan}
 
 \medskip
 \noindent\textbf{The setting.} Fixed for the whole course: a spatially flat
@@ -260,26 +274,13 @@ whose divergence, with Poisson substituted, is the middle member of
 \eqref{eq:newtonian_linear}. The two are one equation in two costumes. Lecture~2
 wears this one: it follows individual elements rather than fields, and that
 change of variable is the whole of the Lagrangian picture.
-(Exercise~\ref{ex:geodesic} derives it from the geodesic equation, where
-conformal time is not an affine parameter and the Hubble drag is easy to get
-wrong by exactly a factor of two.)
+(Exercise~\ref{ex:geodesic} derives it from the geodesic equation.)
 
 \paragraph{What \texorpdfstring{$(\cH/k)^2$}{(H/k)2} buys.} One small parameter
-did the work above, and it does two further jobs, because the rest of the course
-rests on both.
+did the work above, and it does a further job that the whole of Lecture~2 rests
+on.
 
-\emph{It makes $\delta$ meaningful.} Relativistically $\delta$ is not a physical
-quantity: it depends on how spacetime is sliced. The same mode grows as
-$(k\tau)^2$ in synchronous gauge and sits frozen in the Newtonian gauge until
-horizon entry \cite[\S 7]{MaBertschinger1995} --- which is why ``do perturbations
-grow outside the horizon?'' has no gauge-independent answer. Sub-horizon that
-ambiguity is suppressed by the same $(\cH/k)^2$, so in the regime of
-\eqref{eq:newtonian_linear}, and only there, $\delta$ becomes something
-unambiguous to compute, correlate and measure --- and so does $\Phi$, in the
-gauge just fixed. Section~\ref{sec:linearpk} will follow $\Phi$ for exactly this
-reason.
-
-\emph{And it keeps the metric linear.} Inverting the Poisson equation,
+\emph{It keeps the metric linear.} Inverting the Poisson equation,
 \begin{equation}
 |\Phi| \sim \frac{3}{2}\,\Om\left(\frac{\cH}{k}\right)^{\!2}\delta ,
 \label{eq:phi_small}
@@ -292,6 +293,19 @@ that follows. We will let $\delta$ grow past unity and resum it to all orders
 through displacements, while never going beyond linear order in the metric. Those
 two statements sound contradictory and are not: $\Phi$ and $\delta$ are separated
 by $(\cH/k)^2$, and it is $\delta$ alone that becomes large.
+
+\begin{reading}
+\emph{It also makes $\delta$ meaningful.} Relativistically $\delta$ is not a physical
+quantity: it depends on how spacetime is sliced. The same mode grows as
+$(k\tau)^2$ in synchronous gauge and sits frozen in the Newtonian gauge until
+horizon entry \cite[\S 7]{MaBertschinger1995} --- which is why ``do perturbations
+grow outside the horizon?'' has no gauge-independent answer. Sub-horizon that
+ambiguity is suppressed by the same $(\cH/k)^2$, so in the regime of
+\eqref{eq:newtonian_linear}, and only there, $\delta$ becomes something
+unambiguous to compute, correlate and measure --- and so does $\Phi$, in the
+gauge just fixed. Section~\ref{sec:linearpk} will follow $\Phi$ for exactly this
+reason.
+\end{reading}
 
 
 \subsection{The pressureless fluid, and how perturbations grow}
@@ -342,13 +356,11 @@ so a universe started slightly wrong converges on the growing solution rather
 than remembering the error. Every later statement in this course assumes only the
 growing mode is left.
 
-The growing mode is remarkable for how \emph{slow} it is. Gravity has a runaway
-instability available to it --- in a static medium an overdensity grows
-exponentially --- and the expansion converts that into a power law. The reason is
-in Section~\ref{sec:bridge}: the Friedmann equation makes $\cH^2 \sim Ga^2\bar\rho$,
-so the drag term $\cH\dot D$ and the source $\tfrac32\Om\cH^2 D$ in
-\eqref{eq:growth} are always comparable. Gravity wins, but only just, and
-$\delta$ grows in proportion to $a$ rather than exponentially. That is why
+The growing mode is remarkable for how \emph{slow} it is. In a static medium an
+overdensity grows exponentially; expansion converts that runaway into a power
+law. The Friedmann equation makes $\cH^2 \sim Ga^2\bar\rho$, so the drag
+$\cH\dot D$ and the source $\tfrac32\Om\cH^2 D$ in \eqref{eq:growth} are always
+comparable: gravity wins, but only just. That is why
 perturbations of order $10^{-3}$ at recombination are of order unity now, after a
 factor of a thousand in $a$, instead of having collapsed long ago --- and why
 perturbation theory is useful across five decades of expansion.
@@ -371,7 +383,10 @@ Inflation delivers, to very good approximation, Gaussian initial conditions: the
 \langle \delta^{(1)}(\vk)\,\delta^{(1)}(\vk')\rangle = (2\pi)^3\dirac(\vk+\vk')\,\Plin(k) ,
 \label{eq:plin_def}
 \end{equation}
-where two distinct assumptions are at work. Statistical \emph{homogeneity} --- invariance under translations --- is what forces the delta function, so that modes whose wavevectors do not sum to zero are uncorrelated. Statistical \emph{isotropy} is a separate statement, invariance under rotations, and it is what makes $\Plin$ a function of the magnitude $k=|\vk|$ alone rather than of the vector $\vk$. Note the one pair that is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$ --- a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
+where two distinct assumptions are at work. Statistical \emph{homogeneity} --- invariance under translations --- is what forces the delta function, so that modes whose wavevectors do not sum to zero are uncorrelated. Statistical \emph{isotropy} is a separate statement, invariance under rotations, and it is what makes $\Plin$ a function of the magnitude $k=|\vk|$ alone rather than of the vector $\vk$.
+
+\begin{reading}
+Note the one pair that is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$ --- a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
 
 \paragraph{Making one.} That a Gaussian field is fixed completely by $\Plin$ is a
 practical statement as much as a formal one, and it is what the hands-on session
@@ -389,7 +404,6 @@ different universes with identical statistics, which is why a fixed seed is the
 right way to compare cosmologies: change $n_s$ with the seed held, and every
 difference you see is physics rather than luck.
 
-\begin{reading}
 \paragraph{One number to fix the amplitude.} The spectrum has a shape and an
 overall size, and the size is conventionally quoted as $\sigma_8$: the rms
 fluctuation of the linear density field smoothed on spheres of radius
@@ -419,22 +433,22 @@ be the thing theory predicts?}
 
 Everything so far has been about how a perturbation \emph{evolves}. Where the
 perturbations came from is the business of the lectures you have just had, and
-we need only their output.
-
-Inflation stretches quantum fluctuations to cosmological size and leaves a
-spectrum of curvature perturbations that is very nearly \emph{scale invariant}:
-equal power in every logarithmic interval of $k$. Nearly, but not exactly ---
-inflation has to end, so the expansion rate drifts while modes are leaving the
-horizon, and the spectrum tilts. Conventionally
+we need only their output: a nearly \emph{scale-invariant} spectrum of curvature
+perturbations,
 \begin{equation}
 \Delta^2_\zeta(k) = A_s\left(\frac{k}{k_0}\right)^{n_s-1} ,
 \qquad n_s \simeq 0.965 ,
 \label{eq:primordial}
 \end{equation}
-with $A_s$ an amplitude and $k_0$ an arbitrary pivot scale. Exact scale
-invariance would be $n_s = 1$; the measured few-percent deficit is a genuine
-prediction of inflation rather than a fitted convenience, and it is one of the
-reasons to believe the picture.
+with $A_s$ an amplitude and $k_0$ an arbitrary pivot scale.
+
+\begin{reading}
+Scale invariance means equal power in every logarithmic interval of $k$, which is
+what $n_s = 1$ would give. Inflation cannot deliver it exactly: inflation has to
+end, so the expansion rate drifts while modes are leaving the horizon, and the
+spectrum tilts. The measured few-percent deficit is a genuine prediction rather
+than a fitted convenience, and it is one of the reasons to believe the picture.
+\end{reading}
 
 Two consequences carry forward. The primordial field is Gaussian to excellent
 approximation, which is what Section~\ref{sec:stats} assumed. And converting
@@ -472,20 +486,21 @@ feature each is responsible for.}
 One thing does: \textbf{when a mode entered the horizon}.
 
 \paragraph{The horizon.} Recall $\cH \equiv \dd\ln a/\dd\tau = aH$, the expansion
-rate in conformal time --- not the Hubble parameter $H = \dd\ln a/\dd t$.
-(Overdots here are $\partial/\partial\tau$ throughout, so $\dot a/a$ is $\cH$,
-not $H$; it is also why the growth equation \eqref{eq:growth} carries $\cH\dot D$
-where its cosmic-time form carries $2H\,\dd D/\dd t$.) Because $\cH$ is a
-logarithmic rate, $1/\cH$ is a \emph{time} --- roughly one e-folding of
-expansion. And because light travels at unit comoving speed in conformal time,
-that same number is a \emph{length}: the comoving distance light covers while
-the universe expands appreciably. This is the comoving Hubble radius, loosely
+rate in conformal time. Because $\cH$ is a logarithmic rate, $1/\cH$ is a
+\emph{time} --- roughly one e-folding of expansion; and because light travels at
+unit comoving speed in conformal time, that same number is a \emph{length}: the
+comoving distance light covers while the universe expands appreciably. This is the comoving Hubble radius, loosely
 ``the horizon''. A mode is \emph{sub-horizon} when $k \gg \cH$, so that a signal
 crosses it many times per expansion time and gravity acts coherently across it,
 and \emph{super-horizon} when $k \ll \cH$, where nothing propagates across it at
 all.
 
 \begin{reading}
+Not the Hubble parameter $H = \dd\ln a/\dd t$: overdots here are
+$\partial/\partial\tau$ throughout, so $\dot a/a$ is $\cH$, not $H$, and it is
+also why the growth equation \eqref{eq:growth} carries $\cH\dot D$ where its
+cosmic-time form carries $2H\,\dd D/\dd t$.
+
 You met this quantity in the previous lectures, running the other way. During
 inflation $1/\cH$ \emph{shrinks}, which is how modes exit and how their
 fluctuations are frozen in as the initial conditions of
@@ -496,7 +511,25 @@ changes at that moment; the horizon moves past it.
 \end{reading}
 
 What follows is what that
-crossing does.
+crossing does, and Fig.~\ref{fig:horizon} is the picture to keep in mind while
+it happens.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.80\textwidth]{horizon_crossing.pdf}
+\caption{Horizon entry. The heavy curve is the comoving Hubble radius
+$1/\cH$; the coloured lines are three modes, each at its fixed comoving $1/k$. A
+mode is a horizontal line because $\vk$ is a comoving label that never changes
+--- what moves is the horizon, and a mode \emph{enters} where the two meet. The
+mode entering exactly at matter--radiation equality defines $k_{\rm eq}$, and the
+figure is drawn with it computed rather than assumed:
+$\cH(a_{\rm eq}) = 0.0153\,h\,{\rm Mpc}^{-1}$ for $\Om = 0.31$, $h = 0.676$ and
+three massless neutrino species, giving $a_{\rm eq} = 2.9\times10^{-4}$ and
+$z_{\rm eq} = 3410$. At the right-hand edge $\Lambda$ takes over and $1/\cH$
+turns around, so modes have begun leaving again --- the same thing inflation did,
+in the same direction.}
+\label{fig:horizon}
+\end{figure}
 
 Follow the potential $\Phi$ rather than the density. It is unambiguous, since
 Section~\ref{sec:bridge} fixed the gauge completely, and it obeys three rules.
@@ -532,10 +565,27 @@ T(k) \;\sim\; \left(\frac{a_{\rm enter}}{a_{\rm eq}}\right)^{2}
 \end{equation}
 
 
-That is the shape, from horizon crossing and the Poisson equation alone. Flat
-below the break, falling as $k^{-2}$ above it, with the break at $k_{\rm eq} \equiv \cH(a_{\rm eq}) \simeq 0.015\,h\,{\rm Mpc}^{-1}$, \emph{defined} as the mode entering exactly at matter--radiation equality. It is
-not a fitted parameter: it depends on $\Om h^2$ and the radiation density, and
-it is the one scale the early universe stamps on the spectrum.
+That is the shape, from horizon crossing and the Poisson equation alone: flat
+below the break, falling as $k^{-2}$ above it, with the break at
+$k_{\rm eq} \equiv \cH(a_{\rm eq}) \simeq 0.015\,h\,{\rm Mpc}^{-1}$. It is not a
+fitted parameter --- it depends on $\Om h^2$ and the radiation density --- and it
+is the one scale the early universe stamps on the spectrum.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.96\textwidth]{pk_construction.pdf}
+\caption{The two factors of $\Plin = A\,k^{n_s}T^2(k)$, and their product.
+\emph{Left:} inflation supplies a featureless power law with no scale in it; the
+transfer function supplies everything else --- flat below $k_{\rm eq}$, falling
+as $k^{-2}$ above it. \emph{Right:} the product, which is the input to everything
+that follows. The turnover sits at $k_{\rm eq}$ by construction, the high-$k$
+slope is $k^{-2}$ softened by the M\'esz\'aros logarithm, and the inset shows the
+baryon acoustic oscillations as a ratio to the no-wiggle spectrum, since at a few
+percent they are invisible on the main panel. Computed with the Eisenstein \& Hu
+transfer function \cite{EisensteinHu1998} --- the one you will code in the
+hands-on session.}
+\label{fig:pkconstruction}
+\end{figure}
 
 \begin{remark}
 Two refinements, neither of which changes the argument. The cold dark matter is
@@ -609,19 +659,22 @@ easier to turn into a number?
 \setcounter{equation}{0}
 \setcounter{exercise}{0}
 
-\noindent\textbf{Plan (65 min at the board, 25 for questions).} The Lagrangian
-picture: label a fluid element and follow it (0--13) $\rightarrow$ the Zel'dovich
-approximation, its recipe and its velocities (13--22) $\rightarrow$ \emph{why a
-web and not a collection of spheres}: three unequal eigenvalues, and how the
-volume divides (22--35) $\rightarrow$ shell crossing, where the approximation
-dies (35--42) $\rightarrow$ 2LPT and what it fixes (42--54) $\rightarrow$ linear
-galaxy bias, as a bridge to what surveys measure (54--63). \emph{Read, not
+\begin{plan}
+\noindent\textbf{Plan (65 min at the board, 25 for questions --- this one does
+fit).} The Lagrangian picture: label a fluid element and follow it (0--13)
+$\rightarrow$ the Zel'dovich approximation, its recipe and its velocities
+(13--22) $\rightarrow$ \emph{why a web and not a collection of spheres}: three
+unequal eigenvalues, and how the volume divides (22--38) $\rightarrow$ shell
+crossing, where the approximation dies (38--45) $\rightarrow$ 2LPT and what it
+fixes (45--56) $\rightarrow$ linear galaxy bias, as a bridge to what surveys
+measure (56--65). \emph{Read, not
 lectured:} the one-dimensional exactness proof (Exercise~\ref{ex:1dza}), the
 Comments, and the practical business of generating initial conditions --- the
 hands-on session does that experimentally. \emph{If you are running behind:} the
 2LPT algebra compresses to its result, since the hands-on will show what it
 fixes. Do not compress the eigenvalue argument; it is the point of the lecture.
 Sources: \cite[Apps.~A and E]{Jeong2010}, \cite{Zeldovich1970,DodelsonSchmidt}.
+\end{plan}
 
 \subsection{The Lagrangian picture}
 \label{sec:lpt}
@@ -770,6 +823,23 @@ Read the middle rows: \textbf{$84\%$ of the volume is headed for a sheet or a
 filament, and only $8\%$ ever collapses along all three axes.} The web is not
 decoration draped over a population of spherical halos. It is what almost
 everything becomes, and the compact objects are the rare case.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.96\textwidth]{cosmic_web.pdf}
+\caption{A cosmic web, made by displacing a Gaussian field once. $128^3$
+particles in a $250\,h^{-1}$Mpc box at $z=0$, with the linear spectrum of
+Lecture~1 and a single Zel'dovich step --- no simulation, and no dynamics beyond
+\eqref{eq:za_displacement}. \emph{Left:} projected density through a
+$15\,h^{-1}$Mpc slab. \emph{Right:} every particle coloured by how many
+eigenvalues of its deformation tensor are collapsing. The measured volume
+fractions are $8.0$, $42.1$, $42.0$ and $8.0$ per cent, reproducing the table
+above from an actual realization rather than from theory. Knots land on the nodes
+of the web and filaments trace the strands, which is the claim of this section
+made visible. This is what the hands-on session builds, using the same
+conventions as the Cosmic Web Sandbox \cite{Sandbox}.}
+\label{fig:web}
+\end{figure}
 
 This is also why the ZA is worth more than its accuracy suggests. It predicts the
 skeleton of the cosmic web --- where the sheets and filaments will be --- from
@@ -991,6 +1061,17 @@ Phys. Rept. \textbf{367} (2002) 1
 Y.~B. Zel'dovich,
 \emph{Gravitational instability: An approximate theory for large density perturbations},
 Astron. Astrophys. \textbf{5} (1970) 84.
+
+\bibitem{EisensteinHu1998}
+D.~J. Eisenstein and W. Hu,
+\emph{Baryonic features in the matter transfer function},
+Astrophys. J. \textbf{496} (1998) 605
+[\href{https://arxiv.org/abs/astro-ph/9709112}{astro-ph/9709112}].
+
+\bibitem{Sandbox}
+N.-M. Nguyen,
+\emph{The Cosmic Web Sandbox},
+\href{https://minhmpa.github.io/lss-lab/cosmic-web-sandbox/}{minhmpa.github.io/lss-lab/cosmic-web-sandbox}.
 
 \bibitem{Doroshkevich1970}
 A.~G. Doroshkevich,
