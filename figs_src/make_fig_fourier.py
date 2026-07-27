@@ -57,8 +57,10 @@ for i, (w, k, lam, col) in enumerate(zip(waves, KS, LAM, COL)):
     y0 = -i * STEP
     axL.axhline(y0, color="0.85", lw=0.5, zorder=0)
     axL.plot(x, w + y0, color=col, zorder=2)
-    axL.text(L * 1.015, y0, rf"$\lambda={lam:.0f}$", color=col,
-             va="center", ha="left", fontsize=7.5)
+    # name the modes rather than pricing them: the numbers are set by the box
+    # size, which is arbitrary, but lambda_1 > lambda_2 > lambda_3 is not
+    axL.text(L * 1.015, y0, rf"$\lambda_{i+1}$", color=col,
+             va="center", ha="left", fontsize=8.5)
     if i < len(waves) - 1:
         axL.text(-L * 0.055, y0 - STEP / 2, "+", ha="center", va="center",
                  fontsize=13, color="0.35")
@@ -79,17 +81,19 @@ axL.set_title("position space: a lumpy field", fontsize=8.5)
 
 # ---- right: where those modes live on P(k)
 axR.loglog(kg, pk, color="0.25", lw=1.4, zorder=2)
-for k, a, col in zip(KS, AMP, COL):
+for i, (k, a, col) in enumerate(zip(KS, AMP, COL)):
     P = c.pk_lin(np.array([k]))[0]
     axR.plot([k, k], [1e1, P], color=col, lw=1.0, ls=":", zorder=1)
     axR.plot(k, P, "o", color=col, ms=6, mec="white", mew=0.8, zorder=3)
+    axR.annotate(rf"$k_{i+1}$", (k, P), textcoords="offset points",
+                 xytext=(9, -9), color=col, fontsize=8.5, zorder=4)
 axR.set_xlim(1e-3, 1.0)
 axR.set_ylim(2e2, 6e4)
 axR.set_xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
 axR.set_ylabel(r"$P_{\rm L}(k)\ [(\mathrm{Mpc}/h)^3]$")
 axR.set_title(r"Fourier space: amplitude per mode", fontsize=8.5)
-axR.text(0.96, 0.94, r"$\lambda = 2\pi/k$", transform=axR.transAxes,
-         ha="right", va="top", fontsize=8)
+axR.text(0.96, 0.94, r"$k = 2\pi/\lambda$", transform=axR.transAxes,
+         ha="right", va="top", fontsize=9)
 
 fig.savefig(OUT + "fourier_decomposition.pdf")
 # the caption must not leave the impression that large scales dominate lumpiness
