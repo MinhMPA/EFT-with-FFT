@@ -37,8 +37,35 @@
 \begin{document}
 \maketitle
 
-\noindent Solutions to the exercises in the lecture notes. Equation numbers
-refer to the notes; equations numbered here are local to each solution.
+\noindent Solutions to the derivations and exercises in the lecture notes.
+Equation numbers refer to the notes; equations numbered here are local to each
+solution.
+
+\begin{solution}{Derivation 1 (the mean of the perturbation).}
+By definition $\bar\rho(\tau)$ is the spatial mean of $\rho(\vx,\tau)$, so
+averaging $\delta\rho = \rho - \bar\rho$ over the volume gives
+$\overline{\delta\rho}(\tau) = \bar\rho - \bar\rho = 0$ at every time, and
+dividing by $\bar\rho$ gives $\bar\delta = 0$. In Fourier space,
+$\delta(\vk{=}0) = \int\dd^3x\,\delta(\vx) \propto \bar\delta = 0$. No
+dynamics entered: the split $\rho = \bar\rho\,(1+\delta)$ \emph{defines} the
+background to carry the mean, so the perturbation carries only differences.
+That is why dilution by the expansion never appears in $\delta$ --- it lives
+in $\bar\rho$ --- and why the hands-on session sets the $\vk = 0$ mode of a
+generated field to zero by hand.
+\end{solution}
+
+\begin{solution}{Derivation 2 (the smallness of $\Phi$).}
+The third member of the linear system in Fourier space is
+$-k^2\Phi = \tfrac32\Om(\tau)\cH^2\delta$, so
+$|\Phi| = \tfrac32\,\Om(\tau)\,(\cH/k)^2\,|\delta|$. With
+$\cH_0 \simeq 3.3\times10^{-4}\,h\,{\rm Mpc}^{-1}$ and
+$k = 0.1\,h\,{\rm Mpc}^{-1}$, the factor $(\cH/k)^2 \simeq 1.1\times10^{-5}$;
+with $\Om = 0.31$ and $\delta = 100$,
+$|\Phi| \simeq 1.5 \times 0.31 \times 1.1\times10^{-5} \times 100
+\simeq 5\times10^{-4}$, as quoted in the notes. Sub-horizon, the weak-field
+condition on $\Phi$ is therefore guaranteed by the Poisson equation for any
+density contrast these lectures meet: A4 delivers A2.
+\end{solution}
 
 \begin{solution}{Exercise 1.1 (the Newtonian equation of motion).}
 Conformal time is not an affine parameter, so we cannot use the affine form of

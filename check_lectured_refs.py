@@ -18,7 +18,7 @@ def spans(s, envs):
 def main(path):
     s = open(path).read()
     hidden = spans(s, ['reading', 'remark'])
-    allowed = hidden + spans(s, ['exercise', 'plan'])
+    allowed = hidden + spans(s, ['exercise', 'plan', 'derivation'])
     inside = lambda i, sp: any(a <= i < b for a, b in sp)
     labels = {m.group(1) for m in re.finditer(r'\\label\{([^}]+)\}', s)
               if inside(m.start(), hidden)}
@@ -27,7 +27,7 @@ def main(path):
         if m.group(1) in labels and not inside(m.start(), allowed):
             bad.append((s[:m.start()].count('\n') + 1, m.group(1)))
     # a quiz is asked at the board, so it must not sit inside a reading block
-    for m in re.finditer(r'\\begin\{quiz\}', s):
+    for m in re.finditer(r'\\begin\{(?:quiz|derivation)\}', s):
         if inside(m.start(), hidden):
             bad.append((s[:m.start()].count('\n') + 1, 'quiz inside reading/remark'))
     for line, what in bad:

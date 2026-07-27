@@ -58,6 +58,14 @@
 % it must survive being read aloud, cold, to a student.
 \newcommand{\answer}[1]{\upshape\par\smallskip\hspace*{1.2em}\textbf{Answer.}\ #1}
 
+% Short calculations posed at the board and done during the break --- not
+% homework. A few lines each; solutions in the companion note.
+\newcounter{derivation}
+\newenvironment{derivation}
+  {\par\medskip\noindent\begingroup\small\refstepcounter{derivation}%
+   \color{Plum!60!black}\textbf{Derivation \thederivation\ (during the break).}\ }
+  {\endgroup\par\medskip}
+
 % Exercises
 \newcounter{exercise}[section]
 \renewcommand{\theexercise}{\thesection.\arabic{exercise}}
@@ -85,15 +93,17 @@ with two hands-on sessions}
 so that $\langle\delta(\vk)\delta(\vk')\rangle = (2\pi)^3\dirac(\vk+\vk')P(k)$. A primed correlator, $\langle\cdots\rangle'$, strips the factor $(2\pi)^3\dirac$. This is the convention of both Dodelson \& Schmidt \cite[Eqs.~(5.26)--(5.27)]{DodelsonSchmidt} and Jeong \cite[App.~A.1]{Jeong2010} --- the two sources these lectures lean on hardest --- so formulae can be carried across from either without adjustment. Not every reference agrees: some place the $(2\pi)^{-3}$ on $\dd^3x$ instead, and their power spectra then differ by factors of $(2\pi)^3$.
 
 \medskip
-\noindent\textbf{How the blocks work.} Four kinds of set-off text.
+\noindent\textbf{How the blocks work.} Five kinds of set-off text.
 \textbf{Comment} is an aside that deepens the argument without carrying it.
 \textbf{Read, not lectured} is written for you but skipped at the board ---
 about a fifth of these notes, and none of it needed to follow the thread.
 \textbf{Ask the room} is a question to stop on: each carries an
 \emph{If nobody bites} fallback, which breaks the question into a smaller one
 rather than giving it away, and an \emph{Answer} stating the resolution
-plainly, for self-study as much as for the lecturer. \textbf{Exercises} are at the end of each
-lecture, with solutions in the companion note.
+plainly, for self-study as much as for the lecturer. \textbf{Derivations} are
+a few lines of algebra posed at the board and done during the break --- not
+homework. \textbf{Exercises} are at the end of each lecture, for later. Both
+are solved in the companion note.
 
 \medskip
 \noindent\textbf{Notation.} One table to refer back to; each entry is defined where it first appears.
@@ -125,13 +135,13 @@ $D_+,\ f$ & linear growth factor and rate
 \setcounter{exercise}{0}
 
 \begin{plan}
-\noindent\textbf{Plan (80 min at the board, 10 for questions).} The setting,
-and two ways to hold a perturbation (0--8) $\rightarrow$ the assumption ledger
-A1--A5, the equations derived one statement at a time, and what $(\cH/k)^2$
-buys (8--32) $\rightarrow$ the pressureless fluid, and how perturbations grow
-(32--43) $\rightarrow$ Gaussian random fields and what a power spectrum is
-(43--49) $\rightarrow$ the spectrum inflation hands us (49--53) $\rightarrow$
-horizon crossing, and how it carves the shape of $\Plin(k)$ (53--80). \emph{Read, not lectured:} everything in a grey block or a
+\noindent\textbf{Plan (80 min at the board, 10 for questions).} The setting:
+background, $\delta$, and Fourier space (0--8) $\rightarrow$ the assumptions
+A1--A5, the equations derived from them, and the smallness of $\Phi$ (8--33)
+$\rightarrow$ the pressureless fluid, and how perturbations grow (33--43)
+$\rightarrow$ Gaussian random fields and what a power spectrum is (43--49)
+$\rightarrow$ the primordial spectrum (49--53) $\rightarrow$ horizon crossing,
+and how it carves the shape of $\Plin(k)$ (53--80). \emph{Read, not lectured:} everything in a grey block or a
 Comment --- roughly a fifth of what is written here, including the recipe
 for drawing a Gaussian field, the definition of $\sigma_8$, and why
 $n_s \neq 1$.
@@ -175,9 +185,19 @@ picks up small perturbations, and the matter density departs from its mean by
 with $|\delta|\ll1$ early on and of order unity by the time there are galaxies to
 count. How $\delta$ gets from one to the other is the whole course.
 
+\begin{derivation}
+Show, from the definition above, that the density perturbation
+$\delta\rho \equiv \rho - \bar\rho$ averages to zero at every time,
+$\overline{\delta\rho}(\tau) = 0$, and hence that $\delta(\vk{=}0) = 0$.
+Nothing about gravity or expansion is needed, and that is the lesson to bring
+back: which object in the split $\rho = \bar\rho\,(1+\delta)$ carries the mean?
+(The hands-on session sets the $\vk = 0$ mode to zero by hand for exactly this
+reason.)
+\end{derivation}
+
 \medskip
 \begin{reading}
-\noindent\textbf{Two ways to hold the same field.} We move between them
+\noindent\textbf{Position space and Fourier space.} We move between them
 constantly, so it is worth saying once that they carry identical information.
 In \emph{position space}, $\delta(\vx)$ is a lumpy field filling the universe;
 this is where physical intuition lives, and where the displacements and
@@ -221,17 +241,16 @@ at large $k$.}
 \label{fig:fourier}
 \end{figure}
 
-\subsection{The equations we will use, and why we may}
+\subsection{The Newtonian equations and their assumptions}
 \label{sec:bridge}
 
 From here on everything is Newtonian: a fluid in an expanding box, no metric in
-sight. Three equations do all the work, and they rest on one choice and five
-numbered assumptions. Keep the ledger in a corner of the board: the
+sight. Three equations do all the work, and they rest on one gauge choice and
+five numbered assumptions, A1--A5. Keep the list in a corner of the board: the
 assumptions do different jobs, fail at different times, and exactly one will be
 dropped in Lecture~2.
 
-\paragraph{The arena (A1), and one choice.} \textbf{A1:} a spatially flat FLRW
-background, carrying \emph{scalar} perturbations only. The three types
+\paragraph{A1: flat FLRW background, scalar perturbations only.} The three types
 decouple at linear order: vectors decay, and tensors --- gravitational waves ---
 do not source density perturbations, so structure formation is a scalar story.
 Then make a \emph{choice}, which restricts no physics: fix the gauge completely by
@@ -244,13 +263,13 @@ writing the perturbed metric in conformal Newtonian (longitudinal) form
 \end{equation}
 Here $\psi$ perturbs $g_{00}$ --- it is what a slow particle falls down --- and
 $\phi$ perturbs the spatial metric --- it is what appears in the field equation.
-\paragraph{Weak fields (A2).} \textbf{A2:} $|\phi|,\,|\psi| \ll 1$, and work
-to first order in both. An observation as much as an assumption: the potentials
+\paragraph{A2: weak fields, $|\phi|,\,|\psi| \ll 1$.} Work to first order in
+both potentials. An observation as much as an assumption: the potentials
 are of order $10^{-5}$ on every scale we will meet, at every time. Note what A2
 does \emph{not} mention: the density contrast $\delta$.
 
-\paragraph{Cold matter (A3).} \textbf{A3:} the matter is cold dark matter and
-baryons --- pressureless and slow, $u \ll 1$. Newtonian gravity has one
+\paragraph{A3: cold matter.} The matter is cold dark matter and baryons ---
+pressureless and slow, $u \ll 1$. Newtonian gravity has one
 potential, not two, and A3 is what closes the gap: the traceless part of
 Einstein's equations sources $\phi - \psi$ through anisotropic stress alone,
 which cold matter does not carry, so for us the two potentials coincide,
@@ -262,15 +281,15 @@ the $15\%$ level during radiation domination. That contribution fades as matter
 comes to dominate, so in the matter era $\phi = \psi$ is accurate.
 \end{reading}
 
-\paragraph{The equations (A4, A5).} The last two entries arrive with the
-system itself. \textbf{A4:} keep only sub-horizon modes, $k \gg \cH$.
-\textbf{A5:} linearize in the density contrast, $|\delta| \ll 1$. They look
-alike and are not: A4 is permanent, while A5 is scaffolding --- the one
-assumption Lecture~2 drops, for a reason this section ends on. The system is
+\paragraph{A4: sub-horizon modes. A5: linear contrasts.} The last two arrive
+with the system itself: keep only $k \gg \cH$ (A4), and linearize in the
+density contrast, $|\delta| \ll 1$ (A5). They look alike and are not: A4 is
+permanent, while A5 is temporary --- the one assumption Lecture~2 drops, for a
+reason given at the end of this section. With the list complete, the system is
 three physical statements, each worth deriving in words before writing it
 down.
 
-\emph{Counting matter.} The contrast changes only because matter flows. Mass
+\emph{Mass conservation.} The contrast changes only because matter flows. Mass
 conservation for the peculiar velocity $\vu \equiv \dd\vx/\dd\tau$ reads
 $\dot\delta = -\nabla\cdot[(1+\delta)\vu]$ --- dilution by the expansion is
 already inside $\bar\rho$, so it never appears in $\delta$ --- and at linear
@@ -278,7 +297,7 @@ order (A5) $\dot\delta = -\theta$, with $\theta \equiv \nabla\cdot\vu$. (The
 relativistic version carries one more term, a dilation $3\dot\phi$; A4
 suppresses it, as Exercise~\ref{ex:subhorizon} shows.)
 
-\emph{Pushing matter.} For a pressureless fluid (A3) there is no separate Euler
+\emph{Newton's second law.} For a pressureless fluid (A3) there is no separate Euler
 equation to import: Euler \emph{is} Newton's second law applied to fluid
 elements. In comoving coordinates, to first order in $\Phi$ (A2), it reads
 \begin{equation}
@@ -294,8 +313,8 @@ elements rather than fields, and that change of variable is the whole of the
 Lagrangian picture. For now, take its divergence:
 $\dot\theta = -\cH\,\theta - \nabla^2\Phi$.
 
-\emph{Sourcing gravity.} What closes the system is the field equation, and here
-A4 earns its keep: every term carrying a factor of $\cH$
+\emph{The Poisson equation.} What closes the system is the field equation, and
+here A4 does its work: every term carrying a factor of $\cH$
 where its neighbours carry $k$ is suppressed by $(\cH/k)^2$, and the energy
 constraint of general relativity collapses to the Poisson equation,
 $\nabla^2\Phi = 4\pi Ga^2\bar\rho\,\delta = \tfrac32\Om(\tau)\cH^2\delta$, the
@@ -316,7 +335,7 @@ system; Dodelson \& Schmidt \cite[Ch.~12]{DodelsonSchmidt} set out this same
 starting point with its assumptions listed.
 
 \begin{quiz}
-The ledger demanded both weak fields (A2) and sub-horizon modes (A4). But
+We assumed both weak fields (A2) and sub-horizon modes (A4). But
 gravity is weak \emph{everywhere} --- $10^{-5}$ on every scale --- so A2 costs
 nothing. Why is it not enough on its own? Concretely: what goes wrong if you
 apply \eqref{eq:newtonian_linear} to a super-horizon mode?
@@ -351,9 +370,8 @@ rather than any single member: Euler feels the time--time potential while
 Poisson sources the spatial one.
 \end{remark}
 
-\paragraph{What \texorpdfstring{$(\cH/k)^2$}{(H/k)2} buys.} A4 did the work
-above, and it does a further job --- the one promised when A5 was called
-scaffolding --- that the whole of Lecture~2 rests on.
+\paragraph{The smallness of $\Phi$.} A4 has a second consequence, and the
+whole of Lecture~2 rests on it.
 
 \emph{It keeps the metric linear.} Inverting the Poisson equation,
 \begin{equation}
@@ -367,8 +385,18 @@ precisely where clustering becomes strong --- which is the licence for everythin
 that follows. We will let $\delta$ grow past unity and resum it to all orders
 through displacements, while never going beyond linear order in the metric. Those
 two statements sound contradictory and are not: $\Phi$ and $\delta$ are separated
-by $(\cH/k)^2$, and it is $\delta$ alone that becomes large. In ledger terms:
-dropping A5 leaves A2 intact.
+by $(\cH/k)^2$, and it is $\delta$ alone that becomes large. Dropping A5
+leaves A2 intact.
+
+\begin{derivation}
+Derive \eqref{eq:phi_small} yourself: write the third member of
+\eqref{eq:newtonian_linear} in Fourier space and show that
+$|\Phi| = \tfrac32\,\Om(\tau)\,(\cH/k)^2\,|\delta|$, so that sub-horizon (A4)
+the weak-field condition (A2) on $\Phi$ is guaranteed rather than assumed.
+Then put in numbers --- $\cH_0 \simeq 3.3\times10^{-4}\,h\,{\rm Mpc}^{-1}$,
+$k = 0.1\,h\,{\rm Mpc}^{-1}$, $\delta = 100$ --- and check the $5\times10^{-4}$
+quoted above.
+\end{derivation}
 
 \begin{reading}
 \emph{It also makes $\delta$ meaningful.} Relativistically $\delta$ is not a physical
@@ -428,7 +456,7 @@ f \equiv \frac{\dd\ln D_+}{\dd\ln a}
 with $f = 1$ in EdS. The often-quoted exponent $0.55$~\cite{Linder2005} agrees
 with $5/9$ at the sub-percent level over viable cosmologies.
 
-\paragraph{Solving it.} Einstein--de Sitter is the case to do by hand, because
+\paragraph{The Einstein--de Sitter solution.} Einstein--de Sitter is the case to do by hand, because
 everything else is a numerical perturbation on it. There $\cH = 2/\tau$ and
 $a \propto \tau^2$, so \eqref{eq:growth} becomes
 $\ddot D + (2/\tau)\dot D - (6/\tau^2)D = 0$. Try $D \propto \tau^n$ and the
@@ -471,7 +499,7 @@ where two distinct assumptions are at work. Statistical \emph{homogeneity} --- i
 \begin{reading}
 Note the one pair that is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$ --- a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
 
-\paragraph{Making one.} That a Gaussian field is fixed completely by $\Plin$ is a
+\paragraph{Generating a realization.} That a Gaussian field is fixed completely by $\Plin$ is a
 practical statement as much as a formal one, and it is what the hands-on session
 begins with. On a periodic grid the recipe is three lines:
 \begin{enumerate}[itemsep=1pt,topsep=2pt]
@@ -487,7 +515,7 @@ different universes with identical statistics, which is why a fixed seed is the
 right way to compare cosmologies: change $n_s$ with the seed held, and every
 difference you see is physics rather than luck.
 
-\paragraph{One number to fix the amplitude.} The spectrum has a shape and an
+\paragraph{Normalization: $\sigma_8$.} The spectrum has a shape and an
 overall size, and the size is conventionally quoted as $\sigma_8$: the rms
 fluctuation of the linear density field smoothed on spheres of radius
 $8\,h^{-1}$Mpc,
@@ -518,7 +546,7 @@ have the fewest modes to average over, so they are the worst measured ---
 cosmic variance is the price of owning one universe.}
 \end{quiz}
 
-\subsection{The spectrum inflation hands us}
+\subsection{The primordial spectrum}
 \label{sec:primordial}
 
 Everything so far has been about how a perturbation \emph{evolves}. Where the
@@ -771,9 +799,9 @@ room).} The Lagrangian picture: label a fluid element and follow it (0--13)
 $\rightarrow$ the Zel'dovich approximation, its recipe and its velocities
 (13--19) $\rightarrow$ \emph{why a web and not a collection of spheres}: three
 unequal eigenvalues, and how the volume divides (19--36) $\rightarrow$ shell
-crossing, where the approximation dies (36--43) $\rightarrow$ 2LPT and what it
-fixes (43--54) $\rightarrow$ linear galaxy bias, as a bridge to what surveys
-measure (54--64). \emph{Read, not
+crossing, where the approximation fails (36--44) $\rightarrow$ 2LPT and what it
+fixes (44--55) $\rightarrow$ linear galaxy bias, as a bridge to what surveys
+measure (55--64). \emph{Read, not
 lectured:} the one-dimensional exactness proof (Exercise~\ref{ex:1dza}), the
 Comments, and the practical business of generating initial conditions --- the
 hands-on session does that experimentally. \emph{If you are running behind:} the
@@ -962,7 +990,7 @@ whatsoever. The hands-on session that follows this lecture puts that to the test
 you will displace a Gaussian field once, classify each particle by how many of its
 eigenvalues are collapsing, and get a web out.
 
-\subsection{Shell crossing, and where the approximation dies}
+\subsection{Shell crossing, and where the approximation fails}
 \label{sec:shellcross}
 
 The first of those collapses is also the end of the theory. When
@@ -1070,7 +1098,7 @@ Order by order, and before shell crossing, yes --- the companion notes
 \cite{EFTnotes} make the correspondence explicit by recovering the Eulerian
 kernels from the displacement map.
 
-\subsection{Galaxies: linear bias, and where this goes next}
+\subsection{Galaxies: linear bias}
 \label{sec:bias}
 
 Everything so far has been about matter. Surveys measure galaxies, and galaxies

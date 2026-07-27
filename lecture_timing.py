@@ -23,13 +23,14 @@ SEC_PER_BOXED   = 30.0    # a boxed equation gets extra attention; added on top
 SEC_PER_FIGURE  = 150.0   # put it up, orient the room, draw out the point
 SEC_PER_TABLE   = 90.0
 SEC_PER_QUIZ    = 150.0   # pose, wait, take an answer, resolve. Often the nudge too.
+SEC_PER_DERIV   = 30.0    # pose a break derivation; the doing happens off the clock
 OVERHEAD        = 0.10    # transitions, admin, losing your place
 BUDGET_MIN      = 65.0
 
 ENV_EQN = re.compile(r'\\begin\{(equation|align|eqnarray)\*?\}')
 
 def strip_for_words(t):
-    for e in ('figure', 'table', 'exercise', 'quiz', 'center', 'remark', 'reading', 'plan'):
+    for e in ('figure', 'table', 'exercise', 'quiz', 'center', 'remark', 'reading', 'plan', 'derivation'):
         t = re.sub(r'\\begin\{' + e + r'\}.*?\\end\{' + e + r'\}', '', t, flags=re.S)
     t = re.sub(ENV_EQN.pattern + r'.*?\\end\{\w+\*?\}', '', t, flags=re.S)
     t = re.sub(r'\$[^$]*\$', ' X ', t)
@@ -43,13 +44,15 @@ def estimate(block):
     fig    = block.count(r'\begin{figure}')
     tab    = block.count(r'\begin{tabular}') - block.count(r'\begin{tabular}{@{}ll@{\hspace{2em}}ll@{}}')
     quiz   = block.count(r'\begin{quiz}')
+    deriv  = block.count(r'\begin{derivation}')
     # Comments and 'Read, not lectured' passages are in the notes but not delivered,
     # so their words and equations are excluded above and here.
     for env in ('remark', 'reading'):
         for m in re.finditer(r'\\begin\{'+env+r'\}.*?\\end\{'+env+r'\}', block, re.S):
             eqn -= len(ENV_EQN.findall(m.group(0)))
     secs = (w / WORDS_PER_MIN * 60 + eqn * SEC_PER_EQN + boxed * SEC_PER_BOXED
-            + fig * SEC_PER_FIGURE + max(tab, 0) * SEC_PER_TABLE + quiz * SEC_PER_QUIZ)
+            + fig * SEC_PER_FIGURE + max(tab, 0) * SEC_PER_TABLE + quiz * SEC_PER_QUIZ
+            + deriv * SEC_PER_DERIV)
     return dict(words=w, eqn=eqn, fig=fig, tab=max(tab, 0), quiz=quiz,
                 min=secs * (1 + OVERHEAD) / 60)
 
