@@ -125,13 +125,13 @@ $D_+,\ f$ & linear growth factor and rate
 \setcounter{exercise}{0}
 
 \begin{plan}
-\noindent\textbf{Plan (74 min at the board, 16 for questions).} The setting,
+\noindent\textbf{Plan (75 min at the board, 15 for questions).} The setting,
 and two ways to hold a perturbation (0--8) $\rightarrow$ the equations we may
 use, derived one statement at a time, and what $(\cH/k)^2$ buys (8--27)
 $\rightarrow$ the pressureless fluid, and how perturbations grow (27--37)
 $\rightarrow$ Gaussian random fields and what a power spectrum is (37--44)
 $\rightarrow$ the spectrum inflation hands us (44--48) $\rightarrow$ horizon
-crossing, and how it carves the shape of $\Plin(k)$ (48--74). \emph{Read, not lectured:} everything in a grey block or a
+crossing, and how it carves the shape of $\Plin(k)$ (48--75). \emph{Read, not lectured:} everything in a grey block or a
 Comment --- roughly a third of what is written here, including the Vlasov
 hierarchy, the recipe for drawing a Gaussian field, the definition of
 $\sigma_8$, and why $n_s \neq 1$.
@@ -315,6 +315,26 @@ Ma \& Bertschinger \cite[\S 5]{MaBertschinger1995} give the unapproximated
 system; Dodelson \& Schmidt \cite[Ch.~12]{DodelsonSchmidt} set out this same
 starting point with its assumptions listed.
 
+\begin{remark}
+Which assumption lives where. The three members of \eqref{eq:newtonian_linear}
+do not lean on the same legs, and it is worth being precise.
+\emph{Continuity} is the most robust: mass conservation, needing only
+$|\delta| \ll 1$ to linearize and one use of $k \gg \cH$, to drop the
+relativistic dilation term $3\dot\phi$. \emph{Euler}, in the form
+$\dot\theta = -\cH\theta - \nabla^2\Phi$, needs the matter to be cold ---
+pressureless and single-stream --- plus $u \ll 1$ and $|\Phi| \ll 1$, but
+\emph{no} sub-horizon limit at all: for cold matter it is exact at linear order
+in this gauge. (As written in \eqref{eq:newtonian_linear} it has Poisson
+substituted into $\nabla^2\Phi$, so the sub-horizon limit rides in with the
+substitution.) \emph{Poisson} is where $k \gg \cH$ does its real work: the
+relativistic energy constraint carries extra terms of relative size
+$(\cH/k)^2$, and dropping them is what turns a constraint of general relativity
+into Newton's field equation --- Exercise~\ref{ex:subhorizon} makes this
+quantitative. Finally, one assumption underwrites the system as a whole rather
+than any single member: $\phi = \psi$, because Euler feels the time--time
+potential while Poisson sources the spatial one.
+\end{remark}
+
 \paragraph{What \texorpdfstring{$(\cH/k)^2$}{(H/k)2} buys.} One small parameter
 did the work above, and it does a further job that the whole of Lecture~2 rests
 on.
@@ -349,6 +369,21 @@ Section~\ref{sec:linearpk} follows $\Phi$ and not $\delta$ when it has to cross
 the horizon.
 \end{reading}
 
+
+\begin{remark}
+Where relativity actually enters. Everything these lectures \emph{compute} is
+Newtonian and sub-horizon: the system \eqref{eq:newtonian_linear}, the linear
+growth it implies, and the whole of Lecture~2. Beyond the FLRW background
+itself, general relativity appears exactly three times, each as an input rather
+than a calculation: the metric \eqref{eq:newtonian_gauge} with $\phi = \psi$,
+which defines $\Phi$; the primordial spectrum of Section~\ref{sec:primordial},
+which is inflation's output; and the one super-horizon fact that $\Phi$ holds
+still outside the horizon (Section~\ref{sec:linearpk}), used only to carry the
+initial condition intact to horizon entry. One dynamical ingredient is quoted
+rather than derived: the acoustic oscillation of the radiation fluid, which
+needs pressure and so lies outside \eqref{eq:newtonian_linear}. Everything else
+is the three equations above.
+\end{remark}
 
 \subsection{The pressureless fluid, and how perturbations grow}
 \label{sec:vlasov}
@@ -605,9 +640,12 @@ Section~\ref{sec:primordial}. Super-horizon is where the initial condition sits,
 not a phase we integrate through.
 
 \emph{Inside the horizon during radiation domination, $\Phi$ decays.} Sub-horizon
-the Poisson equation of \eqref{eq:newtonian_linear} applies, $-k^2\Phi = 4\pi
-Ga^2\bar\rho\,\delta$, with $\bar\rho$ dominated by radiation. Two things then
-happen at once. The prefactor falls: $\bar\rho_r \propto a^{-4}$, so
+the energy constraint is again a Poisson equation, $-k^2\Phi = 4\pi
+Ga^2\bar\rho\,\delta$ --- the constraint cares only about what dominates the
+density, here radiation. The \emph{dynamics} of \eqref{eq:newtonian_linear} do
+not carry over: radiation has pressure, which is exactly what ``pressureless''
+excluded, so how $\delta_r$ behaves is imported here rather than derived. Two
+things then happen at once. The prefactor falls: $\bar\rho_r \propto a^{-4}$, so
 $a^2\bar\rho_r \propto a^{-2}$. And the source refuses to grow: radiation
 pressure resists compression, so $\delta_r$ does not collapse but rings, as a
 sound wave in the tightly coupled photon--baryon plasma. Hence $\Phi \propto a^{-2}\times(\text{oscillation})$. Keep both factors in view. They become the two features of the spectrum: the
