@@ -516,7 +516,7 @@ $\rightarrow$ linear galaxy bias, as a bridge to what surveys measure (59--63).
 conditions --- the hands-on session that follows does that experimentally.
 Sources: \cite[Apps.~A and E]{Jeong2010}, \cite{Zeldovich1970,DodelsonSchmidt}.
 
-\subsection{The Lagrangian picture and the Zel'dovich approximation}
+\subsection{The Lagrangian picture}
 \label{sec:lpt}
 
 How does gravitational collapse actually proceed? A slightly overdense region decelerates the matter around it; particles drift toward it, overshoot, and eventually orbit. The natural variable for this story is not the density at a fixed point but the trajectory of each mass element. Label each fluid element by its initial comoving position $\vq$ and track its displacement,
@@ -549,15 +549,123 @@ At first order, \eqref{eq:lpt_master} with $\delta = -\nabla_q\cdot\vPsi^{(1)}$ 
 \vPsi^{(1)}(\vk,\tau) = \frac{i\vk}{k^2}\,\delta^{(1)}(\vk,\tau) .
 \label{eq:za_displacement}
 \end{equation}
+\subsection{The Zel'dovich approximation}
+\label{sec:za}
+
 The \emph{Zel'dovich approximation} (ZA) \cite{Zeldovich1970} takes this linear displacement seriously beyond linear order in the density: move particles on straight lines (in comoving coordinates) and read the density off the Jacobian. Since $\Psi^{(1)}_{i,j}$ is symmetric it can be diagonalized at each $\vq$, with eigenvalues written $-D_+\lambda_1, -D_+\lambda_2, -D_+\lambda_3$, so
 \begin{equation}
 \delta_{\rm ZA}(\vx,\tau)
 = \frac{1}{\left(1-D_+\lambda_1\right)\left(1-D_+\lambda_2\right)\left(1-D_+\lambda_3\right)} - 1 .
 \label{eq:za_density}
 \end{equation}
-Here is the physical picture of structure formation, sketched in Fig.~\ref{fig:collapse}. At each point the initial conditions define three principal axes with collapse strengths $\lambda_1 > \lambda_2 > \lambda_3$. They are generically unequal for a simple statistical reason: the eigenvalues of a random symmetric matrix are almost never degenerate, so perfectly spherical collapse essentially never happens. Collapse happens first along the $\lambda_1$ axis, when $D_+\lambda_1 \to 1$: matter flattens into a sheet, a Zel'dovich \emph{pancake}, and the density formally diverges. That moment, $J \to 0$, is \emph{shell crossing}. Particle trajectories intersect, the map $\vq\mapsto\vx$ stops being invertible, several streams with different velocities coexist at the same point, and both the single-stream description of Section~\ref{sec:vlasov} and the Zel'dovich solution itself stop being valid.
 
-It is worth being clear about what the rest of Fig.~\ref{fig:collapse} is, then. Formally the second factor in \eqref{eq:za_density} vanishes later wherever $\lambda_2>0$, and the third later still wherever $\lambda_3>0$; the sequence sheet $\rightarrow$ filament $\rightarrow$ knot is that ordering of eigenvalue crossings, and nothing more. As a guide to the \emph{morphology} of the cosmic web it is an excellent one, and it is why the ZA predicts the skeleton of that web from the second derivatives of the initial potential alone. As dynamics past the first caustic it is an extrapolation: a Zel'dovich knot is not a halo, and the approximation says nothing about binding, virialization, or the stable orbiting configuration that collapsed matter actually settles into. Getting through shell crossing needs adhesion models, phase-space methods, or $N$-body simulation.
+As a recipe this is completely explicit, which is why it is what initial-condition
+generators do. Draw a Gaussian realization of $\delta^{(1)}(\vk)$ with variance
+$\Plin(k)$ --- the output of the previous hands-on session. Get the displacement
+from \eqref{eq:za_displacement}, one multiplication per mode,
+$\vPsi^{(1)}(\vk) = (i\vk/k^2)\,\delta^{(1)}(\vk)$. Transform back, move every
+particle from $\vq$ to $\vq + \vPsi^{(1)}$, and stop. Three Fourier transforms
+and a shift, and you have a nonlinear density field.
+
+The velocities come free. Since $\vPsi^{(1)} \propto D_+$ and nothing else in it
+depends on time,
+\begin{equation}
+\vu_{\rm ZA} = \dot{\vPsi}^{(1)} = \frac{\dot D_+}{D_+}\,\vPsi^{(1)}
+= \cH f\,\vPsi^{(1)} ,
+\label{eq:za_velocity}
+\end{equation}
+so positions and velocities are the same field up to the factor $\cH f$ of
+\eqref{eq:growth_rate}. A simulation needs both, and the ZA supplies them
+together --- one of the reasons it, and its second-order extension in
+Section~\ref{sec:2lpt}, are what every code uses to start.
+
+\begin{remark}
+The ZA is not a degraded linear theory, and it is worth being clear why. Linear
+theory says the \emph{density} is small. The ZA instead says the
+\emph{displacement} is well approximated at first order --- and then treats the
+consequences exactly, through a determinant that contains every power of
+$\vPsi^{(1)}$. Since bulk flows are the dominant motion on quasi-linear scales,
+that is the right thing to get right. It is why the ZA follows matter into
+sheets, where linear theory only says $\delta$ is growing, and why it remains a
+serviceable description well past the point where $\delta = 1$.
+\end{remark}
+\subsection{Why a web, and not a collection of spheres}
+\label{sec:web}
+
+You have already met a model of gravitational collapse: a uniform overdense
+sphere, which contracts, turns around and collapses to a point. It is the
+standard toy problem, it is analytically solvable, and it is the basis of most
+of what is said about halo formation.
+
+It also essentially never happens.
+
+Look at what a sphere requires in \eqref{eq:za_density}: all three factors must
+vanish together, $\lambda_1 = \lambda_2 = \lambda_3$. But $\Psi^{(1)}_{i,j}$ is
+the second-derivative matrix of a Gaussian random field --- a random symmetric
+$3\times3$ matrix --- and degenerate eigenvalues among such matrices form a set
+of measure zero. Sample four hundred thousand of them and you will not find one.
+\emph{Exactly spherical collapse has probability zero.}
+
+So the generic situation is $\lambda_1 > \lambda_2 > \lambda_3$, strictly, and
+the three factors in \eqref{eq:za_density} vanish at three different times. That
+single fact is the origin of the cosmic web. Collapse runs along the $\lambda_1$
+axis first and the patch flattens into a \emph{sheet}, a Zel'dovich pancake. If
+$\lambda_2 > 0$ the sheet later contracts along a second axis into a
+\emph{filament}. If $\lambda_3 > 0$ as well, the filament finally draws up into a
+\emph{knot}. How far a patch gets is decided by nothing more than how many of its
+eigenvalues are positive --- which is fixed in the initial conditions, before any
+dynamics has happened.
+
+That makes the morphology countable. For a Gaussian field the joint distribution
+of the three eigenvalues is known \cite{Doroshkevich1970}, and the volume
+fractions come out as
+\begin{center}
+\small
+\begin{tabular}{@{}lcl@{}}
+\toprule
+positive eigenvalues & fraction of volume & fate \\
+\midrule
+0 & $8\%$  & void, expanding in all three directions \\
+1 & $42\%$ & sheet \\
+2 & $42\%$ & filament \\
+3 & $8\%$  & knot \\
+\bottomrule
+\end{tabular}
+\end{center}
+Read the middle rows: \textbf{$84\%$ of the volume is headed for a sheet or a
+filament, and only $8\%$ ever collapses along all three axes.} The web is not
+decoration draped over a population of spherical halos. It is what almost
+everything becomes, and the compact objects are the rare case.
+
+This is also why the ZA is worth more than its accuracy suggests. It predicts the
+skeleton of the cosmic web --- where the sheets and filaments will be --- from
+the second derivatives of the initial potential alone, with no dynamics
+whatsoever. The hands-on session that follows this lecture puts that to the test:
+you will displace a Gaussian field once, classify each particle by how many of its
+eigenvalues are collapsing, and get a web out.
+
+\subsection{Shell crossing, and where the approximation dies}
+\label{sec:shellcross}
+
+The first of those collapses is also the end of the theory. When
+$D_+\lambda_1 \to 1$ the first factor in \eqref{eq:za_density} vanishes, the
+density formally diverges, and $J \to 0$. That moment is \emph{shell crossing}:
+particle trajectories intersect, the map $\vq \mapsto \vx$ stops being
+invertible, several streams with different velocities occupy the same point, and
+both the single-stream description of Section~\ref{sec:vlasov} and the Zel'dovich
+solution itself cease to be valid.
+
+Be clear, then, about what the later stages of Fig.~\ref{fig:collapse} are.
+Formally the second factor vanishes later wherever $\lambda_2>0$ and the third
+later still wherever $\lambda_3>0$, and the sequence sheet $\rightarrow$ filament
+$\rightarrow$ knot is that ordering of eigenvalue crossings. As a guide to
+\emph{morphology} it is excellent, and it is what the table above counts. As
+\emph{dynamics} past the first caustic it is an extrapolation: a Zel'dovich knot
+is not a halo, and the approximation says nothing about binding, virialization,
+or the stable orbiting configuration that collapsed matter actually settles into.
+Getting through shell crossing needs adhesion models, phase-space methods, or
+$N$-body simulation --- which is precisely why the initial conditions of
+Section~\ref{sec:2lpt} matter, since a simulation is what you hand them to.
 
 \begin{figure}[t]
 \centering
@@ -647,6 +755,47 @@ Order by order, and before shell crossing, yes --- the companion notes
 \cite{EFTnotes} make the correspondence explicit by recovering the Eulerian
 kernels from the displacement map.
 
+\subsection{Galaxies: linear bias, and where this goes next}
+\label{sec:bias}
+
+Everything so far has been about matter. Surveys measure galaxies, and galaxies
+are not matter.
+
+They form in the deepest potential wells, so they are not a fair sample of the
+density field but a \emph{biased} one. The simplest statement of that --- and the
+only one this course needs --- is that on large scales the galaxy overdensity is
+proportional to the matter overdensity,
+\begin{equation}
+\delta_g(\vx) = b_1\,\delta(\vx) ,
+\qquad\Longrightarrow\qquad
+P_g(k) = b_1^2\,\Plin(k) ,
+\label{eq:linear_bias}
+\end{equation}
+with a single number $b_1$, the \emph{linear bias}. It exceeds one for the
+massive halos that host bright galaxies, because a rare peak responds more than
+proportionately to the large-scale density it sits in: raise the background a
+little and the number of regions crossing the threshold to form a galaxy rises a
+lot. Nothing about $b_1$ is predicted by the theory in these lectures. It is
+measured alongside the cosmology.
+
+Two things are worth knowing about \eqref{eq:linear_bias}. It is the first term
+of an expansion, not a law --- at smaller scales the response stops being linear,
+picks up a dependence on the tidal field, and acquires a stochastic piece. And it
+is written in real space, whereas a survey infers radial positions from
+redshifts, so peculiar velocities distort what is measured along the line of
+sight. Both corrections, and the one-loop machinery that organises them, are the
+subject of the companion notes \cite{EFTnotes}.
+
+\begin{remark}
+That closes the loop the course opened. Section~\ref{sec:linearpk} showed how to
+get $\Plin(k)$ from a cosmological model, and it has since been put to two
+distinct uses. Fed through the displacement map of this lecture it becomes
+initial conditions for an $N$-body simulation, which is what the hands-on session
+does. Multiplied by $b_1^2$ it becomes a prediction for what a galaxy survey
+measures. One spectrum, two roads: the first leads to simulations of structure
+formation, the second to cosmological inference from galaxy clustering.
+\end{remark}
+
 \begin{exercise}\label{ex:d2}
 Solve \eqref{eq:D2} in EdS ($\cH = 2/\tau$, $\Om=1$, $D_+ = a \propto \tau^2$) and verify $D_2 = -\tfrac37 a^2$.
 \end{exercise}
@@ -702,6 +851,12 @@ Phys. Rept. \textbf{367} (2002) 1
 Y.~B. Zel'dovich,
 \emph{Gravitational instability: An approximate theory for large density perturbations},
 Astron. Astrophys. \textbf{5} (1970) 84.
+
+\bibitem{Doroshkevich1970}
+A.~G. Doroshkevich,
+\emph{Spatial structure of perturbations and origin of galactic rotation in fluctuation theory},
+Astrophysics \textbf{6} (1970) 320
+[translated from Astrofizika \textbf{6} (1970) 581].
 
 \bibitem{EFTnotes}
 N.-M. Nguyen,
