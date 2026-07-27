@@ -87,6 +87,22 @@ with two hands-on sessions}
 \begin{document}
 \maketitle
 
+\noindent\textbf{Suggested reading.} Three textbooks, each better than these
+notes at something.
+\begin{enumerate}[itemsep=1pt,topsep=3pt,leftmargin=*]
+\item S.~Dodelson \& F.~Schmidt, \emph{Modern Cosmology}, 2nd ed.\ (Academic
+  Press, 2020). The closest match to this course, and the one to read if you
+  read only one: Ch.~12 covers Lecture~1 from the same starting point, with its
+  assumptions set out explicitly.
+\item D.~Baumann, \emph{Cosmology} (Cambridge University Press, 2022). Go here
+  for where the initial conditions come from --- inflation and the primordial
+  spectrum --- which these lectures take as given.
+\item D.~Huterer, \emph{A Course in Cosmology: From Theory to Practice}
+  (Cambridge University Press, 2023). Go here for the observational side: how
+  the quantities we compute are actually measured, and from what.
+\end{enumerate}
+
+\medskip
 \noindent\textbf{How the blocks work.} Five kinds of set-off text.
 \textbf{Comment} is an aside that deepens the argument without carrying it.
 \textbf{Read, not lectured} is written for you but skipped at the board ---
@@ -303,13 +319,18 @@ reason given at the end of this section. With the list complete, the system is
 three physical statements, each worth deriving in words before writing it
 down.
 
-\emph{Mass conservation.} The contrast changes only because matter flows. Mass
-conservation for the peculiar velocity $\vu \equiv \dd\vx/\dd\tau$ reads
-$\dot\delta = -\nabla\cdot[(1+\delta)\vu]$ --- dilution by the expansion is
-already inside $\bar\rho$, so it never appears in $\delta$ --- and at linear
-order (A5) $\dot\delta = -\theta$, with $\theta \equiv \nabla\cdot\vu$. (The
-relativistic version carries one more term, a dilation $3\dot\phi$; A4
-suppresses it, as Exercise~\ref{ex:subhorizon} shows.)
+\emph{Mass conservation.} The contrast changes only because matter flows. For
+the peculiar velocity $\vu \equiv \dd\vx/\dd\tau$, mass conservation reads
+\begin{equation}
+\dot\delta + \nabla\cdot\left[(1+\delta)\,\vu\right] = 0 ,
+\label{eq:continuity}
+\end{equation}
+in which dilution by the expansion never appears --- it is already inside
+$\bar\rho$, which is the content of Derivation~1. At linear order (A5) the
+product term drops and \eqref{eq:continuity} becomes $\dot\delta = -\theta$,
+with $\theta \equiv \nabla\cdot\vu$. (The relativistic version carries one more
+term, a dilation $3\dot\phi$; A4 suppresses it, as
+Exercise~\ref{ex:subhorizon} shows.)
 
 \emph{Newton's second law.} For a pressureless fluid (A3) there is no separate Euler
 equation to import: Euler \emph{is} Newton's second law applied to fluid
