@@ -82,7 +82,37 @@ Einstein constraint to the Poisson equation, which is what makes $\Phi$ the
 Newtonian potential.
 \end{solution}
 
-\begin{solution}{Exercise 1.2 ($D_2$ in EdS).}
+\begin{solution}{Exercise 1.2 (the sub-horizon limit).}
+\emph{(i)} The two groups in \eqref{eq:energy_constraint} are $k^2\phi$ and
+$3\cH(\dot\phi + \cH\psi)$. With $\phi=\psi=\Phi$ and $\dot\Phi \lesssim \cH\Phi$,
+the second is bounded by $3\cH(\cH\Phi + \cH\Phi) = 6\cH^2\Phi$, so
+\begin{equation*}
+\frac{\text{discarded}}{\text{retained}} \;\lesssim\; 6\left(\frac{\cH}{k}\right)^2 .
+\end{equation*}
+For the growing mode in matter domination the bound is saturated from below
+rather than above: $\Phi$ is constant, so $\dot\Phi = 0$ exactly and the ratio is
+$3(\cH/k)^2$. Either way the suppression is two powers of $\cH/k$, and the limit
+$k \gg \cH$ leaves $-k^2\Phi = 4\pi Ga^2\bar\rho\,\delta$.
+
+\emph{(ii)} $(\cH_0/k)^2 = (3.3\times10^{-4}/k)^2$ gives $1.1\times10^{-5}$ at
+$k = 0.1\,h\,{\rm Mpc}^{-1}$ and $1.1\times10^{-1}$ at
+$k = 10^{-3}\,h\,{\rm Mpc}^{-1}$. So on the scales this course actually uses the
+Newtonian field equation is good to a part in $10^5$, while at
+$k \sim 10^{-3}$ the neglected term is a ten-percent effect. That is the
+low-$k$ edge of the window in the Comment, and this is what closes it.
+
+\emph{(iii)} Because a bound is a claim about the solution, while an identity is
+a claim about the equations. The bound $\dot\Phi \lesssim \cH\Phi$ holds for the
+growing mode and fails for the decaying one, and one has to check it again in
+every new regime --- during a rapid transition, for a modified-gravity model, for
+an isocurvature initial condition. The algebraic form has no such exposure: the
+time derivative has been eliminated using a second Einstein equation, so the
+$\mathcal{O}(\cH/k)$ suppression is visible in the equation itself and holds
+wherever the Einstein equations do. Removing an assumption is worth more than
+verifying it, because verification does not travel.
+\end{solution}
+
+\begin{solution}{Exercise 1.3 ($D_2$ in EdS).}
 In EdS, $a \propto \tau^2$, $\cH = 2/\tau$, $\Om = 1$, and $D_+ = a$. Try
 $D_2 = C a^2 \propto \tau^4$. Then $\dot D_2 = 4C\tau^3$ and
 $\ddot D_2 = 12C\tau^2$, while $D_+^2 = a^2 \propto \tau^4$. Normalising
@@ -111,7 +141,7 @@ Lecture~2 --- is $\tfrac{17}{21}\delta_1^2$. Since $17/21 > 2/3$, adding the tid
 collapse \emph{faster} than the straight-line Zel'dovich estimate, not slower.
 \end{solution}
 
-\begin{solution}{Exercise 1.3 (the Zel'dovich approximation is exact in 1D).}
+\begin{solution}{Exercise 1.4 (the Zel'dovich approximation is exact in 1D).}
 In one dimension, Gauss's law says the gravitational field at a point depends
 only on the total mass on either side of it. Consider a sheet with Lagrangian
 coordinate $q$ displaced to $x = q + \Psi(q,\tau)$. Before shell crossing the

@@ -289,6 +289,25 @@ answer. Sub-horizon that ambiguity is suppressed by the same $(\cH/k)^2$, and
 $\delta$ becomes something unambiguous to compute, correlate and measure. Every
 power spectrum in these lectures stands on that.
 
+\paragraph{Why the metric stays linear.} One consequence of the Poisson equation
+is worth drawing out now, because everything after this lecture depends on it.
+Inverting $-k^2\Phi = 4\pi Ga^2\bar\rho\,\delta$ gives
+\begin{equation}
+|\Phi| \sim \frac{3}{2}\,\Om\left(\frac{\cH}{k}\right)^{\!2}\delta ,
+\label{eq:phi_small}
+\end{equation}
+so the potential is the density contrast suppressed by two powers of $\cH/k$ ---
+the same factor that licensed the Newtonian limit. At
+$k = 0.1\,h\,{\rm Mpc}^{-1}$ that suppression is about $10^{-5}$, so even a patch
+with $\delta \sim 100$ carries $|\Phi| \sim 5\times10^{-4}$. Gravity stays weak
+precisely where clustering becomes strong.
+
+This is the licence for the rest of the course. We will let $\delta$ grow to
+order unity and beyond, and resum it to all orders through loops and
+displacements, while never going past linear order in the metric. Those two
+statements sound contradictory and are not: $\Phi$ and $\delta$ are separated by
+$(\cH/k)^2$, and it is $\delta$ alone that becomes large.
+
 \begin{remark}
 The window, then. It closes below at $k\sim\cH$, in practice
 $k \sim 10^{-3}\,h\,{\rm Mpc}^{-1}$, where relativistic corrections and the gauge
@@ -479,6 +498,25 @@ are in hand.
 
 \begin{exercise}\label{ex:geodesic}
 Derive \eqref{eq:newtonian_eom}: write the geodesic equation for a nonrelativistic particle in the metric \eqref{eq:newtonian_gauge}, keep terms to first order in the potentials and to leading order in $u \ll 1$, and use $\phi = \psi = \Phi$. Careful: conformal time is not an affine parameter.
+\end{exercise}
+
+\begin{exercise}\label{ex:subhorizon}
+\textbf{The other limit.} Exercise~\ref{ex:geodesic} took $v\ll1$ and produced
+the force law; this one takes $k\gg\cH$ and produces the field equation.
+(i) Reducing \eqref{eq:energy_constraint} to Poisson needs slightly more than
+$k\gg\cH$: it needs $\dot\phi$ not to be anomalously large. Assuming
+$\dot\phi \lesssim \cH\phi$, which holds for the growing mode, show that the
+discarded group is smaller than the retained one by
+$\mathcal{O}\big((\cH/k)^2\big)$.
+(ii) Put a number on it. Today $\cH_0 = H_0/c \simeq 3.3\times10^{-4}\,h\,{\rm Mpc}^{-1}$.
+How large is the neglected term at $k = 0.1\,h\,{\rm Mpc}^{-1}$, and at
+$k = 10^{-3}\,h\,{\rm Mpc}^{-1}$? Which of the two lies inside the window quoted
+in the Comment above?
+(iii) The assumption in (i) can be \emph{removed} rather than justified:
+combining the time--time constraint with the time--space one gives an algebraic
+equation for $\phi$ carrying no time derivative at all, in which the correction
+is manifestly $\mathcal{O}(\cH/k)$ \cite[Ex.~6.7]{DodelsonSchmidt}. Why is
+eliminating an assumption preferable to bounding it?
 \end{exercise}
 
 \begin{exercise}\label{ex:d2}
@@ -1420,6 +1458,11 @@ R. Takahashi, M. Sato, T. Nishimichi, A. Taruya and M. Oguri,
 \emph{Revising the halofit model for the nonlinear matter power spectrum},
 Astrophys. J. \textbf{761} (2012) 152
 [\href{https://arxiv.org/abs/1208.2701}{arXiv:1208.2701}].
+
+\bibitem{DodelsonSchmidt}
+S. Dodelson and F. Schmidt,
+\emph{Modern Cosmology}, 2nd edition,
+Academic Press (2021).
 
 \bibitem{Huterer2023}
 D. Huterer,
