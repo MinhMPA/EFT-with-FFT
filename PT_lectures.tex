@@ -143,6 +143,31 @@ $k = 0.1\,h\,{\rm Mpc}^{-1}$ means $\lambda \simeq 63\,h^{-1}{\rm Mpc}$, a few
 cluster diameters. This is where the dynamics and the statistics live. The
 transform convention is in the front matter; nothing below depends on which
 picture you find more natural, only on being fluent in both.
+Figure~\ref{fig:fourier} is the same statement drawn.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.96\textwidth]{fourier_decomposition.pdf}
+\caption{The same field, held two ways. \emph{Left:} three plane waves of
+comoving wavelength $\lambda = 2\pi/k$, added into a lumpy density field
+$\delta(x)$. This is a one-dimensional slice for legibility; the real field is
+three-dimensional and each mode carries a direction $\khat$ as well as a
+wavelength. \emph{Right:} where those same three modes sit on the linear power
+spectrum, which is nothing more exotic than amplitude against scale (defined
+properly in Section~\ref{sec:stats}, and computed in Section~\ref{sec:linearpk}).
+Colours identify the same mode across the two panels.
+\newline
+One warning, because the picture invites the wrong conclusion. The longest wave
+is drawn with the largest amplitude, correctly: a single mode's amplitude goes
+as $\sqrt{\Plin(k)}$, and $\Plin$ falls beyond its peak. But that is \emph{not}
+the same as large scales dominating the lumpiness. Short-wavelength modes are
+far more numerous, and the fluctuation power per logarithmic interval,
+$\Delta^2(k) = k^3\Plin(k)/2\pi^2$, rises steeply across these three modes ---
+$0.009$, $0.12$, $0.66$. Small scales carry more, which is why nonlinearity
+reaches them first, and why almost everything difficult in this course happens
+at large $k$.}
+\label{fig:fourier}
+\end{figure}
 
 \subsection{Why Newtonian dynamics, and which \texorpdfstring{$\delta$}{delta}}
 \label{sec:bridge}
