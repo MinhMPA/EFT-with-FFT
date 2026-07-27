@@ -38,6 +38,20 @@
   {\par\medskip\noindent\begingroup\small\color{ForestGreen!60!black}\textbf{Comment.}\ }
   {\endgroup\par\medskip}
 
+% Passages the lecture does not cover: present in the notes, skipped at the board.
+\newenvironment{reading}
+  {\par\medskip\noindent\begingroup\small\color{black!58}%
+   \textbf{Read, not lectured.}\ }
+  {\endgroup\par\medskip}
+
+% In-lecture questions. "Ask the room" is the prompt; \nudge is the fallback
+% for when nobody answers -- a smaller question or a hint, not the answer.
+\newenvironment{quiz}
+  {\par\medskip\noindent\begingroup\small\color{RoyalBlue!65!black}%
+   \textbf{Ask the room.}\ \itshape}
+  {\endgroup\par\medskip}
+\newcommand{\nudge}[1]{\upshape\par\smallskip\hspace*{1.2em}\textbf{If nobody bites:}\ \itshape #1}
+
 % Exercises
 \newcounter{exercise}[section]
 \renewcommand{\theexercise}{\thesection.\arabic{exercise}}
@@ -93,18 +107,19 @@ $D_+,\ f$ & linear growth factor and rate
 \setcounter{equation}{0}
 \setcounter{exercise}{0}
 
-\noindent\textbf{Plan (65 min at the board, 25 for questions).} The setting, and
-two ways to hold a perturbation (0--5) $\rightarrow$ why Newtonian dynamics is
-allowed, and which $\delta$ we are computing (5--15) $\rightarrow$ the
-pressureless fluid and linear growth (15--27) $\rightarrow$ Gaussian random
-fields and what a power spectrum is (27--37) $\rightarrow$ the primordial
-spectrum inflation hands us (37--42) $\rightarrow$ horizon crossing, and how it
-carves the shape of $\Plin(k)$ (42--57) $\rightarrow$ the M\'esz\'aros effect and
-what it adds (57--60). \emph{Read, not lectured:} the geodesic derivation
-(Exercise~\ref{ex:geodesic}) and the Vlasov hierarchy --- state the single-stream
-closure and move on. The hands-on session that follows builds $\Plin(k)$ from
-scratch and draws a realization of it, so this is the lecture worth letting run
-into the question time. Sources:~\cite{MaBertschinger1995,DodelsonSchmidt}.
+\noindent\textbf{Plan (65 min at the board, 25 for questions).} The setting,
+and two ways to hold a perturbation (0--8) $\rightarrow$ the equations we may
+use, and what $(\cH/k)^2$ buys (8--24) $\rightarrow$ the pressureless fluid, and
+how perturbations grow (24--34) $\rightarrow$ Gaussian random fields and what a
+power spectrum is (34--44) $\rightarrow$ the spectrum inflation hands us
+(44--50) $\rightarrow$ horizon crossing, and how it carves the shape of
+$\Plin(k)$ (50--65). \emph{Read, not lectured:} everything in a grey block or a
+Comment --- about a quarter of what is written here, including the Vlasov
+hierarchy, the \lcdm{} growth numbers, and the definition of $\sigma_8$. These
+timings come from \texttt{lecture\_timing.py} at a deliberately slow pace; run
+it yourself with your own numbers. \emph{If you are running behind:} drop the
+boxed questions first, then the M\'esz\'aros aside --- not the horizon argument,
+which is what the hands-on session needs. Sources:~\cite{MaBertschinger1995,DodelsonSchmidt}.
 
 \medskip
 \noindent\textbf{The setting.} Fixed for the whole course: a spatially flat
@@ -116,11 +131,15 @@ it. The unperturbed metric is
 \end{equation*}
 written in comoving coordinates $\vx$, which ride along with the expansion: a
 galaxy at rest keeps the same $\vx$ while its physical separation from us,
-$a\vx$, grows. Conformal time is used throughout because of the form this takes:
+$a\vx$, grows. \begin{reading}
+Conformal time is used throughout because of the form this takes:
 with $\dd\tau$ and $\dd\vx$ appearing symmetrically, radial light rays obey
 $\dd x = \pm\dd\tau$, so light travels at unit comoving speed and an interval of
 conformal time \emph{is} a comoving distance. That is what will make the horizon
-a clean notion in Section~\ref{sec:bridge}. Structure is what happens when this is not quite true. The metric
+a clean notion in Section~\ref{sec:bridge}.
+\end{reading}
+
+Structure is what happens when this is not quite true. The metric
 picks up small perturbations, and the matter density departs from its mean by
 \begin{equation*}
 \delta(\vx,\tau) \equiv \frac{\rho(\vx,\tau) - \bar\rho(\tau)}{\bar\rho(\tau)} ,
@@ -129,6 +148,7 @@ with $|\delta|\ll1$ early on and of order unity by the time there are galaxies t
 count. How $\delta$ gets from one to the other is the whole course.
 
 \medskip
+\begin{reading}
 \noindent\textbf{Two ways to hold the same field.} We move between them
 constantly, so it is worth saying once that they carry identical information.
 In \emph{position space}, $\delta(\vx)$ is a lumpy field filling the universe;
@@ -147,6 +167,7 @@ $\delta(\vk)$ evolves independently of every other. One partial differential
 equation in three dimensions becomes one ordinary differential equation per
 $\vk$ --- which is what makes linear theory solvable at all.
 Figure~\ref{fig:fourier} is the same statement drawn.
+\end{reading}
 
 \begin{figure}[t]
 \centering
@@ -190,12 +211,23 @@ the perturbed metric in conformal Newtonian (longitudinal) form
 \end{equation}
 Here $\psi$ perturbs $g_{00}$ --- it is what a slow particle falls down --- and
 $\phi$ perturbs the spatial metric --- it is what appears in the field equation.
+\begin{reading}
 Newtonian gravity has one potential, not two, so we need these to coincide. They
 do whenever the total anisotropic stress vanishes
 \cite[Eq.~(23d)]{MaBertschinger1995}, which holds for cold dark matter and
 baryons in the matter era; free-streaming neutrinos spoil it at the $15\%$ level
 during radiation domination, but that contribution fades as matter comes to
 dominate. Write $\phi = \psi \equiv \Phi$.
+
+\begin{quiz}
+Gravity is weak everywhere in the universe --- the potential is of order
+$10^{-5}$ on every scale. So why is ``gravity is weak'' not enough to justify
+using Newtonian dynamics?
+\nudge{Split it. Is a super-horizon mode weakly gravitating? Yes. Can you write
+down a Newtonian description of one? Then weakness cannot be the thing that
+licenses it, and something else must be.}
+\end{quiz}
+\end{reading}
 
 \paragraph{The equations.} Now keep only scales far inside the horizon,
 $k \gg \cH$. Every term carrying a factor of $\cH$ where its neighbours carry
@@ -261,9 +293,11 @@ through displacements, while never going beyond linear order in the metric. Thos
 two statements sound contradictory and are not: $\Phi$ and $\delta$ are separated
 by $(\cH/k)^2$, and it is $\delta$ alone that becomes large.
 
-\subsection{The Vlasov equation and the pressureless fluid}
+
+\subsection{The pressureless fluid, and how perturbations grow}
 \label{sec:vlasov}
 
+\begin{reading}
 We now set up the nonlinear problem in the Newtonian regime, following \cite[\S 2]{Bernardeau2002}. Particles obey \eqref{eq:newtonian_eom}, with $\Phi$ the peculiar potential of \eqref{eq:newtonian_linear}. Collisionless matter is then described by its phase-space density $f(\vx,\vp,\tau)$, with $\vp = am\vu$; phase-space conservation gives the Vlasov equation,
 \begin{equation}
 \frac{\partial f}{\partial\tau} + \frac{\vp}{ma}\cdot\nabla f - am\,\nabla\Phi\cdot\frac{\partial f}{\partial\vp} = 0 .
@@ -276,7 +310,8 @@ Taking velocity moments produces a hierarchy: the zeroth moment gives continuity
 \dot{\vu} + \cH\,\vu + (\vu\cdot\nabla)\,\vu &= -\nabla\Phi - \frac{1}{\rho}\,\nabla_j\!\left(\rho\,\sigma_{ij}\right).
 \label{eq:euler}
 \end{align}
-Cold matter starts cold: before orbits cross, each position hosts a single stream and $\sigma_{ij} = 0$. This \emph{single-stream closure} truncates the hierarchy into a pressureless perfect fluid. It is a closure rather than a controlled approximation: exact until shell crossing, and completely wrong after. Where it fails is where the effective theory of Lecture~2 will operate.
+Cold matter starts cold: before orbits cross, each position hosts a single stream and $\sigma_{ij} = 0$. This \emph{single-stream closure} truncates the hierarchy into a pressureless perfect fluid. It is a closure rather than a controlled approximation: exact until shell crossing, and completely wrong after. Where it fails is where Lecture~2 stops.
+\end{reading}
 
 Within the closure, vorticity $\bm{w} = \nabla\times\vu$ obeys a homogeneous equation: it decays as $1/a$ at linear order and stays zero if it starts zero. The velocity field is then fully specified by its divergence $\theta = \nabla\cdot\vu$.
 
@@ -293,7 +328,40 @@ f \equiv \frac{\dd\ln D_+}{\dd\ln a}
 \simeq \Om^{5/9}(\tau) \quad\text{(flat \lcdm)} ,
 \label{eq:growth_rate}
 \end{equation}
-with $f = 1$ in EdS. The often-quoted exponent $0.55$~\cite{Linder2005} agrees with $5/9$ at the sub-percent level over viable cosmologies. The growth rate will return as the central quantity of redshift-space distortions in Lecture~3.
+with $f = 1$ in EdS. The often-quoted exponent $0.55$~\cite{Linder2005} agrees
+with $5/9$ at the sub-percent level over viable cosmologies.
+
+\paragraph{Solving it.} Einstein--de Sitter is the case to do by hand, because
+everything else is a numerical perturbation on it. There $\cH = 2/\tau$ and
+$a \propto \tau^2$, so \eqref{eq:growth} becomes
+$\ddot D + (2/\tau)\dot D - (6/\tau^2)D = 0$. Try $D \propto \tau^n$ and the
+indicial equation factorizes as $(n-2)(n+3) = 0$, giving $D \propto \tau^{2} = a$ and $D \propto \tau^{-3} = a^{-3/2}$. Two modes,
+one growing and one decaying, as a second-order equation must have. The decaying
+one is why initial conditions are forgettable: any admixture dies as $a^{-3/2}$,
+so a universe started slightly wrong converges on the growing solution rather
+than remembering the error. Every later statement in this course assumes only the
+growing mode is left.
+
+The growing mode is remarkable for how \emph{slow} it is. Gravity has a runaway
+instability available to it --- in a static medium an overdensity grows
+exponentially --- and the expansion converts that into a power law. The reason is
+in Section~\ref{sec:bridge}: the Friedmann equation makes $\cH^2 \sim Ga^2\bar\rho$,
+so the drag term $\cH\dot D$ and the source $\tfrac32\Om\cH^2 D$ in
+\eqref{eq:growth} are always comparable. Gravity wins, but only just, and
+$\delta$ grows in proportion to $a$ rather than exponentially. That is why
+perturbations of order $10^{-3}$ at recombination are of order unity now, after a
+factor of a thousand in $a$, instead of having collapsed long ago --- and why
+perturbation theory is useful across five decades of expansion.
+
+\begin{reading}
+\paragraph{And in our universe.} Once dark energy takes over, the expansion
+accelerates, the drag wins, and growth stalls. Solving \eqref{eq:growth}
+numerically for flat \lcdm{} with $\Om = 0.31$ gives a present-day growth factor
+about $22\%$ below what the matter-era $D_+ \propto a$ would have delivered, and
+the growth rate falls from $f = 1$ deep in the matter era to $f(z{=}0) = 0.52$, matching $\Om^{5/9} = 0.522$ to the digits shown. Structure formation is, in this
+sense, already over: the universe is coasting, and what we observe is close to
+the final state of linear growth.
+\end{reading}
 
 \subsection{Gaussian random fields and the power spectrum}
 \label{sec:stats}
@@ -305,7 +373,46 @@ Inflation delivers, to very good approximation, Gaussian initial conditions: the
 \end{equation}
 where two distinct assumptions are at work. Statistical \emph{homogeneity} --- invariance under translations --- is what forces the delta function, so that modes whose wavevectors do not sum to zero are uncorrelated. Statistical \emph{isotropy} is a separate statement, invariance under rotations, and it is what makes $\Plin$ a function of the magnitude $k=|\vk|$ alone rather than of the vector $\vk$. Note the one pair that is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$ --- a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
 
-That a Gaussian field is specified completely by $\Plin$ is a practical statement as much as a formal one. To \emph{generate} a realization you draw each Fourier mode independently, with variance $\Plin(k)$ and a random phase, and transform back. That is the first step of any initial-conditions code, and the first step of the hands-on session.
+\paragraph{Making one.} That a Gaussian field is fixed completely by $\Plin$ is a
+practical statement as much as a formal one, and it is what the hands-on session
+begins with. On a periodic grid the recipe is three lines:
+\begin{enumerate}[itemsep=1pt,topsep=2pt]
+\item for each mode $\vk$, draw a complex amplitude with zero mean and variance
+$\Plin(k)$ --- equivalently, draw the modulus from a Rayleigh distribution and
+the phase uniformly on $[0,2\pi)$;
+\item impose reality, $\delta(-\vk) = \delta(\vk)^*$, so that the field you get
+back is real rather than complex;
+\item inverse transform.
+\end{enumerate}
+Nothing else is needed. Two realizations drawn with different random seeds are
+different universes with identical statistics, which is why a fixed seed is the
+right way to compare cosmologies: change $n_s$ with the seed held, and every
+difference you see is physics rather than luck.
+
+\begin{reading}
+\paragraph{One number to fix the amplitude.} The spectrum has a shape and an
+overall size, and the size is conventionally quoted as $\sigma_8$: the rms
+fluctuation of the linear density field smoothed on spheres of radius
+$8\,h^{-1}$Mpc,
+\begin{equation}
+\sigma_8^2 = \int\!\frac{\dd^3k}{(2\pi)^3}\;\Plin(k)\,\big|W(kR)\big|^2 ,
+\qquad R = 8\,h^{-1}{\rm Mpc},
+\label{eq:sigma8}
+\end{equation}
+with $W$ the Fourier transform of a top-hat sphere. The radius is historical
+rather than fundamental --- it is roughly where $\sigma \simeq 1$, so it marks
+the scale that is going nonlinear now --- but the definition is what normalizes
+every spectrum you will plot. Measured, $\sigma_8 \simeq 0.81$.
+\end{reading}
+
+\begin{quiz}
+Two realizations of the same $\Plin(k)$ with different seeds look completely
+different. In what sense, then, is $\Plin$ a prediction of the theory at all?
+\nudge{Which of these could you measure from one universe: the amplitude of the
+mode at some particular $\vk$, or the average of $|\delta(\vk)|^2$ over all modes
+of the same $|\vk|$? We only have one universe --- so which of the two had better
+be the thing theory predicts?}
+\end{quiz}
 
 \subsection{The spectrum inflation hands us}
 \label{sec:primordial}
@@ -333,11 +440,7 @@ Two consequences carry forward. The primordial field is Gaussian to excellent
 approximation, which is what Section~\ref{sec:stats} assumed. And converting
 curvature to matter density costs two powers of $k$ in the field, by the Poisson
 equation, hence four in the spectrum, so the primordial \emph{matter} spectrum is
-a featureless power law,
-\begin{equation}
-P_{\rm prim}(k) \propto k^{n_s} .
-\end{equation}
-Nothing in that has a scale in it. Every feature in the observed $\Plin(k)$ ---
+a featureless power law, $P_{\rm prim}(k) \propto k^{n_s}$. Nothing in that has a scale in it. Every feature in the observed $\Plin(k)$ ---
 the turnover, the falloff, the wiggles --- is put there afterwards.
 
 \subsection{Horizon crossing, and the shape of \texorpdfstring{$\Plin(k)$}{P(k)}}
@@ -356,6 +459,16 @@ the time dependence of Section~\ref{sec:vlasov}, and $T^2(k)$ carries everything
 in between. This is the formula you will code in the hands-on session, and the
 question now is what shapes $T$.
 
+\begin{quiz}
+The primordial spectrum is a featureless power law. The observed one has a
+turnover, a falloff and wiggles. Where does a \emph{scale} come from, when the
+initial conditions contain none?
+\nudge{Two scales enter after inflation and neither is primordial. One is set by
+the expansion --- when did a given mode come into causal contact? The other is
+set by the contents --- when did matter take over from radiation? Guess which
+feature each is responsible for.}
+\end{quiz}
+
 One thing does: \textbf{when a mode entered the horizon}.
 
 \paragraph{The horizon.} Recall $\cH \equiv \dd\ln a/\dd\tau = aH$, the expansion
@@ -372,13 +485,17 @@ crosses it many times per expansion time and gravity acts coherently across it,
 and \emph{super-horizon} when $k \ll \cH$, where nothing propagates across it at
 all.
 
+\begin{reading}
 You met this quantity in the previous lectures, running the other way. During
 inflation $1/\cH$ \emph{shrinks}, which is how modes exit and how their
 fluctuations are frozen in as the initial conditions of
 Section~\ref{sec:primordial}. Afterwards it grows, through radiation and matter
 domination alike, so a mode --- labelled by a comoving $\vk$ that never changes
 --- starts super-horizon and \emph{enters} when $k = \cH$. Nothing about the mode
-changes at that moment; the horizon moves past it. What follows is what that
+changes at that moment; the horizon moves past it.
+\end{reading}
+
+What follows is what that
 crossing does.
 
 Follow the potential $\Phi$ rather than the density. It is unambiguous, since
@@ -393,12 +510,7 @@ Ga^2\bar\rho\,\delta$, with $\bar\rho$ dominated by radiation. Two things then
 happen at once. The prefactor falls: $\bar\rho_r \propto a^{-4}$, so
 $a^2\bar\rho_r \propto a^{-2}$. And the source refuses to grow: radiation
 pressure resists compression, so $\delta_r$ does not collapse but rings, as a
-sound wave in the tightly coupled photon--baryon plasma. Hence
-\begin{equation}
-\Phi \;\propto\; a^{-2}\times(\text{oscillation}) .
-\label{eq:phi_decay}
-\end{equation}
-Keep both factors in view. They become the two features of the spectrum: the
+sound wave in the tightly coupled photon--baryon plasma. Hence $\Phi \propto a^{-2}\times(\text{oscillation})$. Keep both factors in view. They become the two features of the spectrum: the
 $a^{-2}$ envelope sets the broadband shape, and the oscillation is the BAO.
 
 \emph{Inside the horizon during matter domination, $\Phi$ holds still again.}
@@ -411,11 +523,7 @@ equality and so never sees the decaying phase: it arrives with its primordial
 amplitude intact, $T \simeq 1$. A mode with $k > k_{\rm eq}$ enters during
 radiation domination, at $a_{\rm enter}$, and decays from then until equality.
 The earlier it enters, the longer it decays --- and entry is set by $k = \cH$,
-with $\cH \propto 1/a$ during radiation domination, so
-\begin{equation}
-a_{\rm enter} \propto \frac1k .
-\end{equation}
-Putting the two together, the suppression a mode accumulates between entry and
+with $\cH \propto 1/a$ during radiation domination, so $a_{\rm enter} \propto 1/k$. Putting the two together, the suppression a mode accumulates between entry and
 equality is
 \begin{equation}
 T(k) \;\sim\; \left(\frac{a_{\rm enter}}{a_{\rm eq}}\right)^{2}
@@ -423,12 +531,9 @@ T(k) \;\sim\; \left(\frac{a_{\rm enter}}{a_{\rm eq}}\right)^{2}
 \label{eq:transfer_scaling}
 \end{equation}
 
+
 That is the shape, from horizon crossing and the Poisson equation alone. Flat
-below the break, falling as $k^{-2}$ above it, with the break at
-\begin{equation}
-k_{\rm eq} \equiv \cH(a_{\rm eq}) \simeq 0.015\,h\,{\rm Mpc}^{-1} ,
-\end{equation}
-\emph{defined} as the mode entering exactly at matter--radiation equality. It is
+below the break, falling as $k^{-2}$ above it, with the break at $k_{\rm eq} \equiv \cH(a_{\rm eq}) \simeq 0.015\,h\,{\rm Mpc}^{-1}$, \emph{defined} as the mode entering exactly at matter--radiation equality. It is
 not a fitted parameter: it depends on $\Om h^2$ and the radiation density, and
 it is the one scale the early universe stamps on the spectrum.
 
@@ -439,7 +544,7 @@ not quite frozen while the potential decays --- it grows logarithmically, the
 $T \propto k^{-2}\ln k$. You can see this in a real transfer function: fitting
 the Eisenstein \& Hu form over $0.5 < k < 5\,h\,{\rm Mpc}^{-1}$ gives a slope of
 $-1.67$, not $-2$, and the difference is the logarithm. Exercise~\ref{ex:meszaros}
-works it out. And the oscillation in \eqref{eq:phi_decay} survives as the baryon
+works it out. And that oscillation survives as the baryon
 acoustic wiggles: the plasma rings until recombination frees the photons, freezing
 the wave at a single scale, the sound horizon $r_d \simeq 100\,h^{-1}$Mpc.
 Baryons are only about a sixth of the matter, so the wiggles ride on the
@@ -505,15 +610,17 @@ easier to turn into a number?
 \setcounter{exercise}{0}
 
 \noindent\textbf{Plan (65 min at the board, 25 for questions).} The Lagrangian
-picture: label a fluid element and follow it (0--12) $\rightarrow$ the Zel'dovich
-approximation, and the density read off a Jacobian (12--24) $\rightarrow$
-\emph{why a web and not a collection of spheres}: three unequal eigenvalues, and
-the sheet--filament--knot sequence (24--39) $\rightarrow$ shell crossing, where
-the approximation dies (39--47) $\rightarrow$ 2LPT and what it fixes (47--59)
-$\rightarrow$ linear galaxy bias, as a bridge to what surveys measure (59--63).
-\emph{Read, not lectured:} the one-dimensional exactness proof
-(Exercise~\ref{ex:1dza}), and the practical business of generating initial
-conditions --- the hands-on session that follows does that experimentally.
+picture: label a fluid element and follow it (0--13) $\rightarrow$ the Zel'dovich
+approximation, its recipe and its velocities (13--22) $\rightarrow$ \emph{why a
+web and not a collection of spheres}: three unequal eigenvalues, and how the
+volume divides (22--35) $\rightarrow$ shell crossing, where the approximation
+dies (35--42) $\rightarrow$ 2LPT and what it fixes (42--54) $\rightarrow$ linear
+galaxy bias, as a bridge to what surveys measure (54--63). \emph{Read, not
+lectured:} the one-dimensional exactness proof (Exercise~\ref{ex:1dza}), the
+Comments, and the practical business of generating initial conditions --- the
+hands-on session does that experimentally. \emph{If you are running behind:} the
+2LPT algebra compresses to its result, since the hands-on will show what it
+fixes. Do not compress the eigenvalue argument; it is the point of the lecture.
 Sources: \cite[Apps.~A and E]{Jeong2010}, \cite{Zeldovich1970,DodelsonSchmidt}.
 
 \subsection{The Lagrangian picture}
@@ -549,6 +656,14 @@ At first order, \eqref{eq:lpt_master} with $\delta = -\nabla_q\cdot\vPsi^{(1)}$ 
 \vPsi^{(1)}(\vk,\tau) = \frac{i\vk}{k^2}\,\delta^{(1)}(\vk,\tau) .
 \label{eq:za_displacement}
 \end{equation}
+\begin{quiz}
+The density is $1+\delta = 1/J$, with no equation of its own. What happens when
+$J \to 0$, and what does that correspond to physically?
+\nudge{$J$ is the volume of a fluid element. What does zero volume mean for the
+matter inside it, and for the map $\vq \mapsto \vx$? Try it in one dimension
+first, with two particles approaching each other.}
+\end{quiz}
+
 \subsection{The Zel'dovich approximation}
 \label{sec:za}
 
@@ -589,6 +704,16 @@ that is the right thing to get right. It is why the ZA follows matter into
 sheets, where linear theory only says $\delta$ is growing, and why it remains a
 serviceable description well past the point where $\delta = 1$.
 \end{remark}
+\begin{quiz}
+You know the spherical collapse model. Look at \eqref{eq:za_density} and ask what
+a sphere requires of $\lambda_1,\lambda_2,\lambda_3$. Then ask how often a random
+symmetric matrix obliges.
+\nudge{Take it in two steps. First: for the patch to stay spherical, how must the
+three eigenvalues be related? Second, forget cosmology --- write down any
+$3\times3$ symmetric matrix off the top of your head and compute its
+eigenvalues. Were two of them equal? Would you expect them to be?}
+\end{quiz}
+
 \subsection{Why a web, and not a collection of spheres}
 \label{sec:web}
 
@@ -632,6 +757,15 @@ positive eigenvalues & fraction of volume & fate \\
 \bottomrule
 \end{tabular}
 \end{center}
+\begin{quiz}
+Before looking at the numbers: the four fates are void, sheet, filament, knot.
+Which two do you expect to be commonest, and why should the table be symmetric?
+\nudge{Each eigenvalue is roughly as likely to be positive as negative. If they
+were independent coin flips, what would the four fractions be? The real numbers
+are close to that --- and the small discrepancy is because they are not quite
+independent.}
+\end{quiz}
+
 Read the middle rows: \textbf{$84\%$ of the volume is headed for a sheet or a
 filament, and only $8\%$ ever collapses along all three axes.} The web is not
 decoration draped over a population of spherical halos. It is what almost
@@ -700,10 +834,6 @@ Section~\ref{sec:2lpt} matter, since a simulation is what you hand them to.
 \caption{The Zel'dovich eigenvalue sequence, drawn in oblique projection so that all three axes are visible. A patch flattens along its principal axes in order of decreasing $\lambda_i$, each stage occurring when the corresponding factor $1-D_+\lambda_i$ in \eqref{eq:za_density} passes through zero: first the vertical axis, giving a sheet, then the depth axis, then the last one --- the second and third only where $\lambda_2$ and $\lambda_3$ are themselves positive, so many patches stop at a sheet. \emph{Only the first crossing is dynamics.} It is a genuine ZA prediction, and it requires a sufficiently positive $\lambda_1$ and enough subsequent growth, so it is not guaranteed at an arbitrary point in a late-time accelerating universe. The second and third stages lie beyond the first caustic, where the approximation has already broken down; read them as the formal eigenvalue ordering, which tracks the morphology of the cosmic web, and not as a description of collapse. The final object is a knot in the deformation map, not a virialized halo.}
 \label{fig:collapse}
 \end{figure}
-
-\begin{remark}
-The ZA is not a degraded linear theory. Its density field \eqref{eq:za_density} contains terms of all orders, and it captures the physics that dominates on quasi-linear scales --- bulk motion --- nonperturbatively. (Exactly, in one dimension before shell crossing, as in Exercise~\ref{ex:1dza}; in three dimensions it is a very good approximation to the displacement, not an exact solution.) This is why the ZA describes the smearing of the BAO feature much better than linear Eulerian theory, why it generates initial conditions for $N$-body simulations, and why its descendants power the infrared resummation of Lecture~3.
-\end{remark}
 
 \subsection{Second order: 2LPT and initial conditions}
 \label{sec:2lpt}
@@ -777,6 +907,16 @@ proportionately to the large-scale density it sits in: raise the background a
 little and the number of regions crossing the threshold to form a galaxy rises a
 lot. Nothing about $b_1$ is predicted by the theory in these lectures. It is
 measured alongside the cosmology.
+
+\begin{quiz}
+Why should $b_1$ be greater than one? Galaxies are made of matter, so why do they
+not simply trace it?
+\nudge{Galaxies form where the density crosses some threshold. Now add a
+long-wavelength mode that raises the background slightly across a large region.
+The density did not change much --- but how much did the \emph{number of places
+above threshold} change? Sketch a Gaussian with a cut near its tail and slide it
+right.}
+\end{quiz}
 
 Two things are worth knowing about \eqref{eq:linear_bias}. It is the first term
 of an expansion, not a law --- at smaller scales the response stops being linear,
