@@ -54,9 +54,9 @@
    \textbf{Ask the room.}\ \itshape}
   {\endgroup\par\medskip}
 \newcommand{\nudge}[1]{\upshape\par\smallskip\hspace*{1.2em}\textbf{If nobody bites:}\ \itshape #1}
-% Where the discussion should end up. Upright, so it reads as the resolution
-% rather than as one more prompt.
-\newcommand{\answer}[1]{\upshape\par\smallskip\hspace*{1.2em}\textbf{Where it lands:}\ #1}
+% The resolution, stated plainly. Upright, complete sentences, no fragments:
+% it must survive being read aloud, cold, to a student.
+\newcommand{\answer}[1]{\upshape\par\smallskip\hspace*{1.2em}\textbf{Answer.}\ #1}
 
 % Exercises
 \newcounter{exercise}[section]
@@ -91,8 +91,8 @@ so that $\langle\delta(\vk)\delta(\vk')\rangle = (2\pi)^3\dirac(\vk+\vk')P(k)$. 
 about a third of these notes, and none of it needed to follow the thread.
 \textbf{Ask the room} is a question to stop on: each carries an
 \emph{If nobody bites} fallback, which breaks the question into a smaller one
-rather than giving it away, and a \emph{Where it lands} note saying what the
-discussion is supposed to reach. \textbf{Exercises} are at the end of each
+rather than giving it away, and an \emph{Answer} stating the resolution
+plainly, for self-study as much as for the lecturer. \textbf{Exercises} are at the end of each
 lecture, with solutions in the companion note.
 
 \medskip
@@ -125,13 +125,13 @@ $D_+,\ f$ & linear growth factor and rate
 \setcounter{exercise}{0}
 
 \begin{plan}
-\noindent\textbf{Plan (71 min at the board, 19 for questions).} The setting,
+\noindent\textbf{Plan (74 min at the board, 16 for questions).} The setting,
 and two ways to hold a perturbation (0--8) $\rightarrow$ the equations we may
-use, and what $(\cH/k)^2$ buys (8--25) $\rightarrow$ the pressureless fluid, and
-how perturbations grow (25--34) $\rightarrow$ Gaussian random fields and what a
-power spectrum is (34--41) $\rightarrow$ the spectrum inflation hands us
-(41--45) $\rightarrow$ horizon crossing, and how it carves the shape of
-$\Plin(k)$ (45--71). \emph{Read, not lectured:} everything in a grey block or a
+use, derived one statement at a time, and what $(\cH/k)^2$ buys (8--27)
+$\rightarrow$ the pressureless fluid, and how perturbations grow (27--37)
+$\rightarrow$ Gaussian random fields and what a power spectrum is (37--44)
+$\rightarrow$ the spectrum inflation hands us (44--48) $\rightarrow$ horizon
+crossing, and how it carves the shape of $\Plin(k)$ (48--74). \emph{Read, not lectured:} everything in a grey block or a
 Comment --- roughly a third of what is written here, including the Vlasov
 hierarchy, the recipe for drawing a Gaussian field, the definition of
 $\sigma_8$, and why $n_s \neq 1$.
@@ -139,10 +139,10 @@ $\sigma_8$, and why $n_s \neq 1$.
 \emph{On the timings.} They come from \texttt{lecture\_timing.py}, which prices
 words, equations, figures and questions separately at a deliberately slow board
 pace; run it with your own numbers rather than trusting mine. Note what it says:
-this lecture is five minutes longer than its sibling and has the tighter
+this lecture is ten minutes longer than its sibling and has the tighter
 question budget, because the machinery has to be built before any of it pays
-off. To recover time, drop a boxed question ($2.5$ min each, and its
-\emph{Where it lands} note can be stated flat in thirty seconds) or quote the
+off. To recover time, drop a boxed question ($2.5$ min each; its \emph{Answer}
+can be stated flat in thirty seconds) or quote the
 Einstein--de Sitter growing and decaying modes instead of solving the indicial
 equation ($3$ min). Do \emph{not} compress
 Section~\ref{sec:linearpk}: the horizon argument is the one thing this lecture
@@ -247,6 +247,7 @@ do whenever the total anisotropic stress vanishes
 baryons in the matter era; free-streaming neutrinos spoil it at the $15\%$ level
 during radiation domination, but that contribution fades as matter comes to
 dominate. Write $\phi = \psi \equiv \Phi$.
+\end{reading}
 
 \begin{quiz}
 Gravity is weak everywhere in the universe --- the potential is of order
@@ -254,49 +255,65 @@ $10^{-5}$ on every scale. So why is ``gravity is weak'' not enough to justify
 using Newtonian dynamics?
 \nudge{Split it. Is a super-horizon mode weakly gravitating? Yes. Can you write
 down a Newtonian description of one? Then weakness cannot be what licenses it.}
-\answer{On $k \gg \cH$, which has nothing to do with weakness. A weak field
-licenses \emph{linearizing} the metric; it does not supply a Newtonian
-\emph{description}. Newtonian gravity acts instantaneously --- Poisson is a
-constraint, not a wave equation --- which is only sensible if light crosses the
-scale of interest in far less than an expansion time. Super-horizon it does not,
-and $\delta$ is gauge-dependent there besides, so there is nothing for the
-description to describe. Two independent conditions, and only one of them is
-``gravity is weak''.}
+\answer{Two different approximations are being conflated, and weakness is only
+one of them. A weak field, $|\Phi| \sim 10^{-5}$, licenses linearizing the
+metric --- and that holds on every scale. A Newtonian description needs
+something more: the Poisson equation acts instantaneously, and instantaneous
+action only makes sense if light can cross the scale of interest in much less
+time than the system takes to evolve, which is one expansion time. That is the
+sub-horizon condition $k \gg \cH$. A super-horizon mode fails it no matter how
+weak gravity is: no signal has crossed the mode even once, so there is no
+settled potential for Poisson to describe. So: weak field on all scales,
+Newtonian dynamics only inside the horizon.}
 \end{quiz}
-\end{reading}
+\paragraph{The equations.} Now take the second limit --- the one the question
+above was pointing at --- and keep only scales far inside the horizon,
+$k \gg \cH$. The system is three physical statements, each worth deriving in
+words before writing it down.
 
-\paragraph{The equations.} Now keep only scales far inside the horizon,
-$k \gg \cH$. Every term carrying a factor of $\cH$ where its neighbours carry
-$k$ is suppressed by $(\cH/k)^2$: the relativistic energy constraint collapses to
-a Poisson equation, and the dilation term drops out of continuity. What survives
-is a pressureless fluid in an expanding background,
+\emph{Counting matter.} The contrast changes only because matter flows. Mass
+conservation for the peculiar velocity $\vu \equiv \dd\vx/\dd\tau$ reads
+$\dot\delta = -\nabla\cdot[(1+\delta)\vu]$ --- dilution by the expansion is
+already inside $\bar\rho$, so it never appears in $\delta$ --- and at linear
+order $\dot\delta = -\theta$, with $\theta \equiv \nabla\cdot\vu$.
+
+\emph{Pushing matter.} For a pressureless fluid there is no separate Euler
+equation to import: Euler \emph{is} Newton's second law applied to fluid
+elements. In comoving coordinates it reads
+\begin{equation}
+\ddot\vx + \cH\,\dot\vx = -\nabla\Phi .
+\label{eq:newtonian_eom}
+\end{equation}
+The new term is the drag $\cH\dot\vx$, and it is not friction: set $\Phi = 0$
+and \eqref{eq:newtonian_eom} says $\dot\vx \propto 1/a$ --- free particles coast
+to rest in comoving coordinates as their peculiar velocities redshift away.
+(Exercise~\ref{ex:geodesic} derives it from the geodesic equation of
+\eqref{eq:newtonian_gauge}.) Lecture~2 is built on this equation --- it follows
+elements rather than fields, and that change of variable is the whole of the
+Lagrangian picture. For now, take its divergence:
+$\dot\theta = -\cH\,\theta - \nabla^2\Phi$.
+
+\emph{Sourcing gravity.} What closes the system is the field equation, and here
+the sub-horizon limit earns its keep: every term carrying a factor of $\cH$
+where its neighbours carry $k$ is suppressed by $(\cH/k)^2$, and the energy
+constraint of general relativity collapses to the Poisson equation,
+$\nabla^2\Phi = 4\pi Ga^2\bar\rho\,\delta = \tfrac32\Om(\tau)\cH^2\delta$, the
+last equality by the Friedmann equation. (The same suppression removes a
+dilation term $3\dot\phi$ from continuity above.) Exercise~\ref{ex:subhorizon}
+carries out the reduction and puts a number on what was dropped.
+
+Assembled, at linear order:
 \begin{equation}
 \dot\delta = -\theta,
 \qquad
 \dot\theta = -\cH\,\theta - \frac{3}{2}\Om(\tau)\cH^2\delta,
 \qquad
-\nabla^2\Phi = \frac{3}{2}\Om(\tau)\cH^2\delta ,
+\nabla^2\Phi = \frac{3}{2}\Om(\tau)\cH^2\delta .
 \label{eq:newtonian_linear}
 \end{equation}
-with the peculiar velocity $\vu \equiv \dd\vx/\dd\tau$, its divergence
-$\theta \equiv \nabla\cdot\vu$, and $4\pi Ga^2\bar\rho = \tfrac32\Om\cH^2$.
-Exercise~\ref{ex:subhorizon} carries out the reduction and puts a number on what
-was dropped; Ma \& Bertschinger \cite[\S 5]{MaBertschinger1995} give the
-unapproximated system, and Dodelson \& Schmidt \cite[Ch.~12]{DodelsonSchmidt}
-set out this same starting point with its assumptions listed.
-
-\paragraph{The same equations, one element at a time.} For a pressureless fluid
-there is no separate Euler equation to import: Euler \emph{is} Newton's second
-law applied to fluid elements. Written for one element rather than for the field,
-\begin{equation}
-\ddot\vx + \cH\,\dot\vx = -\nabla\Phi ,
-\label{eq:newtonian_eom}
-\end{equation}
-whose divergence, with Poisson substituted, is the middle member of
-\eqref{eq:newtonian_linear}. The two are one equation in two costumes. Lecture~2
-wears this one: it follows individual elements rather than fields, and that
-change of variable is the whole of the Lagrangian picture.
-(Exercise~\ref{ex:geodesic} derives it from the geodesic equation.)
+Ma \& Bertschinger \cite[\S 5]{MaBertschinger1995} give the unapproximated
+system; Dodelson \& Schmidt \cite[Ch.~12]{DodelsonSchmidt} set out this same
+starting point with its assumptions listed.
 
 \paragraph{What \texorpdfstring{$(\cH/k)^2$}{(H/k)2} buys.} One small parameter
 did the work above, and it does a further job that the whole of Lecture~2 rests
@@ -352,14 +369,19 @@ Taking velocity moments produces a hierarchy: the zeroth moment gives continuity
 Cold matter starts cold: before orbits cross, each position hosts a single stream and $\sigma_{ij} = 0$. This \emph{single-stream closure} truncates the hierarchy into a pressureless perfect fluid. It is a closure rather than a controlled approximation: exact until shell crossing, and completely wrong after. Where it fails is where Lecture~2 stops.
 \end{reading}
 
-Within the closure, vorticity $\bm{w} = \nabla\times\vu$ obeys a homogeneous equation: it decays as $1/a$ at linear order and stays zero if it starts zero. The velocity field is then fully specified by its divergence $\theta = \nabla\cdot\vu$.
-
-Linearizing \eqref{eq:continuity}--\eqref{eq:euler} recovers \eqref{eq:newtonian_linear}, which combine into
+Everything needed is already in \eqref{eq:newtonian_linear}. One check first:
+the curl of \eqref{eq:newtonian_eom} at linear order gives
+$\dot{\bm{w}} + \cH\,\bm{w} = 0$ for the vorticity $\bm{w} = \nabla\times\vu$,
+so rotation decays as $1/a$ and stays zero if it starts zero --- the velocity
+field is fully specified by its divergence $\theta$. Now combine the pair:
+differentiate $\dot\delta = -\theta$, substitute $\dot\theta$, and note that no
+coefficient carries a $k$, so the position dependence factors out and every mode
+grows by one common factor,
 \begin{equation}
 \ddot D + \cH\,\dot D - \frac{3}{2}\Om(\tau)\,\cH^2 D = 0 .
 \label{eq:growth}
 \end{equation}
-The growing solution $D_+(\tau)$ defines linear growth, $\delta^{(1)}(\vx,\tau) = D_+(\tau)\,\delta_0(\vx)$; in Einstein--de Sitter (EdS, $\Om = 1$) $D_+ = a$ and the decaying mode is $a^{-3/2}$. The velocity follows from continuity, and introduces the growth rate $f$ (not to be confused with the phase-space density of \eqref{eq:vlasov}, the one unfortunate collision in the standard notation),
+The growing solution $D_+(\tau)$ defines linear growth, $\delta^{(1)}(\vx,\tau) = D_+(\tau)\,\delta_0(\vx)$; in Einstein--de Sitter (EdS, $\Om = 1$) $D_+ = a$ and the decaying mode is $a^{-3/2}$. The velocity follows from continuity, and introduces the growth rate $f$ (not to be confused with the phase-space density, the one unfortunate collision in the standard notation),
 \begin{equation}
 \theta^{(1)} = -\cH f\,\delta^{(1)},
 \qquad
@@ -450,13 +472,14 @@ different. In what sense, then, is $\Plin$ a prediction of the theory at all?
 \nudge{Which of these could you measure from one universe: the amplitude of the
 mode at one particular $\vk$, or the average of $|\delta(\vk)|^2$ over all modes
 of the same $|\vk|$? Which had better be the thing theory predicts?}
-\answer{On the ensemble, not the realization. $\Plin$ is a variance, and the
-phases --- everything that makes two seeds look different --- are exactly what it
-does not predict. We recover it from one universe by averaging $|\delta(\vk)|^2$
-over modes of equal $|\vk|$, which works because those modes are independent
-draws from the same distribution. The price is cosmic variance: the fewer modes
-in a shell, the noisier the estimate, which is why the largest scales are the
-worst measured.}
+\answer{The theory predicts the distribution, not the draw. The phases ---
+everything that makes two seeds look different --- are random and carry no
+cosmology. $\Plin$ is the \emph{variance} of the modes, and the variance is the
+prediction. We measure it from our single universe by averaging
+$|\delta(\vk)|^2$ over the many modes that share the same $|\vk|$, which works
+because they are independent draws from one distribution. The largest scales
+have the fewest modes to average over, so they are the worst measured ---
+cosmic variance is the price of owning one universe.}
 \end{quiz}
 
 \subsection{The spectrum inflation hands us}
@@ -512,13 +535,14 @@ initial conditions contain none?
 set by the expansion: when did a given mode come into causal contact? Another is
 set by the contents: when did matter take over from radiation? A third is a
 distance a wave could travel. Match each to a feature.}
-\answer{On horizon entry, timed against two clocks. A mode's fate depends on
-whether it entered before or after matter--radiation equality, and that
-comparison defines $k_{\rm eq}$ --- the turnover, and the $k^{-2}$ falloff above
-it. The wiggles have a separate origin: the sound horizon at recombination,
-$r_d \simeq 100\,h^{-1}$Mpc, the furthest a pressure wave got before the photons
-left. Inflation supplies only an amplitude and a tilt; every feature you can
-point to was stamped on later.}
+\answer{Every scale in the observed spectrum was imprinted after inflation, by
+two different pieces of physics. The turnover and the $k^{-2}$ falloff come from
+horizon entry: modes that entered during radiation domination are suppressed,
+and the boundary is $k_{\rm eq}$, the mode entering exactly at matter--radiation
+equality. The wiggles come from a different scale entirely: the sound horizon at
+recombination, $r_d \simeq 100\,h^{-1}$Mpc, the farthest a pressure wave in the
+photon--baryon plasma travelled before the photons were released. Inflation
+supplies only the amplitude and the tilt; every feature is processing.}
 \end{quiz}
 
 One thing does: \textbf{when a mode entered the horizon}.
@@ -758,12 +782,13 @@ $J \to 0$, and what does that correspond to physically?
 \nudge{$J$ is the volume of a fluid element. What does zero volume mean for the
 matter inside it, and for the map $\vq \mapsto \vx$? Try one dimension first,
 with two particles approaching each other.}
-\answer{On shell crossing. $J \to 0$ is a fluid element squeezed to zero volume,
-so $\delta$ formally diverges and the map $\vq \mapsto \vx$ stops being
-one-to-one: two Lagrangian labels arrive at the same place. This is the first
-caustic, and it is where the single-stream closure of Section~\ref{sec:vlasov}
-fails --- not an artefact of the ZA but a real feature of collisionless collapse.
-Section~\ref{sec:shellcross} is what happens next.}
+\answer{$J$ is the volume of a fluid element, so $J \to 0$ is an element
+crushed to zero volume: the density $1+\delta = 1/J$ diverges, and the map
+$\vq \mapsto \vx$ stops being one-to-one, because two elements have arrived at
+the same position. Physically this is \emph{shell crossing}, the formation of
+the first caustic. It is where the fluid description fails --- a real feature of
+collisionless collapse, not an artefact of the approximation --- and
+Section~\ref{sec:shellcross} picks up the story there.}
 \end{quiz}
 
 \subsection{The Zel'dovich approximation}
@@ -858,14 +883,16 @@ which two should be commonest, and why should the table be symmetric?
 related? Now write down any $3\times3$ symmetric matrix off the top of your head
 --- were two of its eigenvalues equal? Would you ever expect them to be? For the
 second half, treat each eigenvalue's sign as a coin flip and count.}
-\answer{A sphere needs $\lambda_1 = \lambda_2 = \lambda_3$, which is a set of
-measure zero: no matrix you write down will oblige, and spherical collapse
-describes an event that never happens. Generic collapse is anisotropic and runs
-along the largest eigenvalue first --- sheet, then filament, then knot. Three
-fair coins would give $12.5/37.5/37.5/12.5$, and the true values
-$8/42/42/8$ are symmetric for the reason the coins are (a Gaussian field
-prefers no sign of $\delta$) but pushed toward the mixed cases, because the
-eigenvalues repel rather than being independent.}
+\answer{A sphere needs $\lambda_1 = \lambda_2 = \lambda_3$, and for a random
+symmetric matrix that is a probability-zero coincidence: no matrix you write
+down will oblige. So spherical collapse describes an event that never happens,
+and generic collapse is anisotropic --- it runs fastest along the largest
+eigenvalue, forming a sheet first, then a filament, then a knot. For the
+fractions: if the three eigenvalue signs were independent coin flips, the split
+would be $12.5/37.5/37.5/12.5$ per cent. The true split, $8/42/42/8$, keeps the
+symmetry --- a Gaussian field has no preferred sign of $\delta$ --- but shifts
+weight toward sheets and filaments, because the eigenvalues are not independent:
+they repel.}
 
 Read the middle rows: \textbf{$84\%$ of the volume is headed for a sheet or a
 filament, and only $8\%$ ever collapses along all three axes.} The web is not
@@ -1033,13 +1060,16 @@ not simply trace it?
 mode that lifts the background slightly across a large region: the density barely
 moved, but how much did the \emph{number of places above threshold} move? Sketch
 a Gaussian with a cut near its tail and slide it right.}
-\answer{On the threshold, not the matter. This is the peak--background split: a
-long mode shifts the whole local field, and because the threshold sits in the
-tail of the Gaussian, a small shift in the mean makes a large fractional change
-in the number of sites above it. So $\delta_g$ responds more strongly than
-$\delta$, giving $b_1 > 1$ --- and more strongly still for rarer tracers, which
-is why massive and luminous galaxies are the most biased. Nothing here requires
-galaxies to be made of anything but matter.}
+\answer{Thresholds amplify. Galaxies form only where the density exceeds a
+threshold that sits in the tail of the distribution. Now add a small
+long-wavelength overdensity: the density field barely changes, but the number
+of regions above the threshold changes by much more, because shifting a
+Gaussian slightly moves a large fraction of its tail across a fixed cut. So
+galaxy counts respond more strongly than the matter does, which is $b_1 > 1$
+--- and the rarer the object, the stronger the amplification, which is why the
+most massive galaxies are the most biased. (This argument is the
+\emph{peak--background split}, and it reappears whenever bias is derived
+properly.)}
 \end{quiz}
 
 Two things are worth knowing about \eqref{eq:linear_bias}. It is the first term
