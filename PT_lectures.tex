@@ -53,7 +53,7 @@
 \begin{document}
 \maketitle
 
-\noindent\textbf{Conventions.} Conformal time $\tau$, defined by $\dd t = a\,\dd\tau$, so that $\tau = \int\dd t/a$ --- an integral, not $t/a$; comoving coordinates $\vx$; $\cH \equiv \dd\ln a/\dd\tau = aH$; overdots denote $\partial/\partial\tau$. Fourier transforms follow
+\noindent\textbf{Conventions.} Conformal time $\tau$, defined by $\dd t = a\,\dd\tau$, so that $\tau = \int\dd t/a$ --- an integral, not $t/a$; comoving coordinates $\vx$; $\cH \equiv \dd\ln a/\dd\tau = aH$; overdots denote $\partial/\partial\tau$. The comoving background 3-metric is flat, and spatial indices are raised and lowered with $\delta_{ij}$ --- so a repeated pair is summed regardless of placement, and $\partial_k\Phi\,\partial_k\Phi$ means $\sum_k(\partial_k\Phi)^2$. (Under the general-relativistic convention one would move them with $g_{ij}$ instead, which would fold the factor $a^2(1-2\phi)$ into every contraction.) Fourier transforms follow
 \begin{equation*}
 \delta(\vk) = \int \dd^3x\, e^{-i\vk\cdot\vx}\,\delta(\vx),
 \qquad
@@ -115,7 +115,7 @@ Friedmann--Lema\^itre--Robertson--Walker (FLRW) universe --- homogeneous,
 isotropic and expanding --- with everything of interest a small departure from
 it. The unperturbed metric is
 \begin{equation*}
-\dd s^2 = a^2(\tau)\left[-\dd\tau^2 + \dd\vx^2\right],
+\dd s^2 = a^2(\tau)\left[-\dd\tau^2 + \delta_{ij}\,\dd x^i\dd x^j\right],
 \end{equation*}
 written in comoving coordinates $\vx$, which ride along with the expansion: a
 galaxy at rest keeps the same $\vx$ while its physical separation from us,
@@ -225,7 +225,7 @@ transfer function of Section~\ref{sec:linearpk} records.
 \paragraph{The metric.} Fix the gauge completely with the conformal Newtonian
 (longitudinal) form \cite{MaBertschinger1995},
 \begin{equation}
-\dd s^2 = a^2(\tau)\left[-(1+2\psi)\,\dd\tau^2 + (1-2\phi)\,\dd\vx^2\right] .
+\dd s^2 = a^2(\tau)\left[-(1+2\psi)\,\dd\tau^2 + (1-2\phi)\,\delta_{ij}\,\dd x^i\dd x^j\right] .
 \label{eq:newtonian_gauge}
 \end{equation}
 Here $\psi$ perturbs $g_{00}$ and $\phi$ perturbs the spatial metric. Keep them
