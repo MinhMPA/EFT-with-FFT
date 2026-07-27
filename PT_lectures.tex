@@ -505,11 +505,21 @@ $\ddot D + (2/\tau)\dot D - (6/\tau^2)D = 0$. Try $D \propto \tau^n$, factorize
 the indicial equation, and identify which root is the growing mode.
 \end{derivation}
 
-Two modes, one growing and one decaying, as a second-order equation must have.
-The decaying one is why initial conditions are forgettable: any admixture dies
-as $a^{-3/2}$, so a universe started slightly wrong converges on the growing
-solution rather than remembering the error. Every later statement in this course
-assumes only the growing mode is left.
+Two modes, so the general solution mixes them:
+$\delta = A(\vx)\,D_+(\tau) + B(\vx)\,D_-(\tau)$, with $A$ and $B$ fixed by the
+initial density \emph{and} the initial velocity --- a second-order equation needs
+two pieces of initial data. Relative to the growing mode the second term falls
+as $D_-/D_+ \propto a^{-5/2}$, so after enough expansion only $A(\vx)D_+(\tau)$
+survives. That is what licenses writing $\delta^{(1)} = D_+(\tau)\,\delta_0(\vx)$
+above: one function of position times one of time, rather than two.
+
+Be careful what this does \emph{not} erase. It does not erase the initial
+conditions: $A(\vx)$ is the primordial field, remembered exactly, and computing
+it is the whole business of Lecture~1. What is forgotten is only the other half
+of the initial data --- whatever part of the start did not lie on the growing
+solution. This is why initial conditions for a simulation can be laid down using
+the growing mode alone (Section~\ref{sec:2lpt}), and why a slightly wrong start
+relaxes onto the right answer instead of propagating.
 
 The growing mode is remarkable for how \emph{slow} it is. In a static medium an
 overdensity grows exponentially; expansion converts that runaway into a power
