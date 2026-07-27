@@ -42,7 +42,7 @@ def estimate(block):
     eqn    = len(ENV_EQN.findall(block))
     boxed  = block.count(r'\boxed')
     fig    = block.count(r'\begin{figure}')
-    tab    = block.count(r'\begin{tabular}') - block.count(r'\begin{tabular}{@{}ll@{\hspace{2em}}ll@{}}')
+    tab    = block.count(r'\begin{tabular}')
     quiz   = block.count(r'\begin{quiz}')
     deriv  = block.count(r'\begin{derivation}')
     # Comments and 'Read, not lectured' passages are in the notes but not delivered,
