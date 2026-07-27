@@ -86,14 +86,25 @@ $D_+,\ f$ & linear growth factor and rate
 \tableofcontents
 
 %=====================================================================
-\section*{Lecture 1: Linear evolution, the matter power spectrum, and the Zel'dovich picture}
-\addcontentsline{toc}{section}{Lecture 1: Linear evolution, the matter power spectrum, and the Zel'dovich picture}
+\section*{Lecture 1: From primordial fluctuations to the linear power spectrum}
+\addcontentsline{toc}{section}{Lecture 1: From primordial fluctuations to the linear power spectrum}
 \setcounter{section}{1}
 \setcounter{subsection}{0}
 \setcounter{equation}{0}
 \setcounter{exercise}{0}
 
-\noindent\textbf{Plan (65 min at the board, 25 for questions).} From the SVT decomposition to the linearized Newtonian equations (0--10) $\rightarrow$ the pressureless fluid, the single-stream closure, and linear growth (10--22) $\rightarrow$ Gaussian random fields and what a power spectrum is (22--32) $\rightarrow$ the transfer function and the linear matter power spectrum (32--40) $\rightarrow$ the displacement map, the Zel'dovich approximation, and shell crossing (40--55) $\rightarrow$ 2LPT and why initial conditions need it (55--65). \emph{Read, not lectured:} the geodesic derivation (Exercise~\ref{ex:geodesic}) and the Vlasov hierarchy --- state the single-stream closure and move on. [Timings and split to be rewritten in step 2: this block still describes the three-lecture version.] Sources:~\cite{MaBertschinger1995,Bernardeau2002}, \cite[Apps.~A and E]{Jeong2010}.
+\noindent\textbf{Plan (65 min at the board, 25 for questions).} The setting, and
+two ways to hold a perturbation (0--5) $\rightarrow$ why Newtonian dynamics is
+allowed, and which $\delta$ we are computing (5--15) $\rightarrow$ the
+pressureless fluid and linear growth (15--27) $\rightarrow$ Gaussian random
+fields and what a power spectrum is (27--37) $\rightarrow$ the primordial
+spectrum inflation hands us (37--42) $\rightarrow$ horizon crossing, and how it
+carves the shape of $\Plin(k)$ (42--57) $\rightarrow$ the M\'esz\'aros effect and
+what it adds (57--60). \emph{Read, not lectured:} the geodesic derivation
+(Exercise~\ref{ex:geodesic}) and the Vlasov hierarchy --- state the single-stream
+closure and move on. The hands-on session that follows builds $\Plin(k)$ from
+scratch and draws a realization of it, so this is the lecture worth letting run
+into the question time. Sources:~\cite{MaBertschinger1995,DodelsonSchmidt}.
 
 \medskip
 \noindent\textbf{The setting.} Fixed for the whole course: a spatially flat
@@ -362,10 +373,184 @@ where two distinct assumptions are at work. Statistical \emph{homogeneity} --- i
 
 That a Gaussian field is specified completely by $\Plin$ is a practical statement as much as a formal one. To \emph{generate} a realization you draw each Fourier mode independently, with variance $\Plin(k)$ and a random phase, and transform back. That is the first step of any initial-conditions code, and the first step of the hands-on session.
 
-\subsection{The linear matter power spectrum}
+\subsection{The spectrum inflation hands us}
+\label{sec:primordial}
+
+Everything so far has been about how a perturbation \emph{evolves}. Where the
+perturbations came from is the business of the lectures you have just had, and
+we need only their output.
+
+Inflation stretches quantum fluctuations to cosmological size and leaves a
+spectrum of curvature perturbations that is very nearly \emph{scale invariant}:
+equal power in every logarithmic interval of $k$. Nearly, but not exactly ---
+inflation has to end, so the expansion rate drifts while modes are leaving the
+horizon, and the spectrum tilts. Conventionally
+\begin{equation}
+\Delta^2_\zeta(k) = A_s\left(\frac{k}{k_0}\right)^{n_s-1} ,
+\qquad n_s \simeq 0.965 ,
+\label{eq:primordial}
+\end{equation}
+with $A_s$ an amplitude and $k_0$ an arbitrary pivot scale. Exact scale
+invariance would be $n_s = 1$; the measured few-percent deficit is a genuine
+prediction of inflation rather than a fitted convenience, and it is one of the
+reasons to believe the picture.
+
+Two consequences carry forward. The primordial field is Gaussian to excellent
+approximation, which is what Section~\ref{sec:stats} assumed. And converting
+curvature to matter density costs two powers of $k$ in the field, by the Poisson
+equation, hence four in the spectrum, so the primordial \emph{matter} spectrum is
+a featureless power law,
+\begin{equation}
+P_{\rm prim}(k) \propto k^{n_s} .
+\end{equation}
+Nothing in that has a scale in it. Every feature in the observed $\Plin(k)$ ---
+the turnover, the falloff, the wiggles --- is put there afterwards.
+
+\subsection{Horizon crossing, and the shape of \texorpdfstring{$\Plin(k)$}{P(k)}}
 \label{sec:linearpk}
 
-The linear evolution across horizon entry and the radiation--matter transition is what a Boltzmann code integrates. Its output is summarized by the transfer function: modes with $k > k_{\rm eq}$ entered the horizon during radiation domination, when CDM perturbations could barely grow (the M\'esz\'aros effect), so they carry a suppression that larger-scale modes escape. Modes entering after equality avoid it and, once sub-horizon in matter domination, grow approximately as $a$. (Note the care needed after the Comment in Section~\ref{sec:bridge}: a mode that is still super-horizon is \emph{not} growing as $a$ in the Newtonian gauge.) The value $k_{\rm eq} \simeq 0.015\,h\,{\rm Mpc}^{-1}$ is fiducial --- it depends on $\Om h^2$ and on the radiation density. The processed spectrum, including the baryon acoustic oscillation (BAO) wiggles imprinted by the pre-recombination photon--baryon fluid, is what fixes the shape of the $\Plin(k,z)$ defined in \eqref{eq:plin_def}. Everything in these lectures takes $\Plin$ as the input.
+Write the linear spectrum as the primordial one times a \emph{transfer function}
+that carries all the processing:
+\begin{equation}
+\boxed{\;\Plin(k,z) \;=\; A\,k^{n_s}\,T^2(k)\,D_+^2(z)\;}
+\label{eq:pk_master}
+\end{equation}
+with $T \to 1$ on the largest scales by convention and $A$ fixed by one measured
+amplitude, for which we use $\sigma_8$. The three factors are three separate
+pieces of physics: inflation sets $k^{n_s}$, the growth factor $D_+^2$ carries
+the time dependence of Section~\ref{sec:vlasov}, and $T^2(k)$ carries everything
+in between. This is the formula you will code in the hands-on session, and the
+question now is what shapes $T$.
+
+One thing does: \textbf{when a mode entered the horizon}.
+
+Follow the potential $\Phi$ rather than the density. It is unambiguous, since
+Section~\ref{sec:bridge} fixed the gauge completely, and it obeys three rules.
+
+\emph{Outside the horizon, $\Phi$ holds still.} No causal process operates across
+the mode, so nothing can reshape it.
+
+\emph{Inside the horizon during radiation domination, $\Phi$ decays.} Sub-horizon
+the Poisson equation of \eqref{eq:newtonian_linear} applies, $-k^2\Phi = 4\pi
+Ga^2\bar\rho\,\delta$, with $\bar\rho$ dominated by radiation. Two things then
+happen at once. The prefactor falls: $\bar\rho_r \propto a^{-4}$, so
+$a^2\bar\rho_r \propto a^{-2}$. And the source refuses to grow: radiation
+pressure resists compression, so $\delta_r$ does not collapse but rings, as a
+sound wave in the tightly coupled photon--baryon plasma. Hence
+\begin{equation}
+\Phi \;\propto\; a^{-2}\times(\text{oscillation}) .
+\label{eq:phi_decay}
+\end{equation}
+Keep both factors in view. They become the two features of the spectrum: the
+$a^{-2}$ envelope sets the broadband shape, and the oscillation is the BAO.
+
+\emph{Inside the horizon during matter domination, $\Phi$ holds still again.}
+Now $a^2\bar\rho_m \propto a^{-1}$ while $\delta$ grows as $D_+ \propto a$, and
+the two cancel exactly. This is why the potential is constant through the whole
+matter era, and why $\Phi$ stayed small in \eqref{eq:phi_small}.
+
+Now assemble. A mode with $k < k_{\rm eq}$ enters the horizon \emph{after}
+equality and so never sees the decaying phase: it arrives with its primordial
+amplitude intact, $T \simeq 1$. A mode with $k > k_{\rm eq}$ enters during
+radiation domination, at $a_{\rm enter}$, and decays from then until equality.
+The earlier it enters, the longer it decays --- and entry is set by $k = \cH$,
+with $\cH \propto 1/a$ during radiation domination, so
+\begin{equation}
+a_{\rm enter} \propto \frac1k .
+\end{equation}
+Putting the two together, the suppression a mode accumulates between entry and
+equality is
+\begin{equation}
+T(k) \;\sim\; \left(\frac{a_{\rm enter}}{a_{\rm eq}}\right)^{2}
+\;\propto\; \left(\frac{k_{\rm eq}}{k}\right)^{2} .
+\label{eq:transfer_scaling}
+\end{equation}
+
+That is the shape, from horizon crossing and the Poisson equation alone. Flat
+below the break, falling as $k^{-2}$ above it, with the break at
+\begin{equation}
+k_{\rm eq} \equiv \cH(a_{\rm eq}) \simeq 0.015\,h\,{\rm Mpc}^{-1} ,
+\end{equation}
+\emph{defined} as the mode entering exactly at matter--radiation equality. It is
+not a fitted parameter: it depends on $\Om h^2$ and the radiation density, and
+it is the one scale the early universe stamps on the spectrum.
+
+\begin{remark}
+Two refinements, neither of which changes the argument. The cold dark matter is
+not quite frozen while the potential decays --- it grows logarithmically, the
+\emph{M\'esz\'aros effect} --- which softens the falloff to
+$T \propto k^{-2}\ln k$. You can see this in a real transfer function: fitting
+the Eisenstein \& Hu form over $0.5 < k < 5\,h\,{\rm Mpc}^{-1}$ gives a slope of
+$-1.67$, not $-2$, and the difference is the logarithm. Exercise~\ref{ex:meszaros}
+works it out. And the oscillation in \eqref{eq:phi_decay} survives as the baryon
+acoustic wiggles: the plasma rings until recombination frees the photons, freezing
+the wave at a single scale, the sound horizon $r_d \simeq 100\,h^{-1}$Mpc.
+Baryons are only about a sixth of the matter, so the wiggles ride on the
+broadband shape at the few-percent level rather than dominating it.
+\end{remark}
+
+\begin{exercise}\label{ex:geodesic}
+Derive \eqref{eq:newtonian_eom}: write the geodesic equation for a nonrelativistic particle in the metric \eqref{eq:newtonian_gauge}, keep terms to first order in the potentials and to leading order in $u \ll 1$, and use $\phi = \psi = \Phi$. Careful: conformal time is not an affine parameter.
+\end{exercise}
+
+\begin{exercise}\label{ex:subhorizon}
+\textbf{The other limit.} Exercise~\ref{ex:geodesic} took $v\ll1$ and produced
+the force law; this one takes $k\gg\cH$ and produces the field equation.
+(i) Reducing \eqref{eq:energy_constraint} to Poisson needs slightly more than
+$k\gg\cH$: it needs $\dot\phi$ not to be anomalously large. Assuming
+$\dot\phi \lesssim \cH\phi$, which holds for the growing mode, show that the
+discarded group is smaller than the retained one by
+$\mathcal{O}\big((\cH/k)^2\big)$.
+(ii) Put a number on it. Today $\cH_0 = H_0/c \simeq 3.3\times10^{-4}\,h\,{\rm Mpc}^{-1}$.
+How large is the neglected term at $k = 0.1\,h\,{\rm Mpc}^{-1}$, and at
+$k = 10^{-3}\,h\,{\rm Mpc}^{-1}$? Which of the two lies inside the window quoted
+in the Comment above?
+(iii) The assumption in (i) can be \emph{removed} rather than justified:
+combining the time--time constraint with the time--space one gives an algebraic
+equation for $\phi$ carrying no time derivative at all, in which the correction
+is manifestly $\mathcal{O}(\cH/k)$ \cite[Ex.~6.7]{DodelsonSchmidt}. Why is
+eliminating an assumption preferable to bounding it?
+\end{exercise}
+
+\begin{exercise}\label{ex:meszaros}
+\textbf{The M\'esz\'aros effect.} Take a universe of cold dark matter and
+radiation, with the radiation smooth --- it does not cluster --- but dominating
+the expansion until equality. Using $y \equiv a/a_{\rm eq}$ as the time
+variable, the CDM density contrast obeys
+\begin{equation*}
+\frac{\dd^2\delta}{\dd y^2}
++ \frac{2+3y}{2y(1+y)}\,\frac{\dd\delta}{\dd y}
+- \frac{3}{2y(1+y)}\,\delta = 0 .
+\end{equation*}
+(i) Verify that $\delta \propto 1 + \tfrac32 y$ solves it.
+(ii) Show that this is frozen for $y\ll1$ and grows as $a$ for $y\gg1$: a mode
+sitting inside the horizon during radiation domination gains almost nothing
+until equality.
+(iii) Section~\ref{sec:linearpk} got the suppression of $T(k)$ from the
+\emph{potential} decaying while a mode waits. Here it comes from the
+\emph{density} refusing to grow. Are these two effects or one, and which is
+easier to turn into a number?
+\end{exercise}
+
+%=====================================================================
+\section*{Lecture 2: From the power spectrum to the cosmic web}
+\addcontentsline{toc}{section}{Lecture 2: From the power spectrum to the cosmic web}
+\setcounter{section}{2}
+\setcounter{subsection}{0}
+\setcounter{equation}{0}
+\setcounter{exercise}{0}
+
+\noindent\textbf{Plan (65 min at the board, 25 for questions).} The Lagrangian
+picture: label a fluid element and follow it (0--12) $\rightarrow$ the Zel'dovich
+approximation, and the density read off a Jacobian (12--24) $\rightarrow$
+\emph{why a web and not a collection of spheres}: three unequal eigenvalues, and
+the sheet--filament--knot sequence (24--39) $\rightarrow$ shell crossing, where
+the approximation dies (39--47) $\rightarrow$ 2LPT and what it fixes (47--59)
+$\rightarrow$ linear galaxy bias, as a bridge to what surveys measure (59--63).
+\emph{Read, not lectured:} the one-dimensional exactness proof
+(Exercise~\ref{ex:1dza}), and the practical business of generating initial
+conditions --- the hands-on session that follows does that experimentally.
+Sources: \cite[Apps.~A and E]{Jeong2010}, \cite{Zeldovich1970,DodelsonSchmidt}.
 
 \subsection{The Lagrangian picture and the Zel'dovich approximation}
 \label{sec:lpt}
@@ -490,29 +675,6 @@ Do the Lagrangian and Eulerian descriptions carry the same information?
 Order by order, and before shell crossing, yes --- the companion notes
 \cite{EFTnotes} make the correspondence explicit by recovering the Eulerian
 kernels from the displacement map.
-
-\begin{exercise}\label{ex:geodesic}
-Derive \eqref{eq:newtonian_eom}: write the geodesic equation for a nonrelativistic particle in the metric \eqref{eq:newtonian_gauge}, keep terms to first order in the potentials and to leading order in $u \ll 1$, and use $\phi = \psi = \Phi$. Careful: conformal time is not an affine parameter.
-\end{exercise}
-
-\begin{exercise}\label{ex:subhorizon}
-\textbf{The other limit.} Exercise~\ref{ex:geodesic} took $v\ll1$ and produced
-the force law; this one takes $k\gg\cH$ and produces the field equation.
-(i) Reducing \eqref{eq:energy_constraint} to Poisson needs slightly more than
-$k\gg\cH$: it needs $\dot\phi$ not to be anomalously large. Assuming
-$\dot\phi \lesssim \cH\phi$, which holds for the growing mode, show that the
-discarded group is smaller than the retained one by
-$\mathcal{O}\big((\cH/k)^2\big)$.
-(ii) Put a number on it. Today $\cH_0 = H_0/c \simeq 3.3\times10^{-4}\,h\,{\rm Mpc}^{-1}$.
-How large is the neglected term at $k = 0.1\,h\,{\rm Mpc}^{-1}$, and at
-$k = 10^{-3}\,h\,{\rm Mpc}^{-1}$? Which of the two lies inside the window quoted
-in the Comment above?
-(iii) The assumption in (i) can be \emph{removed} rather than justified:
-combining the time--time constraint with the time--space one gives an algebraic
-equation for $\phi$ carrying no time derivative at all, in which the correction
-is manifestly $\mathcal{O}(\cH/k)$ \cite[Ex.~6.7]{DodelsonSchmidt}. Why is
-eliminating an assumption preferable to bounding it?
-\end{exercise}
 
 \begin{exercise}\label{ex:d2}
 Solve \eqref{eq:D2} in EdS ($\cH = 2/\tau$, $\Om=1$, $D_+ = a \propto \tau^2$) and verify $D_2 = -\tfrac37 a^2$.

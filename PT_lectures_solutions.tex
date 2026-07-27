@@ -109,7 +109,44 @@ wherever the Einstein equations do. Removing an assumption is worth more than
 verifying it, because verification does not travel.
 \end{solution}
 
-\begin{solution}{Exercise 1.3 ($D_2$ in EdS).}
+\begin{solution}{Exercise 1.3 (the M\'esz\'aros effect).}
+\emph{(i)} With $\delta = 1 + \tfrac32 y$ we have $\delta' = \tfrac32$ and
+$\delta'' = 0$, so the left-hand side is
+\begin{equation*}
+\frac{2+3y}{2y(1+y)}\cdot\frac32 \;-\; \frac{3}{2y(1+y)}\left(1+\frac{3y}{2}\right)
+= \frac{1}{y(1+y)}\left[\frac{3(2+3y)}{4} - \frac{3}{2}\left(1+\frac{3y}{2}\right)\right] = 0 ,
+\end{equation*}
+since both terms in the bracket equal $(6+9y)/4$.
+
+\emph{(ii)} For $y \ll 1$, $\delta \to 1$: constant, no growth at all. For
+$y \gg 1$, $\delta \to \tfrac32 y \propto a$, the matter-era growth of
+Section~\ref{sec:vlasov}. So the growing mode does nothing during radiation
+domination and only switches on at equality. A mode that entered the horizon at
+$a_{\rm enter} \ll a_{\rm eq}$ therefore sits idle for the whole interval
+between, which is exactly the growth it is missing relative to a mode entering
+after equality.
+
+\emph{(iii)} One effect, seen from two sides, and the Poisson equation is what
+ties them: $-k^2\Phi = 4\pi Ga^2\bar\rho\,\delta$. During radiation domination
+the prefactor $a^2\bar\rho_r$ falls as $a^{-2}$ while $\delta_r$ merely
+oscillates, so $\Phi$ decays; and the cold dark matter, with a decaying
+potential to fall into and radiation pressure holding the dominant fluid up,
+has nothing to collapse toward and freezes. Neither statement causes the other.
+They are the same physics written in different variables.
+
+The potential version is the one to turn into a number, because $\Phi \propto
+a^{-2}$ is a clean power law and the suppression follows immediately as
+$(a_{\rm enter}/a_{\rm eq})^2$. The density version needs the full solution
+above, and the amplitude at which $\delta$ freezes depends on how long the
+potential took to decay after entry --- which is where the logarithm in
+$T \propto k^{-2}\ln k$ comes from, and why it is not visible in the scaling
+argument.
+\end{solution}
+
+%=====================================================================
+\section*{Lecture 2}
+
+\begin{solution}{Exercise 2.1 ($D_2$ in EdS).}
 In EdS, $a \propto \tau^2$, $\cH = 2/\tau$, $\Om = 1$, and $D_+ = a$. Try
 $D_2 = C a^2 \propto \tau^4$. Then $\dot D_2 = 4C\tau^3$ and
 $\ddot D_2 = 12C\tau^2$, while $D_+^2 = a^2 \propto \tau^4$. Normalising
@@ -138,7 +175,7 @@ perturbation theory --- is $\tfrac{17}{21}\delta_1^2$. Since $17/21 > 2/3$, addi
 collapse \emph{faster} than the straight-line Zel'dovich estimate, not slower.
 \end{solution}
 
-\begin{solution}{Exercise 1.4 (the Zel'dovich approximation is exact in 1D).}
+\begin{solution}{Exercise 2.2 (the Zel'dovich approximation is exact in 1D).}
 In one dimension, Gauss's law says the gravitational field at a point depends
 only on the total mass on either side of it. Consider a sheet with Lagrangian
 coordinate $q$ displaced to $x = q + \Psi(q,\tau)$. Before shell crossing the
