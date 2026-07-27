@@ -1,7 +1,66 @@
 # PT_lectures — status and remaining open items
 
-Draft v9. `PT_lectures.pdf` (28 pp) and `PT_lectures_solutions.pdf` (8 pp) both
+Draft v10. `PT_lectures.pdf` (29 pp) and `PT_lectures_solutions.pdf` (8 pp) both
 compile clean with zero warnings.
+
+## Front matter and the Lecture 1 prelude (2026-07-27, later)
+
+Section 1.1 was rebuilt around a stated intention, after it became clear it was
+doing an abbreviated relativistic-perturbation-theory lecture rather than
+answering a question. It now answers two: **why is Newtonian gravity allowed
+here, and is the `delta` we compute a real quantity?** The structure is
+`Newtonian gravity is two statements` -> the horizon, defined -> the metric ->
+*first limit* `v << 1` gives the force law, and `psi` is the Newtonian potential
+-> *second limit* `k >> H` gives the field equation, via the energy constraint
+-> the two potentials must coincide -> which `delta`. Two limits doing two
+different jobs, using two different metric potentials, was the organising idea
+that had been missing.
+
+A **prelude** now opens Lecture 1: the setting (flat FLRW, expanding,
+everything a small departure from it), `delta` properly defined, and the fact
+that the same field can be held as `delta(x)` or `delta(k)` — position space for
+intuition and for the displacement picture, Fourier space for dynamics and
+statistics, with the `lambda = 2 pi / k` dictionary and a number attached.
+
+That prelude exposed a genuine structural gap: **"modes evolve independently at
+linear order" was never stated anywhere**, yet Section 2.2 delivers "two modes
+couple only into their sum" as a punchline. The contrast had no baseline. It is
+now stated where `k` first does work, with the reason (homogeneous background =>
+position-independent coefficients => plane waves stay plane waves).
+
+Front matter cut to **Conventions and Notation only** — 121 words, down from
+863. Audience, Goal, How to use, and Scope are gone; the pre-read framing and
+the hands-on placement live in the README instead. The Vocabulary table moved to
+Appendix E, a glossary, since it is lookup material rather than reading
+material. Two pages now precede Section 1.1 instead of three.
+
+### Five conventions that were correct but unreadable
+
+Caught by reading cold, not by any verification pass — all five had cleared
+adversarial review, because they check physics and algebra, not whether a line
+misparses on sight:
+
+- `H = a-dot/a` written for the *conformal* Hubble rate. True given that overdots
+  are conformal-time derivatives, but it reads as `H = aH`. Now
+  `H = dln a / dtau`, with the overdot convention restated and a note that this
+  is why the growth equation carries `H D-dot` where its cosmic-time form carries
+  `2 H dD/dt` — verified symbolically.
+- Conformal time never explained as `tau = int dt/a` (an integral, not `t/a`),
+  nor why it is used: the metric becomes conformally flat, so light travels at
+  unit comoving speed and a conformal-time interval *is* a comoving distance.
+- The comoving Hubble radius asserted rather than derived. It is `1/(aH)`, the
+  physical Hubble radius made comoving, and it is a *length* because of that
+  light-speed property.
+- "`1/H` is one e-fold" stated as an identity. It follows from `H` being a
+  logarithmic rate, `Delta tau = Delta ln a / H`, but only if `H` holds still. It
+  does not: the true figure is `1.7/H` in radiation domination, `1.3/H` in
+  matter, and exactly `1/H` only in de Sitter. Now stated with the numbers.
+- Fourier space used before being motivated, and `lambda = 2 pi / k` appearing
+  nowhere in the document.
+
+The pattern in all five: a *characteristic scale* written as an *equality*.
+Defensible to someone who already knows the material, wrong as read by someone
+meeting it. Worth watching for in the rest of the document.
 
 **This file and everything it describes are untracked in git.** Twenty-eight
 pages through four rounds of correction plus a full structural reorder, with no
@@ -116,9 +175,9 @@ deliberate divergence from its wording.
   naming which derivations go to the board and which are reading. This addresses
   both the review's largest structural complaint and the pacing concern already
   recorded here from the undergraduate reader.
-- **A Scope box** in the front matter lists the assumptions in force (Gaussian
-  adiabatic ICs, single pressureless fluid, EdS kernels, plane-parallel, one
-  tracer, one effective redshift).
+- **A Scope box** was added listing the assumptions in force. (Later removed
+  when the front matter was cut back; the assumptions are now stated where they
+  are used.)
 - **The Goal was downgraded from "compute" to "derive the anatomy of, and
   evaluate with a supplied code".** The appendices do not give `Z_3`, and
   pretending otherwise was an overpromise.
