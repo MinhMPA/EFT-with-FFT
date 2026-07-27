@@ -4,19 +4,43 @@ This repository contains a pedagogical note on 1-loop perturbation theory (PT) a
 
 ## Lecture notes
 
-`PT_lectures.tex` is a self-contained course, *Cosmological Perturbation Theory from Matter to Galaxies*, in three 90-minute sessions (65 min at the board, 25 for questions). It starts from linear relativistic perturbation theory and ends at the 1-loop EFT galaxy power spectrum in redshift space and how it is compared with survey data:
+Two courses, sharing the figure pipeline in `figs_src/`.
 
-1. **Linear evolution, the matter power spectrum, and the Zel'dovich picture.** From the SVT decomposition to the linearized Newtonian equations, the pressureless fluid and linear growth, Gaussian random fields and what a power spectrum is, the transfer function, then the Lagrangian picture: displacement, the Zel'dovich approximation, shell crossing, and 2LPT.
-2. **From displacements to loops, and where they fail.** Wick's theorem, the Eulerian kernels, the same `F_2` recovered from the displacement map, the one-loop matter power spectrum and its diagrams, why bare single-stream loops are UV-incomplete, and the EFT of large-scale structure.
-3. **Galaxies in redshift space at one loop.** Galaxy bias, redshift-space distortions and the `Z_n` kernels, IR resummation, multipoles and Alcock–Paczynski, and an end-to-end recipe from Boltzmann code to posterior.
+### From Primordial Fluctuations to the Cosmic Web
 
-The notes are written as a **pre-read**, not a lecture transcript: each lecture opens with a timed plan naming what goes on the board and what is left to read. A hands-on session follows Lecture 1 and uses its linear spectrum and displacement maps directly, which is why the Lagrangian material sits there rather than in Lecture 2.
+`PT_lectures.tex` — two 90-minute lectures (65 min at the board, 25 for
+questions) alternating with two hands-on sessions:
 
-Companion files:
+```
+L1  primordial fluctuations -> linear matter power spectrum P_L(k)
+H1  code the transfer function, build P_L, draw a Gaussian realization
+L2  Zel'dovich and LPT -> the cosmic web; linear bias as a bridge
+H2  displace the H1 field in 3D; sheets, filaments, knots
+```
 
-- `PT_lectures_solutions.tex` — worked solutions to all eleven exercises, plus a list of recurring errors worth recognising.
-- `figs_src/` — the code generating the computed figures. `ptlib.py` implements the linear spectrum (Eisenstein & Hu), the reduced one-loop integrals, and halofit; `validate.py` checks the loop integrals against kernels built independently from the recursion relations (agreement to 1 part in 10⁶); `make_figs.py`, `make_fig_running.py` and `make_fig_multipoles.py` produce the figures. All are self-contained except the last, which drives an external `ps_1loop_jax`.
-- `PT_lecture_expert_review.pdf` — an external technical review of an earlier draft, and `PT_lectures_OPEN_ITEMS.md`, which records how each of its findings was resolved and what remains open.
+Each practical consumes the lecture before it, and the two chain: H1 produces
+the field H2 moves. The design and its trade-offs are recorded in
+[`docs/adr/0001`](docs/adr/0001-narrow-school-to-linear-theory-and-zeldovich.md).
+
+The [Cosmic Web Sandbox](https://minhmpa.github.io/lss-lab/cosmic-web-sandbox/)
+runs the same pipeline in the browser — Eisenstein & Hu transfer function, LPT,
+T-web eigenvalue classification — and serves as the live demonstration in both
+lectures and as the target for H2.
+
+### Cosmological Perturbation Theory from Matter to Galaxies
+
+`EFT_lectures.tex` — the longer course, for a different school: Eulerian and
+Lagrangian perturbation theory, the one-loop matter power spectrum, the EFT of
+large-scale structure, galaxy bias, redshift-space distortions, IR resummation,
+and the end-to-end comparison with survey data. Incorporates an external
+technical review (`PT_lecture_expert_review.pdf`); `PT_lectures_OPEN_ITEMS.md`
+records how each finding was resolved.
+
+Both have companion solutions files. `figs_src/` generates the computed figures:
+`ptlib.py` implements the linear spectrum (Eisenstein & Hu), the reduced
+one-loop integrals and halofit; `validate.py` checks the loop integrals against
+kernels built independently from the recursion relations, agreeing to 1 part in
+10^6.
 
 ## FFTLog note
 
