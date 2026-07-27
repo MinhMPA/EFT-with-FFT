@@ -82,17 +82,6 @@ with two hands-on sessions}
 \begin{document}
 \maketitle
 
-\noindent\textbf{Conventions.} Conformal time $\tau$, defined by $\dd t = a\,\dd\tau$, so that $\tau = \int\dd t/a$ --- an integral, not $t/a$; comoving coordinates $\vx$; $\cH \equiv \dd\ln a/\dd\tau = aH$; overdots denote $\partial/\partial\tau$. The comoving background 3-metric is flat, and spatial indices are raised and lowered with $\delta_{ij}$ --- so a repeated pair is summed regardless of placement, and $\partial_k\Phi\,\partial_k\Phi$ means $\sum_k(\partial_k\Phi)^2$. (Under the general-relativistic convention one would move them with $g_{ij}$ instead, which would fold the factor $a^2(1-2\phi)$ into every contraction.) Fourier transforms follow
-\begin{equation*}
-\delta(\vk) = \int \dd^3x\, e^{-i\vk\cdot\vx}\,\delta(\vx),
-\qquad
-\delta(\vx) = \int_{\vk} e^{i\vk\cdot\vx}\,\delta(\vk),
-\qquad
-\int_{\vk} \equiv \int\!\frac{\dd^3k}{(2\pi)^3},
-\end{equation*}
-so that $\langle\delta(\vk)\delta(\vk')\rangle = (2\pi)^3\dirac(\vk+\vk')P(k)$. A primed correlator, $\langle\cdots\rangle'$, strips the factor $(2\pi)^3\dirac$. This is the convention of both Dodelson \& Schmidt \cite[Eqs.~(5.26)--(5.27)]{DodelsonSchmidt} and Jeong \cite[App.~A.1]{Jeong2010} --- the two sources these lectures lean on hardest --- so formulae can be carried across from either without adjustment. Not every reference agrees: some place the $(2\pi)^{-3}$ on $\dd^3x$ instead, and their power spectra then differ by factors of $(2\pi)^3$.
-
-\medskip
 \noindent\textbf{How the blocks work.} Five kinds of set-off text.
 \textbf{Comment} is an aside that deepens the argument without carrying it.
 \textbf{Read, not lectured} is written for you but skipped at the board ---
@@ -142,21 +131,29 @@ Sources:~\cite{MaBertschinger1995,DodelsonSchmidt}.
 \end{plan}
 
 \medskip
-\noindent\textbf{The setting.} Fixed for the whole course: a spatially flat
-Friedmann--Lema\^itre--Robertson--Walker (FLRW) universe --- homogeneous,
-isotropic and expanding --- with everything of interest a small departure from
-it. The unperturbed metric is
+\noindent\textbf{The setting and conventions.} Fixed for the whole course: a
+spatially flat Friedmann--Lema\^itre--Robertson--Walker (FLRW) universe ---
+homogeneous, isotropic and expanding --- with everything of interest a small
+departure from it. The unperturbed metric is
 \begin{equation*}
 \dd s^2 = a^2(\tau)\left[-\dd\tau^2 + \delta_{ij}\,\dd x^i\dd x^j\right],
 \end{equation*}
 written in comoving coordinates $\vx$, which ride along with the expansion: a
 galaxy at rest keeps the same $\vx$ while its physical separation from us,
-$a\vx$, grows. \begin{reading}
-Conformal time is used throughout because of the form this takes:
-with $\dd\tau$ and $\dd\vx$ appearing symmetrically, radial light rays obey
+$a\vx$, grows. Here $\tau$ is \emph{conformal} time, defined by
+$\dd t = a\,\dd\tau$, so that $\tau = \int\dd t/a$ --- an integral, not $t/a$.
+Overdots mean $\partial/\partial\tau$ throughout, and
+$\cH \equiv \dd\ln a/\dd\tau = aH$ is the expansion rate in that time. Spatial
+indices are raised and lowered with $\delta_{ij}$, so a repeated pair is summed
+regardless of placement.
+\begin{reading}
+Conformal time is used because of the form the metric then takes: with $\dd\tau$
+and $\dd\vx$ appearing symmetrically, radial light rays obey
 $\dd x = \pm\dd\tau$, so light travels at unit comoving speed and an interval of
 conformal time \emph{is} a comoving distance. That is what will make the horizon
-a clean notion in Section~\ref{sec:bridge}.
+a clean notion in Section~\ref{sec:linearpk}. On the indices: under the
+general-relativistic convention one would move them with $g_{ij}$ instead, which
+would fold the factor $a^2(1-2\phi)$ into every contraction.
 \end{reading}
 
 Structure is what happens when this is not quite true. The metric
@@ -178,25 +175,45 @@ reason.)
 \end{derivation}
 
 \medskip
-\begin{reading}
-\noindent\textbf{Position space and Fourier space.} We move between them
-constantly, so it is worth saying once that they carry identical information.
-In \emph{position space}, $\delta(\vx)$ is a lumpy field filling the universe;
-this is where physical intuition lives, and where the displacements and
-collapsing sheets of Lecture~2 are easiest to picture. In
-\emph{Fourier space}, $\delta(\vk)$ is the amplitude of one plane wave of
-comoving wavelength $\lambda = 2\pi/k$ --- so large $k$ means small scales, and
-$k = 0.1\,h\,{\rm Mpc}^{-1}$ means $\lambda \simeq 63\,h^{-1}{\rm Mpc}$, a few
-cluster diameters. This is where the dynamics and the statistics live. The
-transform convention is in the front matter.
+\noindent\textbf{Position space and Fourier space.} Both hold the same
+information. In position space $\delta(\vx)$ is a lumpy field --- where
+intuition lives, and where Lecture~2's collapsing sheets are easiest to picture.
+In Fourier space we resolve it into plane waves.
 
-The linear problem wants the second picture, and not merely for convenience: the
-linearized equations have coefficients that do not depend on position, because
-the background is homogeneous, so a plane wave stays a plane wave and each
-$\delta(\vk)$ evolves independently of every other. One partial differential
+Start in a periodic box of side $L$ --- what the hands-on session actually uses.
+The field is a discrete sum, one term per mode,
+\begin{equation*}
+\delta(\vx) = \sum_{\vk}\,\delta_{\vk}\,e^{i\vk\cdot\vx} ,
+\qquad
+\vk = \frac{2\pi}{L}\,\bm{n} , \quad \bm{n} \in \mathbb{Z}^3 ,
+\end{equation*}
+with the spacing $2\pi/L$ set by the box. Let $L \to \infty$: the spacing closes
+up, the sum becomes an integral, and we have the convention used throughout,
+\begin{equation*}
+\delta(\vk) = \int \dd^3x\, e^{-i\vk\cdot\vx}\,\delta(\vx),
+\qquad
+\delta(\vx) = \int_{\vk} e^{i\vk\cdot\vx}\,\delta(\vk),
+\qquad
+\int_{\vk} \equiv \int\!\frac{\dd^3k}{(2\pi)^3} .
+\end{equation*}
+Each mode is a plane wave of comoving wavelength $\lambda = 2\pi/k$, so large
+$k$ means \emph{small} scales: $k = 0.1\,h\,{\rm Mpc}^{-1}$ is
+$\lambda \simeq 63\,h^{-1}$Mpc, a few cluster diameters.
+
+Why bother: because the background is homogeneous, the linearized equations have
+coefficients independent of position. A plane wave stays a plane wave, and each
+$\delta(\vk)$ evolves independently of every other --- one partial differential
 equation in three dimensions becomes one ordinary differential equation per
-$\vk$ --- which is what makes linear theory solvable at all.
-Figure~\ref{fig:fourier} is the same statement drawn.
+$\vk$. That is what makes linear theory solvable.
+Figure~\ref{fig:fourier} draws it.
+
+\begin{reading}
+Not every reference uses this convention: some put the $(2\pi)^{-3}$ on $\dd^3x$
+instead, and their power spectra then differ from ours by factors of $(2\pi)^3$.
+Ours is that of both Dodelson \& Schmidt
+\cite[Eqs.~(5.26)--(5.27)]{DodelsonSchmidt} and Jeong \cite[App.~A.1]{Jeong2010}
+--- the two sources these lectures lean on hardest --- so formulae can be
+carried across from either without adjustment.
 \end{reading}
 
 \begin{figure}[t]
