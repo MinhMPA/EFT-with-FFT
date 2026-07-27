@@ -58,6 +58,11 @@
 % it must survive being read aloud, cold, to a student.
 \newcommand{\answer}[1]{\upshape\par\smallskip\hspace*{1.2em}\textbf{Answer.}\ #1}
 
+% Dangled over a skipped passage: say it at the board and see whether anyone
+% asks. If they do, the block that follows is what you tell them; if not, it
+% cost fifteen seconds.
+\newcommand{\bait}[1]{\textbf{Bait:}\ \emph{#1}\ }
+
 % Short calculations posed at the board and done during the break --- not
 % homework. A few lines each; solutions in the companion note.
 \newcounter{derivation}
@@ -85,7 +90,9 @@ with two hands-on sessions}
 \noindent\textbf{How the blocks work.} Five kinds of set-off text.
 \textbf{Comment} is an aside that deepens the argument without carrying it.
 \textbf{Read, not lectured} is written for you but skipped at the board ---
-about a fifth of these notes, and none of it needed to follow the thread.
+about a fifth of these notes, and none of it needed to follow the thread. Each
+opens with a \emph{Bait}: a question to dangle at the board, costing seconds if
+nobody bites and buying the passage back if somebody does.
 \textbf{Ask the room} is a question to stop on: each carries an
 \emph{If nobody bites} fallback, which breaks the question into a smaller one
 rather than giving it away, and an \emph{Answer} stating the resolution
@@ -148,6 +155,7 @@ $\cH \equiv \dd\ln a/\dd\tau = aH$ is the expansion rate in that time. Spatial
 indices are raised and lowered with $\delta_{ij}$, so a repeated pair is summed
 regardless of placement.
 \begin{reading}
+\bait{Why measure time with $\tau$ rather than with $t$?}
 Conformal time is used because of the form the metric then takes: with $\dd\tau$
 and $\dd\vx$ appearing symmetrically, radial light rays obey
 $\dd x = \pm\dd\tau$, so light travels at unit comoving speed and an interval of
@@ -209,6 +217,8 @@ $\vk$. That is what makes linear theory solvable.
 Figure~\ref{fig:fourier} draws it.
 
 \begin{reading}
+\bait{You will read papers that write the transform differently. Does that
+change $\Plin$?}
 Not every reference uses this convention: some put the $(2\pi)^{-3}$ on $\dd^3x$
 instead, and their power spectra then differ from ours by factors of $(2\pi)^3$.
 Ours is that of both Dodelson \& Schmidt
@@ -277,6 +287,8 @@ Einstein's equations sources $\phi - \psi$ through anisotropic stress alone,
 which cold matter does not carry, so for us the two potentials coincide,
 $\phi = \psi \equiv \Phi$.
 \begin{reading}
+\bait{I said cold matter carries no anisotropic stress. Is there anything in the
+universe that does?}
 The fine print: it is the \emph{total} anisotropic stress that must vanish
 \cite[Eq.~(23d)]{MaBertschinger1995}, and free-streaming neutrinos spoil it at
 the $15\%$ level during radiation domination. That contribution fades as matter
@@ -337,23 +349,18 @@ system; Dodelson \& Schmidt \cite[Ch.~12]{DodelsonSchmidt} set out this same
 starting point with its assumptions listed.
 
 \begin{quiz}
-We assumed both weak fields (A2) and sub-horizon modes (A4). But
-gravity is weak \emph{everywhere} --- $10^{-5}$ on every scale --- so A2 costs
-nothing. Why is it not enough on its own? Concretely: what goes wrong if you
-apply \eqref{eq:newtonian_linear} to a super-horizon mode?
-\nudge{Split it. Is a super-horizon mode weakly gravitating? Yes. So point at
-the one member of \eqref{eq:newtonian_linear} that cannot be trusted there.
-What does it silently assume?}
-\answer{Two different approximations are being conflated, and weakness is only
-one of them. A weak field licenses linearizing the metric --- and that holds on
-every scale. The Poisson equation is a different kind of statement: it ties
-$\Phi$ at one point to the density everywhere on the same time slice,
-instantaneously, and instantaneous action only makes sense if light can cross
-the scale of interest in much less time than the system takes to evolve, which
-is one expansion time. That is A4. A super-horizon mode fails it no matter how
-weak gravity is: no signal has crossed the mode even once, so there is no
-settled potential for Poisson to describe. Weak field on all scales; Newtonian
-dynamics only inside the horizon.}
+Gravity is weak \emph{everywhere} --- $10^{-5}$ on every scale --- so A2 costs
+us nothing. Why do we need A4 as well? What fails if you apply
+\eqref{eq:newtonian_linear} to a super-horizon mode?
+\nudge{A super-horizon mode is weakly gravitating too. So point at the one
+member of \eqref{eq:newtonian_linear} that still fails there.}
+\answer{Poisson fails. It ties $\Phi$ at one point to the density everywhere on
+the same time slice, instantaneously --- which makes sense only if light crosses
+the scale of interest in far less than an expansion time. That is A4, and a
+super-horizon mode fails it however weak gravity is: no signal has crossed the
+mode even once, so there is no settled potential to describe. A2 linearizes the
+metric on every scale; A4 is what buys Newtonian dynamics, and only inside the
+horizon.}
 \end{quiz}
 
 \begin{remark}
@@ -401,6 +408,7 @@ quoted above.
 \end{derivation}
 
 \begin{reading}
+\bait{I keep saying $\Phi$ is unambiguous. Is $\delta$?}
 \emph{It also makes $\delta$ meaningful.} Relativistically $\delta$ is not a physical
 quantity: it depends on how spacetime is sliced. The same mode grows as
 $(k\tau)^2$ in synchronous gauge and sits frozen in the Newtonian gauge until
@@ -458,16 +466,19 @@ f \equiv \frac{\dd\ln D_+}{\dd\ln a}
 with $f = 1$ in EdS. The often-quoted exponent $0.55$~\cite{Linder2005} agrees
 with $5/9$ at the sub-percent level over viable cosmologies.
 
-\paragraph{The Einstein--de Sitter solution.} Einstein--de Sitter is the case to do by hand, because
+\begin{derivation}
+Get those two solutions. Einstein--de Sitter is the case to do by hand, since
 everything else is a numerical perturbation on it. There $\cH = 2/\tau$ and
-$a \propto \tau^2$, so \eqref{eq:growth} becomes
-$\ddot D + (2/\tau)\dot D - (6/\tau^2)D = 0$. Try $D \propto \tau^n$ and the
-indicial equation factorizes as $(n-2)(n+3) = 0$, giving $D \propto \tau^{2} = a$ and $D \propto \tau^{-3} = a^{-3/2}$. Two modes,
-one growing and one decaying, as a second-order equation must have. The decaying
-one is why initial conditions are forgettable: any admixture dies as $a^{-3/2}$,
-so a universe started slightly wrong converges on the growing solution rather
-than remembering the error. Every later statement in this course assumes only the
-growing mode is left.
+$a \propto \tau^2$, so \eqref{eq:growth} reads
+$\ddot D + (2/\tau)\dot D - (6/\tau^2)D = 0$. Try $D \propto \tau^n$, factorize
+the indicial equation, and identify which root is the growing mode.
+\end{derivation}
+
+Two modes, one growing and one decaying, as a second-order equation must have.
+The decaying one is why initial conditions are forgettable: any admixture dies
+as $a^{-3/2}$, so a universe started slightly wrong converges on the growing
+solution rather than remembering the error. Every later statement in this course
+assumes only the growing mode is left.
 
 The growing mode is remarkable for how \emph{slow} it is. In a static medium an
 overdensity grows exponentially; expansion converts that runaway into a power
@@ -479,6 +490,8 @@ factor of a thousand in $a$, instead of having collapsed long ago --- and why
 perturbation theory is useful across five decades of expansion.
 
 \begin{reading}
+\bait{$D_+ = a$ was Einstein--de Sitter. By how much has dark energy already
+slowed growth in our universe?}
 \paragraph{And in our universe.} Once dark energy takes over, the expansion
 accelerates, the drag wins, and growth stalls. Solving \eqref{eq:growth}
 numerically for flat \lcdm{} with $\Om = 0.31$ gives a present-day growth factor
@@ -499,6 +512,8 @@ Inflation delivers, to very good approximation, Gaussian initial conditions: the
 where two distinct assumptions are at work. Statistical \emph{homogeneity} --- invariance under translations --- is what forces the delta function, so that modes whose wavevectors do not sum to zero are uncorrelated. Statistical \emph{isotropy} is a separate statement, invariance under rotations, and it is what makes $\Plin$ a function of the magnitude $k=|\vk|$ alone rather than of the vector $\vk$.
 
 \begin{reading}
+\bait{Three to dangle here: is $\vk' = -\vk$ really uncorrelated? How would you
+generate such a field on a computer? And what sets the overall amplitude?}
 Note the one pair that is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$ --- a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
 
 \paragraph{Generating a realization.} That a Gaussian field is fixed completely by $\Plin$ is a
@@ -533,19 +548,17 @@ every spectrum you will plot. Measured, $\sigma_8 \simeq 0.81$.
 \end{reading}
 
 \begin{quiz}
-Two realizations of the same $\Plin(k)$ with different seeds look completely
-different. In what sense, then, is $\Plin$ a prediction of the theory at all?
-\nudge{Which of these could you measure from one universe: the amplitude of the
-mode at one particular $\vk$, or the average of $|\delta(\vk)|^2$ over all modes
-of the same $|\vk|$? Which had better be the thing theory predicts?}
-\answer{The theory predicts the distribution, not the draw. The phases ---
-everything that makes two seeds look different --- are random and carry no
-cosmology. $\Plin$ is the \emph{variance} of the modes, and the variance is the
-prediction. We measure it from our single universe by averaging
-$|\delta(\vk)|^2$ over the many modes that share the same $|\vk|$, which works
-because they are independent draws from one distribution. The largest scales
-have the fewest modes to average over, so they are the worst measured ---
-cosmic variance is the price of owning one universe.}
+Two seeds give completely different universes from the same $\Plin(k)$. In what
+sense is $\Plin$ a prediction, then?
+\nudge{From one universe, could you measure the amplitude at one particular
+$\vk$, or only an average over modes of equal $|\vk|$? Which had better be the
+thing theory predicts?}
+\answer{The theory predicts the distribution, not the draw. The phases --- all
+that differs between seeds --- are random and carry no cosmology; $\Plin$ is the
+\emph{variance}, and that is the prediction. We measure it by averaging
+$|\delta(\vk)|^2$ over modes of equal $|\vk|$, which are independent draws from
+one distribution. The largest scales have the fewest such modes, so they are the
+worst measured: cosmic variance is the price of owning one universe.}
 \end{quiz}
 
 \subsection{The primordial spectrum}
@@ -563,6 +576,7 @@ perturbations,
 with $A_s$ an amplitude and $k_0$ an arbitrary pivot scale.
 
 \begin{reading}
+\bait{Why is $n_s$ not exactly $1$?}
 Scale invariance means equal power in every logarithmic interval of $k$, which is
 what $n_s = 1$ would give. Inflation cannot deliver it exactly: inflation has to
 end, so the expansion rate drifts while modes are leaving the horizon, and the
@@ -574,8 +588,8 @@ Two consequences carry forward. The primordial field is Gaussian to excellent
 approximation, which is what Section~\ref{sec:stats} assumed. And converting
 curvature to matter density costs two powers of $k$ in the field, by the Poisson
 equation, hence four in the spectrum, so the primordial \emph{matter} spectrum is
-a featureless power law, $P_{\rm prim}(k) \propto k^{n_s}$. Nothing in that has a scale in it. Every feature in the observed $\Plin(k)$ ---
-the turnover, the falloff, the wiggles --- is put there afterwards.
+a featureless power law, $P_{\rm prim}(k) \propto k^{n_s}$ --- with, note, no
+scale anywhere in it.
 
 \subsection{Horizon crossing, and the shape of \texorpdfstring{$\Plin(k)$}{P(k)}}
 \label{sec:linearpk}
@@ -594,21 +608,18 @@ in between. This is the formula you will code in the hands-on session, and the
 question now is what shapes $T$.
 
 \begin{quiz}
-The primordial spectrum is a featureless power law. The observed one has a
-turnover, a falloff and wiggles. Where does a \emph{scale} come from, when the
-initial conditions contain none?
-\nudge{No scale is primordial, so every one of them entered afterwards. One is
-set by the expansion: when did a given mode come into causal contact? Another is
-set by the contents: when did matter take over from radiation? A third is a
-distance a wave could travel. Match each to a feature.}
-\answer{Every scale in the observed spectrum was imprinted after inflation, by
-two different pieces of physics. The turnover and the $k^{-2}$ falloff come from
-horizon entry: modes that entered during radiation domination are suppressed,
-and the boundary is $k_{\rm eq}$, the mode entering exactly at matter--radiation
-equality. The wiggles come from a different scale entirely: the sound horizon at
-recombination, $r_d \simeq 100\,h^{-1}$Mpc, the farthest a pressure wave in the
-photon--baryon plasma travelled before the photons were released. Inflation
-supplies only the amplitude and the tilt; every feature is processing.}
+The primordial spectrum is a featureless power law, yet the observed one has a
+turnover, a falloff and wiggles. Where do those scales come from?
+\nudge{None of them is primordial. One is set by the expansion --- when did a
+mode come into causal contact? Another by the contents --- when did matter
+overtake radiation? A third is a distance a wave could travel.}
+\answer{All of them are imprinted after inflation, by two pieces of physics.
+Horizon entry gives the turnover and the $k^{-2}$ falloff: modes entering during
+radiation domination are suppressed, and the boundary is $k_{\rm eq}$, the mode
+entering exactly at equality. The wiggles come from the sound horizon at
+recombination, $r_d \simeq 100\,h^{-1}$Mpc --- the farthest a pressure wave
+travelled before the photons were released. Inflation supplies only an amplitude
+and a tilt.}
 \end{quiz}
 
 One thing does: \textbf{when a mode entered the horizon}.
@@ -624,6 +635,8 @@ and \emph{super-horizon} when $k \ll \cH$, where nothing propagates across it at
 all.
 
 \begin{reading}
+\bait{Two: have I been writing $H$ or $\cH$, and does it matter? And what was
+$1/\cH$ doing during inflation?}
 Not the Hubble parameter $H = \dd\ln a/\dd t$: overdots here are
 $\partial/\partial\tau$ throughout, so $\dot a/a$ is $\cH$, not $H$, and it is
 also why the growth equation \eqref{eq:growth} carries $\cH\dot D$ where its
@@ -847,17 +860,14 @@ At first order, \eqref{eq:lpt_master} with $\delta = -\nabla_q\cdot\vPsi^{(1)}$ 
 \end{equation}
 \begin{quiz}
 The density is $1+\delta = 1/J$, with no equation of its own. What happens when
-$J \to 0$, and what does that correspond to physically?
+$J \to 0$, and what is that physically?
 \nudge{$J$ is the volume of a fluid element. What does zero volume mean for the
-matter inside it, and for the map $\vq \mapsto \vx$? Try one dimension first,
-with two particles approaching each other.}
-\answer{$J$ is the volume of a fluid element, so $J \to 0$ is an element
-crushed to zero volume: the density $1+\delta = 1/J$ diverges, and the map
-$\vq \mapsto \vx$ stops being one-to-one, because two elements have arrived at
-the same position. Physically this is \emph{shell crossing}, the formation of
-the first caustic. It is where the fluid description fails --- a real feature of
-collisionless collapse, not an artefact of the approximation --- and
-Section~\ref{sec:shellcross} picks up the story there.}
+map $\vq \mapsto \vx$? Try one dimension, with two particles approaching.}
+\answer{An element crushed to zero volume: $\delta$ diverges, and
+$\vq \mapsto \vx$ stops being one-to-one because two labels have reached the
+same place. This is \emph{shell crossing}, the first caustic --- a real feature
+of collisionless collapse, not an artefact of the approximation --- and it is
+where the fluid description fails. Section~\ref{sec:shellcross} picks it up.}
 \end{quiz}
 
 \subsection{The Zel'dovich approximation}
@@ -944,24 +954,20 @@ positive eigenvalues & fraction of volume & fate \\
 \end{tabular}
 \end{center}
 \begin{quiz}
-You know the spherical collapse model. What does a sphere require of
-$\lambda_1,\lambda_2,\lambda_3$, and how often does a random symmetric matrix
-oblige? Then, before looking at the numbers: of void, sheet, filament and knot,
-which two should be commonest, and why should the table be symmetric?
-\nudge{For the patch to stay spherical, how must the three eigenvalues be
-related? Now write down any $3\times3$ symmetric matrix off the top of your head
---- were two of its eigenvalues equal? Would you ever expect them to be? For the
+What does a sphere require of $\lambda_1,\lambda_2,\lambda_3$, and how often
+does a random symmetric matrix oblige? Then, before you look at the numbers:
+which two of void, sheet, filament and knot should be commonest, and why is the
+table symmetric?
+\nudge{To stay spherical, how must the eigenvalues be related? Write down any
+$3\times3$ symmetric matrix --- were two of its eigenvalues equal? For the
 second half, treat each eigenvalue's sign as a coin flip and count.}
-\answer{A sphere needs $\lambda_1 = \lambda_2 = \lambda_3$, and for a random
-symmetric matrix that is a probability-zero coincidence: no matrix you write
-down will oblige. So spherical collapse describes an event that never happens,
-and generic collapse is anisotropic --- it runs fastest along the largest
-eigenvalue, forming a sheet first, then a filament, then a knot. For the
-fractions: if the three eigenvalue signs were independent coin flips, the split
-would be $12.5/37.5/37.5/12.5$ per cent. The true split, $8/42/42/8$, keeps the
-symmetry --- a Gaussian field has no preferred sign of $\delta$ --- but shifts
-weight toward sheets and filaments, because the eigenvalues are not independent:
-they repel.}
+\answer{A sphere needs $\lambda_1 = \lambda_2 = \lambda_3$, a probability-zero
+coincidence: spherical collapse describes an event that never happens. Generic
+collapse is anisotropic, running fastest along the largest eigenvalue --- sheet,
+then filament, then knot. Three fair coins would give $12.5/37.5/37.5/12.5$ per
+cent; the true $8/42/42/8$ keeps the symmetry, since a Gaussian field prefers no
+sign of $\delta$, but shifts weight to the mixed cases, because the eigenvalues
+repel rather than being independent.}
 
 Read the middle rows: \textbf{$84\%$ of the volume is headed for a sheet or a
 filament, and only $8\%$ ever collapses along all three axes.} The web is not
@@ -1124,22 +1130,18 @@ lot. Nothing about $b_1$ is predicted by the theory in these lectures. It is
 measured alongside the cosmology.
 
 \begin{quiz}
-Why should $b_1$ be greater than one? Galaxies are made of matter, so why do they
-not simply trace it?
-\nudge{Galaxies form where the density crosses a threshold. Add a long-wavelength
-mode that lifts the background slightly across a large region: the density barely
-moved, but how much did the \emph{number of places above threshold} move? Sketch
-a Gaussian with a cut near its tail and slide it right.}
-\answer{Thresholds amplify. Galaxies form only where the density exceeds a
-threshold that sits in the tail of the distribution. Now add a small
-long-wavelength overdensity: the density field barely changes, but the number
-of regions above the threshold changes by much more, because shifting a
-Gaussian slightly moves a large fraction of its tail across a fixed cut. So
-galaxy counts respond more strongly than the matter does, which is $b_1 > 1$
---- and the rarer the object, the stronger the amplification, which is why the
-most massive galaxies are the most biased. (This argument is the
-\emph{peak--background split}, and it reappears whenever bias is derived
-properly.)}
+Why should $b_1$ exceed one? Galaxies are made of matter --- why do they not
+simply trace it?
+\nudge{Galaxies form above a density threshold. Add a long mode that lifts the
+background slightly: the density barely moved, but how much did the \emph{number
+of sites above threshold} move? Sketch a Gaussian with a cut in its tail and
+slide it right.}
+\answer{Thresholds amplify. Galaxies form only above a threshold sitting in the
+tail of the distribution, so a small shift of the whole field carries a large
+fraction of that tail across the cut. Counts therefore respond more strongly
+than the matter does: $b_1 > 1$, and more strongly still for rarer objects,
+which is why the most massive galaxies are the most biased. This is the
+\emph{peak--background split}.}
 \end{quiz}
 
 Two things are worth knowing about \eqref{eq:linear_bias}. It is the first term

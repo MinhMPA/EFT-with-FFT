@@ -23,6 +23,7 @@ SEC_PER_BOXED   = 30.0    # a boxed equation gets extra attention; added on top
 SEC_PER_FIGURE  = 150.0   # put it up, orient the room, draw out the point
 SEC_PER_TABLE   = 90.0
 SEC_PER_QUIZ    = 150.0   # pose, wait, take an answer, resolve. Often the nudge too.
+SEC_PER_BAIT    = 15.0    # dangled over a skipped passage; costs more only if someone bites
 SEC_PER_DERIV   = 30.0    # pose a break derivation; the doing happens off the clock
 OVERHEAD        = 0.10    # transitions, admin, losing your place
 BUDGET_MIN      = 65.0
@@ -45,6 +46,7 @@ def estimate(block):
     tab    = block.count(r'\begin{tabular}')
     quiz   = block.count(r'\begin{quiz}')
     deriv  = block.count(r'\begin{derivation}')
+    bait   = block.count(r'\bait{')
     # Comments and 'Read, not lectured' passages are in the notes but not delivered,
     # so their words and equations are excluded above and here.
     for env in ('remark', 'reading'):
@@ -52,7 +54,7 @@ def estimate(block):
             eqn -= len(ENV_EQN.findall(m.group(0)))
     secs = (w / WORDS_PER_MIN * 60 + eqn * SEC_PER_EQN + boxed * SEC_PER_BOXED
             + fig * SEC_PER_FIGURE + max(tab, 0) * SEC_PER_TABLE + quiz * SEC_PER_QUIZ
-            + deriv * SEC_PER_DERIV)
+            + deriv * SEC_PER_DERIV + bait * SEC_PER_BAIT)
     return dict(words=w, eqn=eqn, fig=fig, tab=max(tab, 0), quiz=quiz,
                 min=secs * (1 + OVERHEAD) / 60)
 
