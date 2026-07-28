@@ -577,5 +577,88 @@ smaller ones.)
 ''')
 
 
+M(r'''
+---
+## Step 5 — Look at it
+
+You have a universe. Slice it.
+''')
+
+C(r'''
+fig, ax = plt.subplots(1, 2, figsize=(10, 4.2))
+
+sl = delta_x[:, :, N//2]
+im = ax[0].imshow(sl.T, origin="lower", extent=[0, L, 0, L], cmap="RdBu_r",
+                  vmin=-4, vmax=4, interpolation="nearest")
+ax[0].set_title(r"a slice through $\delta$, one cell thick")
+fig.colorbar(im, ax=ax[0], label=r"$\delta$", fraction=0.046)
+
+ax[1].hist(delta_x.ravel(), bins=200, density=True, color="0.7")
+g = np.linspace(-10, 10, 400)
+ax[1].plot(g, np.exp(-g**2/(2*rms_grid**2))/np.sqrt(2*np.pi*rms_grid**2), "k-", lw=1.2,
+           label=f"Gaussian, sigma = {rms_grid:.2f}")
+ax[1].set_xlim(-10, 10); ax[1].set_xlabel(r"$\delta$"); ax[1].legend(fontsize=8)
+ax[1].set_title("and its one-point distribution")
+
+for a in (ax[0],):
+    a.set_xlabel(r"$x\ [h^{-1}\mathrm{Mpc}]$"); a.set_ylabel(r"$y\ [h^{-1}\mathrm{Mpc}]$")
+fig.tight_layout(); plt.show()
+''')
+
+M(r'''
+The histogram is a Gaussian because we built it from one — that is the whole
+content of "Gaussian initial conditions". Lecture 2 is about what gravity does
+to that symmetry: the field develops a long tail to high $\delta$ (you cannot
+go below $\delta = -1$, but there is no ceiling above), and the picture stops
+looking like noise and starts looking like a web.
+
+Note also that $\delta$ reaches $\pm 12$ here, which is well past the $|\delta|
+\ll 1$ that assumption A5 asked for. Linear theory has already broken on the
+smallest scales of this grid. Lecture 2 picks that up.
+''')
+
+C(r'''
+def realize(T_of_k, ns_=ns, seed=SEED):
+    """Re-draw the field for a different cosmology, same seed. -> (rms, turnover)."""
+    P = make_pk_lin(T_of_k, ns=ns_)
+    Pg = P(np.sqrt(K2).ravel()).reshape(K2.shape); Pg[0, 0, 0] = 0.0
+    r = np.random.default_rng(seed)
+    dk = np.fft.rfftn(r.standard_normal((N, N, N)))*np.sqrt(Pg*N**3/L**3)
+    dk[0, 0, 0] = 0.0
+    kg_ = np.logspace(-4, 2, 4000)
+    return float(np.std(np.fft.irfftn(dk, s=(N, N, N)))), float(kg_[np.argmax(P(kg_))])
+
+
+print(f"{'variant':12s} {'k_eq':>8s} {'turnover':>10s} {'rms delta':>10s}")
+for label, kw, ns_ in [("fiducial", {}, ns),
+                       ("ns = 1.10", {}, 1.10),
+                       ("ns = 0.85", {}, 0.85),
+                       ("Om = 0.20", {"Om": 0.20}, ns),
+                       ("Om = 0.45", {"Om": 0.45}, ns)]:
+    Om_ = kw.get("Om", Om)
+    keq_ = 7.46e-2*(Om_*h*h)*(Tcmb/2.7)**-2/h
+    rms_, turn_ = realize(lambda k: T_full(k, **kw), ns_=ns_)
+    print(f"{label:12s} {keq_:8.4f} {turn_:10.4f} {rms_:10.3f}")
+''')
+
+M(r'''
+**Read that table carefully — $\sigma_8$ is renormalised to 0.81 in every
+row.** So none of these differences is an amplitude; they are all *shape*.
+
+Raising $n_s$ tilts power towards small scales, and the grid's rms — which
+integrates out to $k_{\rm Nyq} = 1.61$, i.e. scales of a few Mpc — goes up from
+2.52 to 2.80, even though $\sigma$ at $8\,h^{-1}$Mpc is pinned. More
+small-scale structure at fixed $\sigma_8$.
+
+Raising $\Omega_m$ moves $k_{\rm eq}$ right, because equality happens earlier
+when there is more matter, so the turnover shifts and more of the spectrum sits
+in the steep part. This is the one scale the early universe stamps on the
+spectrum, and you have just moved it by changing the contents of the universe.
+
+Every one of these fields was drawn with **the same seed**. Same phases, same
+random numbers. Every difference you see is the cosmology.
+''')
+
+
 if __name__ == "__main__":
     main()
