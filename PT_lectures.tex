@@ -715,6 +715,27 @@ Dodelson \& Schmidt's Eq.~(7.99); much of the inflation literature writes $\zeta
 for the same quantity.
 
 \begin{reading}
+\bait{What is the pivot $k_0$, and does its value matter?}
+It looks like physics and is not. A tilted power law has no single amplitude ---
+$\Delta^2_{\mathcal{R}}$ takes a different value at every $k$ --- so $A_s$ has to
+be quoted \emph{somewhere}, and $k_0$ is that somewhere: $A_s$ is by definition
+$\Delta^2_{\mathcal{R}}(k_0)$. Move the pivot and $A_s$ moves with it, by
+$(k_0'/k_0)^{n_s-1}$, leaving $\Delta^2_{\mathcal{R}}(k)$ unchanged at every $k$.
+Planck's $A_s = 2.1\times10^{-9}$ at $k_0 = 0.05\,{\rm Mpc}^{-1}$ would be
+$2.35\times10^{-9}$ had they chosen $0.002\,{\rm Mpc}^{-1}$; the spectrum is the
+same spectrum. The value is picked so that the data constrain $A_s$ and $n_s$
+close to independently, which puts it near the middle of the measured range of
+scales.
+
+Two practical warnings. That $0.05$ is in ${\rm Mpc}^{-1}$, not
+$h\,{\rm Mpc}^{-1}$: in the units these lectures use it is
+$0.074\,h\,{\rm Mpc}^{-1}$, and reading it as $0.05\,h\,{\rm Mpc}^{-1}$ misplaces
+the pivot by a factor $1/h$. And these lectures never need its value at all,
+because we fix $A$ in \eqref{eq:pk_master} with $\sigma_8$ rather than with
+$A_s$ --- the pivot cancels out of everything downstream.
+\end{reading}
+
+\begin{reading}
 \bait{What \emph{is} $\mathcal{R}$, and how does it turn into $\delta$?}
 $\mathcal{R}$ is a perturbation to the spatial curvature of a constant-time
 slice, measured on slices where the matter is at rest: the spatial metric reads
