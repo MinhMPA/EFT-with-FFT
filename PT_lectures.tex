@@ -333,9 +333,7 @@ when $k \ll \cH$, where nothing crosses it at all. Section~\ref{sec:linearpk} is
 about what happens to a mode when it changes from one to the other.
 
 \medskip
-\noindent With the list complete, here is the whole of what follows in one
-sentence: \textbf{we are describing a self-gravitating fluid, matter moving in a potential that it sources itself.} That alone fixes what the system must
-contain. A fluid conserves mass and momentum, which is two equations; and
+\noindent With the list complete: we are describing a \textbf{self-gravitating fluid}, matter moving in a potential that it sources itself. That fixes what the system must contain. A fluid conserves mass and momentum, which is two equations; and
 because the gravity is its own, a third is needed to tie the potential back to
 the density. Those three, one at a time.
 
@@ -366,7 +364,7 @@ about motion. Eliminate $\vu$ and $\Phi$ between the three members and you get a
 single equation for $\delta$ alone; that is \eqref{eq:growth}, and
 Section~\ref{sec:vlasov} does it.
 
-The new term is the drag $\cH\dot\vx$, and it is not friction: set $\Phi = 0$
+The new term is the drag $\cH\dot\vx$, and it is not friction. Set $\Phi = 0$
 and \eqref{eq:newtonian_eom} says $\dot\vx \propto 1/a$: free particles coast
 to rest in comoving coordinates as their peculiar velocities redshift away.
 Two exercises reach it from opposite directions:
@@ -410,7 +408,7 @@ so try it before reading on.
 \begin{reading}
 \bait{We used mass conservation and momentum conservation. Where is energy
 conservation?}
-Three answers, which are one answer seen from three sides.
+Three answers, which are the same answer from three sides.
 
 For cold matter, mass conservation \emph{is} energy conservation. The energy
 density is rest mass; the kinetic part is smaller by $u^2 \ll 1$ (A2). So
@@ -470,9 +468,7 @@ whole of Lecture~2 rests on it.
 \end{equation}
 the potential is the density contrast suppressed by two powers of $\cH/k$. At
 $k = 0.1\,h\,{\rm Mpc}^{-1}$ that factor is about $10^{-5}$, so even a patch with
-$\delta \sim 100$ carries $|\Phi| \sim 5\times10^{-4}$. Gravity stays weak
-precisely where clustering becomes strong, which is the licence for everything
-that follows. We will let $\delta$ grow past unity and resum it to all orders
+$\delta \sim 100$ carries $|\Phi| \sim 5\times10^{-4}$. Gravity stays weak precisely where clustering becomes strong. This is what licenses everything that follows. We will let $\delta$ grow past unity and resum it to all orders
 through displacements, while never going beyond linear order in the metric. Those
 two statements sound contradictory and are not: $\Phi$ and $\delta$ are separated
 by $(\cH/k)^2$, and it is $\delta$ alone that becomes large. Dropping A4
@@ -490,8 +486,7 @@ quoted above.
 
 \begin{reading}
 \bait{I keep saying $\Phi$ is unambiguous. Is $\delta$?}
-\emph{It also makes $\delta$ meaningful.} Here is where the trouble comes from,
-since it is not obvious. Writing $\delta = (\rho - \bar\rho)/\bar\rho$ requires
+\emph{It also makes $\delta$ meaningful.} Where the ambiguity comes from: Writing $\delta = (\rho - \bar\rho)/\bar\rho$ requires
 $\bar\rho$ \emph{at the same time} as $\rho$, and in general relativity
 ``the same time'' is a choice of how to slice spacetime into spatial surfaces,
 not a fact about the universe. Shift that slicing infinitesimally,
@@ -507,8 +502,7 @@ synchronous gauge and sits frozen in the Newtonian gauge until horizon entry
 \cite[\S 7]{MaBertschinger1995}, and why ``do perturbations grow outside the
 horizon?'' has no gauge-independent answer.
 
-There is a repair, and it is worth seeing because it explains A3 from a second
-direction. The combination
+There is a repair, and it explains A3 from a second direction. The combination
 $\Delta \equiv \delta + 3\cH(1+w)\,v$, with $v$ the velocity potential
 ($\vu = \nabla v$), is gauge-invariant --- the shift above cancels against the
 one $v$ picks up --- and it obeys
@@ -578,9 +572,7 @@ as $D_-/D_+ \propto a^{-5/2}$, so after enough expansion only $A(\vx)D_+(\tau)$
 survives. That is what licenses writing $\delta^{(1)} = D_+(\tau)\,\delta_0(\vx)$
 above: one function of position times one of time, rather than two.
 
-Be careful what this does \emph{not} erase. It does not erase the initial
-conditions: $A(\vx)$ is the primordial field, remembered exactly, and computing
-it is the whole business of Lecture~1. What is forgotten is only the other half of the initial data: whatever part of the start did not lie on the growing
+What it does not erase is the initial conditions. $A(\vx)$ is the primordial field, remembered exactly, and computing it is what Lecture~1 does. What is forgotten is only the other half of the initial data: whatever part of the start did not lie on the growing
 solution. This is why initial conditions for a simulation can be laid down using
 the growing mode alone (Section~\ref{sec:2lpt}), and why a slightly wrong start
 relaxes onto the right answer instead of propagating.
@@ -634,7 +626,7 @@ physics either way.
 
 \begin{reading}
 \bait{How would you actually generate one of these fields on a computer?}
-Note the one pair that is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$: a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
+One pair is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$: a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
 
 \paragraph{Generating a realization.} That a Gaussian field is fixed completely by $\Plin$ is a
 practical statement as much as a formal one, and it is what the hands-on session
@@ -703,7 +695,7 @@ for the same quantity.
 
 \begin{reading}
 \bait{What is the pivot $k_0$, and does its value matter?}
-It looks like physics and is not. A tilted power law has no single amplitude ---
+It is a bookkeeping choice, not physics. A tilted power law has no single amplitude ---
 $\Delta^2_{\mathcal{R}}$ takes a different value at every $k$ --- so $A_s$ has to
 be quoted \emph{somewhere}, and $k_0$ is that somewhere: $A_s$ is by definition
 $\Delta^2_{\mathcal{R}}(k_0)$. Move the pivot and $A_s$ moves with it, by
@@ -809,8 +801,7 @@ One thing does: \textbf{when a mode entered the horizon}.
 the comoving Hubble radius $1/\cH$ and used it to separate sub-horizon modes
 from super-horizon ones. The point now is that the separation is not permanent:
 $1/\cH$ changes with time while a comoving $k$ does not, so a given mode can
-start on one side and end on the other. It does, and that is the whole
-mechanism.
+start on one side and end on the other. It does, and that is the mechanism.
 
 \begin{reading}
 \bait{Have I been writing $H$ or $\cH$ --- and what was $1/\cH$ doing during
@@ -885,29 +876,26 @@ Now $a^2\bar\rho_m \propto a^{-1}$ while $\delta$ grows as $D_+ \propto a$, and
 the two cancel exactly. This is why the potential is constant through the whole
 matter era, and why $\Phi$ stayed small in \eqref{eq:phi_small}.
 
-Now assemble. A mode with $k < k_{\rm eq}$ enters the horizon \emph{after}
-equality and so never sees the decaying phase: it arrives with its primordial
-amplitude intact, $T \simeq 1$. Note what that does \emph{not} say. Such a mode
-does enter --- $k = 10^{-3}\,h\,{\rm Mpc}^{-1}$ crosses in at $a \simeq 0.03$,
-and has $T = 0.99$ --- but by then $\Phi$ has stopped decaying, so entry costs
-it nothing. Suppression requires entering while radiation still dominates, not
-entering as such. A mode with $k > k_{\rm eq}$ enters during
-radiation domination, at $a_{\rm enter}$, and decays from then until equality.
-Now just evaluate the decay between its two endpoints. Nothing happens before
-$a_{\rm enter}$ and nothing happens after $a_{\rm eq}$, and in between
-$\Phi \propto a^{-2}$, so the \emph{whole} accumulated suppression is that power
-law read across the window,
+Assembling these. A mode with $k < k_{\rm eq}$ enters \emph{after} equality, so
+it never sees the decaying phase and arrives with its primordial amplitude
+intact, $T \simeq 1$. It does still enter: $k = 10^{-3}\,h\,{\rm Mpc}^{-1}$
+crosses at $a \simeq 0.03$ and has $T = 0.99$. What matters is that $\Phi$ has
+stopped decaying by then, so entry costs it nothing. Suppression requires
+entering \emph{while radiation dominates}, not entering.
+
+A mode with $k > k_{\rm eq}$ enters at $a_{\rm enter}$ during radiation
+domination and decays until equality. Nothing happens before $a_{\rm enter}$ or
+after $a_{\rm eq}$, and $\Phi \propto a^{-2}$ in between, so the accumulated
+suppression is that power law read across the window,
 \begin{equation*}
 \frac{\Phi(a_{\rm eq})}{\Phi_{\rm prim}}
 = \left(\frac{a_{\rm enter}}{a_{\rm eq}}\right)^{\!2} ,
 \end{equation*}
-and it is frozen in from then on. That is the factor, and it is nothing more
-than $a^{-2}$ evaluated at the ends of the interval. The earlier a mode enters,
-the wider the window and the smaller the survivor. To turn that into a statement
-about $k$, use the entry condition $k = \cH(a_{\rm enter})$ with
-$\cH \propto 1/a$ during radiation domination, so that
-$a_{\rm enter} \propto 1/k$; fixing the normalization by the mode that enters
-exactly at equality, $a_{\rm enter}/a_{\rm eq} = k_{\rm eq}/k$. Hence
+frozen in from then on: $a^{-2}$ evaluated at the ends of the interval, so the
+earlier a mode enters the less survives. For the $k$-dependence, entry means
+$k = \cH(a_{\rm enter})$ with $\cH \propto 1/a$ in radiation domination, giving
+$a_{\rm enter} \propto 1/k$. Normalizing on the mode entering at equality,
+$a_{\rm enter}/a_{\rm eq} = k_{\rm eq}/k$, so
 \begin{equation}
 T(k) \;\sim\; \left(\frac{a_{\rm enter}}{a_{\rm eq}}\right)^{2}
 \;\propto\; \left(\frac{k_{\rm eq}}{k}\right)^{2} .
@@ -927,9 +915,9 @@ is the one scale the early universe stamps on the spectrum.
 \caption{The two factors of $\Plin = A\,k^{n_s}T^2(k)$, and their product.
 \emph{Left:} inflation supplies a featureless power law with no scale in it; the transfer function supplies everything else: flat below $k_{\rm eq}$, falling
 as $k^{-2}$ above it. \emph{Right:} the product, which is the input to everything
-that follows. The turnover sits at $k_{\rm eq}$ by construction, the high-$k$
-slope is $k^{-2}$ softened by the M\'esz\'aros logarithm, and the inset shows the
-baryon acoustic oscillations as a ratio to the no-wiggle spectrum, since at a few
+that follows. The turnover sits at $k_{\rm eq}$, marked by the dotted line; the
+high-$k$ slope is $k^{-2}$ softened by the M\'esz\'aros logarithm; and the inset
+shows the baryon wiggles as a ratio to the no-wiggle spectrum, since at a few
 percent they are invisible on the main panel. Computed with the Eisenstein \& Hu transfer function \cite{EisensteinHu1998}, the one you will code in the
 hands-on session.}
 \label{fig:pkconstruction}
@@ -1086,14 +1074,13 @@ J = \det\left(\delta_{ij} + \Psi_{i,j}\right),
 \Psi_{i,j} \equiv \frac{\partial\Psi_i}{\partial q_j} .
 \label{eq:jacobian}
 \end{equation}
-A volume element that shrinks ($J<1$) is overdense; one that expands is
-underdense, and Figure~\ref{fig:lagmap} is that sentence drawn. Because the
-determinant is nonlinear in $\vPsi$, a displacement correct only at first order
-already generates density perturbations at every order: low-order LPT resums an
-infinite subset of Eulerian nonlinearities, the ones that come from moving
-matter around. The subset is restricted, though: the Jacobian generates every power of the
-linear displacement, not every dynamical nonlinearity, so more orders in
-$\delta$ does not buy more dynamical accuracy.
+A cell that shrinks ($J<1$) is overdense, one that expands is underdense;
+Figure~\ref{fig:lagmap} shows both. Because the determinant is nonlinear in
+$\vPsi$, a first-order displacement already generates $\delta$ at every order:
+LPT resums the Eulerian nonlinearities that come from moving matter. Only
+those, though. The Jacobian gives every power of the linear displacement, not
+every dynamical nonlinearity, so more orders in $\delta$ is not more dynamical
+accuracy.
 
 \begin{figure}[t]
 \centering
@@ -1134,8 +1121,7 @@ where the fluid description fails. Section~\ref{sec:shellcross} picks it up.}
 \label{sec:za}
 
 The \emph{Zel'dovich approximation} (ZA) \cite{Zeldovich1970} takes this linear displacement seriously beyond linear order in the density: move particles on straight lines (in comoving coordinates) and read the density
-off the Jacobian. Getting the density is three steps, and they are worth doing
-slowly.
+off the Jacobian. Getting the density takes three steps.
 
 \emph{The deformation matrix is symmetric.} Since $\vPsi^{(1)} =
 -\nabla_q\varphi^{(1)}$, its gradient is a matrix of second derivatives,
@@ -1185,7 +1171,7 @@ so positions and velocities are the same field up to the factor $\cH f$ of
 Section~\ref{sec:2lpt}, are what every code uses to start.
 
 \begin{remark}
-The ZA is not a degraded linear theory, and it is worth being clear why. Linear
+The ZA is not a degraded linear theory. The difference is what each one approximates. Linear
 theory says the \emph{density} is small. The ZA instead says the
 \emph{displacement} is well approximated at first order, and then treats the consequences exactly, through a determinant that contains every power of
 $\vPsi^{(1)}$. Since bulk flows are the dominant motion on quasi-linear scales,
@@ -1349,8 +1335,11 @@ At second order the displacement responds to the gravitational tide generated at
 D_2(\tau) \simeq -\frac{3}{7}\,D_+^2(\tau)\;\Om^{-1/143},
 \label{eq:D2}
 \end{equation}
-where the fit is better than $0.1\%$ over $10^{-3}<a<1$ for flat \lcdm{} and the
-EdS limit is $D_2 = -\tfrac37 D_+^2$. (This Lagrangian $D_2$ is a different object from the second-order amplitude of Eulerian perturbation theory \cite{EFTnotes}; the literature uses the same symbol for both.) The spatial source is the second principal invariant of the deformation tensor $\varphi^{(1)}_{,ij}$: writing $\vPsi^{(2)} = \nabla_q\varphi^{(2)}$,
+with the fit better than $0.1\%$ over $10^{-3}<a<1$ for flat \lcdm{}, and
+$D_2 = -\tfrac37 D_+^2$ in EdS. (This Lagrangian $D_2$ is not the second-order
+amplitude of Eulerian perturbation theory \cite{EFTnotes}, though the literature
+uses one symbol for both.) The spatial source is the second principal invariant
+of $\varphi^{(1)}_{,ij}$; writing $\vPsi^{(2)} = \nabla_q\varphi^{(2)}$,
 \begin{equation}
 \nabla_q^2\varphi^{(2)}
 \simeq -\frac{3}{7}\,\Om^{-1/143}
@@ -1371,11 +1360,15 @@ where $f_1 \equiv \dd\ln D_+/\dd\ln a = f$ and, because the convention here has 
 f_2 \equiv \frac{\dd\ln|D_2|}{\dd\ln a} = \frac{\dot D_2}{\cH D_2} .
 \label{eq:f2_def}
 \end{equation}
-The velocity in \eqref{eq:2lpt_map} is unaffected by this: the sign of $D_2$ already sits in $\varphi^{(2)}$. Physically: Zel'dovich streams are straight; the tide bends them. 2LPT is the standard for setting up initial conditions of $N$-body simulations: starting from the ZA alone leaves slowly decaying transients, and 2LPT strongly suppresses them. How large the residual is depends on the starting redshift, the force resolution, and which statistic you look at \cite[App.~E.5]{Jeong2010}.
+The velocity is unaffected, since the sign of $D_2$ already sits in
+$\varphi^{(2)}$. Physically: Zel'dovich streams are straight, and the tide bends
+them. 2LPT is the standard for $N$-body initial conditions because starting from
+the ZA alone leaves slowly decaying transients; the residual depends on starting
+redshift, force resolution and which statistic you measure
+\cite[App.~E.5]{Jeong2010}.
 
 \begin{remark}
-Sign conventions differ across the literature, so it is worth saying which one
-this is. Everything in this lecture --- the displacement $\vx = \vq + \vPsi$, the
+Sign conventions differ across the literature. This is the one used here. Everything in this lecture --- the displacement $\vx = \vq + \vPsi$, the
 Jacobian, the deformation tensor and its eigenvalues, the growth equation for
 $D_2$ and its fit, the second-order source, and the map \eqref{eq:2lpt_map}
 itself --- follows Jeong \cite[App.~E]{Jeong2010} exactly, including $D_2 < 0$
@@ -1430,7 +1423,7 @@ point.
 \begin{reading}
 \bait{Section~\ref{sec:web} said spherical collapse never happens. So why is a
 threshold taken from spherical collapse allowed here?}
-A fair objection, and the two statements are about different things.
+The two statements are about different things.
 Section~\ref{sec:web} is about \emph{morphology}: exact degeneracy of the three
 eigenvalues has probability zero, so nothing collapses as a sphere and the web
 is not a population of balls. Here $\delta_{\rm cr}$ is used only as a
@@ -1491,7 +1484,7 @@ this rarity.}
 \label{fig:threshold}
 \end{figure}
 
-Two things are worth knowing about \eqref{eq:linear_bias}. It is the first term
+Two limitations of \eqref{eq:linear_bias}. It is the first term
 of an expansion, not a law, and the threshold model is far too crude to
 predict a real $b_1$, which is measured alongside the cosmology. At smaller
 scales the response stops being linear,

@@ -38,17 +38,12 @@ ax[0].axvline(K_EQ, color="0.75", lw=0.8, ls=":")
 ax[0].text(K_EQ * 1.35, 3e-8, r"$k_{\rm eq}$", fontsize=8, color="0.4")
 ax[0].set_ylim(1e-9, 1e6); ax[0].set_xlim(1e-4, 10)
 ax[0].set_ylabel("the two factors (arbitrary scale)")
-ax[0].set_title(r"$\Plin = A\,k^{n_s}\,T^2(k)$".replace(r"\Plin", "P_{\\rm L}"),
-                fontsize=9)
 ax[0].legend(frameon=False, loc="lower left")
 
 ax[1].loglog(k, P, color="k", lw=1.6, label="linear $P_{\\rm L}(k)$")
 ax[1].loglog(k, Pnw, color="0.6", lw=1.0, ls="--", label="no-wiggle (no baryons)")
 ax[1].axvline(K_EQ, color="0.75", lw=0.8, ls=":")
-ax[1].text(K_EQ * 1.35, 1.4e4, r"$k_{\rm eq}$", fontsize=8, color="0.4")
-ax[1].annotate("turnover", xy=(K_EQ, np.interp(K_EQ, k, P)), xytext=(2.0e-4, 2.2e4),
-               fontsize=7.5, color="0.35",
-               arrowprops=dict(arrowstyle="->", color="0.5", lw=0.7))
+ax[1].text(K_EQ * 1.35, 2.0e3, r"$k_{\rm eq}$", fontsize=8, color="0.4")
 ax[1].annotate(r"$\propto k^{-2}\ln k$", xy=(0.9, np.interp(0.9, k, P)),
                xytext=(0.9, 1.1e4), fontsize=7.5, color="0.35",
                arrowprops=dict(arrowstyle="->", color="0.5", lw=0.7))
@@ -61,11 +56,10 @@ ins.axhline(1.0, color="0.8", lw=0.6)
 ins.set_xscale("log"); ins.set_xlim(0.02, 0.4); ins.set_ylim(0.90, 1.10)
 ins.set_xticks([0.03, 0.1, 0.3]); ins.set_xticklabels(["0.03","0.1","0.3"], fontsize=6)
 ins.set_yticks([0.95, 1.05]); ins.tick_params(labelsize=6, length=2)
-ins.set_title(r"$P_{\rm L}/P_{\rm nw}$: the BAO", fontsize=6.5, pad=2)
+ins.set_ylabel(r"$P_{\rm L}/P_{\rm nw}$", fontsize=6.5, labelpad=1)
 for sp in ins.spines.values(): sp.set_linewidth(0.5)
 ax[1].set_ylabel(r"$P_{\rm L}(k)\ [(\mathrm{Mpc}/h)^3]$")
-ax[1].set_title("the product", fontsize=9)
-ax[1].legend(frameon=False, loc="lower right", fontsize=7)
+ax[1].legend(frameon=False, loc="upper left", fontsize=7)
 for a in ax:
     a.set_xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
 fig.tight_layout()

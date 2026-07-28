@@ -77,7 +77,6 @@ axL.set_xlabel(r"comoving position $x\ [\mathrm{Mpc}/h]$")
 axL.set_yticks([])
 for sp in ("left", "right", "top"):
     axL.spines[sp].set_visible(False)
-axL.set_title("position space: a lumpy field", fontsize=8.5)
 
 # ---- right: where those modes live on P(k)
 axR.loglog(kg, pk, color="0.25", lw=1.4, zorder=2)
@@ -91,7 +90,6 @@ axR.set_xlim(1e-3, 1.0)
 axR.set_ylim(2e2, 6e4)
 axR.set_xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
 axR.set_ylabel(r"$P_{\rm L}(k)\ [(\mathrm{Mpc}/h)^3]$")
-axR.set_title(r"Fourier space: amplitude per mode", fontsize=8.5)
 axR.text(0.96, 0.94, r"$k = 2\pi/\lambda$", transform=axR.transAxes,
          ha="right", va="top", fontsize=9)
 
