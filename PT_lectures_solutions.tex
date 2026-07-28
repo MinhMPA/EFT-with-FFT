@@ -12,6 +12,7 @@
 \newcommand{\vq}{\bm{q}}
 \newcommand{\vk}{\bm{k}}
 \newcommand{\vu}{\bm{u}}
+\newcommand{\vr}{\bm{r}}
 \newcommand{\vPsi}{\bm{\Psi}}
 \newcommand{\nhat}{\hat{\bm{z}}}
 \newcommand{\khat}{\hat{\bm{k}}}
@@ -54,7 +55,44 @@ in $\bar\rho$ --- and why the hands-on session sets the $\vk = 0$ mode of a
 generated field to zero by hand.
 \end{solution}
 
-\begin{solution}{Derivation 2 (the smallness of $\Phi$).}
+\begin{solution}{Derivation 2 (the equation of motion, from Newton).}
+With $\vr = a\vx$ and overdots meaning $\dd/\dd t$, the physical acceleration is
+\begin{equation*}
+\ddot\vr = \ddot a\,\vx + 2\dot a\,\dot\vx + a\,\ddot\vx .
+\end{equation*}
+Newton's second law is $\ddot\vr = -\nabla_r\Phi_{\rm tot}$. Splitting the
+source, $\nabla_r^2\Phi_{\rm tot} = 4\pi G\bar\rho\,(1+\delta)$, gives a
+background piece $\nabla_r\bar\Phi = \tfrac{4\pi}{3}G\bar\rho\,\vr$ and a
+peculiar piece $\nabla_r\Phi = a^{-1}\nabla_x\Phi$, so
+\begin{equation*}
+\ddot a\,\vx + 2\dot a\,\dot\vx + a\,\ddot\vx
+= -\tfrac{4\pi}{3}G\bar\rho\,a\,\vx - a^{-1}\nabla_x\Phi .
+\end{equation*}
+\emph{What cancels:} the Friedmann acceleration equation for matter is exactly
+$\ddot a = -\tfrac{4\pi}{3}G\bar\rho\,a$, so the first term on each side goes.
+The frame is itself falling with the background, which is why only the
+\emph{peculiar} potential survives --- and the cancellation is not an accident
+of $p = 0$: with pressure both sides carry the same $\bar\rho + 3\bar p$.
+Dividing by $a$,
+\begin{equation*}
+\ddot\vx + 2H\dot\vx = -a^{-2}\nabla_x\Phi .
+\end{equation*}
+Finally $\dd/\dd t = a^{-1}\partial_\tau$ gives
+$\dd^2/\dd t^2 = a^{-2}\big(\partial_\tau^2 - \cH\,\partial_\tau\big)$, so the
+left-hand side is $a^{-2}\big(\vx'' + \cH\vx'\big)$ and
+\begin{equation*}
+\vx'' + \cH\,\vx' = -\nabla_x\Phi ,
+\end{equation*}
+which is the equation of motion in the notes.
+
+\emph{Where the drag comes from:} not from a force. The $2\dot a\,\dot\vx$ is
+the chain rule on $\vr = a\vx$, and the change to conformal time turns the $2H$
+into a single $\cH$. Both are artefacts of describing motion in coordinates that
+expand --- which is why setting $\Phi = 0$ leaves $\vx' \propto 1/a$ rather than
+$\vx' = $ constant.
+\end{solution}
+
+\begin{solution}{Derivation 3 (the smallness of $\Phi$).}
 The third member of the linear system in Fourier space is
 $-k^2\Phi = \tfrac32\Om(\tau)\cH^2\delta$, so
 $|\Phi| = \tfrac32\,\Om(\tau)\,(\cH/k)^2\,|\delta|$. With
@@ -67,7 +105,7 @@ condition on $\Phi$ is therefore guaranteed by the Poisson equation for any
 density contrast these lectures meet: A4 delivers A2.
 \end{solution}
 
-\begin{solution}{Derivation 3 (the Einstein--de Sitter growth modes).}
+\begin{solution}{Derivation 4 (the Einstein--de Sitter growth modes).}
 In EdS, $a \propto \tau^2$ and $\cH = \dd\ln a/\dd\tau = 2/\tau$, with
 $\Om = 1$, so the growth equation reads
 $\ddot D + (2/\tau)\dot D - (6/\tau^2)D = 0$. Substituting $D \propto \tau^n$

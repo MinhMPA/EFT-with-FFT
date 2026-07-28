@@ -20,6 +20,7 @@
 \newcommand{\vk}{\bm{k}}
 \newcommand{\vp}{\bm{p}}
 \newcommand{\vu}{\bm{u}}
+\newcommand{\vr}{\bm{r}}
 \newcommand{\vPsi}{\bm{\Psi}}
 \newcommand{\nhat}{\hat{\bm{z}}}
 \newcommand{\khat}{\hat{\bm{k}}}
@@ -358,8 +359,9 @@ elements. In comoving coordinates, to first order in $\Phi$ (A1), it reads
 The new term is the drag $\cH\dot\vx$, and it is not friction: set $\Phi = 0$
 and \eqref{eq:newtonian_eom} says $\dot\vx \propto 1/a$ --- free particles coast
 to rest in comoving coordinates as their peculiar velocities redshift away.
-(Exercise~\ref{ex:geodesic} derives it from the geodesic equation of
-\eqref{eq:newtonian_gauge}.) Lecture~2 is built on this equation --- it follows
+There are two routes to it: Derivation~\ref{der:eom} below never leaves
+Newton, and Exercise~\ref{ex:geodesic} comes down to it from the geodesic
+equation of \eqref{eq:newtonian_gauge}. Lecture~2 is built on this equation --- it follows
 elements rather than fields, and that change of variable is the whole of the
 Lagrangian picture. Note that the overdot in \eqref{eq:newtonian_eom} follows
 the element, so $\dot\vx$ is its peculiar velocity $\vu$. Written instead for
@@ -367,6 +369,17 @@ the velocity \emph{field} at a fixed point, the same law carries an extra
 advective term, $\dot\vu + (\vu\cdot\nabla)\vu + \cH\vu = -\nabla\Phi$; that
 term is quadratic in the perturbation and drops by A4. What is left, on taking
 the divergence, is $\dot\theta = -\cH\,\theta - \nabla^2\Phi$.
+
+\begin{derivation}\label{der:eom}
+Get \eqref{eq:newtonian_eom} without leaving Newton. Write momentum
+conservation in \emph{physical} coordinates, $\dd^2\vr/\dd t^2 =
+-\nabla_r\Phi_{\rm tot}$ with $\vr = a\vx$, and split $\Phi_{\rm tot}$ into the
+part sourced by $\bar\rho$ and the part sourced by $\bar\rho\,\delta$. You will
+need the Friedmann acceleration equation,
+$\ddot a = -\tfrac{4\pi}{3}G\bar\rho\,a$, and then a change to conformal time.
+Two things to watch: what cancels, and where the drag term comes from --- is it
+a force?
+\end{derivation}
 
 \emph{The Poisson equation.} What closes the system is the field equation, and
 here A3 does its work: every term carrying a factor of $\cH$
