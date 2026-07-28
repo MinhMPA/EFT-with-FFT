@@ -78,36 +78,39 @@ print(f"  counted points sit on the erfc curve to {100*resid:.1f}% over the plot
 # ---------------------------------------------------------------- figure ---
 fig, ax = plt.subplots(1, 2, figsize=(9.8, 4.0))
 
-# LEFT: a 2D slice. A 1D cut cannot show "more regions" -- it holds too few.
-# Here every cell above threshold is drawn, in two colours: those that were
-# already above without the long mode, and those the long mode pushed over.
+# LEFT: a 2D slice, with the threshold drawn as a level set. A 1D cut cannot
+# do this job: enough peaks on a line means a low nu_c, and a low nu_c is
+# exactly what kills the response -- the two are the same parameter.
 sl   = dR[:, :, N//3]
 xs   = np.arange(N)*(L/N)
 lm2d = 0.30*np.sin(2*np.pi*xs/L)[:, None]*np.ones((1, N))
+XG, YG = np.meshgrid(xs, xs, indexing="ij")
 
-was  = sl > DELTA_CR                       # above without the long mode
-now_ = (sl + lm2d) > DELTA_CR              # above with it
-new  = now_ & ~was
-lost = was & ~now_
-print(f"  2D slice: {was.sum()} cells above threshold -> {now_.sum()} "
-      f"({new.sum()} gained, {lost.sum()} lost)")
+was  = sl > DELTA_CR
+now_ = (sl + lm2d) > DELTA_CR
+print(f"  2D slice: area above threshold {100*was.mean():.2f}% -> {100*now_.mean():.2f}%")
 
 ax[0].imshow(lm2d.T, origin="lower", extent=[0, L, 0, L], cmap="RdBu_r",
-             vmin=-0.9, vmax=0.9, interpolation="bilinear", zorder=0)
-ys, xs2 = np.nonzero(was)
-ax[0].plot(xs2*(L/N), ys*(L/N), "s", color="0.15", ms=1.4, mew=0,
-           label=f"above threshold already ({was.sum()})", zorder=3)
-ys, xs2 = np.nonzero(new)
-ax[0].plot(xs2*(L/N), ys*(L/N), "s", color="#e8590c", ms=1.4, mew=0,
-           label=f"pushed over by $\\delta_L$ (+{new.sum()})", zorder=4)
+             vmin=-1.1, vmax=1.1, interpolation="bilinear", zorder=0)
+# the threshold as a level set, before and after the long mode is added
+ax[0].contour(XG, YG, sl, levels=[DELTA_CR], colors="0.15",
+              linewidths=1.1, zorder=3)
+ax[0].contourf(XG, YG, sl + lm2d, levels=[DELTA_CR, 1e9],
+               colors=["#e8590c"], alpha=0.55, zorder=2)
+ax[0].contour(XG, YG, sl + lm2d, levels=[DELTA_CR], colors="#e8590c",
+              linewidths=1.1, zorder=4)
+
+from matplotlib.lines import Line2D
+ax[0].legend(handles=[
+    Line2D([], [], color="0.15", lw=1.3, label=r"$\delta_R = \delta_{\rm cr}$"),
+    Line2D([], [], color="#e8590c", lw=1.3,
+           label=r"$\delta_R + \delta_L = \delta_{\rm cr}$")],
+    loc="upper right", fontsize=7.5, framealpha=0.92).get_frame().set_edgecolor("none")
 ax[0].set_xlim(0, L); ax[0].set_ylim(0, L)
 ax[0].set_xlabel(r"$q_x\ [h^{-1}\mathrm{Mpc}]$")
 ax[0].set_ylabel(r"$q_y\ [h^{-1}\mathrm{Mpc}]$")
-ax[0].set_title(r"where the long mode is positive, more regions cross",
+ax[0].set_title("the same threshold, lifted where the long mode is positive",
                 fontsize=9)
-leg = ax[0].legend(loc="upper right", frameon=True, fontsize=7,
-                   markerscale=4, framealpha=0.9)
-leg.get_frame().set_edgecolor("none")
 
 # RIGHT: abundance vs long mode, measured against predicted
 dL = np.linspace(-0.45, 0.45, 300)
