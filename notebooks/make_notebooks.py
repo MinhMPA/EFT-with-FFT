@@ -15,8 +15,9 @@ worked answer is withheld while leaving a question in its place.
 Run this file to write notebooks/H1_gaussian_field.ipynb and
 notebooks/H1_gaussian_field_solutions.ipynb. Never edit the .ipynb by hand.
 """
-import json
 import os
+
+from nbbuild import build, emit
 
 CELLS = []
 
@@ -41,44 +42,11 @@ def SM(answer, bait):
     CELLS.append(("markdown", answer, bait))
 
 
-def _source(text):
-    """LaTeX-free, trailing-newline-correct source list for nbformat v4."""
-    lines = text.strip("\n").split("\n")
-    return [ln + "\n" for ln in lines[:-1]] + [lines[-1]]
-
-
-def _cell(kind, text, idx):
-    base = {"id": f"c{idx:03d}", "metadata": {}, "source": _source(text)}
-    if kind == "markdown":
-        return {"cell_type": "markdown", **base}
-    return {"cell_type": "code", "execution_count": None, "outputs": [], **base}
-
-
-def build(which):
-    """which in {'student', 'solutions'} -> an nbformat v4 notebook dict."""
-    assert which in ("student", "solutions"), which
-    return {
-        "cells": [_cell(kind, sol if which == "solutions" else stu, i)
-                  for i, (kind, sol, stu) in enumerate(CELLS)],
-        "metadata": {
-            "kernelspec": {"display_name": "Python 3", "language": "python",
-                           "name": "python3"},
-            "language_info": {"name": "python", "version": "3.10"},
-        },
-        "nbformat": 4,
-        "nbformat_minor": 5,
-    }
-
-
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
     for which, name in (("student", "H1_gaussian_field.ipynb"),
                         ("solutions", "H1_gaussian_field_solutions.ipynb")):
-        path = os.path.join(here, name)
-        with open(path, "w") as fh:
-            json.dump(build(which), fh, indent=1)
-            fh.write("\n")
-        print(f"wrote {name}  ({len(CELLS)} cells)")
+        emit(CELLS, os.path.join(here, name), which)
 
 
 M(r'''
