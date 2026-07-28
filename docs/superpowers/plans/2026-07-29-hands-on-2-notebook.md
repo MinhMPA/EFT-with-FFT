@@ -16,7 +16,13 @@
 - **The deformation tensor is built from the fiducial (linear) field**, never the displaced one. Classify first, move second.
 - **Every checkpoint prints before it asserts** (H1's convention, unified in `e415071`).
 - **Three stubs only:** `Ψ⁽¹⁾`, the positive-eigenvalue count, `δ₂`. Everything else is given, working code.
-- **Solution cells overwrite stubs.** Stubs use `...`, never `raise`, so Run-All never blocks.
+- **Solution cells overwrite stubs, and a stub cell must never error** — not by
+  `raise`, and not incidentally either (feeding `...` into numpy raises just as
+  fatally, and Colab's Run All stops at the first erroring cell). Any stub line
+  that *consumes* a TODO value must sit behind an `if ... not in <todo>:` guard,
+  so an unfilled stub is a quiet no-op. Consequence: the full notebook must pass
+  plain `jupyter nbconvert --execute` with **no** `--allow-errors`, and the
+  stripped-solutions variant must fail it.
 - Students must never be pointed at `figs_src/ptlib.py` or `figs_src/make_fig_web.py`.
 
 ### Measured reference values
@@ -44,7 +50,7 @@ Continuum comparisons for the step-2 observation (not a checkpoint):
 |---|---|---|---|
 | `rms Ψ_x` | 5.833 | 5.039 | 5.203 |
 | `rms δ` | 6.603 | 2.331 | 2.531 |
-| fraction of `∫dk P` below `k_f` | **24.2%** | | |
+| fraction of `∫dk P` below `k_f` | **24.1%** (on the notebook's own 4000-pt grid; 24.2% on a 6000-pt one — an observation, never asserted) | | |
 | fraction of `∫dk k²P` below `k_f` | **0.01%** | | |
 
 ---
@@ -435,7 +441,9 @@ SC(stub=r'''
 # Watch the sign: getting it backwards makes matter flow OUT of overdensities,
 # and the rms will not tell you.
 psi1_k = [...,  ...,  ...]
-psi1   = [np.fft.irfftn(p, s=(N, N, N)) for p in psi1_k]
+
+if ... not in psi1_k:          # skips quietly until you have filled the dots
+    psi1 = [np.fft.irfftn(p, s=(N, N, N)) for p in psi1_k]
 ''', solution=r'''#@title Solution — Psi^(1)
 psi1_k = [1j*Ki/K2*delta_k for Ki in (KX, KY, KZ)]
 psi1   = [np.fft.irfftn(p, s=(N, N, N)) for p in psi1_k]
