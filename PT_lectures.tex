@@ -169,7 +169,8 @@ written in comoving coordinates $\vx$, which ride along with the expansion: a
 galaxy at rest keeps the same $\vx$ while its physical separation from us,
 $a\vx$, grows. Here $\tau$ is \emph{conformal} time, defined by
 $\dd t = a\,\dd\tau$, so that $\tau = \int\dd t/a$ --- an integral, not $t/a$.
-Overdots mean $\partial/\partial\tau$ throughout, and
+Overdots mean $\partial/\partial\tau$ throughout --- at fixed comoving position
+for a field, at fixed element for a trajectory --- and
 $\cH \equiv \dd\ln a/\dd\tau = aH$ is the expansion rate in that time. Spatial
 indices are raised and lowered with $\delta_{ij}$, so a repeated pair is summed
 regardless of placement.
@@ -351,7 +352,8 @@ Exercise~\ref{ex:subhorizon} shows.)
 
 \emph{Newton's second law.} For a pressureless fluid (A2) there is no separate Euler
 equation to import: Euler \emph{is} Newton's second law applied to fluid
-elements. In comoving coordinates, to first order in $\Phi$ (A1), it reads
+elements. Follow one element, so that $\vx(\tau)$ is its trajectory. To first
+order in $\Phi$ (A1),
 \begin{equation}
 \ddot\vx + \cH\,\dot\vx = -\nabla\Phi .
 \label{eq:newtonian_eom}
@@ -363,12 +365,9 @@ There are two routes to it: Derivation~\ref{der:eom} below never leaves
 Newton, and Exercise~\ref{ex:geodesic} comes down to it from the geodesic
 equation of \eqref{eq:newtonian_gauge}. Lecture~2 is built on this equation --- it follows
 elements rather than fields, and that change of variable is the whole of the
-Lagrangian picture. Note that the overdot in \eqref{eq:newtonian_eom} follows
-the element, so $\dot\vx$ is its peculiar velocity $\vu$. Written instead for
-the velocity \emph{field} at a fixed point, the same law carries an extra
-advective term, $\dot\vu + (\vu\cdot\nabla)\vu + \cH\vu = -\nabla\Phi$; that
-term is quadratic in the perturbation and drops by A4. What is left, on taking
-the divergence, is $\dot\theta = -\cH\,\theta - \nabla^2\Phi$.
+Lagrangian picture. For now we need only its divergence: with $\vu = \dot\vx$
+and $\theta = \nabla\cdot\vu$, at linear order (A4)
+$\dot\theta = -\cH\,\theta - \nabla^2\Phi$.
 
 \begin{derivation}\label{der:eom}
 Get \eqref{eq:newtonian_eom} without leaving Newton. Write momentum
