@@ -2,7 +2,7 @@
 
 ## Session 1 — From a cosmology to a density field
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MinhMPA/EFT-with-FFT/blob/master/handson/H1_gaussian_field.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/MinhMPA/EFT-with-FFT/blob/master/notebooks/H1_gaussian_field.ipynb)
 
 Nothing to install. Click the badge, sign in with any Google account, and run
 the first cell. If you would rather work locally you need only numpy and
@@ -23,8 +23,8 @@ parameter, every difference you see is physics, not luck.
 `make_notebooks.py` is the source of truth. Both `.ipynb` files are generated:
 
 ```bash
-python3 handson/make_notebooks.py   # regenerate both notebooks
-python3 handson/verify_notebooks.py # execute both, cross-check against ptlib
+python3 notebooks/make_notebooks.py   # regenerate both notebooks
+python3 notebooks/verify_notebooks.py # execute both, cross-check against ptlib
 ```
 
 Never hand-edit the `.ipynb` files — your changes will be overwritten.

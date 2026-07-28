@@ -16,7 +16,7 @@ the Eisenstein & Hu code so it can run in Colab with no repo checkout, and this
 is what stops the two copies drifting apart. It also pins the shipped CAMB
 table, the offline path's only unverified input.
 
-Run from the repo root:  python3 handson/verify_notebooks.py
+Run from the repo root:  python3 notebooks/verify_notebooks.py
 """
 import json
 import os
@@ -26,9 +26,9 @@ import sys
 import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-HANDSON = os.path.join(ROOT, "handson")
-STUDENT = os.path.join(HANDSON, "H1_gaussian_field.ipynb")
-SOLUTIONS = os.path.join(HANDSON, "H1_gaussian_field_solutions.ipynb")
+NOTEBOOKS = os.path.join(ROOT, "notebooks")
+STUDENT = os.path.join(NOTEBOOKS, "H1_gaussian_field.ipynb")
+SOLUTIONS = os.path.join(NOTEBOOKS, "H1_gaussian_field_solutions.ipynb")
 
 failures = []
 
@@ -68,19 +68,19 @@ check("solutions side does not", "NotImplementedError" not in sol_txt)
 print("3. execution")
 res = subprocess.run(
     ["jupyter", "nbconvert", "--to", "notebook", "--execute", "--stdout", SOLUTIONS],
-    cwd=HANDSON, capture_output=True, text=True)
+    cwd=NOTEBOOKS, capture_output=True, text=True)
 check("solutions execute clean", res.returncode == 0,
       res.stderr.strip().splitlines()[-1][:100] if res.returncode else "")
 
 res = subprocess.run(
     ["jupyter", "nbconvert", "--to", "notebook", "--execute", "--stdout", STUDENT],
-    cwd=HANDSON, capture_output=True, text=True)
+    cwd=NOTEBOOKS, capture_output=True, text=True)
 check("student notebook stops at a TODO", res.returncode != 0,
       "it ran to completion, so the stubs are not stubs" if res.returncode == 0 else "")
 
 print("4. shipped data files")
 for name, rows in (("pk_lin_fiducial.txt", 1024), ("T_camb_fiducial.txt", 1024)):
-    path = os.path.join(HANDSON, name)
+    path = os.path.join(NOTEBOOKS, name)
     ok = os.path.exists(path)
     check(f"{name} present", ok)
     if ok:
@@ -94,13 +94,13 @@ matplotlib.use("Agg")           # headless: the plotting cells must still run
 import ptlib
 
 # Rebuild the notebook's namespace by running every code cell in order. This
-# runs in handson/ (the save cell writes delta_k_128.npz there, and the
+# runs in notebooks/ (the save cell writes delta_k_128.npz there, and the
 # fallback cells read pk_lin_fiducial.txt / T_camb_fiducial.txt by bare
 # filename). Nothing is filtered and nothing is swallowed: a cell that raises
 # here is a real failure, and the traceback is the diagnostic.
 ns_ = {"__name__": "__notebook__"}
 cwd = os.getcwd()
-os.chdir(HANDSON)               # pk_lin_fiducial.txt lives here
+os.chdir(NOTEBOOKS)               # pk_lin_fiducial.txt lives here
 try:
     for n, cell in enumerate(v):
         if cell["cell_type"] != "code":
@@ -115,7 +115,7 @@ finally:
     os.chdir(cwd)
     # check 3 (nbconvert) and this exec both leave delta_k_128.npz behind;
     # clean up once here so the suite leaves no residue.
-    leftover = os.path.join(HANDSON, "delta_k_128.npz")
+    leftover = os.path.join(NOTEBOOKS, "delta_k_128.npz")
     if os.path.exists(leftover):
         os.remove(leftover)
 
@@ -144,7 +144,7 @@ else:
 # fiducial cosmology (e.g. via a CAMB re-run with the wrong params) would pass
 # every other check here and only fail in a classroom with no internet.
 if "T_full" in ns_:
-    tab = np.loadtxt(os.path.join(HANDSON, "T_camb_fiducial.txt"))
+    tab = np.loadtxt(os.path.join(NOTEBOOKS, "T_camb_fiducial.txt"))
     k_tab, T_tab = tab[:, 0], tab[:, 1]
     rel = float(np.abs(ns_["T_full"](k_tab)/T_tab - 1).max())
     check("shipped CAMB table matches the notebook's T_full", rel < 0.04,

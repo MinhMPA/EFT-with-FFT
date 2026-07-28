@@ -7,8 +7,8 @@ notebook. Cells are declared once, below, in reading order:
     C(code)             a code cell, identical in both (given to students)
     S(solution, stub)   a code cell that differs: students get `stub`
 
-Run this file to write handson/H1_gaussian_field.ipynb and
-handson/H1_gaussian_field_solutions.ipynb. Never edit the .ipynb by hand.
+Run this file to write notebooks/H1_gaussian_field.ipynb and
+notebooks/H1_gaussian_field_solutions.ipynb. Never edit the .ipynb by hand.
 """
 import json
 import os
@@ -769,7 +769,7 @@ C(r'''
 import urllib.request
 
 PK_URL = ("https://raw.githubusercontent.com/MinhMPA/EFT-with-FFT/"
-          "master/handson/pk_lin_fiducial.txt")
+          "master/notebooks/pk_lin_fiducial.txt")
 
 
 def rebuild_delta_k(N_=128, L_=250.0, seed_=1234):
@@ -882,7 +882,7 @@ def T_boltzmann():
 
     import urllib.request
     url = ("https://raw.githubusercontent.com/MinhMPA/EFT-with-FFT/"
-           "master/handson/T_camb_fiducial.txt")
+           "master/notebooks/T_camb_fiducial.txt")
     try:
         tab = np.loadtxt("T_camb_fiducial.txt")
     except OSError:
