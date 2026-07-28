@@ -1224,7 +1224,7 @@ M(r'''
 rebuilds the field from the same seed. `np.random.default_rng` is guaranteed
 reproducible across numpy versions and platforms, so this is not an
 approximation to what you built — the phases are identical, and the amplitudes
-agree to a few parts in a million.
+agree to a few parts in a hundred thousand.
 
 Which is also the answer to a fair question: if the field can be regenerated in
 ten lines, why save it at all? Because in real work it cannot. A field from a
@@ -1267,12 +1267,19 @@ def rebuild_delta_k(N_=128, L_=250.0, seed_=1234):
     return dk_
 
 
-dk_fb   = rebuild_delta_k()
-rms_fb  = float(np.std(np.fft.irfftn(dk_fb, s=(N, N, N))))
-assert abs(rms_fb - rms_grid)/rms_grid < 1e-3, \
-    f"fallback gives rms {rms_fb:.5f}, you built {rms_grid:.5f}"
-print(f"fallback rms = {rms_fb:.5f}   (you built {rms_grid:.5f})")
-print(f"they differ by {abs(rms_fb-rms_grid)/rms_grid:.1e} -- the tabulated P is interpolated")
+dk_fb  = rebuild_delta_k()
+rms_fb = float(np.std(np.fft.irfftn(dk_fb, s=(128, 128, 128))))
+
+# Checked against the fiducial number, NOT against your delta_x. This cell has to
+# pass when your own field is wrong or was never built -- that is its whole job.
+assert abs(rms_fb - 2.516) < 0.001, f"fallback gives rms {rms_fb:.5f}, expected 2.516"
+print(f"fallback rms   = {rms_fb:.5f}   (fiducial 2.516)")
+
+try:
+    print(f"your own field = {rms_grid:.5f}   -> the two differ by "
+          f"{abs(rms_fb - rms_grid)/rms_grid:.1e}")
+except NameError:
+    print("your own field is not in memory -- which is exactly the case this cell exists for")
 ''')
 
 M(r'''
@@ -1297,7 +1304,14 @@ Session 2 moves it.
 Do this **first** — the fallback cell loads this file, so the notebook cannot
 execute without it. 1024 points over `1e-4 < k < 31.6` bracket the grid's
 `k_f = 0.025` and corner `2.79` with room to spare, and log-log interpolation
-on that grid reproduces `P` to `2.1e-4` and `rms δ` to `7e-6` (measured).
+on that grid reproduces `P` to `2.1e-4` (measured).
+
+The fallback's `rms` then differs from the student-built field by **`5.8e-5`**
+relative — not the `7e-6` an interpolation-only estimate would suggest. The extra
+comes from a second, larger difference: the table is generated from `ptlib`, which
+normalises `σ₈` with `scipy.integrate.quad`, while the notebook's `pk_lin` uses the
+`logint` log-grid sum. Those two amplitudes differ by `1.13e-4` in `P`, hence
+`5.6e-5` in `rms`. Both effects sit far inside the `1e-3` assert tolerance.
 
 ```bash
 python3 -c "
