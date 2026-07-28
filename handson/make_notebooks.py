@@ -37,19 +37,19 @@ def _source(text):
     return [ln + "\n" for ln in lines[:-1]] + [lines[-1]]
 
 
-def _cell(kind, text):
+def _cell(kind, text, idx):
+    base = {"id": f"c{idx:03d}", "metadata": {}, "source": _source(text)}
     if kind == "markdown":
-        return {"cell_type": "markdown", "metadata": {}, "source": _source(text)}
-    return {"cell_type": "code", "metadata": {}, "execution_count": None,
-            "outputs": [], "source": _source(text)}
+        return {"cell_type": "markdown", **base}
+    return {"cell_type": "code", "execution_count": None, "outputs": [], **base}
 
 
 def build(which):
     """which in {'student', 'solutions'} -> an nbformat v4 notebook dict."""
     assert which in ("student", "solutions"), which
     return {
-        "cells": [_cell(kind, sol if which == "solutions" else stu)
-                  for kind, sol, stu in CELLS],
+        "cells": [_cell(kind, sol if which == "solutions" else stu, i)
+                  for i, (kind, sol, stu) in enumerate(CELLS)],
         "metadata": {
             "kernelspec": {"display_name": "Python 3", "language": "python",
                            "name": "python3"},
