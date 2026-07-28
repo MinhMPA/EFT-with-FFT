@@ -33,8 +33,11 @@ def Hc(a):                       # comoving Hubble rate, h/Mpc
     return (100.0 / C_KMS) * a * np.sqrt(Or / a**4 + Om / a**3 + OL)
 
 k_eq = Hc(a_eq)
+# 1/H peaks exactly where the expansion begins to accelerate
+a_acc = (Om / (2.0 * OL)) ** (1.0 / 3.0)
 print(f"  Omega_r = {Or:.3e}   a_eq = {a_eq:.3e}  (z_eq = {1/a_eq-1:.0f})")
 print(f"  k_eq = script-H(a_eq) = {k_eq:.4f} h/Mpc")
+print(f"  a_acc = (Om/2OL)^(1/3) = {a_acc:.3f}  (z = {1/a_acc-1:.2f})")
 
 a = np.logspace(-6, 0, 3000)
 R = 1.0 / Hc(a)                                   # comoving Hubble radius, Mpc/h
@@ -42,8 +45,20 @@ R = 1.0 / Hc(a)                                   # comoving Hubble radius, Mpc/
 fig, ax = plt.subplots(figsize=(6.2, 3.6))
 
 ax.plot(a, R, color="k", lw=1.8, zorder=4, label=r"comoving Hubble radius $1/\mathcal{H}$")
-ax.axvline(a_eq, color="0.75", lw=0.8, ls=":", zorder=0)
-ax.text(a_eq * 1.3, 6.5e3, r"$a_{\rm eq}$", fontsize=8, color="0.4")
+# era boundaries. 1/H is a different power of a in each, which is why the
+# curve bends -- and the break at a_eq is what singles out k_eq.
+for av, lab in [(a_eq, r"$a_{\rm eq}$"), (a_acc, r"$a_{\rm acc}$")]:
+    ax.axvline(av, color="0.5", lw=0.9, ls="--", dashes=(4, 3), zorder=1)
+    ax.text(av, 6.0e3, lab, fontsize=8.5, color="0.3", ha="center", va="center",
+            bbox=dict(fc="white", ec="none", pad=1.2))
+
+ERAS = [(1e-6, a_eq, "radiation", r"$\propto a$"),
+        (a_eq, a_acc, "matter", r"$\propto a^{1/2}$"),
+        (a_acc, 1.5, r"$\Lambda$", r"$\propto a^{-1}$")]
+for lo, hi, nm, law in ERAS:
+    xm = np.sqrt(lo * hi)
+    ax.text(xm, 1.55e4, nm, fontsize=8.5, color="0.25", ha="center", va="center")
+    ax.text(xm, 1.02e4, law, fontsize=7.5, color="0.45", ha="center", va="center")
 
 modes = [(0.005, "#3b6ea5"), (k_eq, "#c8622d"), (0.05, "#4c9a5e")]
 for k, col in modes:
@@ -57,14 +72,12 @@ for k, col in modes:
 ax.annotate("enters the horizon", xy=(a[np.argmin(np.abs(R[a < 0.5] - 1 / 0.05))], 1 / 0.05),
             xytext=(2.2e-4, 5.2), fontsize=7.5, color="0.3",
             arrowprops=dict(arrowstyle="->", color="0.5", lw=0.7))
-ax.text(0.62, 5.2e3, r"$\Lambda$ takes over," "\n" r"$1/\mathcal{H}$ turns around",
-        fontsize=7, color="0.45", ha="center")
 ax.text(1.3e-6, 1.15e3, "before this, during inflation,\n"
         r"$1/\mathcal{H}$ ran downhill and modes $\it{exited}$",
         fontsize=7, color="0.45", ha="left", va="center")
 
 ax.set_xscale("log"); ax.set_yscale("log")
-ax.set_xlim(1e-6, 1.5); ax.set_ylim(3.0, 1.2e4)
+ax.set_xlim(1e-6, 1.5); ax.set_ylim(3.0, 2.2e4)
 ax.set_xlabel(r"scale factor $a$")
 ax.set_ylabel(r"comoving scale $[\,h^{-1}\mathrm{Mpc}\,]$")
 ax.legend(frameon=False, loc="lower right", fontsize=7.5)

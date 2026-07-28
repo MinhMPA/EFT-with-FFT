@@ -131,7 +131,7 @@ are solved in the companion note.
 \begin{plan}
 \noindent\textbf{Plan (80 min at the board, 10 for questions).} The setting:
 background, $\delta$, and Fourier space (0--8) $\rightarrow$ the assumptions
-A1--A5, the equations derived from them, and the smallness of $\Phi$ (8--33)
+A1--A3, the equations derived from them, and the smallness of $\Phi$ (8--33)
 $\rightarrow$ the pressureless fluid, and how perturbations grow (33--43)
 $\rightarrow$ Gaussian random fields and what a power spectrum is (43--49)
 $\rightarrow$ the primordial spectrum (49--53) $\rightarrow$ horizon crossing,
@@ -160,8 +160,7 @@ spatially flat Friedmann--Lema\^itre--Robertson--Walker (FLRW) universe ---
 homogeneous, isotropic and expanding --- carrying \emph{scalar} perturbations
 only. The three perturbation types decouple at linear order: vectors decay, and
 tensors --- gravitational waves --- do not source density perturbations, so
-structure formation is a scalar story. This is assumption \textbf{A1} of the
-list below. The unperturbed metric is
+structure formation is a scalar story. The unperturbed metric is
 \begin{equation*}
 \dd s^2 = a^2(\tau)\left[-\dd\tau^2 + \delta_{ij}\,\dd x^i\dd x^j\right],
 \end{equation*}
@@ -264,14 +263,14 @@ at large $k$.}
 
 From here on everything is Newtonian: a fluid in an expanding box, no metric in
 sight. Three equations do all the work, and they rest on one gauge choice and
-five numbered assumptions, A1--A5. Keep the list in a corner of the board: the
+four numbered assumptions, A1--A3. Keep the list in a corner of the board: the
 assumptions do different jobs, fail at different times, and exactly one will be
 dropped in Lecture~2.
 
-\paragraph{A1 again, and one choice.} \textbf{A1} --- flat FLRW background,
-scalar perturbations only --- was stated in the prelude and is the arena. To it
-add a \emph{choice}, which restricts no physics: fix the gauge completely by
-writing the perturbed metric in conformal Newtonian (longitudinal) form
+\paragraph{The gauge choice.} The arena was fixed in the prelude: flat FLRW,
+scalar perturbations only. What comes before any assumption is a \emph{choice},
+and it restricts no physics --- fix the gauge completely by writing the
+perturbed metric in conformal Newtonian (longitudinal) form
 \cite{MaBertschinger1995},
 \begin{equation}
 \dd s^2 = a^2(\tau)\left[-(1+2\psi)\,\dd\tau^2
@@ -280,14 +279,14 @@ writing the perturbed metric in conformal Newtonian (longitudinal) form
 \end{equation}
 Here $\psi$ perturbs $g_{00}$ --- it is what a slow particle falls down --- and
 $\phi$ perturbs the spatial metric --- it is what appears in the field equation.
-\paragraph{A2: weak fields, $|\phi|,\,|\psi| \ll 1$.} Work to first order in
+\paragraph{A1: weak fields, $|\phi|,\,|\psi| \ll 1$.} Work to first order in
 both potentials. An observation as much as an assumption: the potentials
-are of order $10^{-5}$ on every scale we will meet, at every time. Note what A2
+are of order $10^{-5}$ on every scale we will meet, at every time. Note what A1
 does \emph{not} mention: the density contrast $\delta$.
 
-\paragraph{A3: cold matter.} The matter is cold dark matter and baryons ---
+\paragraph{A2: cold matter.} The matter is cold dark matter and baryons ---
 pressureless and slow, $u \ll 1$. Newtonian gravity has one
-potential, not two, and A3 is what closes the gap: the traceless part of
+potential, not two, and A2 is what closes the gap: the traceless part of
 Einstein's equations sources $\phi - \psi$ through anisotropic stress alone,
 which cold matter does not carry, so for us the two potentials coincide,
 $\phi = \psi \equiv \Phi$.
@@ -300,10 +299,10 @@ the $15\%$ level during radiation domination. That contribution fades as matter
 comes to dominate, so in the matter era $\phi = \psi$ is accurate.
 \end{reading}
 
-\paragraph{A4: sub-horizon modes. A5: linear contrasts.} The last two arrive
-with the system itself: keep only $k \gg \cH$ (A4), and linearize in the
-density contrast, $|\delta| \ll 1$ (A5). They look alike and are not: A4 is
-permanent, while A5 is temporary --- the one assumption Lecture~2 drops, for a
+\paragraph{A3: sub-horizon modes. A4: linear contrasts.} The last two arrive
+with the system itself: keep only $k \gg \cH$ (A3), and linearize in the
+density contrast, $|\delta| \ll 1$ (A4). They look alike and are not: A3 is
+permanent, while A4 is temporary --- the one assumption Lecture~2 drops, for a
 reason given at the end of this section. With the list complete, the system is
 three physical statements, each worth deriving in words before writing it
 down.
@@ -315,15 +314,15 @@ the peculiar velocity $\vu \equiv \dd\vx/\dd\tau$, mass conservation reads
 \label{eq:continuity}
 \end{equation}
 in which dilution by the expansion never appears --- it is already inside
-$\bar\rho$, which is the content of Derivation~1. At linear order (A5) the
+$\bar\rho$, which is the content of Derivation~1. At linear order (A4) the
 product term drops and \eqref{eq:continuity} becomes $\dot\delta = -\theta$,
 with $\theta \equiv \nabla\cdot\vu$. (The relativistic version carries one more
-term, a dilation $3\dot\phi$; A4 suppresses it, as
+term, a dilation $3\dot\phi$; A3 suppresses it, as
 Exercise~\ref{ex:subhorizon} shows.)
 
-\emph{Newton's second law.} For a pressureless fluid (A3) there is no separate Euler
+\emph{Newton's second law.} For a pressureless fluid (A2) there is no separate Euler
 equation to import: Euler \emph{is} Newton's second law applied to fluid
-elements. In comoving coordinates, to first order in $\Phi$ (A2), it reads
+elements. In comoving coordinates, to first order in $\Phi$ (A1), it reads
 \begin{equation}
 \ddot\vx + \cH\,\dot\vx = -\nabla\Phi .
 \label{eq:newtonian_eom}
@@ -338,14 +337,14 @@ Lagrangian picture. For now, take its divergence:
 $\dot\theta = -\cH\,\theta - \nabla^2\Phi$.
 
 \emph{The Poisson equation.} What closes the system is the field equation, and
-here A4 does its work: every term carrying a factor of $\cH$
+here A3 does its work: every term carrying a factor of $\cH$
 where its neighbours carry $k$ is suppressed by $(\cH/k)^2$, and the energy
 constraint of general relativity collapses to the Poisson equation,
 $\nabla^2\Phi = 4\pi Ga^2\bar\rho\,\delta = \tfrac32\Om(\tau)\cH^2\delta$, the
 last equality by the Friedmann equation. Exercise~\ref{ex:subhorizon}
 carries out the reduction and puts a number on what was dropped.
 
-Assembled, at linear order (A5):
+Assembled, at linear order (A4):
 \begin{equation}
 \dot\delta = -\theta,
 \qquad
@@ -359,37 +358,37 @@ system; Dodelson \& Schmidt \cite[Ch.~12]{DodelsonSchmidt} set out this same
 starting point with its assumptions listed.
 
 \begin{quiz}
-Gravity is weak \emph{everywhere} --- $10^{-5}$ on every scale --- so A2 costs
-us nothing. Why do we need A4 as well? What fails if you apply
+Gravity is weak \emph{everywhere} --- $10^{-5}$ on every scale --- so A1 costs
+us nothing. Why do we need A3 as well? What fails if you apply
 \eqref{eq:newtonian_linear} to a super-horizon mode?
 \nudge{A super-horizon mode is weakly gravitating too. So point at the one
 member of \eqref{eq:newtonian_linear} that still fails there.}
 \answer{Poisson fails. It ties $\Phi$ at one point to the density everywhere on
 the same time slice, instantaneously --- which makes sense only if light crosses
-the scale of interest in far less than an expansion time. That is A4, and a
+the scale of interest in far less than an expansion time. That is A3, and a
 super-horizon mode fails it however weak gravity is: no signal has crossed the
-mode even once, so there is no settled potential to describe. A2 linearizes the
-metric on every scale; A4 is what buys Newtonian dynamics, and only inside the
+mode even once, so there is no settled potential to describe. A1 linearizes the
+metric on every scale; A3 is what buys Newtonian dynamics, and only inside the
 horizon.}
 \end{quiz}
 
 \begin{remark}
 Which assumption lives where. The three members of \eqref{eq:newtonian_linear}
 do not lean on the same legs. \emph{Continuity} is the most robust: mass
-conservation, needing only A5 to linearize and one use of A4, to drop the
+conservation, needing only A4 to linearize and one use of A3, to drop the
 relativistic dilation term $3\dot\phi$. \emph{Euler}, in the form
-$\dot\theta = -\cH\theta - \nabla^2\Phi$, needs A3 and A2 --- cold, slow matter
-in a weak field --- but \emph{no} use of A4 at all: for cold matter it is exact
-at linear order in this gauge. \emph{Poisson} is where A4 does its real work:
+$\dot\theta = -\cH\theta - \nabla^2\Phi$, needs A2 and A1 --- cold, slow matter
+in a weak field --- but \emph{no} use of A3 at all: for cold matter it is exact
+at linear order in this gauge. \emph{Poisson} is where A3 does its real work:
 the relativistic energy constraint carries extra terms of relative size
 $(\cH/k)^2$, and dropping them is what turns a constraint of general relativity
 into Newton's field equation --- Exercise~\ref{ex:subhorizon} makes this
-quantitative. And the $\phi = \psi$ of A3 underwrites the system as a whole
+quantitative. And the $\phi = \psi$ of A2 underwrites the system as a whole
 rather than any single member: Euler feels the time--time potential while
 Poisson sources the spatial one.
 \end{remark}
 
-\paragraph{The smallness of $\Phi$.} A4 has a second consequence, and the
+\paragraph{The smallness of $\Phi$.} A3 has a second consequence, and the
 whole of Lecture~2 rests on it.
 
 \emph{It keeps the metric linear.} Inverting the Poisson equation,
@@ -404,14 +403,14 @@ precisely where clustering becomes strong --- which is the licence for everythin
 that follows. We will let $\delta$ grow past unity and resum it to all orders
 through displacements, while never going beyond linear order in the metric. Those
 two statements sound contradictory and are not: $\Phi$ and $\delta$ are separated
-by $(\cH/k)^2$, and it is $\delta$ alone that becomes large. Dropping A5
-leaves A2 intact.
+by $(\cH/k)^2$, and it is $\delta$ alone that becomes large. Dropping A4
+leaves A1 intact.
 
 \begin{derivation}
 Derive \eqref{eq:phi_small} yourself: write the third member of
 \eqref{eq:newtonian_linear} in Fourier space and show that
-$|\Phi| = \tfrac32\,\Om(\tau)\,(\cH/k)^2\,|\delta|$, so that sub-horizon (A4)
-the weak-field condition (A2) on $\Phi$ is guaranteed rather than assumed.
+$|\Phi| = \tfrac32\,\Om(\tau)\,(\cH/k)^2\,|\delta|$, so that sub-horizon (A3)
+the weak-field condition (A1) on $\Phi$ is guaranteed rather than assumed.
 Then put in numbers --- $\cH_0 \simeq 3.3\times10^{-4}\,h\,{\rm Mpc}^{-1}$,
 $k = 0.1\,h\,{\rm Mpc}^{-1}$, $\delta = 100$ --- and check the $5\times10^{-4}$
 quoted above.
@@ -436,7 +435,7 @@ synchronous gauge and sits frozen in the Newtonian gauge until horizon entry
 \cite[\S 7]{MaBertschinger1995}, and why ``do perturbations grow outside the
 horizon?'' has no gauge-independent answer.
 
-There is a repair, and it is worth seeing because it explains A4 from a second
+There is a repair, and it is worth seeing because it explains A3 from a second
 direction. The combination
 $\Delta \equiv \delta + 3\cH(1+w)\,v$, with $v$ the velocity potential
 ($\vu = \nabla v$), is gauge-invariant --- the shift above cancels against the
