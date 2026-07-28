@@ -152,6 +152,21 @@ if "T_full" in ns_:
 else:
     check("shipped CAMB table matches the notebook's T_full", False, "T_full not found")
 
+# pk_lin_fiducial.txt is Session 2's input: H2 rebuilds H1's field from it, so
+# nothing in THIS notebook reads it any more and nothing else would notice if it
+# drifted. Compare it over the k-range H2's 128^3 grid actually samples.
+if "pk_lin" in ns_:
+    tab = np.loadtxt(os.path.join(NOTEBOOKS, "pk_lin_fiducial.txt"))
+    kf, kmax = 2 * np.pi / 250.0, np.sqrt(3) * np.pi * 128 / 250.0
+    kk = np.logspace(np.log10(kf), np.log10(kmax), 400)
+    lk, lp = np.log(tab[:, 0]), np.log(tab[:, 1])
+    p_tab = np.exp(np.interp(np.log(kk), lk, lp))
+    rel = float(np.abs(ns_["pk_lin"](kk) / p_tab - 1).max())
+    check("shipped P_L table matches the notebook's pk_lin", rel < 2e-3,
+          f"max rel {rel:.2e}")
+else:
+    check("shipped P_L table matches the notebook's pk_lin", False, "pk_lin not found")
+
 print()
 if failures:
     print(f"{len(failures)} FAILED: " + ", ".join(failures))

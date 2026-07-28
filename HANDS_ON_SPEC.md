@@ -25,8 +25,9 @@ you see is physics, not luck. Say this out loud in both sessions.
 
 ### What students end up with
 
-A linear power spectrum they coded from scratch, and a 3D Gaussian realization
-of it saved to disk — the input to H2.
+A linear power spectrum they coded from scratch, a 3D Gaussian realization of
+it, and a measurement of how far their hand-rolled transfer function sits from
+a Boltzmann code.
 
 ### Steps
 
@@ -37,7 +38,7 @@ of it saved to disk — the input to H2.
 | 3 | 10 | Swap in the **full** `T(k)` (supplied) and plot the ratio | BAO wiggles appear, few percent, first peak near `k ≈ 0.07` |
 | 4 | 25 | Draw a Gaussian realization on a 128³ grid | `rms δ = 2.516` on this grid — see note below |
 | 5 | 15 | Slice it, look at it, vary `n_s` and `Ω_m` with the seed fixed | larger `n_s` → more small-scale structure |
-| 6 | 15 | Save `δ(k)` and `P_L(k)` for H2 | file loads cleanly in a fresh kernel |
+| 6 | 15 | Install CAMB, compare `T(k)` against it, decompose the disagreement | `T_EH/T_CAMB` within 1% on the broadband, **2.67% at `k ≈ 0.09`**; wiggle amplitude ratio `0.978` |
 
 ### The step that will eat the session
 
@@ -60,10 +61,14 @@ beyond `k_Nyq`, so the realized value runs slightly **high**.
 ### Fallback
 
 Ship `notebooks/pk_lin_fiducial.txt` — a tabulated `P_L(k)`. No `delta_k_128.npy`
-is shipped; the fallback regenerates the field deterministically from that
-table and the fixed seed (1234) rather than restoring a blob. **H2 must not
-depend on H1 having gone well.** Anyone behind reruns the fallback — it depends
-on no student-written name — and proceeds.
+is shipped, and H1 saves nothing: H2's step 1 regenerates the field
+deterministically from that table and the fixed seed (1234) rather than
+restoring a blob. **H2 must not depend on H1 having gone well.** The rebuild
+depends on no student-written name, so anyone whose H1 code was broken — or
+who never ran H1 — starts H2 from the same field as everyone else.
+
+That is also why H1 no longer ends on a save step. Once the rebuild is
+deterministic, the file it would have written is one nothing reads.
 
 ---
 
@@ -81,7 +86,7 @@ filament and knot.
 
 | # | ~min | task | checkpoint |
 |---|---|---|---|
-| 1 | 10 | Load H1's `δ(k)` (or the fallback) | `rms δ` matches what H1 reported |
+| 1 | 10 | Rebuild H1's field from `pk_lin_fiducial.txt` and seed 1234 | `rms δ = 2.516`, matching what H1 measured |
 | 2 | 20 | Compute `Ψ⁽¹⁾(k) = (ik/k²)δ(k)`, transform, displace | rms displacement `≈ 5.2 Mpc/h` per axis |
 | 3 | 15 | Project a `15 h⁻¹Mpc` slab and plot | **a cosmic web appears** — this is the moment |
 | 4 | 20 | Build the deformation tensor `D_ij(k) = k_i k_j δ(k)/k²`, get eigenvalues, count how many are positive | volume fractions `8 / 42 / 42 / 8` per cent |

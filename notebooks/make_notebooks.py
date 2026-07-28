@@ -97,7 +97,7 @@ Six steps, roughly 90 minutes:
 | 3 | swap in the full `T(k)` and find the BAO | 10 |
 | 4 | draw a Gaussian realization on a 128³ grid | 25 |
 | 5 | look at it, and change the cosmology | 15 |
-| 6 | save it for Session 2 | 15 |
+| 6 | check your `T(k)` against a Boltzmann code | 15 |
 
 **The seed is fixed.** Everyone's field is the same field, and it is the one in
 Figure 4 of the notes, the cosmic web. So when you change `n_s` in step 5 and the picture
@@ -901,6 +901,30 @@ wiggle, largest where the wiggle crosses zero.
 Look at the right-hand panel and decide which you see. Then check the printed
 amplitude ratio, and the error away from the BAO band, and ask whether either
 failure alone accounts for the 2.7%.
+''')
+
+M(r'''
+---
+## What you built
+
+- a transfer function, from a fitting formula, whose $k^{-1.67}$ slope you
+  measured against the $k^{-2}$ the board derived;
+- a linear power spectrum with a turnover at $k_{\rm eq}$ and baryon wiggles at
+  the few-percent level;
+- a Gaussian realization on a 128³ grid whose variance you checked against
+  $\int {\rm d}^3k/(2\pi)^3 P(k)$ rather than trusting;
+- evidence, from the same seed run five ways, that the shape of $P_{\rm L}$ is
+  set by the contents of the universe;
+- and a measurement of how far your twelve lines sit from a Boltzmann code,
+  including which of the two ways they fail.
+
+**Nothing to save.** Session 2 opens by rebuilding this field from the same
+seed and the same tabulated spectrum, so it starts from the field you just
+made whether or not this notebook is still running. That is a convenience of
+working at 128³ with a fixed seed; a real simulation costs hours and the file
+*is* the product.
+
+Session 2 moves it.
 ''')
 
 
