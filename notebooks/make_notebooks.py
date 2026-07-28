@@ -6,6 +6,11 @@ notebook. Cells are declared once, below, in reading order:
     M(text)             a markdown cell, identical in both
     C(code)             a code cell, identical in both (given to students)
     S(solution, stub)   a code cell that differs: students get `stub`
+    SM(answer, bait)    a markdown cell that differs: students get `bait`
+
+Both notebooks always have the same number of cells, so a passage meant only
+for the solutions still occupies a cell in the student notebook -- SM is how a
+worked answer is withheld while leaving a question in its place.
 
 Run this file to write notebooks/H1_gaussian_field.ipynb and
 notebooks/H1_gaussian_field_solutions.ipynb. Never edit the .ipynb by hand.
@@ -29,6 +34,11 @@ def C(src):
 def S(solution, stub):
     """Code cell the students write. `stub` is what they start from."""
     CELLS.append(("code", solution, stub))
+
+
+def SM(answer, bait):
+    """Markdown cell that differs: the solutions get `answer`, students `bait`."""
+    CELLS.append(("markdown", answer, bait))
 
 
 def _source(text):
@@ -931,6 +941,88 @@ So the fit is worth what it costs. For everything this course does with
 $P_{\rm L}$ it is fine, and where you would care about the wiggles at the
 percent level — measuring the BAO scale from a survey — you would run the
 Boltzmann code.
+
+That leaves a sharper question, and you have everything needed to answer it.
+The error near the peaks does not just grow — it *oscillates*, changing sign
+several times. Two different failures would do that, and the cell below
+separates them.
+''')
+
+C(r'''
+# Divide each transfer function by the SAME smooth reference, so what is left
+# is the wiggles alone and the two are directly comparable.
+w_eh  = T_full(kb)/T_nowiggle(kb) - 1
+w_ref = T_ref/T_nowiggle(kb) - 1
+
+band = (kb > 0.03) & (kb < 0.45)
+amp_eh, amp_ref = float(np.ptp(w_eh[band])), float(np.ptp(w_ref[band]))
+away = (kb < 0.02) | (kb > 0.5)
+
+assert 0.9 < amp_eh/amp_ref < 1.1, \
+    f"the two wiggle amplitudes should be within 10%, got {amp_eh/amp_ref:.3f}"
+print(f"wiggle amplitude, peak to peak over 0.03 < k < 0.45")
+print(f"   Eisenstein & Hu : {amp_eh:.4f}")
+print(f"   CAMB            : {amp_ref:.4f}")
+print(f"   ratio           : {amp_eh/amp_ref:.3f}")
+print(f"error away from the BAO band (k < 0.02 or k > 0.5): "
+      f"{100*np.abs(ratio_T[away]-1).max():.2f}%")
+
+fig, ax = plt.subplots(1, 2, figsize=(10.5, 3.6))
+ax[0].semilogx(kb[band], w_ref[band], color="k", lw=1.4, label="CAMB")
+ax[0].semilogx(kb[band], w_eh[band], color="#e8590c", lw=1.2, label="Eisenstein & Hu")
+ax[0].axhline(0.0, color="0.6", lw=0.8)
+ax[0].set_ylabel(r"$T/T_{\rm nw} - 1$")
+ax[0].set_title("the wiggles, side by side")
+ax[0].legend(fontsize=8)
+
+ax[1].semilogx(kb[band], (w_eh - w_ref)[band], color="#2f6ea5")
+ax[1].axhline(0.0, color="0.6", lw=0.8)
+ax[1].set_ylabel("EH $-$ CAMB")
+ax[1].set_title("what is left over")
+for a in ax:
+    a.set_xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
+fig.tight_layout(); plt.show()
+''')
+
+SM(answer=r'''
+**Both failures are present, and neither dominates.**
+
+*Amplitude.* Eisenstein & Hu's oscillation comes out at 0.978 of CAMB's — about
+2% too shallow. On its own that would leave a residual exactly in phase with
+the wiggle: largest at the peaks, zero at the nodes.
+
+*Phase.* The acoustic scale is also displaced, by roughly 1% in $k$. The
+formula builds its oscillation as a $\mathrm{sinc}(k\tilde{s})$ whose argument
+uses an analytic approximation to the sound horizon $s = \int c_s\,{\rm d}\tau$,
+and a small error in $s$ misplaces every node. A pure phase error leaves a
+residual that looks like the *derivative* of the wiggle — a quarter-cycle out
+of step, largest where the wiggle crosses zero.
+
+The right-hand panel is the sum of the two, which is why it neither peaks with
+the wiggles nor with their zeros.
+
+*And a floor underneath both.* Away from the BAO band entirely the error is
+still about 1.8%, so the 2.7% at the peak is a smooth broadband error with the
+wiggle error stacked on top — not a clean zero baseline that erupts.
+
+The deeper reason is that the real acoustic solution is a driven, damped
+oscillator with a time-dependent sound speed, decoupling over a finite interval
+rather than instantaneously. That is not a $\mathrm{sinc}$, and no closed form
+of a dozen coefficients makes it one. Which is why Eisenstein & Hu survives in
+modern work mainly as the *no-wiggle* spectrum — a smooth reference to divide
+by, where it is excellent and this failure is irrelevant by construction.
+''', bait=r'''
+**Which is it?** Two failures would each make the error oscillate, and the
+panels above tell them apart.
+
+If the fit got the wiggle *amplitude* wrong, the leftover would peak where the
+wiggles peak. If it got the acoustic *phase* wrong — the sound horizon setting
+where the nodes fall — the leftover would look like the derivative of the
+wiggle, largest where the wiggle crosses zero.
+
+Look at the right-hand panel and decide which you see. Then check the printed
+amplitude ratio, and the error away from the BAO band, and ask whether either
+failure alone accounts for the 2.7%.
 ''')
 
 
