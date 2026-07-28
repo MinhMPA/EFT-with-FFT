@@ -621,6 +621,35 @@ Inflation delivers, to very good approximation, Gaussian initial conditions: the
 where two distinct assumptions are at work. Statistical \emph{homogeneity} --- invariance under translations --- is what forces the delta function, so that modes whose wavevectors do not sum to zero are uncorrelated. Statistical \emph{isotropy} is a separate statement, invariance under rotations, and it is what makes $\Plin$ a function of the magnitude $k=|\vk|$ alone rather than of the vector $\vk$.
 
 \begin{reading}
+\bait{We just defined $\Plin$ in Fourier space. What is it in position space?}
+The two-point correlation function: the excess probability, over random, of
+finding matter at two points separated by $\vr$,
+\begin{equation*}
+\xi(r) \equiv \big\langle \delta(\vx)\,\delta(\vx+\vr)\big\rangle
+= \int_{\vk} \Plin(k)\,e^{i\vk\cdot\vr}
+= \frac{1}{2\pi^2}\int_0^\infty \dd k\; k^2\,\Plin(k)\,\frac{\sin kr}{kr} ,
+\end{equation*}
+the last step doing the angular integral for an isotropic spectrum. So
+$\xi$ and $\Plin$ are a Fourier pair and carry identical information --- the
+same statement as the prelude's, one level up: a field can be held in position
+space or in Fourier space, and so can its statistics.
+
+Two things follow. At zero separation $\xi(0) = \langle\delta^2\rangle =
+\int_{\vk}\Plin(k)$, the variance of the field --- but treat that with care.
+Because the power per logarithmic interval $k^3\Plin/2\pi^2$ \emph{rises} with
+$k$, the integral is dominated by the smallest scales and keeps growing as you
+push the upper limit out; an unqualified variance is not a number. This is
+precisely why amplitudes are quoted smoothed, which is what the window in
+\eqref{eq:sigma8} is for. On a grid the upper limit is the Nyquist frequency and
+the integral is finite, which is what lets the hands-on session check its
+normalization against it. And the baryon wiggles of
+Section~\ref{sec:linearpk} become a single bump: an oscillation of period
+$2\pi/r_d$ in $\Plin$ transforms into one feature in $\xi$ at $r = r_d \simeq
+100\,h^{-1}$Mpc. Surveys quote whichever is more convenient; it is the same
+physics either way.
+\end{reading}
+
+\begin{reading}
 \bait{How would you actually generate one of these fields on a computer?}
 Note the one pair that is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$ --- a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
 
