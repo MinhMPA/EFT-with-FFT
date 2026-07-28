@@ -38,7 +38,7 @@ wn = rng.standard_normal((N,N,N))
 dk = np.fft.rfftn(wn) * np.sqrt(P * N**3 / L**3)
 dk[0,0,0] = 0.0
 print(f"  rms of delta on this grid: {np.std(np.fft.irfftn(dk, s=(N,)*3)):.2f}"
-      f"   (expected 2.32 for k_Nyq = 1.61 h/Mpc)")
+      f"   (expected 2.52; continuum to k_Nyq = 1.61 h/Mpc gives 2.32, the grid runs high on corner modes)")
 
 # Zel'dovich displacement  Psi(k) = i k / k^2  delta(k)
 q = (np.arange(N)+0.5)*(L/N)
@@ -47,7 +47,8 @@ pos = []
 for i, Ki in enumerate((KX, KY, KZ)):
     psi = np.fft.irfftn(1j*Ki/K2*dk, s=(N,)*3)
     pos.append((Q[i] + psi).ravel() % L)
-print(f"  rms displacement per axis: {np.std(np.fft.irfftn(1j*KX/K2*dk, s=(N,)*3)):.2f} Mpc/h   (expected 5.78)")
+print(f"  rms displacement per axis: {np.std(np.fft.irfftn(1j*KX/K2*dk, s=(N,)*3)):.2f} Mpc/h"
+      f"   (expected 5.20; the all-k continuum gives 5.78, the box has no power below k_f)")
 
 # deformation tensor  D_ij(k) = k_i k_j delta(k) / k^2 ; count positive eigenvalues
 comp = {}

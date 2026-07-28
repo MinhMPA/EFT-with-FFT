@@ -32,10 +32,10 @@ of it saved to disk — the input to H2.
 
 | # | ~min | task | checkpoint |
 |---|---|---|---|
-| 1 | 15 | Code the **no-wiggle** Eisenstein & Hu transfer function `T(k)` | `T → 1` as `k → 0`; `T(0.0153) ≈ 0.67` |
-| 2 | 10 | Build `P_L(k) = A k^{n_s} T²(k)`, normalise to `σ₈ = 0.81` | turnover at `k_eq ≈ 0.015 h/Mpc`; log-slope `≈ −1.7` over `0.5 < k < 5` |
+| 1 | 15 | Code the **no-wiggle** Eisenstein & Hu transfer function `T(k)` | `T → 1` as `k → 0`; `T(0.0153) ≈ 0.675`; log-slope of `T` `≈ −1.67` over `0.5 < k < 5` |
+| 2 | 10 | Build `P_L(k) = A k^{n_s} T²(k)`, normalise to `σ₈ = 0.81` | turnover at `k_eq ≈ 0.016 h/Mpc`; log-slope of `P_L` `≈ −2.38` over `0.5 < k < 5` |
 | 3 | 10 | Swap in the **full** `T(k)` (supplied) and plot the ratio | BAO wiggles appear, few percent, first peak near `k ≈ 0.07` |
-| 4 | 25 | Draw a Gaussian realization on a 128³ grid | `rms δ ≈ 2.5` on this grid — see note below |
+| 4 | 25 | Draw a Gaussian realization on a 128³ grid | `rms δ = 2.516` on this grid — see note below |
 | 5 | 15 | Slice it, look at it, vary `n_s` and `Ω_m` with the seed fixed | larger `n_s` → more small-scale structure |
 | 6 | 15 | Save `δ(k)` and `P_L(k)` for H2 | file loads cleanly in a fresh kernel |
 
