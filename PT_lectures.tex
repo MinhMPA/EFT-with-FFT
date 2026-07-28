@@ -157,8 +157,11 @@ Sources:~\cite{MaBertschinger1995,DodelsonSchmidt}.
 \medskip
 \noindent\textbf{The setting and conventions.} Fixed for the whole course: a
 spatially flat Friedmann--Lema\^itre--Robertson--Walker (FLRW) universe ---
-homogeneous, isotropic and expanding --- with everything of interest a small
-departure from it. The unperturbed metric is
+homogeneous, isotropic and expanding --- carrying \emph{scalar} perturbations
+only. The three perturbation types decouple at linear order: vectors decay, and
+tensors --- gravitational waves --- do not source density perturbations, so
+structure formation is a scalar story. This is assumption \textbf{A1} of the
+list below. The unperturbed metric is
 \begin{equation*}
 \dd s^2 = a^2(\tau)\left[-\dd\tau^2 + \delta_{ij}\,\dd x^i\dd x^j\right],
 \end{equation*}
@@ -176,9 +179,7 @@ Conformal time is used because of the form the metric then takes: with $\dd\tau$
 and $\dd\vx$ appearing symmetrically, radial light rays obey
 $\dd x = \pm\dd\tau$, so light travels at unit comoving speed and an interval of
 conformal time \emph{is} a comoving distance. That is what will make the horizon
-a clean notion in Section~\ref{sec:linearpk}. On the indices: under the
-general-relativistic convention one would move them with $g_{ij}$ instead, which
-would fold the factor $a^2(1-2\phi)$ into every contraction.
+a clean notion in Section~\ref{sec:linearpk}.
 \end{reading}
 
 Structure is what happens when this is not quite true. The metric
@@ -267,10 +268,9 @@ five numbered assumptions, A1--A5. Keep the list in a corner of the board: the
 assumptions do different jobs, fail at different times, and exactly one will be
 dropped in Lecture~2.
 
-\paragraph{A1: flat FLRW background, scalar perturbations only.} The three types
-decouple at linear order: vectors decay, and tensors --- gravitational waves ---
-do not source density perturbations, so structure formation is a scalar story.
-Then make a \emph{choice}, which restricts no physics: fix the gauge completely by
+\paragraph{A1 again, and one choice.} \textbf{A1} --- flat FLRW background,
+scalar perturbations only --- was stated in the prelude and is the arena. To it
+add a \emph{choice}, which restricts no physics: fix the gauge completely by
 writing the perturbed metric in conformal Newtonian (longitudinal) form
 \cite{MaBertschinger1995},
 \begin{equation}
@@ -541,8 +541,7 @@ Inflation delivers, to very good approximation, Gaussian initial conditions: the
 where two distinct assumptions are at work. Statistical \emph{homogeneity} --- invariance under translations --- is what forces the delta function, so that modes whose wavevectors do not sum to zero are uncorrelated. Statistical \emph{isotropy} is a separate statement, invariance under rotations, and it is what makes $\Plin$ a function of the magnitude $k=|\vk|$ alone rather than of the vector $\vk$.
 
 \begin{reading}
-\bait{Three to dangle here: is $\vk' = -\vk$ really uncorrelated? How would you
-generate such a field on a computer? And what sets the overall amplitude?}
+\bait{How would you actually generate one of these fields on a computer?}
 Note the one pair that is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$ --- a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
 
 \paragraph{Generating a realization.} That a Gaussian field is fixed completely by $\Plin$ is a
@@ -550,8 +549,10 @@ practical statement as much as a formal one, and it is what the hands-on session
 begins with. On a periodic grid the recipe is three lines:
 \begin{enumerate}[itemsep=1pt,topsep=2pt]
 \item for each mode $\vk$, draw a complex amplitude with zero mean and variance
-$\Plin(k)$ --- equivalently, draw the modulus from a Rayleigh distribution and
-the phase uniformly on $[0,2\pi)$;
+$\Plin(k)/V$, where $V$ is the box volume --- equivalently, draw the modulus
+from a Rayleigh distribution and the phase uniformly on $[0,2\pi)$. That volume
+factor is the step that most often goes wrong, and it fails silently: the field
+looks right and every number computed from it is off;
 \item impose reality, $\delta(-\vk) = \delta(\vk)^*$, so that the field you get
 back is real rather than complex;
 \item inverse transform.
@@ -664,8 +665,8 @@ and \emph{super-horizon} when $k \ll \cH$, where nothing propagates across it at
 all.
 
 \begin{reading}
-\bait{Two: have I been writing $H$ or $\cH$, and does it matter? And what was
-$1/\cH$ doing during inflation?}
+\bait{Have I been writing $H$ or $\cH$ --- and what was $1/\cH$ doing during
+inflation?}
 Not the Hubble parameter $H = \dd\ln a/\dd t$: overdots here are
 $\partial/\partial\tau$ throughout, so $\dot a/a$ is $\cH$, not $H$, and it is
 also why the growth equation \eqref{eq:growth} carries $\cH\dot D$ where its
@@ -997,6 +998,7 @@ then filament, then knot. Three fair coins would give $12.5/37.5/37.5/12.5$ per
 cent; the true $8/42/42/8$ keeps the symmetry, since a Gaussian field prefers no
 sign of $\delta$, but shifts weight to the mixed cases, because the eigenvalues
 repel rather than being independent.}
+\end{quiz}
 
 Read the middle rows: \textbf{$84\%$ of the volume is headed for a sheet or a
 filament, and only $8\%$ ever collapses along all three axes.} The web is not
@@ -1096,7 +1098,8 @@ At second order the displacement responds to the gravitational tide generated at
 D_2(\tau) \simeq -\frac{3}{7}\,D_+^2(\tau)\;\Om^{-1/143},
 \label{eq:D2}
 \end{equation}
-where the fit is accurate to $0.6\%$ for flat \lcdm{} and the EdS limit is $D_2 = -\tfrac37 D_+^2$. (This Lagrangian $D_2$ is a different object from the second-order amplitude of Eulerian perturbation theory \cite{EFTnotes}; the literature uses the same symbol for both.) The spatial source is the second principal invariant of the deformation tensor $\varphi^{(1)}_{,ij}$: writing $\vPsi^{(2)} = \nabla_q\varphi^{(2)}$,
+where the fit is better than $0.1\%$ over $10^{-3}<a<1$ for flat \lcdm{} and the
+EdS limit is $D_2 = -\tfrac37 D_+^2$. (This Lagrangian $D_2$ is a different object from the second-order amplitude of Eulerian perturbation theory \cite{EFTnotes}; the literature uses the same symbol for both.) The spatial source is the second principal invariant of the deformation tensor $\varphi^{(1)}_{,ij}$: writing $\vPsi^{(2)} = \nabla_q\varphi^{(2)}$,
 \begin{equation}
 \nabla_q^2\varphi^{(2)}
 \simeq -\frac{3}{7}\,\Om^{-1/143}

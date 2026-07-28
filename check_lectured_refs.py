@@ -30,6 +30,14 @@ def main(path):
     for m in re.finditer(r'\\begin\{(?:quiz|derivation)\}', s):
         if inside(m.start(), hidden):
             bad.append((s[:m.start()].count('\n') + 1, 'quiz inside reading/remark'))
+    # environment balance: a dropped \end{} silently swallows the rest of the
+    # document into the wrong style, and pdflatex still emits a PDF
+    for env in ('quiz', 'reading', 'remark', 'derivation', 'exercise', 'plan',
+                'figure', 'equation', 'align', 'enumerate', 'center'):
+        b = len(re.findall(r'\\begin\{' + env + r'\*?\}', s))
+        e = len(re.findall(r'\\end\{' + env + r'\*?\}', s))
+        if b != e:
+            bad.append((0, f"unbalanced environment '{env}': {b} begin, {e} end"))
     for line, what in bad:
         print(f"  line {line}: lectured thread depends on read-only '{what}'")
     if bad:

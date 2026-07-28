@@ -28,7 +28,18 @@ Lecture notes for a graduate school: `PT_lectures.tex` (2×90-min lectures +
   use repeatedly deserves a lead-up at the board: one physical statement per
   member, each a single line. The full GR bookkeeping can live in exercises.
 
-- **After every edit round, re-run the checks.** `pdflatex` ×3 (0 warnings),
+- **Grep the LaTeX log for errors, not just warnings.** `-interaction=nonstopmode`
+  still emits a PDF after a fatal error, so "0 warnings" proves nothing. A
+  dropped `\end{quiz}` survived four commits and silently rendered 190 lines --
+  two sections, two figures and a Comment -- in small blue italic. Always
+  `grep -c '^!' <log>` and run `check_lectured_refs.py`, which now also checks
+  environment balance. (2026-07-28.)
+
+- **When replacing a whole environment, keep its delimiters in both strings.**
+  The bug above came from an exact-match replacement whose `old` ended with
+  `\end{quiz}` and whose `new` did not.
+
+- **After every edit round, re-run the checks.** `pdflatex` ×3 (0 errors, 0 warnings),
   `python3 lecture_timing.py`, `python3 check_lectured_refs.py`, and
   `pdftotext` spot-checks of any passage whose surroundings changed. Every
   unverified edit round in this project has introduced ~1 error.
