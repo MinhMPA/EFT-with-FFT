@@ -183,19 +183,22 @@ def _source(text):
     return [ln + "\n" for ln in lines[:-1]] + [lines[-1]]
 
 
-def _cell(kind, text):
+def _cell(kind, text, idx):
+    # nbformat_minor 5 requires a cell id. Derive it from position rather than
+    # uuid4: these notebooks are committed artifacts, and random ids would make
+    # every regeneration churn the whole file.
+    base = {"id": f"c{idx:03d}", "metadata": {}, "source": _source(text)}
     if kind == "markdown":
-        return {"cell_type": "markdown", "metadata": {}, "source": _source(text)}
-    return {"cell_type": "code", "metadata": {}, "execution_count": None,
-            "outputs": [], "source": _source(text)}
+        return {"cell_type": "markdown", **base}
+    return {"cell_type": "code", "execution_count": None, "outputs": [], **base}
 
 
 def build(which):
     """which in {'student', 'solutions'} -> an nbformat v4 notebook dict."""
     assert which in ("student", "solutions"), which
     return {
-        "cells": [_cell(kind, sol if which == "solutions" else stu)
-                  for kind, sol, stu in CELLS],
+        "cells": [_cell(kind, sol if which == "solutions" else stu, i)
+                  for i, (kind, sol, stu) in enumerate(CELLS)],
         "metadata": {
             "kernelspec": {"display_name": "Python 3", "language": "python",
                            "name": "python3"},
@@ -288,7 +291,7 @@ Never hand-edit the `.ipynb` files — your changes will be overwritten.
 - [ ] **Step 7: Commit**
 
 ```bash
-git add handson/make_notebooks.py handson/README.md HANDS_ON_SPEC.md figs_src/make_fig_web.py
+git add handson/ HANDS_ON_SPEC.md figs_src/make_fig_web.py
 git commit -m "Add hands-on notebook generator; fix two mislabelled checkpoints
 
 The spec's step-2 log-slope of -1.7 belongs to T(k), not P_L(k): measured,
@@ -311,7 +314,7 @@ called the gap unexpected; it is the corner modes, and now says so."
 - [ ] **Step 1: Append the title and orientation cells**
 
 ```python
-M(r"""
+M(r'''
 # Hands-on 1 — From a cosmology to a density field
 
 By the end of this session you will have coded a linear power spectrum from
@@ -337,9 +340,9 @@ Cells marked **you write this** have a `# TODO`. Every one is followed by a
 checkpoint cell that either prints a number or raises `AssertionError`. A wrong
 normalisation is silent — the field looks perfectly plausible and every
 downstream number is wrong — so the checkpoints are not decoration.
-""")
+''')
 
-C(r"""
+C(r'''
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -356,13 +359,13 @@ k_Nyq = np.pi*N/L      # Nyquist: the shortest the grid can represent
 print(f"box {L:.0f} Mpc/h, grid {N}^3")
 print(f"k_f   = {k_f:.4f} h/Mpc   (lambda = {2*np.pi/k_f:.0f} Mpc/h)")
 print(f"k_Nyq = {k_Nyq:.4f} h/Mpc   (lambda = {2*np.pi/k_Nyq:.1f} Mpc/h)")
-""")
+''')
 ```
 
 - [ ] **Step 2: Append the step-1 markdown, carrying the E&H formula**
 
 ```python
-M(r"""
+M(r'''
 ---
 ## Step 1 — The transfer function
 
@@ -393,18 +396,18 @@ $$\Gamma = \Omega_m h \left[\alpha + \frac{1-\alpha}{1 + (0.43\,k s)^4}\right]$$
 $$q = \frac{k\,\Theta^2}{\Gamma h}, \qquad L_0 = \ln(2e + 1.8 q), \qquad C_0 = 14.2 + \frac{731}{1 + 62.5 q}$$
 
 $$\boxed{T(k) = \frac{L_0}{L_0 + C_0\, q^2}}$$
-""")
+''')
 ```
 
 - [ ] **Step 3: Append the `T_nowiggle` cell as an `S` pair**
 
 ```python
-S(solution=r"""
+S(solution=r'''
 def T_nowiggle(k, Om=Om, Ob=Ob, h=h, Tcmb=Tcmb):
-    \"\"\"Eisenstein & Hu (1998) no-wiggle transfer function.
+    """Eisenstein & Hu (1998) no-wiggle transfer function.
 
     k is in h/Mpc. Returns an array, normalised so that T -> 1 as k -> 0.
-    \"\"\"
+    """
     omh2, obh2, fb = Om*h*h, Ob*h*h, Ob/Om
     Theta = Tcmb/2.7
     k = np.atleast_1d(k)*h                                     # h/Mpc -> 1/Mpc
@@ -416,12 +419,12 @@ def T_nowiggle(k, Om=Om, Ob=Ob, h=h, Tcmb=Tcmb):
     L0    = np.log(2*np.e + 1.8*q)
     C0    = 14.2 + 731.0/(1 + 62.5*q)
     return L0/(L0 + C0*q**2)
-""", stub=r"""
+''', stub=r'''
 def T_nowiggle(k, Om=Om, Ob=Ob, h=h, Tcmb=Tcmb):
-    \"\"\"Eisenstein & Hu (1998) no-wiggle transfer function.
+    """Eisenstein & Hu (1998) no-wiggle transfer function.
 
     k is in h/Mpc. Returns an array, normalised so that T -> 1 as k -> 0.
-    \"\"\"
+    """
     omh2, obh2, fb = Om*h*h, Ob*h*h, Ob/Om
     Theta = Tcmb/2.7
     k = np.atleast_1d(k)*h                                     # h/Mpc -> 1/Mpc
@@ -431,15 +434,17 @@ def T_nowiggle(k, Om=Om, Ob=Ob, h=h, Tcmb=Tcmb):
     # Watch two things: k is already in 1/Mpc by the line above, and `np.e` is
     # Euler's number (the formula wants 2e, not 2*10).
     raise NotImplementedError("write T_nowiggle")
-""")
+''')
 ```
 
-**Note for the implementer:** the `\"\"\"` escaping above is because these strings are nested inside `r"""..."""` in `make_notebooks.py`. If you find that fragile, use `'''...'''` for the outer literal and plain `"""` inside. Either is fine; just make sure `python3 handson/make_notebooks.py` runs.
+**Note on quoting.** Cell sources are Python string literals containing Python code that itself contains docstrings, so the outer and inner delimiters must differ. Throughout this plan the outer literal is `r'''...'''` and inner docstrings are plain `"""`.
+
+Do **not** try to nest the same delimiter with backslash escapes — `\"\"\"` inside an `r"""..."""` literal does not work, because a raw string preserves the backslashes and the notebook would end up containing `\"\"\"` verbatim. Different delimiters, no escaping.
 
 - [ ] **Step 4: Append the checkpoint cell**
 
 ```python
-C(r"""
+C(r'''
 # --- checkpoint 1 -------------------------------------------------------
 T_large = float(T_nowiggle(1e-4)[0])
 T_keq   = float(T_nowiggle(0.0153)[0])
@@ -453,9 +458,9 @@ assert abs(slope_T + 1.670) < 0.02, f"slope over 0.5<k<5 should be -1.67, got {s
 print(f"T -> {T_large:.4f}  as k -> 0")
 print(f"T(k_eq = 0.0153)  = {T_keq:.4f}")
 print(f"d ln T / d ln k   = {slope_T:.3f}   over 0.5 < k < 5 h/Mpc")
-""")
+''')
 
-M(r"""
+M(r'''
 **Stop on that last number.** The board said $T \propto k^{-2}$ above
 $k_{\rm eq}$, so you expected $-2$. You measured $-1.67$.
 
@@ -463,7 +468,7 @@ The gap is the **Mészáros effect**: cold dark matter is not quite frozen while
 the potential decays — it creeps up logarithmically — which softens the falloff
 to $T \propto k^{-2}\ln k$. Exercise 1.3 in the notes works it out. You have
 just measured it, in a fitting formula that knows nothing about the derivation.
-""")
+''')
 ```
 
 - [ ] **Step 5: Regenerate and check the two notebooks differ in the right place**
@@ -523,7 +528,7 @@ logarithm -- the remark on p.11, arriving as their own measurement."
 - [ ] **Step 1: Append the markdown**
 
 ```python
-M(r"""
+M(r'''
 ---
 ## Step 2 — The linear power spectrum
 
@@ -552,31 +557,31 @@ $$\sigma_R^2 = \int \frac{k^3 P(k)}{2\pi^2}\, |W(kR)|^2\, {\rm d}\ln k.$$
 The integrand $k^3P/2\pi^2$ is $\Delta^2(k)$, the variance per logarithmic
 interval — the quantity Figure 1 of the notes used to argue that small scales
 carry more.
-""")
+''')
 ```
 
 - [ ] **Step 2: Append the integration helper (given)**
 
 ```python
-C(r"""
+C(r'''
 def logint(f, a, b, n=4000):
-    \"\"\"Integral of f over d ln k from a to b, as a sum on a uniform log grid.
+    """Integral of f over d ln k from a to b, as a sum on a uniform log grid.
 
     Crude on purpose: no scipy, and for smooth integrands like these it is
     accurate to far better than the 1% we care about. Check it if you like by
     doubling n.
-    \"\"\"
+    """
     lnk = np.linspace(np.log(a), np.log(b), n)
     return float(np.sum(f(np.exp(lnk))) * (lnk[1] - lnk[0]))
-""")
+''')
 ```
 
 - [ ] **Step 3: Append `sigma_R` and `make_pk_lin` as an `S` pair**
 
 ```python
-S(solution=r"""
+S(solution=r'''
 def sigma_R(P, R=8.0):
-    \"\"\"rms of the field smoothed on radius R [Mpc/h]. Notes eq. (1.9).\"\"\"
+    """rms of the field smoothed on radius R [Mpc/h]. Notes eq. (1.9)."""
     def integrand(k):
         x = k*R
         W = 3*(np.sin(x) - x*np.cos(x))/x**3
@@ -585,10 +590,10 @@ def sigma_R(P, R=8.0):
 
 
 def make_pk_lin(T, ns=ns, sigma8=sigma8):
-    \"\"\"P_L(k) = A k^ns T^2(k), with A fixed so that sigma_8 comes out right.
+    """P_L(k) = A k^ns T^2(k), with A fixed so that sigma_8 comes out right.
 
     Returns a callable k -> P(k) in (Mpc/h)^3, k in h/Mpc.
-    \"\"\"
+    """
     def unnorm(k):
         return np.atleast_1d(k)**ns * T(k)**2
     A = (sigma8/sigma_R(unnorm))**2
@@ -596,9 +601,9 @@ def make_pk_lin(T, ns=ns, sigma8=sigma8):
 
 
 pk_nw = make_pk_lin(T_nowiggle)
-""", stub=r"""
+''', stub=r'''
 def sigma_R(P, R=8.0):
-    \"\"\"rms of the field smoothed on radius R [Mpc/h]. Notes eq. (1.9).\"\"\"
+    """rms of the field smoothed on radius R [Mpc/h]. Notes eq. (1.9)."""
     def integrand(k):
         # TODO (3 lines): x = kR; the top-hat window W; return k^3 P W^2 / 2pi^2
         raise NotImplementedError
@@ -606,10 +611,10 @@ def sigma_R(P, R=8.0):
 
 
 def make_pk_lin(T, ns=ns, sigma8=sigma8):
-    \"\"\"P_L(k) = A k^ns T^2(k), with A fixed so that sigma_8 comes out right.
+    """P_L(k) = A k^ns T^2(k), with A fixed so that sigma_8 comes out right.
 
     Returns a callable k -> P(k) in (Mpc/h)^3, k in h/Mpc.
-    \"\"\"
+    """
     def unnorm(k):
         # TODO (1 line): the shape, k^ns T^2(k), with no amplitude yet
         raise NotImplementedError
@@ -620,13 +625,13 @@ def make_pk_lin(T, ns=ns, sigma8=sigma8):
 
 
 pk_nw = make_pk_lin(T_nowiggle)
-""")
+''')
 ```
 
 - [ ] **Step 4: Append the checkpoint cell**
 
 ```python
-C(r"""
+C(r'''
 # --- checkpoint 2 -------------------------------------------------------
 s8_out   = sigma_R(pk_nw)
 kg       = np.logspace(-4, 2, 6000)
@@ -641,17 +646,17 @@ print(f"sigma_8 recovered = {s8_out:.4f}")
 print(f"turnover at k     = {turnover:.4f} h/Mpc   (k_eq = 0.0153)")
 print(f"d ln P / d ln k   = {slope_P:.3f}   over 0.5 < k < 5 h/Mpc")
 print(f"consistency: 2 x {slope_T:.3f} + {ns} = {2*slope_T + ns:.3f}")
-""")
+''')
 
-M(r"""
+M(r'''
 The last line is the point. Since $P_{\rm L} \propto k^{n_s} T^2$, the two
 slopes are locked together: $2 \times (-1.670) + 0.965 = -2.375$. If you fudged
 `T_nowiggle` into passing checkpoint 1, checkpoint 2 catches it.
 
 Now plot it. This is Figure 3 of the notes, right-hand panel, from your code.
-""")
+''')
 
-C(r"""
+C(r'''
 kplot = np.logspace(-4, 1, 500)
 fig, ax = plt.subplots(1, 2, figsize=(10, 3.8))
 
@@ -670,7 +675,7 @@ for a in ax:
     a.set_xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
 fig.tight_layout()
 plt.show()
-""")
+''')
 ```
 
 - [ ] **Step 5: Regenerate, execute, verify**
@@ -707,7 +712,7 @@ transfer function cannot pass both."
 - [ ] **Step 1: Append the markdown**
 
 ```python
-M(r"""
+M(r'''
 ---
 ## Step 3 — Baryons, and the wiggles they leave
 
@@ -721,7 +726,7 @@ few-percent level, the **baryon acoustic oscillations**.
 The full Eisenstein & Hu formula has them. It is forty-odd lines and there is
 even less to learn from typing it than the last one, so it is given below.
 Run the cell and move on; the interesting part is the ratio you plot after it.
-""")
+''')
 ```
 
 - [ ] **Step 2: Append `T_full` (given complete)**
@@ -729,12 +734,12 @@ Run the cell and move on; the interesting part is the ratio you plot after it.
 Transcribe `figs_src/ptlib.py:24-69` (`_eh_full`) into a module-level function. It must be a verbatim port — same coefficients, same order — because Task 7 checks it against `ptlib` numerically. Substitute the parameters for `self.*`:
 
 ```python
-C(r"""
+C(r'''
 def T_full(k, Om=Om, Ob=Ob, h=h, Tcmb=Tcmb):
-    \"\"\"Eisenstein & Hu (1998) transfer function with baryon wiggles.
+    """Eisenstein & Hu (1998) transfer function with baryon wiggles.
 
     Their eqs (1)-(24). Given -- do not type this. k in h/Mpc.
-    \"\"\"
+    """
     Theta = Tcmb/2.7
     omh2, obh2 = Om*h*h, Ob*h*h
     fb = Ob/Om
@@ -781,13 +786,13 @@ def T_full(k, Om=Om, Ob=Ob, h=h, Tcmb=Tcmb):
 
 
 pk_lin = make_pk_lin(T_full)     # everything from here on uses this one
-""")
+''')
 ```
 
 - [ ] **Step 3: Append the ratio plot and checkpoint**
 
 ```python
-C(r"""
+C(r'''
 # --- checkpoint 3 -------------------------------------------------------
 kb    = np.logspace(np.log10(0.02), np.log10(0.5), 2000)
 ratio = pk_lin(kb)/pk_nw(kb)
@@ -810,9 +815,9 @@ plt.xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
 plt.ylabel(r"$P_{\rm L}/P_{\rm nw}$")
 plt.title("the baryon acoustic oscillations")
 plt.tight_layout(); plt.show()
-""")
+''')
 
-M(r"""
+M(r'''
 Read the wavelength off that first peak: about 80 Mpc/h, which is the sound
 horizon $r_d \simeq 100\,h^{-1}$Mpc seen through the harmonic structure. This
 is the standard ruler that galaxy surveys measure, and it is a few percent
@@ -820,7 +825,7 @@ tall — which is why the inset in Figure 3 of the notes plots it as a ratio.
 On the spectrum itself you would never see it.
 
 **From here on, use `pk_lin` — the full one.** Wiggles and all.
-""")
+''')
 ```
 
 - [ ] **Step 4: Regenerate, execute, verify**
@@ -854,7 +859,7 @@ git commit -m "Hands-on 1 step 3: full transfer function and the BAO ratio"
 - [ ] **Step 1: Append the markdown that sets up the normalization**
 
 ```python
-M(r"""
+M(r'''
 ---
 ## Step 4 — Draw a universe
 
@@ -888,13 +893,13 @@ it**, below, which is the part that matters:
 ```
 delta_k = np.fft.rfftn(white_noise) * np.sqrt(P * N**3 / L**3)
 ```
-""")
+''')
 ```
 
 - [ ] **Step 2: Append the k-grid cell (given)**
 
 ```python
-C(r"""
+C(r'''
 # The wavevector grid. rfftn drops the redundant half of the last axis, so the
 # last dimension runs over N//2+1 non-negative frequencies.
 kx = np.fft.fftfreq(N, d=1.0/N)*k_f          # signed, for the two full axes
@@ -908,9 +913,9 @@ P_grid = pk_lin(np.sqrt(K2).ravel()).reshape(K2.shape)
 P_grid[0, 0, 0] = 0.0    # Derivation 1: the mean is not a fluctuation
 
 print(f"grid shape {K2.shape},  |k| from {np.sqrt(K2)[0,0,1]:.4f} to {np.sqrt(K2).max():.3f} h/Mpc")
-""")
+''')
 
-M(r"""
+M(r'''
 Note what the last print says: the largest $|k|$ on the grid is **2.79**, not
 $k_{\rm Nyq} = 1.61$. The grid is a cube and the sphere of radius
 $k_{\rm Nyq}$ does not fill it — the corners reach $\sqrt{3}\,k_{\rm Nyq}$.
@@ -919,13 +924,13 @@ Remember that; it comes back in a moment.
 And `P_grid[0,0,0] = 0` is Derivation 1 from the notes, made concrete: the
 $\boldsymbol{k}=0$ mode *is* the mean density, which is not a fluctuation. We
 set it to zero by hand.
-""")
+''')
 ```
 
 - [ ] **Step 3: Append the realization as an `S` pair**
 
 ```python
-S(solution=r"""
+S(solution=r'''
 rng   = np.random.default_rng(SEED)
 white = rng.standard_normal((N, N, N))       # unit-variance real white noise
 
@@ -934,7 +939,7 @@ delta_k[0, 0, 0] = 0.0
 delta_x = np.fft.irfftn(delta_k, s=(N, N, N))
 
 print(f"delta_k {delta_k.shape} {delta_k.dtype},  delta_x {delta_x.shape} {delta_x.dtype}")
-""", stub=r"""
+''', stub=r'''
 rng   = np.random.default_rng(SEED)
 white = rng.standard_normal((N, N, N))       # unit-variance real white noise
 
@@ -945,13 +950,13 @@ white = rng.standard_normal((N, N, N))       # unit-variance real white noise
 raise NotImplementedError("draw the field")
 
 print(f"delta_k {delta_k.shape} {delta_k.dtype},  delta_x {delta_x.shape} {delta_x.dtype}")
-""")
+''')
 ```
 
 - [ ] **Step 4: Append the verification cell — the heart of the session**
 
 ```python
-C(r"""
+C(r'''
 # --- checkpoint 4: the one that matters ---------------------------------
 rms_grid = float(np.std(delta_x))
 rms_cont = np.sqrt(logint(lambda k: k**3*pk_lin(k)/(2*np.pi**2), k_f, k_Nyq, 3000))
@@ -965,9 +970,9 @@ print(f"range                         = {delta_x.min():.1f} to {delta_x.max():.1
 assert abs(rms_grid - 2.516) < 0.02,      f"rms should be 2.516, got {rms_grid:.3f}"
 assert 1.05 < rms_grid/rms_cont < 1.12,   f"grid/continuum should be ~1.086, got {rms_grid/rms_cont:.3f}"
 assert abs(delta_x.mean()) < 1e-10,       f"mean should vanish, got {delta_x.mean():.2e}"
-""")
+''')
 
-M(r"""
+M(r'''
 **Two things to take from those numbers.**
 
 *The normalisation is right.* Your grid says 2.516; integrating
@@ -985,7 +990,7 @@ grid *is*.
 Ask yourself: which way would this go if you cut the box to 125 Mpc/h at fixed
 $N$? (Both $k_f$ and $k_{\rm Nyq}$ double: you lose the largest scales and gain
 smaller ones.)
-""")
+''')
 ```
 
 - [ ] **Step 5: Regenerate, execute, verify**
@@ -1035,14 +1040,14 @@ k_Nyq. The 8.6% excess is the cube's corner modes out to sqrt(3) k_Nyq."
 - [ ] **Step 1: Append the slice plot**
 
 ```python
-M(r"""
+M(r'''
 ---
 ## Step 5 — Look at it
 
 You have a universe. Slice it.
-""")
+''')
 
-C(r"""
+C(r'''
 fig, ax = plt.subplots(1, 2, figsize=(10, 4.2))
 
 sl = delta_x[:, :, N//2]
@@ -1061,9 +1066,9 @@ ax[1].set_title("and its one-point distribution")
 for a in (ax[0],):
     a.set_xlabel(r"$x\ [h^{-1}\mathrm{Mpc}]$"); a.set_ylabel(r"$y\ [h^{-1}\mathrm{Mpc}]$")
 fig.tight_layout(); plt.show()
-""")
+''')
 
-M(r"""
+M(r'''
 The histogram is a Gaussian because we built it from one — that is the whole
 content of "Gaussian initial conditions". Lecture 2 is about what gravity does
 to that symmetry: the field develops a long tail to high $\delta$ (you cannot
@@ -1073,15 +1078,15 @@ looking like noise and starts looking like a web.
 Note also that $\delta$ reaches $\pm 12$ here, which is well past the $|\delta|
 \ll 1$ that assumption A5 asked for. Linear theory has already broken on the
 smallest scales of this grid. Lecture 2 picks that up.
-""")
+''')
 ```
 
 - [ ] **Step 2: Append the parameter-variation cell**
 
 ```python
-C(r"""
+C(r'''
 def realize(T_of_k, ns_=ns, seed=SEED):
-    \"\"\"Re-draw the field for a different cosmology, same seed. -> (rms, turnover).\"\"\"
+    """Re-draw the field for a different cosmology, same seed. -> (rms, turnover)."""
     P = make_pk_lin(T_of_k, ns=ns_)
     Pg = P(np.sqrt(K2).ravel()).reshape(K2.shape); Pg[0, 0, 0] = 0.0
     r = np.random.default_rng(seed)
@@ -1101,9 +1106,9 @@ for label, kw, ns_ in [("fiducial", {}, ns),
     keq_ = 7.46e-2*(Om_*h*h)*(Tcmb/2.7)**-2/h
     rms_, turn_ = realize(lambda k: T_full(k, **kw), ns_=ns_)
     print(f"{label:12s} {keq_:8.4f} {turn_:10.4f} {rms_:10.3f}")
-""")
+''')
 
-M(r"""
+M(r'''
 **Read that table carefully — $\sigma_8$ is renormalised to 0.81 in every
 row.** So none of these differences is an amplitude; they are all *shape*.
 
@@ -1119,7 +1124,7 @@ spectrum, and you have just moved it by changing the contents of the universe.
 
 Every one of these fields was drawn with **the same seed**. Same phases, same
 random numbers. Every difference you see is the cosmology.
-""")
+''')
 ```
 
 - [ ] **Step 3: Regenerate, execute, verify the table matches**
@@ -1165,7 +1170,7 @@ git commit -m "Hands-on 1 step 5: slice, one-point PDF, and cosmology variations
 - [ ] **Step 1: Append the save-and-download cells**
 
 ```python
-M(r"""
+M(r'''
 ---
 ## Step 6 — Save it; Session 2 starts here
 
@@ -1175,9 +1180,9 @@ and a cosmic web falls out. So `delta_k` is the thing to keep.
 
 We store it as `complex64` — half the bytes, and the loss is at the seventh
 decimal, far below anything that matters here.
-""")
+''')
 
-C(r"""
+C(r'''
 np.savez_compressed(
     "delta_k_128.npz",
     delta_k=delta_k.astype(np.complex64),
@@ -1193,9 +1198,9 @@ rms_reloaded = float(np.std(np.fft.irfftn(chk, s=(N, N, N))))
 assert abs(rms_reloaded - rms_grid) < 1e-3, \
     f"reloaded field differs: {rms_reloaded:.5f} vs {rms_grid:.5f}"
 print(f"reloads at rms = {rms_reloaded:.3f}   (built at {rms_grid:.3f})")
-""")
+''')
 
-C(r"""
+C(r'''
 # --- download it -------------------------------------------------------
 # On Colab this drops the file in your Downloads folder. Locally it is
 # already on disk and this does nothing.
@@ -1205,9 +1210,9 @@ try:
     print("downloading -- keep this file, Session 2 opens with it")
 except ImportError:
     print(f"saved locally: {os.path.abspath('delta_k_128.npz')}")
-""")
+''')
 
-M(r"""
+M(r'''
 **Lost it? Nothing is lost.** Session 2 opens with the cell below, which
 rebuilds the field from the same seed. `np.random.default_rng` is guaranteed
 reproducible across numpy versions and platforms, so this is not an
@@ -1218,9 +1223,9 @@ Which is also the answer to a fair question: if the field can be regenerated in
 ten lines, why save it at all? Because in real work it cannot. A field from a
 Boltzmann code and an N-body run costs hours of compute, and the file *is* the
 product. This one is small enough to cheat on, and honest enough to say so.
-""")
+''')
 
-C(r"""
+C(r'''
 # --- Session 2 fallback: run this if you did not keep delta_k_128.npz ---
 # Given complete, and it depends on NOTHING you wrote: the spectrum comes from
 # a tabulated file, not from your pk_lin. If your P_L came out wrong, this
@@ -1261,9 +1266,9 @@ assert abs(rms_fb - rms_grid)/rms_grid < 1e-3, \
     f"fallback gives rms {rms_fb:.5f}, you built {rms_grid:.5f}"
 print(f"fallback rms = {rms_fb:.5f}   (you built {rms_grid:.5f})")
 print(f"they differ by {abs(rms_fb-rms_grid)/rms_grid:.1e} -- the tabulated P is interpolated")
-""")
+''')
 
-M(r"""
+M(r'''
 ---
 ## What you built
 
@@ -1277,7 +1282,7 @@ M(r"""
   is set by the contents of the universe.
 
 Session 2 moves it.
-""")
+''')
 ```
 
 - [ ] **Step 2: Generate the tabulated spectrum the fallback reads**
