@@ -1041,16 +1041,16 @@ easier to turn into a number?
 \setcounter{exercise}{0}
 
 \begin{plan}
-\noindent\textbf{Plan (71 min at the board, 19 for questions).} The Lagrangian
-picture: label a fluid element and follow it (0--13) $\rightarrow$ the
-Zel'dovich approximation, its recipe and its velocities (13--19) $\rightarrow$
-\emph{why a web and not a collection of spheres}: three unequal eigenvalues, and
-how the volume divides (19--36) $\rightarrow$ shell crossing, where the
-approximation fails (36--44) $\rightarrow$ 2LPT and what it fixes (44--55)
-$\rightarrow$ halos, and why counting them is biased (55--71). \emph{If you are
-short:} the threshold derivation of $b_1$ compresses to
-\eqref{eq:halo_abundance}, \eqref{eq:pbs} and the figure, quoted rather than
-derived, which returns six minutes. \emph{Read, not
+\noindent\textbf{Plan (78 min at the board, 12 for questions).} The Lagrangian
+picture, and the map drawn (0--16) $\rightarrow$ the Zel'dovich approximation:
+why the deformation matrix diagonalizes, and the density that follows (16--26)
+$\rightarrow$ \emph{why a web and not a collection of spheres}: three unequal
+eigenvalues, and how the volume divides (26--42) $\rightarrow$ shell crossing,
+where the approximation fails (42--50) $\rightarrow$ 2LPT and what it fixes
+(50--61) $\rightarrow$ halos, and why counting them is biased (61--78).
+\emph{If you are short:} quote \eqref{eq:za_density} instead of deriving it
+($4$ min) and quote the threshold result \eqref{eq:pbs} instead of deriving it
+($6$ min); both figures still carry the argument. \emph{Read, not
 lectured:} the one-dimensional exactness proof (Exercise~\ref{ex:1dza}), the
 Comments, and the practical business of generating initial conditions, which the hands-on session does experimentally. \emph{If you are running behind:} the
 2LPT algebra compresses to its result, since the hands-on will show what it
@@ -1061,7 +1061,11 @@ Sources: \cite[Apps.~A and E]{Jeong2010}, \cite{Zeldovich1970,DodelsonSchmidt}.
 \subsection{The Lagrangian picture}
 \label{sec:lpt}
 
-How does gravitational collapse actually proceed? A slightly overdense region decelerates the matter around it; particles drift toward it, overshoot, and eventually orbit. The natural variable for this story is not the density at a fixed point but the trajectory of each mass element. Label each fluid element by its initial comoving position $\vq$ and track its displacement,
+How does gravitational collapse actually proceed? A slightly overdense region
+decelerates the matter around it; particles drift toward it, overshoot, and
+eventually orbit. The natural variable is not the density at a fixed point but
+the trajectory of each mass element. Label each element by its initial comoving
+position $\vq$ and track its displacement,
 \begin{equation}
 \vx(\vq,\tau) = \vq + \vPsi(\vq,\tau),
 \qquad \vPsi(\vq,0)=0 .
@@ -1082,7 +1086,30 @@ J = \det\left(\delta_{ij} + \Psi_{i,j}\right),
 \Psi_{i,j} \equiv \frac{\partial\Psi_i}{\partial q_j} .
 \label{eq:jacobian}
 \end{equation}
-A volume element that shrinks ($J<1$) is overdense; one that expands is underdense. Because the determinant is nonlinear in $\vPsi$, a displacement of first order generates density perturbations at all orders: low-order LPT resums an infinite subset of Eulerian nonlinearities, the ones associated with moving matter around. The subset is real but restricted --- the Jacobian generates every power of the linear displacement, not every dynamical nonlinearity --- so more orders in density does not mean more dynamical accuracy at all scales.
+A volume element that shrinks ($J<1$) is overdense; one that expands is
+underdense, and Figure~\ref{fig:lagmap} is that sentence drawn. Because the
+determinant is nonlinear in $\vPsi$, a displacement correct only at first order
+already generates density perturbations at every order: low-order LPT resums an
+infinite subset of Eulerian nonlinearities, the ones that come from moving
+matter around. The subset is restricted, though: the Jacobian generates every power of the
+linear displacement, not every dynamical nonlinearity, so more orders in
+$\delta$ does not buy more dynamical accuracy.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.96\textwidth]{lagrangian_map.pdf}
+\caption{The Lagrangian map and its Jacobian. \emph{Left:} a regular grid of
+labels $\vq$, with an arrow to where the Zel'dovich displacement sends each one.
+The labels are bookkeeping and never move; the matter does. \emph{Right:} the
+same cells drawn as the quadrilaterals they become, shaded by their area ratio,
+which in two dimensions is $1/J = 1+\delta$. Cells that shrink go red, and they
+line up into a ridge, which is a filament beginning. The field is the linear
+spectrum of Lecture~1 projected to two dimensions, with the displacement
+amplitude set to $0.46$ of a cell so that the distortion is visible; a
+three-dimensional spectrum on a two-dimensional field has no meaningful
+normalization of its own.}
+\label{fig:lagmap}
+\end{figure}
 
 At first order, \eqref{eq:lpt_master} with $\delta = -\nabla_q\cdot\vPsi^{(1)}$ (from \eqref{eq:jacobian}) says that the divergence of the displacement obeys the linear growth equation \eqref{eq:growth}. Since the flow is irrotational, $\vPsi^{(1)} = -\nabla_q\varphi^{(1)}$ for a Lagrangian potential $\varphi^{(1)}$, and matching to the Eulerian linear density gives
 \begin{equation}
@@ -1106,19 +1133,45 @@ where the fluid description fails. Section~\ref{sec:shellcross} picks it up.}
 \subsection{The Zel'dovich approximation}
 \label{sec:za}
 
-The \emph{Zel'dovich approximation} (ZA) \cite{Zeldovich1970} takes this linear displacement seriously beyond linear order in the density: move particles on straight lines (in comoving coordinates) and read the density off the Jacobian. Since $\Psi^{(1)}_{i,j}$ is symmetric it can be diagonalized at each $\vq$, with eigenvalues written $-D_+\lambda_1, -D_+\lambda_2, -D_+\lambda_3$, so
+The \emph{Zel'dovich approximation} (ZA) \cite{Zeldovich1970} takes this linear displacement seriously beyond linear order in the density: move particles on straight lines (in comoving coordinates) and read the density
+off the Jacobian. Getting the density is three steps, and they are worth doing
+slowly.
+
+\emph{The deformation matrix is symmetric.} Since $\vPsi^{(1)} =
+-\nabla_q\varphi^{(1)}$, its gradient is a matrix of second derivatives,
+$\Psi^{(1)}_{i,j} = -\,\partial^2\varphi^{(1)}/\partial q_i\,\partial q_j$, and
+mixed partials of a smooth function commute. So $\Psi^{(1)}_{i,j}$ is a Hessian,
+hence symmetric. That is not an accident of first order: it follows from the
+flow being irrotational, which is what gives the deformation matrix real
+eigenvalues at all.
+
+\emph{So it diagonalizes.} A real symmetric matrix has three real eigenvalues
+and three orthogonal eigenvectors. At each $\vq$ separately there are therefore
+three perpendicular axes along which the displacement does nothing but stretch
+or compress. Write the eigenvalues as $-D_+\lambda_1$, $-D_+\lambda_2$,
+$-D_+\lambda_3$: the growth factor pulls out because $\vPsi^{(1)} \propto D_+$,
+which leaves the $\lambda_i$ fixed once and for all by the initial conditions,
+and the minus sign is chosen so that positive $\lambda$ means collapse.
+
+\emph{The determinant is then a product.} In that frame $\delta_{ij} +
+\Psi^{(1)}_{i,j}$ is diagonal with entries $1-D_+\lambda_i$, and the determinant
+of a diagonal matrix is the product of its entries. With $1+\delta = 1/J$ from
+\eqref{eq:jacobian},
 \begin{equation}
+J = \prod_{i=1}^{3}\left(1 - D_+\lambda_i\right)
+\quad\Longrightarrow\quad
 \delta_{\rm ZA}(\vx,\tau)
 = \frac{1}{\left(1-D_+\lambda_1\right)\left(1-D_+\lambda_2\right)\left(1-D_+\lambda_3\right)} - 1 .
 \label{eq:za_density}
 \end{equation}
+Each axis contributes one factor, and each factor can vanish on its own. That is
+the whole of Section~\ref{sec:web}.
 
-As a recipe this is completely explicit, which is why it is what initial-condition
-generators do. Draw a Gaussian realization of $\delta^{(1)}(\vk)$ with variance $\Plin(k)$, the output of the previous hands-on session. Get the displacement
-from \eqref{eq:za_displacement}, one multiplication per mode,
-$\vPsi^{(1)}(\vk) = (i\vk/k^2)\,\delta^{(1)}(\vk)$. Transform back, move every
-particle from $\vq$ to $\vq + \vPsi^{(1)}$, and stop. Three Fourier transforms
-and a shift, and you have a nonlinear density field.
+As a recipe this is completely explicit, which is why every initial-condition
+generator uses it. Draw $\delta^{(1)}(\vk)$ with variance $\Plin(k)$, multiply
+by $i\vk/k^2$ to get $\vPsi^{(1)}$, transform back, and move each particle from
+$\vq$ to $\vq + \vPsi^{(1)}$. Three Fourier transforms and a shift, and you have
+a nonlinear density field.
 
 The velocities come free. Since $\vPsi^{(1)} \propto D_+$ and nothing else in it
 depends on time,
@@ -1370,7 +1423,23 @@ sharp enough to get the mechanism right \cite[\S 2.1]{BiasReview}.
 $\delta^{(1)}(\vq)$ this lecture has been displacing on a scale $R$, and declare
 a halo wherever it exceeds a fixed $\delta_{\rm cr}$. That is the entire model:
 no dynamics, one number, the same initial field as Section~\ref{sec:web} sorted
-by a different criterion. Since $\delta^{(1)}$ is Gaussian with variance
+by a different criterion. The number is $\delta_{\rm cr} \simeq 1.686$, the
+linearly extrapolated density at which a uniform sphere would collapse to a
+point.
+
+\begin{reading}
+\bait{Section~\ref{sec:web} said spherical collapse never happens. So why is a
+threshold taken from spherical collapse allowed here?}
+A fair objection, and the two statements are about different things.
+Section~\ref{sec:web} is about \emph{morphology}: exact degeneracy of the three
+eigenvalues has probability zero, so nothing collapses as a sphere and the web
+is not a population of balls. Here $\delta_{\rm cr}$ is used only as a
+\emph{number}, a rough scale for how deep a well must be before it holds
+together. Nothing in the derivation of \eqref{eq:pbs} requires the collapse to
+be spherical. A different threshold shifts $\nu_c$ and the value of $b_1$ and
+changes nothing about the mechanism, which is one reason this model predicts a
+mechanism rather than a number.
+\end{reading} Since $\delta^{(1)}$ is Gaussian with variance
 $\sigma^2(R)$, the fraction of space above the cut is
 \begin{equation}
 \bar n = \tfrac12\,\erfc\!\left(\frac{\nu_c}{\sqrt2}\right) ,

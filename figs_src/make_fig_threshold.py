@@ -76,41 +76,38 @@ print(f"  n_bar: measured {n0:.4e}, predicted {n_of_dL(0.0):.4e}")
 print(f"  counted points sit on the erfc curve to {100*resid:.1f}% over the plotted range")
 
 # ---------------------------------------------------------------- figure ---
-fig, ax = plt.subplots(1, 2, figsize=(9.4, 3.5))
+fig, ax = plt.subplots(1, 2, figsize=(9.8, 4.0))
 
-# LEFT: a 1D cut, with and without a long mode.
-# Most random cuts through the box contain NO regions above threshold at all --
-# these objects are rare, n_bar ~ 6e-3 -- so this is a cut chosen to contain a
-# few. The caption says so.
-JCUT, KCUT = 42, 87
-row = dR[:, JCUT, KCUT]
-x = np.arange(N)*(L/N)
-long_mode = 0.30*np.sin(2*np.pi*x/L)
+# LEFT: a 2D slice. A 1D cut cannot show "more regions" -- it holds too few.
+# Here every cell above threshold is drawn, in two colours: those that were
+# already above without the long mode, and those the long mode pushed over.
+sl   = dR[:, :, N//3]
+xs   = np.arange(N)*(L/N)
+lm2d = 0.30*np.sin(2*np.pi*xs/L)[:, None]*np.ones((1, N))
 
-ax[0].axhline(DELTA_CR, color="#c1121f", ls="--", lw=1.1, zorder=5)
-ax[0].text(L*0.985, DELTA_CR + 0.06, r"$\delta_{\rm cr}$", color="#c1121f",
-           fontsize=9, ha="right")
-ax[0].plot(x, row, color="0.62", lw=0.9, label=r"$\delta_R(q)$")
-ax[0].plot(x, row + long_mode, color="#1d3557", lw=1.0,
-           label=r"$\delta_R(q) + \delta_L(q)$")
-ax[0].plot(x, long_mode, color="#e07a5f", lw=1.6, label=r"the long mode $\delta_L$")
+was  = sl > DELTA_CR                       # above without the long mode
+now_ = (sl + lm2d) > DELTA_CR              # above with it
+new  = now_ & ~was
+lost = was & ~now_
+print(f"  2D slice: {was.sum()} cells above threshold -> {now_.sum()} "
+      f"({new.sum()} gained, {lost.sum()} lost)")
 
-above_0 = row > DELTA_CR
-above_L = (row + long_mode) > DELTA_CR
-ax[0].plot(x[above_0], np.full(above_0.sum(), -2.55), "|", color="0.62", ms=7)
-ax[0].plot(x[above_L], np.full(above_L.sum(), -2.9), "|", color="#1d3557", ms=7)
-ax[0].text(L*0.02, -2.38, f"{above_0.sum()} regions above threshold",
-           fontsize=7.5, color="0.45")
-ax[0].text(L*0.02, -3.30, f"{above_L.sum()} with the long mode added",
-           fontsize=7.5, color="#1d3557")
-print(f"  the plotted cut: {above_0.sum()} -> {above_L.sum()} above threshold "
-      f"({above_L.sum()/above_0.sum():.1f}x)")
-
-ax[0].set_xlim(0, L); ax[0].set_ylim(-3.6, 3.4)
-ax[0].set_xlabel(r"Lagrangian position $q\ [h^{-1}\mathrm{Mpc}]$")
-ax[0].set_ylabel(r"$\delta_R$, smoothed on $R = 5\,h^{-1}$Mpc")
-ax[0].legend(loc="upper right", frameon=False, fontsize=7.5)
-ax[0].set_title("a long mode barely moves the field", fontsize=9)
+ax[0].imshow(lm2d.T, origin="lower", extent=[0, L, 0, L], cmap="RdBu_r",
+             vmin=-0.9, vmax=0.9, interpolation="bilinear", zorder=0)
+ys, xs2 = np.nonzero(was)
+ax[0].plot(xs2*(L/N), ys*(L/N), "s", color="0.15", ms=1.4, mew=0,
+           label=f"above threshold already ({was.sum()})", zorder=3)
+ys, xs2 = np.nonzero(new)
+ax[0].plot(xs2*(L/N), ys*(L/N), "s", color="#e8590c", ms=1.4, mew=0,
+           label=f"pushed over by $\\delta_L$ (+{new.sum()})", zorder=4)
+ax[0].set_xlim(0, L); ax[0].set_ylim(0, L)
+ax[0].set_xlabel(r"$q_x\ [h^{-1}\mathrm{Mpc}]$")
+ax[0].set_ylabel(r"$q_y\ [h^{-1}\mathrm{Mpc}]$")
+ax[0].set_title(r"where the long mode is positive, more regions cross",
+                fontsize=9)
+leg = ax[0].legend(loc="upper right", frameon=True, fontsize=7,
+                   markerscale=4, framealpha=0.9)
+leg.get_frame().set_edgecolor("none")
 
 # RIGHT: abundance vs long mode, measured against predicted
 dL = np.linspace(-0.45, 0.45, 300)
