@@ -19,8 +19,11 @@
 - **Solution cells overwrite stubs, and a stub cell must never error** — not by
   `raise`, and not incidentally either (feeding `...` into numpy raises just as
   fatally, and Colab's Run All stops at the first erroring cell). Any stub line
-  that *consumes* a TODO value must sit behind an `if ... not in <todo>:` guard,
-  so an unfilled stub is a quiet no-op. Consequence: the full notebook must pass
+  that *consumes* a TODO value must sit behind an identity-based guard,
+  `if not any(p is ... for p in <todo>):` — never a `... in <todo>` membership
+  test, which invokes `==` and raises "truth value is ambiguous" the moment a
+  slot holds a numpy array, i.e. exactly when a student fills the stub.
+  Unfilled stubs are quiet no-ops; filled stubs compute. Consequence: the full notebook must pass
   plain `jupyter nbconvert --execute` with **no** `--allow-errors`, and the
   stripped-solutions variant must fail it.
 - Students must never be pointed at `figs_src/ptlib.py` or `figs_src/make_fig_web.py`.
@@ -442,7 +445,7 @@ SC(stub=r'''
 # and the rms will not tell you.
 psi1_k = [...,  ...,  ...]
 
-if ... not in psi1_k:          # skips quietly until you have filled the dots
+if not any(p is ... for p in psi1_k):   # skips quietly until you fill the dots
     psi1 = [np.fft.irfftn(p, s=(N, N, N)) for p in psi1_k]
 ''', solution=r'''#@title Solution — Psi^(1)
 psi1_k = [1j*Ki/K2*delta_k for Ki in (KX, KY, KZ)]
