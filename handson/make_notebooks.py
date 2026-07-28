@@ -455,5 +455,127 @@ On the spectrum itself you would never see it.
 ''')
 
 
+M(r'''
+---
+## Step 4 — Draw a universe
+
+This is the step that will eat the session, and it is worth it. The recipe is
+the three lines from §1.3 of the notes:
+
+1. for each mode $\boldsymbol{k}$, draw a complex amplitude with zero mean and
+   variance $P_{\rm L}(k)$;
+2. impose reality, $\delta(-\boldsymbol{k}) = \delta(\boldsymbol{k})^*$, so the
+   field you get back is real;
+3. inverse transform.
+
+Step 2 is free if you use `np.fft.rfftn` on real white noise — the output of a
+real transform already has the right symmetry, so you cannot get it wrong.
+
+**The trap is step 1, and it is silent.** The continuum statement is
+
+$$\langle \delta^2 \rangle = \int \frac{{\rm d}^3 k}{(2\pi)^3} P(k),$$
+
+but a computer holds a finite grid with a finite box, and the factors of $N$
+and $L$ that convert between the two do not announce themselves. Get them wrong
+and the field still *looks* right — same structure, same texture, plausible
+picture — while every number downstream is off by a constant you will never
+notice. (The figure in these notes was built with exactly this bug the first
+time: $\delta_{\rm rms}$ came out at 0.005 instead of 2.5, and nothing about
+the picture looked odd.)
+
+So here is the line. You are not asked to derive it — you are asked to **check
+it**, below, which is the part that matters:
+
+```
+delta_k = np.fft.rfftn(white_noise) * np.sqrt(P * N**3 / L**3)
+```
+''')
+
+C(r'''
+# The wavevector grid. rfftn drops the redundant half of the last axis, so the
+# last dimension runs over N//2+1 non-negative frequencies.
+kx = np.fft.fftfreq(N, d=1.0/N)*k_f          # signed, for the two full axes
+kz = np.fft.rfftfreq(N, d=1.0/N)*k_f         # non-negative, for the rfft axis
+KX, KY, KZ = np.meshgrid(kx, kx, kz, indexing="ij")
+
+K2 = KX**2 + KY**2 + KZ**2
+K2[0, 0, 0] = 1.0        # placeholder: avoids 0/0, and the mode is zeroed below
+
+P_grid = pk_lin(np.sqrt(K2).ravel()).reshape(K2.shape)
+P_grid[0, 0, 0] = 0.0    # Derivation 1: the mean is not a fluctuation
+
+print(f"grid shape {K2.shape},  |k| from {np.sqrt(K2)[0,0,1]:.4f} to {np.sqrt(K2).max():.3f} h/Mpc")
+''')
+
+M(r'''
+Note what the last print says: the largest $|k|$ on the grid is **2.79**, not
+$k_{\rm Nyq} = 1.61$. The grid is a cube and the sphere of radius
+$k_{\rm Nyq}$ does not fill it — the corners reach $\sqrt{3}\,k_{\rm Nyq}$.
+Remember that; it comes back in a moment.
+
+And `P_grid[0,0,0] = 0` is Derivation 1 from the notes, made concrete: the
+$\boldsymbol{k}=0$ mode *is* the mean density, which is not a fluctuation. We
+set it to zero by hand.
+''')
+
+S(solution=r'''
+rng   = np.random.default_rng(SEED)
+white = rng.standard_normal((N, N, N))       # unit-variance real white noise
+
+delta_k = np.fft.rfftn(white) * np.sqrt(P_grid * N**3 / L**3)
+delta_k[0, 0, 0] = 0.0
+delta_x = np.fft.irfftn(delta_k, s=(N, N, N))
+
+print(f"delta_k {delta_k.shape} {delta_k.dtype},  delta_x {delta_x.shape} {delta_x.dtype}")
+''', stub=r'''
+rng   = np.random.default_rng(SEED)
+white = rng.standard_normal((N, N, N))       # unit-variance real white noise
+
+# TODO (3 lines):
+#   delta_k -- transform the white noise and scale it by sqrt(P N^3 / L^3)
+#   then zero the k=0 mode
+#   delta_x -- inverse transform back to real space, with s=(N, N, N)
+raise NotImplementedError("draw the field")
+
+print(f"delta_k {delta_k.shape} {delta_k.dtype},  delta_x {delta_x.shape} {delta_x.dtype}")
+''')
+
+C(r'''
+# --- checkpoint 4: the one that matters ---------------------------------
+rms_grid = float(np.std(delta_x))
+rms_cont = np.sqrt(logint(lambda k: k**3*pk_lin(k)/(2*np.pi**2), k_f, k_Nyq, 3000))
+
+print(f"realized rms delta            = {rms_grid:.3f}")
+print(f"continuum, k_f to k_Nyq       = {rms_cont:.3f}")
+print(f"ratio                         = {rms_grid/rms_cont:.3f}")
+print(f"mean of delta                 = {delta_x.mean():.2e}   (should be ~0)")
+print(f"range                         = {delta_x.min():.1f} to {delta_x.max():.1f}")
+
+assert abs(rms_grid - 2.516) < 0.02,      f"rms should be 2.516, got {rms_grid:.3f}"
+assert 1.05 < rms_grid/rms_cont < 1.12,   f"grid/continuum should be ~1.086, got {rms_grid/rms_cont:.3f}"
+assert abs(delta_x.mean()) < 1e-10,       f"mean should vanish, got {delta_x.mean():.2e}"
+''')
+
+M(r'''
+**Two things to take from those numbers.**
+
+*The normalisation is right.* Your grid says 2.516; integrating
+$\int {\rm d}^3k/(2\pi)^3\,P(k)$ out to the Nyquist frequency says 2.317. Those
+agree to 9%, which for a check spanning a discrete cube and a continuum
+integral is a pass. Had you dropped the $N^3/L^3$ you would be off by a factor
+of thousands, not 9%.
+
+*The residual 9% is itself physics — or rather, geometry.* The grid carries
+those corner modes out to $\sqrt3\,k_{\rm Nyq} = 2.79\,h\,{\rm Mpc}^{-1}$,
+beyond where the continuum integral stopped. Extra power means extra variance,
+so the realized value runs **high**. It is not an error; it is what a cubic
+grid *is*.
+
+Ask yourself: which way would this go if you cut the box to 125 Mpc/h at fixed
+$N$? (Both $k_f$ and $k_{\rm Nyq}$ double: you lose the largest scales and gain
+smaller ones.)
+''')
+
+
 if __name__ == "__main__":
     main()
