@@ -365,6 +365,13 @@ order in $\Phi$ (A1),
 \ddot\vx + \cH\,\dot\vx = -\nabla\Phi .
 \label{eq:newtonian_eom}
 \end{equation}
+Since $\vu = \dot\vx$, this \emph{is} the fluid's momentum equation,
+$\dot\vu + \cH\vu = -\nabla\Phi$, written per element rather than per point ---
+the density cannot appear in it, because momentum conservation is a statement
+about motion. Eliminate $\vu$ and $\Phi$ between the three members and you get a
+single equation for $\delta$ alone; that is \eqref{eq:growth}, and
+Section~\ref{sec:vlasov} does it.
+
 The new term is the drag $\cH\dot\vx$, and it is not friction: set $\Phi = 0$
 and \eqref{eq:newtonian_eom} says $\dot\vx \propto 1/a$ --- free particles coast
 to rest in comoving coordinates as their peculiar velocities redshift away.
