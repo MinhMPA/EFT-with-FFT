@@ -152,20 +152,37 @@ if "T_full" in ns_:
 else:
     check("shipped CAMB table matches the notebook's T_full", False, "T_full not found")
 
-# pk_lin_fiducial.txt is Session 2's input: H2 rebuilds H1's field from it, so
-# nothing in THIS notebook reads it any more and nothing else would notice if it
-# drifted. Compare it over the k-range H2's 128^3 grid actually samples.
-if "pk_lin" in ns_:
+# pk_lin_fiducial.txt is H2's input, not H1's: nothing in this notebook reads
+# it any more, so no EH-based check here would notice it drifting. H2's live
+# path calls CAMB directly, so the shipped fallback must track a fresh CAMB
+# run at this same fiducial cosmology, or the two paths disagree silently.
+try:
+    import camb
+
+    def _sig8(k, P):
+        x = k * 8.0
+        W = 3 * (np.sin(x) - x * np.cos(x)) / x**3
+        return np.sqrt(np.trapz(k**3 * P * W**2 / (2 * np.pi**2), np.log(k)))
+
+    Om, Ob, h_, ns_camb, s8 = 0.31, 0.048, 0.676, 0.965, 0.81
+    pars = camb.CAMBparams()
+    pars.set_cosmology(H0=100 * h_, ombh2=Ob * h_ * h_, omch2=(Om - Ob) * h_ * h_,
+                       mnu=0.0, omk=0, num_massive_neutrinos=0)
+    pars.InitPower.set_params(ns=ns_camb, As=2.1e-9)
+    pars.set_matter_power(redshifts=[0.0], kmax=60.0)
+    pars.NonLinear = camb.model.NonLinear_none
+    kh_camb, _, pk_camb = camb.get_results(pars).get_matter_power_spectrum(
+        minkh=1e-4, maxkh=50.0, npoints=1024)
+    pk_camb = pk_camb[0] * (s8 / _sig8(kh_camb, pk_camb[0])) ** 2
+
     tab = np.loadtxt(os.path.join(NOTEBOOKS, "pk_lin_fiducial.txt"))
-    kf, kmax = 2 * np.pi / 250.0, np.sqrt(3) * np.pi * 128 / 250.0
-    kk = np.logspace(np.log10(kf), np.log10(kmax), 400)
-    lk, lp = np.log(tab[:, 0]), np.log(tab[:, 1])
-    p_tab = np.exp(np.interp(np.log(kk), lk, lp))
-    rel = float(np.abs(ns_["pk_lin"](kk) / p_tab - 1).max())
-    check("shipped P_L table matches the notebook's pk_lin", rel < 2e-3,
-          f"max rel {rel:.2e}")
-else:
-    check("shipped P_L table matches the notebook's pk_lin", False, "pk_lin not found")
+    k_tab, p_tab = tab[:, 0], tab[:, 1]
+    lk, lp = np.log(kh_camb), np.log(pk_camb)
+    p_ref = np.exp(np.interp(np.log(k_tab), lk, lp))
+    rel = float(np.abs(p_tab / p_ref - 1).max())
+    check("shipped P_L table matches live CAMB", rel < 1e-2, f"max rel {rel:.2e}")
+except Exception as exc:
+    check("shipped P_L table matches live CAMB", False, f"{type(exc).__name__}: {exc}")
 
 print()
 if failures:
