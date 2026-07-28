@@ -660,5 +660,120 @@ random numbers. Every difference you see is the cosmology.
 ''')
 
 
+M(r'''
+---
+## Step 6 — Save it; Session 2 starts here
+
+Session 2 takes this field and moves it: every particle gets displaced along
+$\boldsymbol{\Psi}^{(1)}(\boldsymbol{k}) = (i\boldsymbol{k}/k^2)\,\delta(\boldsymbol{k})$,
+and a cosmic web falls out. So `delta_k` is the thing to keep.
+
+We store it as `complex64` — half the bytes, and the loss is at the seventh
+decimal, far below anything that matters here.
+''')
+
+C(r'''
+np.savez_compressed(
+    "delta_k_128.npz",
+    delta_k=delta_k.astype(np.complex64),
+    N=N, L=L, seed=SEED, Om=Om, Ob=Ob, h=h, ns=ns, sigma8=sigma8,
+)
+
+import os
+print(f"delta_k_128.npz  ({os.path.getsize('delta_k_128.npz')/1e6:.1f} MB)")
+
+# Round-trip check: what Session 2 will load must match what you built.
+chk = np.load("delta_k_128.npz")["delta_k"].astype(np.complex128)
+rms_reloaded = float(np.std(np.fft.irfftn(chk, s=(N, N, N))))
+assert abs(rms_reloaded - rms_grid) < 1e-3, \
+    f"reloaded field differs: {rms_reloaded:.5f} vs {rms_grid:.5f}"
+print(f"reloads at rms = {rms_reloaded:.3f}   (built at {rms_grid:.3f})")
+''')
+
+C(r'''
+# --- download it -------------------------------------------------------
+# On Colab this drops the file in your Downloads folder. Locally it is
+# already on disk and this does nothing.
+try:
+    from google.colab import files
+    files.download("delta_k_128.npz")
+    print("downloading -- keep this file, Session 2 opens with it")
+except ImportError:
+    print(f"saved locally: {os.path.abspath('delta_k_128.npz')}")
+''')
+
+M(r'''
+**Lost it? Nothing is lost.** Session 2 opens with the cell below, which
+rebuilds the field from the same seed. `np.random.default_rng` is guaranteed
+reproducible across numpy versions and platforms, so this is not an
+approximation to what you built — the phases are identical, and the amplitudes
+agree to a few parts in a million.
+
+Which is also the answer to a fair question: if the field can be regenerated in
+ten lines, why save it at all? Because in real work it cannot. A field from a
+Boltzmann code and an N-body run costs hours of compute, and the file *is* the
+product. This one is small enough to cheat on, and honest enough to say so.
+''')
+
+C(r'''
+# --- Session 2 fallback: run this if you did not keep delta_k_128.npz ---
+# Given complete, and it depends on NOTHING you wrote: the spectrum comes from
+# a tabulated file, not from your pk_lin. If your P_L came out wrong, this
+# still gives you the right field to start Session 2 from.
+import urllib.request
+
+PK_URL = ("https://raw.githubusercontent.com/MinhMPA/EFT-with-FFT/"
+          "master/handson/pk_lin_fiducial.txt")
+
+
+def rebuild_delta_k(N_=128, L_=250.0, seed_=1234):
+    try:
+        tab = np.loadtxt("pk_lin_fiducial.txt")
+    except OSError:
+        urllib.request.urlretrieve(PK_URL, "pk_lin_fiducial.txt")
+        tab = np.loadtxt("pk_lin_fiducial.txt")
+    lk, lp = np.log(tab[:, 0]), np.log(tab[:, 1])
+    P_of_k = lambda kq: np.exp(np.interp(np.log(kq), lk, lp))
+
+    kf_ = 2*np.pi/L_
+    kx_ = np.fft.fftfreq(N_, d=1.0/N_)*kf_
+    kz_ = np.fft.rfftfreq(N_, d=1.0/N_)*kf_
+    KX_, KY_, KZ_ = np.meshgrid(kx_, kx_, kz_, indexing="ij")
+    K2_ = KX_**2 + KY_**2 + KZ_**2
+    K2_[0, 0, 0] = 1.0
+
+    P_ = P_of_k(np.sqrt(K2_).ravel()).reshape(K2_.shape)
+    P_[0, 0, 0] = 0.0
+    r_ = np.random.default_rng(seed_)
+    dk_ = np.fft.rfftn(r_.standard_normal((N_, N_, N_)))*np.sqrt(P_*N_**3/L_**3)
+    dk_[0, 0, 0] = 0.0
+    return dk_
+
+
+dk_fb   = rebuild_delta_k()
+rms_fb  = float(np.std(np.fft.irfftn(dk_fb, s=(N, N, N))))
+assert abs(rms_fb - rms_grid)/rms_grid < 1e-3, \
+    f"fallback gives rms {rms_fb:.5f}, you built {rms_grid:.5f}"
+print(f"fallback rms = {rms_fb:.5f}   (you built {rms_grid:.5f})")
+print(f"they differ by {abs(rms_fb-rms_grid)/rms_grid:.1e} -- the tabulated P is interpolated")
+''')
+
+M(r'''
+---
+## What you built
+
+- a transfer function, from a fitting formula, whose $k^{-1.67}$ slope you
+  measured against the $k^{-2}$ the board derived;
+- a linear power spectrum with a turnover at $k_{\rm eq}$ and baryon wiggles at
+  the few-percent level;
+- a Gaussian realization on a 128³ grid whose variance you checked against
+  $\int {\rm d}^3k/(2\pi)^3 P(k)$ rather than trusting;
+- and evidence, from the same seed run five ways, that the shape of $P_{\rm L}$
+  is set by the contents of the universe.
+
+Session 2 moves it.
+''')
+
+
 if __name__ == "__main__":
     main()

@@ -22,3 +22,6 @@ __pycache__/
 
 # Subagent-driven-development scratch (ledger, briefs, review packages)
 .superpowers/
+
+handson/delta_k_128.npz
+handson/*.nbconvert.ipynb
