@@ -19,3 +19,6 @@ __pycache__/
 *.pdf
 !figs/*.pdf
 !PT_lecture_expert_review.pdf
+
+# Subagent-driven-development scratch (ledger, briefs, review packages)
+.superpowers/
