@@ -18,10 +18,8 @@ Run from the repo root:  python3 handson/verify_notebooks.py
 """
 import json
 import os
-import shutil
 import subprocess
 import sys
-import tempfile
 
 import numpy as np
 
@@ -93,12 +91,12 @@ import matplotlib
 matplotlib.use("Agg")           # headless: the plotting cells must still run
 import ptlib
 
-# Rebuild the notebook's namespace by running every code cell in order, in a
-# scratch directory (the save cell writes a file). Nothing is filtered and
-# nothing is swallowed: a cell that raises here is a real failure, and the
-# traceback is the diagnostic.
+# Rebuild the notebook's namespace by running every code cell in order. This
+# runs in handson/ (the save cell writes delta_k_128.npz there, and the
+# fallback cells read pk_lin_fiducial.txt / T_camb_fiducial.txt by bare
+# filename). Nothing is filtered and nothing is swallowed: a cell that raises
+# here is a real failure, and the traceback is the diagnostic.
 ns_ = {"__name__": "__notebook__"}
-scratch = tempfile.mkdtemp(prefix="h1verify-")
 cwd = os.getcwd()
 os.chdir(HANDSON)               # pk_lin_fiducial.txt lives here
 try:
@@ -113,7 +111,11 @@ try:
             break
 finally:
     os.chdir(cwd)
-    shutil.rmtree(scratch, ignore_errors=True)
+    # check 3 (nbconvert) and this exec both leave delta_k_128.npz behind;
+    # clean up once here so the suite leaves no residue.
+    leftover = os.path.join(HANDSON, "delta_k_128.npz")
+    if os.path.exists(leftover):
+        os.remove(leftover)
 
 cosmo = ptlib.Cosmo()
 kt = np.logspace(-3, 1, 60)
