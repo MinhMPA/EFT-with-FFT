@@ -137,8 +137,7 @@ A1--A3, the equations derived from them, and the smallness of $\Phi$ (8--33)
 $\rightarrow$ the pressureless fluid, and how perturbations grow (33--43)
 $\rightarrow$ Gaussian random fields and what a power spectrum is (43--49)
 $\rightarrow$ the primordial spectrum (49--53) $\rightarrow$ horizon crossing,
-and how it carves the shape of $\Plin(k)$ (53--80). \emph{Read, not lectured:} everything in a grey block or a
-Comment --- roughly a fifth of what is written here, including the recipe
+and how it carves the shape of $\Plin(k)$ (53--80). \emph{Read, not lectured:} everything in a grey block or a Comment, roughly a fifth of what is written here, including the recipe
 for drawing a Gaussian field, the definition of $\sigma_8$, and why
 $n_s \neq 1$.
 
@@ -169,7 +168,7 @@ structure formation is a scalar story. The unperturbed metric is
 written in comoving coordinates $\vx$, which ride along with the expansion: a
 galaxy at rest keeps the same $\vx$ while its physical separation from us,
 $a\vx$, grows. Here $\tau$ is \emph{conformal} time, defined by
-$\dd t = a\,\dd\tau$, so that $\tau = \int\dd t/a$ --- an integral, not $t/a$.
+$\dd t = a\,\dd\tau$, so that $\tau = \int\dd t/a$: an integral, not $t/a$.
 Overdots mean $\partial/\partial\tau$ throughout --- at fixed comoving position
 for a field, at fixed element for a trajectory --- and
 $\cH \equiv \dd\ln a/\dd\tau = aH$ is the expansion rate in that time. Spatial
@@ -204,11 +203,10 @@ reason.)
 
 \medskip
 \noindent\textbf{Position space and Fourier space.} Both hold the same
-information. In position space $\delta(\vx)$ is a lumpy field --- where
-intuition lives, and where Lecture~2's collapsing sheets are easiest to picture.
+information. In position space $\delta(\vx)$ is a lumpy field, where intuition lives, and where Lecture~2's collapsing sheets are easiest to picture.
 In Fourier space we resolve it into plane waves.
 
-Start in a periodic box of side $L$ --- what the hands-on session actually uses.
+Start in a periodic box of side $L$, which is what the hands-on session uses.
 The field is a discrete sum, one term per mode,
 \begin{equation*}
 \delta(\vx) = \sum_{\vk}\,\delta_{\vk}\,e^{i\vk\cdot\vx} ,
@@ -230,7 +228,7 @@ $\lambda \simeq 63\,h^{-1}$Mpc, a few cluster diameters.
 
 Why bother: because the background is homogeneous, the linearized equations have
 coefficients independent of position. A plane wave stays a plane wave, and each
-$\delta(\vk)$ evolves independently of every other --- one partial differential
+$\delta(\vk)$ evolves independently of every other: one partial differential
 equation in three dimensions becomes one ordinary differential equation per
 $\vk$. That is what makes linear theory solvable.
 Figure~\ref{fig:fourier} draws it.
@@ -243,8 +241,7 @@ decreasing wavelength, $\lambda_1 > \lambda_2 > \lambda_3$, added into a lumpy
 density field $\delta(x)$. This is a one-dimensional slice for legibility; the
 real field is three-dimensional and each mode carries a direction $\khat$ as
 well as a wavelength. \emph{Right:} the same three modes as wavenumbers
-$k_i = 2\pi/\lambda_i$, placed on the linear power spectrum --- nothing more
-exotic than amplitude against scale (defined properly in
+$k_i = 2\pi/\lambda_i$, placed on the linear power spectrum: nothing more exotic than amplitude against scale (defined properly in
 Section~\ref{sec:stats}, and computed in Section~\ref{sec:linearpk}). The
 longest wave has the smallest $k$. Colours identify the same mode across the
 two panels.
@@ -254,8 +251,7 @@ is drawn with the largest amplitude, correctly: a single mode's amplitude goes
 as $\sqrt{\Plin(k)}$, and $\Plin$ falls beyond its peak. But that is \emph{not}
 the same as large scales dominating the lumpiness. Short-wavelength modes are
 far more numerous, and the fluctuation power per logarithmic interval,
-$\Delta^2(k) = k^3\Plin(k)/2\pi^2$, rises steeply across these three modes ---
-$0.009$, $0.12$, $0.66$. Small scales carry more, which is why nonlinearity
+$\Delta^2(k) = k^3\Plin(k)/2\pi^2$, rises steeply across these three modes: $0.009$, $0.12$, $0.66$. Small scales carry more, which is why nonlinearity
 reaches them first, and why almost everything difficult in this course happens
 at large $k$.}
 \label{fig:fourier}
@@ -272,7 +268,7 @@ dropped in Lecture~2.
 
 \paragraph{The gauge choice.} The arena was fixed in the prelude: flat FLRW,
 scalar perturbations only. What comes before any assumption is a \emph{choice},
-and it restricts no physics --- fix the gauge completely by writing the
+and it restricts no physics. Fix the gauge completely by writing the
 perturbed metric in conformal Newtonian (longitudinal) form
 \cite{MaBertschinger1995},
 \begin{equation}
@@ -305,8 +301,7 @@ both potentials. An observation as much as an assumption: the potentials
 are of order $10^{-5}$ on every scale we will meet, at every time. Note what A1
 does \emph{not} mention: the density contrast $\delta$.
 
-\paragraph{A2: cold matter.} The matter is cold dark matter and baryons ---
-pressureless and slow, $u \ll 1$. Newtonian gravity has one
+\paragraph{A2: cold matter.} The matter is cold dark matter and baryons, pressureless and slow, $u \ll 1$. Newtonian gravity has one
 potential, not two, and A2 is what closes the gap: the traceless part of
 Einstein's equations sources $\phi - \psi$ through anisotropic stress alone,
 which cold matter does not carry, so for us the two potentials coincide,
@@ -323,11 +318,11 @@ comes to dominate, so in the matter era $\phi = \psi$ is accurate.
 \paragraph{A3: sub-horizon modes. A4: linear contrasts.} The last two arrive
 with the system itself: keep only $k \gg \cH$ (A3), and linearize in the
 density contrast, $|\delta| \ll 1$ (A4). They look alike and are not: A3 is
-permanent, while A4 is temporary --- the one assumption Lecture~2 drops, for a
+permanent, while A4 is temporary: the one assumption Lecture~2 drops, for a
 reason given at the end of this section.
 
 A3 deserves a word, since we lean on it constantly. Because $\cH$ is a rate per
-unit conformal time, $1/\cH$ is a \emph{time} --- roughly how long the universe
+unit conformal time, $1/\cH$ is a \emph{time}, roughly how long the universe
 takes to expand appreciably; and because light travels at unit comoving speed in
 conformal time, the same number is also a \emph{length}, the comoving distance
 light covers in that time. That length is the \emph{comoving Hubble radius},
@@ -339,8 +334,7 @@ about what happens to a mode when it changes from one to the other.
 
 \medskip
 \noindent With the list complete, here is the whole of what follows in one
-sentence: \textbf{we are describing a self-gravitating fluid --- matter moving
-in a potential that it sources itself.} That alone fixes what the system must
+sentence: \textbf{we are describing a self-gravitating fluid, matter moving in a potential that it sources itself.} That alone fixes what the system must
 contain. A fluid conserves mass and momentum, which is two equations; and
 because the gravity is its own, a third is needed to tie the potential back to
 the density. Those three, one at a time.
@@ -351,7 +345,7 @@ the peculiar velocity $\vu \equiv \dd\vx/\dd\tau$, mass conservation reads
 \dot\delta + \nabla\cdot\left[(1+\delta)\,\vu\right] = 0 ,
 \label{eq:continuity}
 \end{equation}
-in which dilution by the expansion never appears --- it is already inside
+in which dilution by the expansion never appears; it is already inside
 $\bar\rho$, which is the content of Derivation~1. At linear order (A4) the
 product term drops and \eqref{eq:continuity} becomes $\dot\delta = -\theta$,
 with $\theta \equiv \nabla\cdot\vu$. (The relativistic version carries one more
@@ -367,19 +361,18 @@ order in $\Phi$ (A1),
 \label{eq:newtonian_eom}
 \end{equation}
 Since $\vu = \dot\vx$, this \emph{is} the fluid's momentum equation,
-$\dot\vu + \cH\vu = -\nabla\Phi$, written per element rather than per point ---
-the density cannot appear in it, because momentum conservation is a statement
+$\dot\vu + \cH\vu = -\nabla\Phi$, written per element rather than per point. The density cannot appear in it, because momentum conservation is a statement
 about motion. Eliminate $\vu$ and $\Phi$ between the three members and you get a
 single equation for $\delta$ alone; that is \eqref{eq:growth}, and
 Section~\ref{sec:vlasov} does it.
 
 The new term is the drag $\cH\dot\vx$, and it is not friction: set $\Phi = 0$
-and \eqref{eq:newtonian_eom} says $\dot\vx \propto 1/a$ --- free particles coast
+and \eqref{eq:newtonian_eom} says $\dot\vx \propto 1/a$: free particles coast
 to rest in comoving coordinates as their peculiar velocities redshift away.
 Two exercises reach it from opposite directions:
 Exercise~\ref{ex:geodesic} comes down from the geodesic equation of
 \eqref{eq:newtonian_gauge}, and Exercise~\ref{ex:eomnewton} builds up from
-Newtonian momentum conservation without relativity at all. Lecture~2 is built on this equation --- it follows
+Newtonian momentum conservation without relativity at all. Lecture~2 is built on this equation: it follows
 elements rather than fields, and that change of variable is the whole of the
 Lagrangian picture. For now we need only its divergence: with $\vu = \dot\vx$
 and $\theta = \nabla\cdot\vu$, at linear order (A4)
@@ -410,7 +403,7 @@ starting point with its assumptions listed.
 Assemble \eqref{eq:newtonian_linear} for yourself: linearize
 \eqref{eq:continuity} to get the first member, take the divergence of
 \eqref{eq:newtonian_eom} to get the second, and write down the third. Keep
-track of which assumption each step spends --- the Comment below is the answer,
+track of which assumption each step spends. The Comment below is the answer,
 so try it before reading on.
 \end{derivation}
 
@@ -423,8 +416,7 @@ For cold matter, mass conservation \emph{is} energy conservation. The energy
 density is rest mass; the kinetic part is smaller by $u^2 \ll 1$ (A2). So
 \eqref{eq:continuity} already did that job.
 
-There is also no independent energy equation available to write. A fluid with
-pressure needs one --- something must say how the pressure evolves, and that is
+There is also no independent energy equation available to write. A fluid with pressure needs one, since something must say how the pressure evolves, and that is
 what closes the system. Coldness closes it instead: with no velocity dispersion
 the chain of moment equations truncates after Euler, which is why two fluid
 equations suffice here where a gas would need three. This is also the assumption
@@ -432,8 +424,7 @@ that expires. Once orbits cross, one velocity per point is no longer true and
 the truncation fails, which is where Lecture~2 stops.
 
 And least obviously, you did use it. The relativistic statement that energy
-density curves spacetime is the time--time Einstein equation, called the
-\emph{energy constraint} --- and its sub-horizon limit is the third member of
+density curves spacetime is the time--time Einstein equation, called the \emph{energy constraint}, and its sub-horizon limit is the third member of
 \eqref{eq:newtonian_linear}. Poisson \emph{is} the energy equation, in the only
 form general relativity offers; Exercise~\ref{ex:subhorizon} works with it
 unapproximated.
@@ -446,7 +437,7 @@ us nothing. Why do we need A3 as well? What fails if you apply
 \nudge{A super-horizon mode is weakly gravitating too. So point at the one
 member of \eqref{eq:newtonian_linear} that still fails there.}
 \answer{Poisson fails. It ties $\Phi$ at one point to the density everywhere on
-the same time slice, instantaneously --- which makes sense only if light crosses
+the same time slice, instantaneously, and that makes sense only if light crosses
 the scale of interest in far less than an expansion time. That is A3, and a
 super-horizon mode fails it however weak gravity is: no signal has crossed the
 mode even once, so there is no settled potential to describe. A1 linearizes the
@@ -463,8 +454,7 @@ $\dot\theta = -\cH\theta - \nabla^2\Phi$, needs A2 and A1 --- cold, slow matter
 in a weak field --- but \emph{no} use of A3 at all: for cold matter it is exact
 at linear order in this gauge. \emph{Poisson} is where A3 does its real work:
 the relativistic energy constraint carries extra terms of relative size
-$(\cH/k)^2$, and dropping them is what turns a constraint of general relativity
-into Newton's field equation --- Exercise~\ref{ex:subhorizon} makes this
+$(\cH/k)^2$, and dropping them is what turns a constraint of general relativity into Newton's field equation. Exercise~\ref{ex:subhorizon} makes this
 quantitative. And the $\phi = \psi$ of A2 underwrites the system as a whole
 rather than any single member: Euler feels the time--time potential while
 Poisson sources the spatial one.
@@ -481,7 +471,7 @@ whole of Lecture~2 rests on it.
 the potential is the density contrast suppressed by two powers of $\cH/k$. At
 $k = 0.1\,h\,{\rm Mpc}^{-1}$ that factor is about $10^{-5}$, so even a patch with
 $\delta \sim 100$ carries $|\Phi| \sim 5\times10^{-4}$. Gravity stays weak
-precisely where clustering becomes strong --- which is the licence for everything
+precisely where clustering becomes strong, which is the licence for everything
 that follows. We will let $\delta$ grow past unity and resum it to all orders
 through displacements, while never going beyond linear order in the metric. Those
 two statements sound contradictory and are not: $\Phi$ and $\delta$ are separated
@@ -502,7 +492,7 @@ quoted above.
 \bait{I keep saying $\Phi$ is unambiguous. Is $\delta$?}
 \emph{It also makes $\delta$ meaningful.} Here is where the trouble comes from,
 since it is not obvious. Writing $\delta = (\rho - \bar\rho)/\bar\rho$ requires
-$\bar\rho$ \emph{at the same time} as $\rho$ --- and in general relativity
+$\bar\rho$ \emph{at the same time} as $\rho$, and in general relativity
 ``the same time'' is a choice of how to slice spacetime into spatial surfaces,
 not a fact about the universe. Shift that slicing infinitesimally,
 $\tau \to \tau + \xi^0(\vx,\tau)$. Since $\bar\rho$ depends on time it moves
@@ -530,8 +520,7 @@ $\Delta - \delta \sim (\cH/k)^2\,\delta$. Sub-horizon the two agree and $\delta$
 is as good as gauge-invariant; super-horizon the correction is the whole answer.
 
 $\Phi$ carries no such disease: \eqref{eq:newtonian_gauge} fixes the slicing
-completely, leaving no residual freedom, so $\Phi$ is physical on \emph{every}
-scale --- it is the Bardeen potential under another name. That is exactly why
+completely, leaving no residual freedom, so $\Phi$ is physical on \emph{every} scale: it is the Bardeen potential under another name. That is exactly why
 Section~\ref{sec:linearpk} follows $\Phi$ and not $\delta$ when it has to cross
 the horizon.
 \end{reading}
@@ -558,8 +547,7 @@ is the three equations above.
 Everything needed is already in \eqref{eq:newtonian_linear}. One check first:
 the curl of \eqref{eq:newtonian_eom} at linear order gives
 $\dot{\bm{w}} + \cH\,\bm{w} = 0$ for the vorticity $\bm{w} = \nabla\times\vu$,
-so rotation decays as $1/a$ and stays zero if it starts zero --- the velocity
-field is fully specified by its divergence $\theta$. Now combine all three:
+so rotation decays as $1/a$ and stays zero if it starts zero, so the velocity field is fully specified by its divergence $\theta$. Now combine all three:
 differentiate $\dot\delta = -\theta$, substitute $\dot\theta$, and eliminate
 $\nabla^2\Phi$ with Poisson. No coefficient in the result carries a $k$, so the
 position dependence factors out and every mode grows by one common factor,
@@ -584,7 +572,7 @@ it.
 
 Two modes, so the general solution mixes them:
 $\delta = A(\vx)\,D_+(\tau) + B(\vx)\,D_-(\tau)$, with $A$ and $B$ fixed by the
-initial density \emph{and} the initial velocity --- a second-order equation needs
+initial density \emph{and} the initial velocity, since a second-order equation needs
 two pieces of initial data. Relative to the growing mode the second term falls
 as $D_-/D_+ \propto a^{-5/2}$, so after enough expansion only $A(\vx)D_+(\tau)$
 survives. That is what licenses writing $\delta^{(1)} = D_+(\tau)\,\delta_0(\vx)$
@@ -592,8 +580,7 @@ above: one function of position times one of time, rather than two.
 
 Be careful what this does \emph{not} erase. It does not erase the initial
 conditions: $A(\vx)$ is the primordial field, remembered exactly, and computing
-it is the whole business of Lecture~1. What is forgotten is only the other half
-of the initial data --- whatever part of the start did not lie on the growing
+it is the whole business of Lecture~1. What is forgotten is only the other half of the initial data: whatever part of the start did not lie on the growing
 solution. This is why initial conditions for a simulation can be laid down using
 the growing mode alone (Section~\ref{sec:2lpt}), and why a slightly wrong start
 relaxes onto the right answer instead of propagating.
@@ -604,7 +591,7 @@ law. The Friedmann equation makes $\cH^2 \sim Ga^2\bar\rho$, so the drag
 $\cH\dot D$ and the source $\tfrac32\Om\cH^2 D$ in \eqref{eq:growth} are always
 comparable: gravity wins, but only just. That is why
 perturbations of order $10^{-3}$ at recombination are of order unity now, after a
-factor of a thousand in $a$, instead of having collapsed long ago --- and why
+factor of a thousand in $a$, instead of having collapsed long ago, and why
 perturbation theory is useful across five decades of expansion.
 
 \subsection{Gaussian random fields and the power spectrum}
@@ -627,12 +614,11 @@ finding matter at two points separated by $\vr$,
 = \frac{1}{2\pi^2}\int_0^\infty \dd k\; k^2\,\Plin(k)\,\frac{\sin kr}{kr} ,
 \end{equation*}
 the last step doing the angular integral for an isotropic spectrum. So
-$\xi$ and $\Plin$ are a Fourier pair and carry identical information --- the
-same statement as the prelude's, one level up: a field can be held in position
+$\xi$ and $\Plin$ are a Fourier pair and carry identical information, the same statement as the prelude's, one level up: a field can be held in position
 space or in Fourier space, and so can its statistics.
 
 Two things follow. At zero separation $\xi(0) = \langle\delta^2\rangle =
-\int_{\vk}\Plin(k)$, the variance of the field --- but treat that with care.
+\int_{\vk}\Plin(k)$, the variance of the field, but treat that with care.
 Because the power per logarithmic interval $k^3\Plin/2\pi^2$ \emph{rises} with
 $k$, the integral is dominated by the smallest scales and keeps growing as you
 push the upper limit out; an unqualified variance is not a number. This is
@@ -648,7 +634,7 @@ physics either way.
 
 \begin{reading}
 \bait{How would you actually generate one of these fields on a computer?}
-Note the one pair that is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$ --- a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
+Note the one pair that is exempt: $\vk' = -\vk$, where the delta function fires. Since the field is real, $\delta(-\vk) = \delta(\vk)^*$, so that case is $\langle|\delta(\vk)|^2\rangle$: a variance, and necessarily non-negative. It is not a counterexample to ``uncorrelated'' but the definition of $\Plin$ itself.
 
 \paragraph{Generating a realization.} That a Gaussian field is fixed completely by $\Plin$ is a
 practical statement as much as a formal one, and it is what the hands-on session
@@ -732,8 +718,7 @@ Two practical warnings. That $0.05$ is in ${\rm Mpc}^{-1}$, not
 $h\,{\rm Mpc}^{-1}$: in the units these lectures use it is
 $0.074\,h\,{\rm Mpc}^{-1}$, and reading it as $0.05\,h\,{\rm Mpc}^{-1}$ misplaces
 the pivot by a factor $1/h$. And these lectures never need its value at all,
-because we fix $A$ in \eqref{eq:pk_master} with $\sigma_8$ rather than with
-$A_s$ --- the pivot cancels out of everything downstream.
+because we fix $A$ in \eqref{eq:pk_master} with $\sigma_8$ rather than with $A_s$, since the pivot cancels out of everything downstream.
 \end{reading}
 
 \begin{reading}
@@ -747,8 +732,7 @@ output is quoted in it: it can be handed forward unchanged, across the radiation
 era and into the matter era, to the moment the mode enters and physics resumes.
 
 Turning it into $\delta$ is two steps. First, deep in matter domination the
-potential is a fixed fraction of it, $|\Phi| = \tfrac35|\mathcal{R}|$ --- a pure
-number, no $k$ anywhere. Second, Poisson converts the potential into a density,
+potential is a fixed fraction of it, $|\Phi| = \tfrac35|\mathcal{R}|$, a pure number with no $k$ in it. Second, Poisson converts the potential into a density,
 and \emph{that} is where the two powers of $k$ come from. Together, for modes
 well inside the horizon,
 \begin{equation*}
@@ -809,14 +793,12 @@ question now is what shapes $T$.
 \begin{quiz}
 The primordial spectrum is a featureless power law, yet the observed one has a
 turnover, a falloff and wiggles. Where do those scales come from?
-\nudge{None of them is primordial. One is set by the expansion --- when did a
-mode come into causal contact? Another by the contents --- when did matter
-overtake radiation? A third is a distance a wave could travel.}
+\nudge{None of them is primordial. One is set by the expansion: when did a mode come into causal contact? Another by the contents: when did matter overtake radiation? A third is a distance a wave could travel.}
 \answer{All of them are imprinted after inflation, by two pieces of physics.
 Horizon entry gives the turnover and the $k^{-2}$ falloff: modes entering during
 radiation domination are suppressed, and the boundary is $k_{\rm eq}$, the mode
 entering exactly at equality. The wiggles come from the sound horizon at
-recombination, $r_d \simeq 100\,h^{-1}$Mpc --- the farthest a pressure wave
+recombination, $r_d \simeq 100\,h^{-1}$Mpc, the farthest a pressure wave
 travelled before the photons were released. Inflation supplies only an amplitude
 and a tilt.}
 \end{quiz}
@@ -856,8 +838,7 @@ it happens.
 \includegraphics[width=0.80\textwidth]{horizon_crossing.pdf}
 \caption{Horizon entry. The heavy curve is the comoving Hubble radius
 $1/\cH$; the coloured lines are three modes, each at its fixed comoving $1/k$. A
-mode is a horizontal line because $\vk$ is a comoving label that never changes
---- what moves is the horizon, and a mode \emph{enters} where the two meet. The
+mode is a horizontal line because $\vk$ is a comoving label that never changes. What moves is the horizon, and a mode \emph{enters} where the two meet. The
 mode entering exactly at matter--radiation equality defines $k_{\rm eq}$, and the
 figure is drawn with it computed rather than assumed:
 $\cH(a_{\rm eq}) = 0.0153\,h\,{\rm Mpc}^{-1}$ for $\Om = 0.31$, $h = 0.676$ and
@@ -871,8 +852,7 @@ the plotted curve measures ($+0.998$ at $a = 10^{-6}$, $+0.514$ at $a =
 10^{-2}$, $-0.534$ today and still steepening). The break at $a_{\rm eq}$ is
 what makes $k_{\rm eq}$ special, and the slope of $+1$ to its left is exactly
 the statement $a_{\rm enter}\propto 1/k$ that \eqref{eq:transfer_scaling} rests
-on. The turnaround sits at $a = 0.61$ ($z = 0.64$), which is
-$(\Om/2\Omega_\Lambda)^{1/3}$ --- the onset of acceleration. Past it modes leave
+on. The turnaround sits at $a = 0.61$ ($z = 0.64$), which is $(\Om/2\Omega_\Lambda)^{1/3}$, the onset of acceleration. Past it modes leave
 the horizon again, the same thing inflation did, in the same direction.}
 \label{fig:horizon}
 \end{figure}
@@ -890,7 +870,7 @@ not a phase we integrate through.
 
 \emph{Inside the horizon during radiation domination, $\Phi$ decays.} Sub-horizon
 the energy constraint is again a Poisson equation, $-k^2\Phi = 4\pi
-Ga^2\bar\rho\,\delta$ --- the constraint cares only about what dominates the
+Ga^2\bar\rho\,\delta$. The constraint cares only about what dominates the
 density, here radiation. The \emph{dynamics} of \eqref{eq:newtonian_linear} do
 not carry over: radiation has pressure, which is exactly what ``pressureless''
 excluded, so how $\delta_r$ behaves is imported here rather than derived. Two
@@ -945,14 +925,12 @@ is the one scale the early universe stamps on the spectrum.
 \centering
 \includegraphics[width=0.96\textwidth]{pk_construction.pdf}
 \caption{The two factors of $\Plin = A\,k^{n_s}T^2(k)$, and their product.
-\emph{Left:} inflation supplies a featureless power law with no scale in it; the
-transfer function supplies everything else --- flat below $k_{\rm eq}$, falling
+\emph{Left:} inflation supplies a featureless power law with no scale in it; the transfer function supplies everything else: flat below $k_{\rm eq}$, falling
 as $k^{-2}$ above it. \emph{Right:} the product, which is the input to everything
 that follows. The turnover sits at $k_{\rm eq}$ by construction, the high-$k$
 slope is $k^{-2}$ softened by the M\'esz\'aros logarithm, and the inset shows the
 baryon acoustic oscillations as a ratio to the no-wiggle spectrum, since at a few
-percent they are invisible on the main panel. Computed with the Eisenstein \& Hu
-transfer function \cite{EisensteinHu1998} --- the one you will code in the
+percent they are invisible on the main panel. Computed with the Eisenstein \& Hu transfer function \cite{EisensteinHu1998}, the one you will code in the
 hands-on session.}
 \label{fig:pkconstruction}
 \end{figure}
@@ -967,8 +945,7 @@ $-1.67$, not $-2$, and the difference is the logarithm. For the spectrum itself,
 \eqref{eq:pk_master} therefore runs from $\Plin \propto k^{n_s}$ below the
 turnover to $\Plin \propto k^{n_s-4}\ln^2 k$ far above it: a measured slope of
 $-2.37$ over that same range, still well short of the asymptotic
-$n_s - 4 = -3.04$, because the logarithm is in no hurry. And notice where that
-high-$k$ shape comes from --- $k^{n_s-4}$ is the shape of $P_{\mathcal{R}}$
+$n_s - 4 = -3.04$, because the logarithm is in no hurry. And notice where that high-$k$ shape comes from: $k^{n_s-4}$ is the shape of $P_{\mathcal{R}}$
 itself. The $k^2$ that Poisson puts into $\delta$ is exactly the $k^{-2}$ that
 the decaying potential takes out, so a small-scale mode ends up with a
 late-time $\delta$ proportional to its primordial $\mathcal{R}$ and no extra
@@ -995,7 +972,7 @@ $\ddot a = -\tfrac{4\pi}{3}G\bar\rho\,a$, show that the background gravity
 cancels exactly, so that only the \emph{peculiar} potential survives. Why is
 that cancellation not an accident of $p = 0$?
 (ii)~Convert to conformal time and recover \eqref{eq:newtonian_eom}.
-(iii)~Where did the drag term come from --- and is it a force?
+(iii)~Where did the drag term come from, and is it a force?
 \end{exercise}
 
 \begin{exercise}\label{ex:subhorizon}
@@ -1032,8 +1009,7 @@ $\ddot D + (2/\tau)\dot D - (6/\tau^2)D = 0$.
 (ii)~Identify which root is the growing mode, and express both in terms of $a$
 rather than $\tau$.
 (iii)~A second-order equation has two solutions and the general one mixes them.
-Relative to the growing mode, how fast does the other die --- and what, exactly,
-does that erase?
+Relative to the growing mode, how fast does the other die, and what exactly does that erase?
 \end{exercise}
 
 \begin{exercise}\label{ex:meszaros}
@@ -1076,8 +1052,7 @@ short:} the threshold derivation of $b_1$ compresses to
 \eqref{eq:halo_abundance}, \eqref{eq:pbs} and the figure, quoted rather than
 derived, which returns six minutes. \emph{Read, not
 lectured:} the one-dimensional exactness proof (Exercise~\ref{ex:1dza}), the
-Comments, and the practical business of generating initial conditions --- the
-hands-on session does that experimentally. \emph{If you are running behind:} the
+Comments, and the practical business of generating initial conditions, which the hands-on session does experimentally. \emph{If you are running behind:} the
 2LPT algebra compresses to its result, since the hands-on will show what it
 fixes. Do not compress the eigenvalue argument; it is the point of the lecture.
 Sources: \cite[Apps.~A and E]{Jeong2010}, \cite{Zeldovich1970,DodelsonSchmidt}.
@@ -1139,8 +1114,7 @@ The \emph{Zel'dovich approximation} (ZA) \cite{Zeldovich1970} takes this linear 
 \end{equation}
 
 As a recipe this is completely explicit, which is why it is what initial-condition
-generators do. Draw a Gaussian realization of $\delta^{(1)}(\vk)$ with variance
-$\Plin(k)$ --- the output of the previous hands-on session. Get the displacement
+generators do. Draw a Gaussian realization of $\delta^{(1)}(\vk)$ with variance $\Plin(k)$, the output of the previous hands-on session. Get the displacement
 from \eqref{eq:za_displacement}, one multiplication per mode,
 $\vPsi^{(1)}(\vk) = (i\vk/k^2)\,\delta^{(1)}(\vk)$. Transform back, move every
 particle from $\vq$ to $\vq + \vPsi^{(1)}$, and stop. Three Fourier transforms
@@ -1154,15 +1128,13 @@ depends on time,
 \label{eq:za_velocity}
 \end{equation}
 so positions and velocities are the same field up to the factor $\cH f$ of
-\eqref{eq:growth_rate}. A simulation needs both, and the ZA supplies them
-together --- one of the reasons it, and its second-order extension in
+\eqref{eq:growth_rate}. A simulation needs both, and the ZA supplies them together, one of the reasons it, and its second-order extension in
 Section~\ref{sec:2lpt}, are what every code uses to start.
 
 \begin{remark}
 The ZA is not a degraded linear theory, and it is worth being clear why. Linear
 theory says the \emph{density} is small. The ZA instead says the
-\emph{displacement} is well approximated at first order --- and then treats the
-consequences exactly, through a determinant that contains every power of
+\emph{displacement} is well approximated at first order, and then treats the consequences exactly, through a determinant that contains every power of
 $\vPsi^{(1)}$. Since bulk flows are the dominant motion on quasi-linear scales,
 that is the right thing to get right. It is why the ZA follows matter into
 sheets, where linear theory only says $\delta$ is growing, and why it remains a
@@ -1191,8 +1163,7 @@ single fact is the origin of the cosmic web. Collapse runs along the $\lambda_1$
 axis first and the patch flattens into a \emph{sheet}, a Zel'dovich pancake. If
 $\lambda_2 > 0$ the sheet later contracts along a second axis into a
 \emph{filament}. If $\lambda_3 > 0$ as well, the filament finally draws up into a
-\emph{knot}. How far a patch gets is decided by nothing more than how many of its
-eigenvalues are positive --- which is fixed in the initial conditions, before any
+\emph{knot}. How far a patch gets is decided by nothing more than how many of its eigenvalues are positive, and that is fixed in the initial conditions, before any
 dynamics has happened.
 
 That makes the morphology countable. For a Gaussian field the joint distribution
@@ -1217,12 +1188,11 @@ does a random symmetric matrix oblige? Then, before you look at the numbers:
 which two of void, sheet, filament and knot should be commonest, and why is the
 table symmetric?
 \nudge{To stay spherical, how must the eigenvalues be related? Write down any
-$3\times3$ symmetric matrix --- were two of its eigenvalues equal? For the
+$3\times3$ symmetric matrix. Were two of its eigenvalues equal? For the
 second half, treat each eigenvalue's sign as a coin flip and count.}
 \answer{A sphere needs $\lambda_1 = \lambda_2 = \lambda_3$, a probability-zero
 coincidence: spherical collapse describes an event that never happens. Generic
-collapse is anisotropic, running fastest along the largest eigenvalue --- sheet,
-then filament, then knot. Three fair coins would give $12.5/37.5/37.5/12.5$ per
+collapse is anisotropic, running fastest along the largest eigenvalue: sheet, then filament, then knot. Three fair coins would give $12.5/37.5/37.5/12.5$ per
 cent; the true $8/42/42/8$ keeps the symmetry, since a Gaussian field prefers no
 sign of $\delta$, but shifts weight to the mixed cases, because the eigenvalues
 repel rather than being independent.}
@@ -1238,7 +1208,7 @@ everything becomes, and the compact objects are the rare case.
 \includegraphics[width=0.96\textwidth]{cosmic_web.pdf}
 \caption{A cosmic web, made by displacing a Gaussian field once. $128^3$
 particles in a $250\,h^{-1}$Mpc box at $z=0$, with the linear spectrum of
-Lecture~1 and a single Zel'dovich step --- no simulation, and no dynamics beyond
+Lecture~1 and a single Zel'dovich step, with no simulation and no dynamics beyond
 \eqref{eq:za_displacement}. \emph{Left:} projected density through a
 $15\,h^{-1}$Mpc slab. \emph{Right:} every particle coloured by how many
 eigenvalues of its deformation tensor are collapsing. The measured volume
@@ -1278,7 +1248,7 @@ $\rightarrow$ knot is that ordering of eigenvalue crossings. As a guide to
 is not a halo, and the approximation says nothing about binding, virialization,
 or the stable orbiting configuration that collapsed matter actually settles into.
 Getting through shell crossing needs adhesion models, phase-space methods, or
-$N$-body simulation --- which is precisely why the initial conditions of
+$N$-body simulation, which is precisely why the initial conditions of
 Section~\ref{sec:2lpt} matter, since a simulation is what you hand them to.
 
 \begin{figure}[t]
@@ -1362,7 +1332,7 @@ instead; check before comparing codes.
 \end{remark}
 
 Do the Lagrangian and Eulerian descriptions carry the same information?
-Order by order, and before shell crossing, yes --- the companion notes
+Order by order, and before shell crossing, yes: the companion notes
 \cite{EFTnotes} make the correspondence explicit by recovering the Eulerian
 kernels from the displacement map.
 
@@ -1382,8 +1352,7 @@ P_g(k) = b_1^2\,\Plin(k) ,
 \label{eq:linear_bias}
 \end{equation}
 \begin{quiz}
-Why should $b_1$ exceed one? Galaxies are made of matter --- why do they not
-simply trace it?
+Why should $b_1$ exceed one? Galaxies are made of matter, so why do they not simply trace it?
 \nudge{Galaxies form above a density threshold. Add a long mode that lifts the
 background slightly: the density barely moved, but how much did the \emph{number
 of sites above threshold} move? Sketch a Gaussian with a cut in its tail and
@@ -1425,8 +1394,7 @@ b_1^{\rm L} \;=\; \frac{1}{\bar n}\,\frac{\partial n}{\partial\delta_L}
 \label{eq:pbs}
 \end{equation}
 and there is the answer. Rarer objects sit further out in the tail and respond
-harder, which is why the most massive galaxies are the most strongly biased ---
-and why $b_1$ belongs to the tracer, not to the cosmology.
+harder, which is why the most massive galaxies are the most strongly biased, and why $b_1$ belongs to the tracer, not to the cosmology.
 Figure~\ref{fig:threshold} is \eqref{eq:pbs} measured rather than illustrated.
 
 \begin{figure}[t]
@@ -1451,7 +1419,7 @@ this rarity.}
 \end{figure}
 
 Two things are worth knowing about \eqref{eq:linear_bias}. It is the first term
-of an expansion, not a law --- and the threshold model is far too crude to
+of an expansion, not a law, and the threshold model is far too crude to
 predict a real $b_1$, which is measured alongside the cosmology. At smaller
 scales the response stops being linear,
 picks up a dependence on the tidal field, and acquires a stochastic piece. And it
