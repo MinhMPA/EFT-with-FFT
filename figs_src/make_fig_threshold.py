@@ -76,41 +76,44 @@ print(f"  n_bar: measured {n0:.4e}, predicted {n_of_dL(0.0):.4e}")
 print(f"  counted points sit on the erfc curve to {100*resid:.1f}% over the plotted range")
 
 # ---------------------------------------------------------------- figure ---
-fig, ax = plt.subplots(1, 2, figsize=(9.8, 4.0))
+fig, ax = plt.subplots(1, 2, figsize=(9.8, 3.6))
 
-# LEFT: a 2D slice, with the threshold drawn as a level set. A 1D cut cannot
-# do this job: enough peaks on a line means a low nu_c, and a low nu_c is
-# exactly what kills the response -- the two are the same parameter.
-sl   = dR[:, :, N//3]
-xs   = np.arange(N)*(L/N)
-lm2d = 0.30*np.sin(2*np.pi*xs/L)[:, None]*np.ones((1, N))
-XG, YG = np.meshgrid(xs, xs, indexing="ij")
+# LEFT: the mechanism, on a short cut where individual peaks are resolved.
+# This panel does NOT carry the statistics -- at this rarity a line crosses the
+# threshold about once per 1600 Mpc/h, so no honest cut shows a count changing.
+# The right panel does the counting. Here we only show what the long mode does,
+# using the move the derivation makes: lifting the field by delta_L is the same
+# as lowering the cut to delta_cr - delta_L, so draw one field and two lines.
+JC, KC, S0, WIN = 242, 62, 32, 64
+cut  = dR[S0:S0+WIN, JC, KC]
+qcut = (np.arange(S0, S0+WIN))*(L/N)
+DL   = 0.30
+lo   = DELTA_CR - DL
 
-was  = sl > DELTA_CR
-now_ = (sl + lm2d) > DELTA_CR
-print(f"  2D slice: area above threshold {100*was.mean():.2f}% -> {100*now_.mean():.2f}%")
+ax[0].axhspan(lo, DELTA_CR, color="#e8590c", alpha=0.13, zorder=0)
+ax[0].axhline(DELTA_CR, color="0.15", lw=1.2, zorder=3)
+ax[0].axhline(lo,       color="#e8590c", lw=1.2, ls="--", zorder=3)
+ax[0].plot(qcut, cut, color="#1d3557", lw=1.5, zorder=4)
 
-ax[0].imshow(lm2d.T, origin="lower", extent=[0, L, 0, L], cmap="RdBu_r",
-             vmin=-1.1, vmax=1.1, interpolation="bilinear", zorder=0)
-# the threshold as a level set, before and after the long mode is added
-ax[0].contour(XG, YG, sl, levels=[DELTA_CR], colors="0.15",
-              linewidths=1.1, zorder=3)
-ax[0].contourf(XG, YG, sl + lm2d, levels=[DELTA_CR, 1e9],
-               colors=["#e8590c"], alpha=0.55, zorder=2)
-ax[0].contour(XG, YG, sl + lm2d, levels=[DELTA_CR], colors="#e8590c",
-              linewidths=1.1, zorder=4)
+pk   = (cut[1:-1] > cut[:-2]) & (cut[1:-1] > cut[2:])
+qp, vp = qcut[1:-1][pk], cut[1:-1][pk]
+sel_a = vp > DELTA_CR
+sel_b = (vp > lo) & (vp <= DELTA_CR)
+ax[0].plot(qp[sel_a], vp[sel_a], "o", color="0.15", ms=7, zorder=6,
+           label=f"already a halo ({sel_a.sum()})")
+ax[0].plot(qp[sel_b], vp[sel_b], "o", color="#e8590c", ms=7, zorder=6,
+           label=f"becomes one ({sel_b.sum()})")
+print(f"  cut shown: {sel_a.sum()} peaks above, {sel_b.sum()} inside the band")
 
-from matplotlib.lines import Line2D
-ax[0].legend(handles=[
-    Line2D([], [], color="0.15", lw=1.3, label=r"$\delta_R = \delta_{\rm cr}$"),
-    Line2D([], [], color="#e8590c", lw=1.3,
-           label=r"$\delta_R + \delta_L = \delta_{\rm cr}$")],
-    loc="upper right", fontsize=7.5, framealpha=0.92).get_frame().set_edgecolor("none")
-ax[0].set_xlim(0, L); ax[0].set_ylim(0, L)
-ax[0].set_xlabel(r"$q_x\ [h^{-1}\mathrm{Mpc}]$")
-ax[0].set_ylabel(r"$q_y\ [h^{-1}\mathrm{Mpc}]$")
-ax[0].set_title("the same threshold, lifted where the long mode is positive",
+ax[0].text(qcut[1], DELTA_CR + 0.055, r"$\delta_{\rm cr}$", color="0.15", fontsize=9)
+ax[0].text(qcut[1], lo - 0.15, r"$\delta_{\rm cr} - \delta_L$",
+           color="#e8590c", fontsize=9)
+ax[0].set_xlim(qcut[0], qcut[-1]); ax[0].set_ylim(-0.75, 2.62)
+ax[0].set_xlabel(r"Lagrangian position $q\ [h^{-1}\mathrm{Mpc}]$")
+ax[0].set_ylabel(r"$\delta_R$, smoothed on $R = 5\,h^{-1}$Mpc")
+ax[0].set_title(r"a long mode lowers the cut, it does not move the field",
                 fontsize=9)
+ax[0].legend(loc="lower left", frameon=False, fontsize=7.5)
 
 # RIGHT: abundance vs long mode, measured against predicted
 dL = np.linspace(-0.45, 0.45, 300)
