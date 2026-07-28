@@ -5,14 +5,16 @@ Five checks:
   2. the student notebook's differing cells contain stubs, the solutions' do not;
   3. the solutions notebook executes with every assert passing;
   4. the shipped data tables are present and correctly shaped;
-  5. the notebook's standalone T(k) and P_L(k) agree with figs_src/ptlib.py.
+  5. the notebook's standalone T(k) and P_L(k) agree with figs_src/ptlib.py,
+     and the shipped T_camb_fiducial.txt agrees with the notebook's T_full.
 
 Note check 3 and check 5 both run the optional CAMB section, which takes ~20 s
 when camb is importable. That is expected, not a hang.
 
-Check 4 is the one that matters over time: the notebook deliberately duplicates
+Check 5 is the one that matters over time: the notebook deliberately duplicates
 the Eisenstein & Hu code so it can run in Colab with no repo checkout, and this
-is what stops the two copies drifting apart.
+is what stops the two copies drifting apart. It also pins the shipped CAMB
+table, the offline path's only unverified input.
 
 Run from the repo root:  python3 handson/verify_notebooks.py
 """
@@ -136,6 +138,19 @@ if "pk_lin" in ns_:
     check("notebook pk_lin matches ptlib.pk_lin", rel < 1e-3, f"max rel {rel:.2e}")
 else:
     check("notebook pk_lin matches ptlib.pk_lin", False, "pk_lin not found")
+
+# T_camb_fiducial.txt is the offline path's only source of truth for T(k) --
+# nothing else compares its values to anything, so a table drifted from the
+# fiducial cosmology (e.g. via a CAMB re-run with the wrong params) would pass
+# every other check here and only fail in a classroom with no internet.
+if "T_full" in ns_:
+    tab = np.loadtxt(os.path.join(HANDSON, "T_camb_fiducial.txt"))
+    k_tab, T_tab = tab[:, 0], tab[:, 1]
+    rel = float(np.abs(ns_["T_full"](k_tab)/T_tab - 1).max())
+    check("shipped CAMB table matches the notebook's T_full", rel < 0.04,
+          f"max rel {rel:.2e}")
+else:
+    check("shipped CAMB table matches the notebook's T_full", False, "T_full not found")
 
 print()
 if failures:

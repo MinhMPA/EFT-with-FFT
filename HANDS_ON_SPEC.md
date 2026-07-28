@@ -59,9 +59,11 @@ beyond `k_Nyq`, so the realized value runs slightly **high**.
 
 ### Fallback
 
-Ship `handson/pk_lin_fiducial.txt` — a tabulated `P_L(k)` — and
-`handson/delta_k_128.npy`. **H2 must not depend on H1 having gone well.** Anyone
-behind loads the file and proceeds.
+Ship `handson/pk_lin_fiducial.txt` — a tabulated `P_L(k)`. No `delta_k_128.npy`
+is shipped; the fallback regenerates the field deterministically from that
+table and the fixed seed (1234) rather than restoring a blob. **H2 must not
+depend on H1 having gone well.** Anyone behind reruns the fallback — it depends
+on no student-written name — and proceeds.
 
 ---
 

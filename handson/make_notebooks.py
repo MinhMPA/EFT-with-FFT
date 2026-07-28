@@ -90,7 +90,7 @@ Six steps, roughly 90 minutes:
 | 6 | save it for Session 2 | 15 |
 
 **The seed is fixed.** Everyone's field is the same field, and it is the one in
-Figure 3 of the notes. So when you change `n_s` in step 5 and the picture
+Figure 4 of the notes, the cosmic web. So when you change `n_s` in step 5 and the picture
 changes, that difference is physics — not a different roll of the dice.
 
 Cells marked **you write this** have a `# TODO`. Every one is followed by a
@@ -238,8 +238,8 @@ decades and a linear grid would waste all its points at large $k$:
 $$\sigma_R^2 = \int \frac{k^3 P(k)}{2\pi^2}\, |W(kR)|^2\, {\rm d}\ln k.$$
 
 The integrand $k^3P/2\pi^2$ is $\Delta^2(k)$, the variance per logarithmic
-interval — the quantity Figure 1 of the notes used to argue that small scales
-carry more.
+interval — the quantity Figure 1 of the notes, the position-space/Fourier-space
+pair, used to argue that small scales carry more.
 ''')
 
 C(r'''
@@ -324,7 +324,8 @@ The last line is the point. Since $P_{\rm L} \propto k^{n_s} T^2$, the two
 slopes are locked together: $2 \times (-1.670) + 0.965 = -2.375$. If you fudged
 `T_nowiggle` into passing checkpoint 1, checkpoint 2 catches it.
 
-Now plot it. This is Figure 3 of the notes, right-hand panel, from your code.
+Now plot it. This is Figure 3 of the notes, the power-spectrum construction,
+right-hand panel, from your code.
 ''')
 
 C(r'''
@@ -448,7 +449,8 @@ M(r'''
 Read the wavelength off that first peak: about 80 Mpc/h, which is the sound
 horizon $r_d \simeq 100\,h^{-1}$Mpc seen through the harmonic structure. This
 is the standard ruler that galaxy surveys measure, and it is a few percent
-tall — which is why the inset in Figure 3 of the notes plots it as a ratio.
+tall — which is why the inset in Figure 3 of the notes, the power-spectrum
+construction, plots it as a ratio.
 On the spectrum itself you would never see it.
 
 **From here on, use `pk_lin` — the full one.** Wiggles and all.
@@ -487,7 +489,7 @@ So here is the line. You are not asked to derive it — you are asked to **check
 it**, below, which is the part that matters:
 
 ```
-delta_k = np.fft.rfftn(white_noise) * np.sqrt(P * N**3 / L**3)
+delta_k = np.fft.rfftn(white) * np.sqrt(P_grid * N**3 / L**3)
 ```
 ''')
 
@@ -748,8 +750,8 @@ except ImportError:
 
 M(r'''
 **Lost it? Nothing is lost.** Session 2 opens with the cell below, which
-rebuilds the field from the same seed. `np.random.default_rng` is guaranteed
-reproducible across numpy versions and platforms, so this is not an
+rebuilds the field from the same seed. `np.random.default_rng` is reproducible
+across every numpy since 1.17, on every platform, so this is not an
 approximation to what you built — the phases are identical, and the amplitudes
 agree to a few parts in a hundred thousand.
 
