@@ -6,7 +6,7 @@ This repository contains a pedagogical note on 1-loop perturbation theory (PT) a
 
 Two courses, sharing the figure pipeline in `figs_src/`.
 
-### From Primordial Fluctuations to the Cosmic Web
+### From Quantum Seeds to the Cosmic Web
 
 `PT_lectures.tex` — two 90-minute lectures (65 min at the board, 25 for
 questions) alternating with two hands-on sessions:
