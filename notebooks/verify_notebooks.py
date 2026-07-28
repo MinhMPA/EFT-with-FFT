@@ -19,6 +19,7 @@ table, the offline path's only unverified input.
 Run from the repo root:  python3 notebooks/verify_notebooks.py
 """
 import json
+import nbformat
 import os
 import subprocess
 import sys
@@ -44,7 +45,6 @@ def cells(path):
 
 
 print("1. structure")
-import nbformat
 for p in (STUDENT, SOLUTIONS):
     try:
         nbformat.validate(nbformat.read(p, as_version=4))

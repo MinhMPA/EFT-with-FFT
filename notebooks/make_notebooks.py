@@ -202,13 +202,15 @@ T_keq   = float(T_nowiggle(0.0153)[0])
 kk      = np.logspace(np.log10(0.5), np.log10(5.0), 400)
 slope_T = float(np.polyfit(np.log(kk), np.log(T_nowiggle(kk)), 1)[0])
 
-assert abs(T_large - 1.0) < 2e-3,   f"T should -> 1 on large scales, got {T_large:.4f}"
-assert abs(T_keq - 0.6745) < 0.005, f"T(k_eq) should be 0.675, got {T_keq:.4f}"
-assert abs(slope_T + 1.670) < 0.02, f"slope over 0.5<k<5 should be -1.67, got {slope_T:.3f}"
-
+# Print first, then assert: if one of these fails you still get to see all
+# three measurements, which is what tells you which way it went wrong.
 print(f"T -> {T_large:.4f}  as k -> 0")
 print(f"T(k_eq = 0.0153)  = {T_keq:.4f}")
 print(f"d ln T / d ln k   = {slope_T:.3f}   over 0.5 < k < 5 h/Mpc")
+
+assert abs(T_large - 1.0) < 2e-3,   f"T should -> 1 on large scales, got {T_large:.4f}"
+assert abs(T_keq - 0.6745) < 0.005, f"T(k_eq) should be 0.675, got {T_keq:.4f}"
+assert abs(slope_T + 1.670) < 0.02, f"slope over 0.5<k<5 should be -1.67, got {slope_T:.3f}"
 """)
 
 M(r"""
@@ -319,14 +321,14 @@ kg       = np.logspace(-4, 2, 6000)
 turnover = float(kg[np.argmax(pk_nw(kg))])
 slope_P  = float(np.polyfit(np.log(kk), np.log(pk_nw(kk)), 1)[0])
 
-assert abs(s8_out - 0.81) < 1e-3,      f"sigma_8 should come back at 0.81, got {s8_out:.4f}"
-assert 0.012 < turnover < 0.020,       f"turnover should sit near k_eq = 0.015, got {turnover:.4f}"
-assert abs(slope_P + 2.375) < 0.03,    f"slope over 0.5<k<5 should be -2.38, got {slope_P:.3f}"
-
 print(f"sigma_8 recovered = {s8_out:.4f}")
 print(f"turnover at k     = {turnover:.4f} h/Mpc   (k_eq = 0.0153)")
 print(f"d ln P / d ln k   = {slope_P:.3f}   over 0.5 < k < 5 h/Mpc")
 print(f"consistency: 2 x {slope_T:.3f} + {ns} = {2*slope_T + ns:.3f}")
+
+assert abs(s8_out - 0.81) < 1e-3,      f"sigma_8 should come back at 0.81, got {s8_out:.4f}"
+assert 0.012 < turnover < 0.020,       f"turnover should sit near k_eq = 0.015, got {turnover:.4f}"
+assert abs(slope_P + 2.375) < 0.03,    f"slope over 0.5<k<5 should be -2.38, got {slope_P:.3f}"
 ''')
 
 M(r'''
@@ -438,10 +440,6 @@ band  = (kb > 0.03) & (kb < 0.12)
 kpeak = float(kb[band][np.argmax(ratio[band])])
 rpeak = float(ratio[band].max())
 
-assert 0.06 < kpeak < 0.09,           f"first BAO peak should sit near k=0.078, got {kpeak:.4f}"
-assert 1.04 < rpeak < 1.10,           f"peak should be a few percent, got {rpeak:.4f}"
-assert ratio.min() > 0.93,            f"wiggles should not dominate, got min {ratio.min():.4f}"
-
 print(f"first BAO peak at k = {kpeak:.4f} h/Mpc  ->  lambda = {2*np.pi/kpeak:.0f} Mpc/h")
 print(f"amplitude at that peak: {100*(rpeak-1):+.1f}%")
 print(f"full range of the ratio: {ratio.min():.3f} to {ratio.max():.3f}")
@@ -453,6 +451,11 @@ plt.xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
 plt.ylabel(r"$P_{\rm L}/P_{\rm nw}$")
 plt.title("the baryon acoustic oscillations")
 plt.tight_layout(); plt.show()
+
+# Asserted after the plot, so a failure still leaves you the picture to read.
+assert 0.06 < kpeak < 0.09,           f"first BAO peak should sit near k=0.078, got {kpeak:.4f}"
+assert 1.04 < rpeak < 1.10,           f"peak should be a few percent, got {rpeak:.4f}"
+assert ratio.min() > 0.93,            f"wiggles should not dominate, got min {ratio.min():.4f}"
 ''')
 
 M(r'''
