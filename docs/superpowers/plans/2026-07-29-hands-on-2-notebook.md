@@ -2,11 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the Colab notebook for Hands-on Session 2, in which students displace H1's density field with Zel'dovich and 2LPT, watch a cosmic web appear, classify it, discover that two-thirds of it has shell-crossed, and benchmark their second-order displacement against JaxPM.
+**Goal:** Build the Colab notebook for Hands-on Session 2, in which students displace H1's density field with Zel'dovich and 2LPT, watch a cosmic web appear, classify it, discover that two-thirds of it has shell-crossed, and benchmark their second-order source against FlowPM.
 
 **Architecture:** H2 is a **single** notebook of working code, teaching through inline `# quiz:` comments, with three stubs whose collapsed solution cells *overwrite* them so Run-All always produces the web. This departs from H1's two-file split deliberately — see `docs/adr/0002-h2-departs-from-h1-and-runs-at-two-redshifts.md`. The cell-emitting DSL is extracted from `make_notebooks.py` into `nbbuild.py` so both generators share it.
 
-**Tech Stack:** numpy, matplotlib, CAMB (installed, with a shipped table as fallback), and JaxPM for the closing benchmark only.
+**Tech Stack:** numpy, matplotlib, CAMB (installed, with a shipped table as fallback), and FlowPM (one pip line) for the closing benchmark only.
 
 ## Global Constraints
 

@@ -22,7 +22,7 @@ comments in the style of the school's other notebooks, with three stubs —
 `Ψ⁽¹⁾`, the positive-eigenvalue count, and the 2LPT source `δ₂` — whose
 collapsed solution cells *overwrite* them, so Run-All always produces the web.
 
-**H2 displaces at two epochs.** The benchmark against `jaxpm.lpt` runs at
+**H2 displaces at two epochs.** The benchmark against `flowpm` runs at
 z = 49; the cosmic web is drawn at z = 0. Since `Ψ⁽¹⁾ ∝ D₁` and `Ψ⁽²⁾ ∝ D₁²`,
 both come from one set of FFTs and two scalars.
 
@@ -44,7 +44,7 @@ one picture.
 | 49 | 0.0255 | 0.137 | 0.07 | 0.00% | 0.5% |
 | 0 | 1.0000 | 5.394 | 2.76 | 63.6% | 18% |
 
-At z = 49 — where LPT is used in practice and what `jaxpm.lpt` is built for —
+At z = 49 — where LPT is used in practice and what these codes are built for —
 particles move a fifteenth of a cell and there is nothing to see. At z = 0 the
 web appears, and two thirds of the box has shell-crossed; the first crossing is
 at z = 6.8. Neither epoch alone is honest. Splitting them lets the benchmark run
