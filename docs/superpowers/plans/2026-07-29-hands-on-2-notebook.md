@@ -667,31 +667,89 @@ assert abs(3/7*r2/r1 - 0.181) < 0.02, "2LPT/1LPT at z=0 should be ~0.18"
 
 ---
 
-## Task 9: Step 7 — benchmark against JaxPM
+## Task 9: Step 7 — benchmark against FlowPM
 
-**Risk to resolve first:** JaxPM depends on `jaxdecomp` and `jax-healpy`, neither of which H2 needs. **Time the install before committing to this design.** If it exceeds ~3 minutes or fails, fall back to vendoring the ~40 lines of `lpt()` into the notebook as a reference implementation, and say so in the markdown — the claim then becomes "against a public code's algorithm", not "against a public code".
-
-- [ ] **Step 1: Time the install**
-
-```bash
-time python3 -m pip install --dry-run "git+https://github.com/MinhMPA/JaxPM" 2>&1 | tail -20
-```
-
-Report what it resolves and how long. Decide install-vs-vendor on the evidence and record the decision in the report.
-
-- [ ] **Step 2: The comparison**
-
-Feed JaxPM **our** `delta_x` — do not use `jaxpm.linear_field`, whose `jax.random` seed gives a different realisation. Call with `gradient_order=0` so its gradient is spectral like ours; its defaults (`dealiased=False`, `laplace_fd=False`) already match.
+**Why FlowPM and not JaxPM or fastpm.** `~/fastpm` is the C code (`CC ?= mpicc`,
+needing MPI/PFFT/bigfile/chealpix/kdcount) — not viable on Colab. JaxPM pulls
+`jaxdecomp` and `jax-healpy`, neither needed here, and is untested on Colab.
+FlowPM installs with one pip line, is already proven in a Colab teaching
+notebook, and — decisively — `flowpm.tfpm.lpt2_source` computes *exactly the
+quantity the students hand-code*:
 
 ```python
-dx1 = lpt(cosmo, ic, a=a, order=1, gradient_order=0)
-dx2 = lpt(cosmo, ic, a=a, order=2, gradient_order=0) - dx1
+source = sum_d phi_,[D1] phi_,[D2]  -  sum_d (phi_,ij)^2      # D1=[1,2,0], D2=[2,0,1]
+source *= 3.0/7.
 ```
 
-Compare `Ψ⁽²⁾` **on its own** at both epochs — at z=49 it is 0.5% of the total, so a total-displacement check would not see a broken 2LPT. The `jax_cosmo` Cosmology must carry the same `Om, Ob, h, ns, sigma8`, and its growth normalisation must be checked against `D1(z)` above before the displacement comparison is trusted.
+i.e. `(3/7)·Σ_{i<j}[φ_,iiφ_,jj − φ_,ij²]` — our `δ₂` with the `3/7` folded in.
+So the benchmark compares the same object, not a downstream displacement.
 
-- [ ] **Step 3** Report the achieved agreement for `Ψ⁽¹⁾` and `Ψ⁽²⁾` at both epochs. These are **unmeasured** — the plan cannot predict them because JaxPM is not installed here. Record them, then set the assert tolerances from what you measure, and say so explicitly in the report.
-- [ ] **Step 4** Commit.
+**The gradient convention must be matched, not compared.** FlowPM's
+`gradient_kernel` defaults to the fastpm 4th-order finite difference and
+`lpt2_source` calls it with no `order` argument, so there is no switch to
+spectral. Its `laplace_kernel`, however, uses the exact `sum(ki**2)`. Matching
+therefore needs one substitution in the benchmark cell only:
+
+```
+ik_i   ->   1j * (8*sin(w_i) - sin(2*w_i)) / 6
+```
+
+**Be honest in the markdown about what this validates.** The students' own `δ₂`
+uses the spectral gradient the lecture derives. The benchmark re-computes `δ₂`
+with FlowPM's kernel so that only the *2LPT algebra* is compared. It validates
+the algorithm, not their exact array. Say so; do not claim "your code matches
+FlowPM" when what matches is a convention-matched re-run.
+
+- [ ] **Step 1: Install and confirm the interface**
+
+```bash
+pip install -q tensorflow tensorflow_probability tf-keras flowpm
+python3 -c "
+from flowpm.tfpm import lpt2_source
+from flowpm.kernels import fftk, gradient_kernel, laplace_kernel
+print('flowpm lpt2_source available')
+"
+```
+
+Report the wall-clock install time. If it exceeds ~4 minutes or fails, stop and
+report — do not silently fall back.
+
+- [ ] **Step 2: Feed FlowPM our field, matching conventions**
+
+The real risk is FFT normalisation, not physics. FlowPM uses
+`r2c3d(x, norm=nc**3)` / `c2r3d(x, norm=nc**3)` and `fftk(nc, symmetric=False)`
+returns `kvec` in **grid units** (`w = 2πn/N`, dimensionless), whereas our `KX`
+carries `h/Mpc`. Resolve both by experiment before trusting any number:
+
+1. round-trip a known array through `r2c3d`/`c2r3d` and confirm it returns unchanged;
+2. confirm `lpt2_source` of a field whose `δ₂` you know reproduces it.
+
+Then compare, in real space, our convention-matched `(3/7)·δ₂` against
+`c2r3d(lpt2_source(dlin_k))`.
+
+- [ ] **Step 3: Measure, then set the tolerance**
+
+These numbers are **unmeasured** — FlowPM is not installed in the authoring
+environment. Measure the agreement first, quote it in the report, and set the
+assert from what you observe. **Do not invent a tolerance.**
+
+For calibration only: JaxPM's `test_against_fpm.py` asserts `rtol=1e-4`,
+`atol=1e-3` between its LPT and fastpm-python's — two independent
+implementations sharing the same FD gradient. Convention-matched, ours should
+land in that neighbourhood; if it does not, the discrepancy is the finding and
+must be reported rather than absorbed into a loose tolerance.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add notebooks/
+git commit -m "Hands-on 2 step 7: benchmark delta_2 against FlowPM
+
+flowpm.tfpm.lpt2_source computes the same quantity the students write, so the
+comparison is direct. Its gradient kernel is the fastpm finite difference and
+is not switchable, so the benchmark cell matches that convention rather than
+comparing against it -- what is validated is the 2LPT algebra."
+```
 
 ---
 

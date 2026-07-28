@@ -67,8 +67,9 @@ wrong implementation announces itself.
 _Avoid_: test, validation, sanity check
 
 **Benchmark**:
-The closing comparison of the students' `Ψ⁽¹⁾` and `Ψ⁽²⁾` against `jaxpm.lpt`,
-run with `gradient_order=0` so only the growth convention differs.
+The closing comparison of the students' `δ₂` against `flowpm.tfpm.lpt2_source`,
+with FlowPM's finite-difference gradient adopted so only the 2LPT algebra is
+compared.
 
 ## Relationships
 

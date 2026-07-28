@@ -76,16 +76,17 @@ and it separates all three cases.
   CAMB (`rms δ = 2.5305`). Both are correct for their own session; the 0.6%
   difference is not an error and `notebooks/pk_lin_fiducial.txt` is regenerated
   from CAMB for H2's fallback.
-- The benchmark must call `jaxpm.lpt(..., gradient_order=0)`. JaxPM's default
-  gradient is a fastpm-lineage finite difference that vanishes at Nyquist and is
-  15% low at half-Nyquist; leaving it on would conflate the gradient scheme with
-  the growth convention we intend to compare.
+- The benchmark uses **FlowPM**, not JaxPM: one pip line, already proven in a
+  Colab teaching notebook, and `flowpm.tfpm.lpt2_source` computes exactly the
+  `δ₂` the students write. Its gradient kernel is the fastpm finite difference
+  and is not switchable, so the benchmark cell *matches* that convention rather
+  than comparing against it — the gradient scheme is deliberately not part of
+  the comparison.
 - `Ψ⁽²⁾` is compared on its own, not inside the total. At z = 49 it is 0.5% of
   the displacement, so a broken 2LPT would pass a total-displacement check.
-- JaxPM pulls `jaxdecomp` and `jax-healpy`, neither of which H2 needs. If that
-  install proves slow or fragile on Colab, the fallback is to vendor the ~40
-  lines of `lpt()` — which weakens the claim from "benchmarked against a public
-  code" to "against a public code's algorithm."
+- What the benchmark validates is the 2LPT *algebra*, not the students' exact
+  array: their `δ₂` uses the spectral gradient the lecture derives, and the
+  comparison re-computes it with FlowPM's kernel. The notebook must say so.
 
 ## Alternatives rejected
 
