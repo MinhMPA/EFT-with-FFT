@@ -715,6 +715,36 @@ Dodelson \& Schmidt's Eq.~(7.99); much of the inflation literature writes $\zeta
 for the same quantity.
 
 \begin{reading}
+\bait{What \emph{is} $\mathcal{R}$, and how does it turn into $\delta$?}
+$\mathcal{R}$ is a perturbation to the spatial curvature of a constant-time
+slice, measured on slices where the matter is at rest: the spatial metric reads
+$a^2(1+2\mathcal{R})\delta_{ij}$, so $\mathcal{R}$ is a local, dimensionless
+shift in how much the universe has expanded at that point. Its virtue is that it
+does not evolve outside the horizon, in any background, which is why inflation's
+output is quoted in it: it can be handed forward unchanged, across the radiation
+era and into the matter era, to the moment the mode enters and physics resumes.
+
+Turning it into $\delta$ is two steps. First, deep in matter domination the
+potential is a fixed fraction of it, $|\Phi| = \tfrac35|\mathcal{R}|$ --- a pure
+number, no $k$ anywhere. Second, Poisson converts the potential into a density,
+and \emph{that} is where the two powers of $k$ come from. Together, for modes
+well inside the horizon,
+\begin{equation*}
+\delta_m(k,a) = \frac{2}{5}\,\frac{k^2}{\Om H_0^2}\,\mathcal{R}(k)\,T(k)\,D_+(a) ,
+\end{equation*}
+which is Dodelson \& Schmidt's Eq.~(8.7): the $2/5$ is $\tfrac23\times\tfrac35$,
+the $k^2$ is Poisson, $T$ handles modes that entered before equality, and $D_+$
+carries the growth. Square it and the $k^4$ against $P_{\mathcal{R}} \propto
+k^{n_s-4}$ gives $\Plin \propto k^{n_s}T^2D_+^2$ --- \eqref{eq:pk_master}, with
+$A = 8\pi^2A_s k_0^{1-n_s}/25H_0^4\Om^2$.
+
+One warning when you open the book: they write the spatial metric as
+$a^2(1+2\Phi)$ where \eqref{eq:newtonian_gauge} writes $a^2(1-2\phi)$, so their
+$\Phi$ is minus ours. The relation above is sign-consistent as written; the
+intermediate potentials are not.
+\end{reading}
+
+\begin{reading}
 \bait{Why is $n_s$ not exactly $1$?}
 Scale invariance means equal power in every logarithmic interval of $k$, which is
 what $n_s = 1$ would give. Inflation cannot deliver it exactly: inflation has to
