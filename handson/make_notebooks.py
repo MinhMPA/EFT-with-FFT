@@ -811,6 +811,22 @@ except NameError:
 
 M(r'''
 ---
+## What you built
+
+- a transfer function, from a fitting formula, whose $k^{-1.67}$ slope you
+  measured against the $k^{-2}$ the board derived;
+- a linear power spectrum with a turnover at $k_{\rm eq}$ and baryon wiggles at
+  the few-percent level;
+- a Gaussian realization on a 128³ grid whose variance you checked against
+  $\int {\rm d}^3k/(2\pi)^3 P(k)$ rather than trusting;
+- and evidence, from the same seed run five ways, that the shape of $P_{\rm L}$
+  is set by the contents of the universe.
+
+Session 2 moves it.
+''')
+
+M(r'''
+---
 ## Optional — is that fitting formula any good?
 
 You built $T(k)$ from Eisenstein & Hu's fit. You were told it reproduces a
@@ -913,23 +929,6 @@ So the fit is worth what it costs. For everything this course does with
 $P_{\rm L}$ it is fine, and where you would care about the wiggles at the
 percent level — measuring the BAO scale from a survey — you would run the
 Boltzmann code.
-''')
-
-
-M(r'''
----
-## What you built
-
-- a transfer function, from a fitting formula, whose $k^{-1.67}$ slope you
-  measured against the $k^{-2}$ the board derived;
-- a linear power spectrum with a turnover at $k_{\rm eq}$ and baryon wiggles at
-  the few-percent level;
-- a Gaussian realization on a 128³ grid whose variance you checked against
-  $\int {\rm d}^3k/(2\pi)^3 P(k)$ rather than trusting;
-- and evidence, from the same seed run five ways, that the shape of $P_{\rm L}$
-  is set by the contents of the universe.
-
-Session 2 moves it.
 ''')
 
 
