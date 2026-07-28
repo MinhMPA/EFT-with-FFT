@@ -168,7 +168,9 @@ SC(stub=r'''
 # Watch the sign: getting it backwards makes matter flow OUT of overdensities,
 # and the rms will not tell you.
 psi1_k = [...,  ...,  ...]
-psi1   = [np.fft.irfftn(p, s=(N, N, N)) for p in psi1_k]
+
+if ... not in psi1_k:          # skips quietly until you have filled the dots
+    psi1 = [np.fft.irfftn(p, s=(N, N, N)) for p in psi1_k]
 ''', solution=r'''#@title Solution — Psi^(1)
 psi1_k = [1j*Ki/K2*delta_k for Ki in (KX, KY, KZ)]
 psi1   = [np.fft.irfftn(p, s=(N, N, N)) for p in psi1_k]
