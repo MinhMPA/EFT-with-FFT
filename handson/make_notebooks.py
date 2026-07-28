@@ -211,6 +211,143 @@ to $T \propto k^{-2}\ln k$. Exercise 1.3 in the notes works it out. You have
 just measured it, in a fitting formula that knows nothing about the derivation.
 """)
 
+M(r'''
+---
+## Step 2 — The linear power spectrum
+
+Equation (1.11) of the notes, the boxed one:
+
+$$P_{\rm L}(k, z) = A\, k^{n_s}\, T^2(k)\, D_+^2(z)$$
+
+Three factors, three pieces of physics. Inflation supplies $k^{n_s}$;
+$T^2(k)$ is everything that happened between then and now, which you just
+coded; $D_+^2(z)$ carries the time dependence. We work at $z = 0$, where
+$D_+ = 1$, so it drops.
+
+That leaves $A$ — an amplitude, which the shape cannot tell you. It is fixed by
+one measured number, conventionally $\sigma_8$: the rms of the density field
+smoothed with a top-hat sphere of radius $8\,h^{-1}$Mpc, notes eq. (1.9),
+
+$$\sigma_8^2 = \int \frac{{\rm d}^3k}{(2\pi)^3}\, P_{\rm L}(k)\, |W(kR)|^2, \qquad
+W(x) = \frac{3(\sin x - x\cos x)}{x^3}, \qquad R = 8\,h^{-1}{\rm Mpc}.$$
+
+For an isotropic $P$ that angular integral is trivial, and it is worth writing
+the form you will actually use — with $\mathrm{d}\ln k$, because $P$ spans
+decades and a linear grid would waste all its points at large $k$:
+
+$$\sigma_R^2 = \int \frac{k^3 P(k)}{2\pi^2}\, |W(kR)|^2\, {\rm d}\ln k.$$
+
+The integrand $k^3P/2\pi^2$ is $\Delta^2(k)$, the variance per logarithmic
+interval — the quantity Figure 1 of the notes used to argue that small scales
+carry more.
+''')
+
+C(r'''
+def logint(f, a, b, n=4000):
+    """Integral of f over d ln k from a to b, as a sum on a uniform log grid.
+
+    Crude on purpose: no scipy, and for smooth integrands like these it is
+    accurate to far better than the 1% we care about. Check it if you like by
+    doubling n.
+    """
+    lnk = np.linspace(np.log(a), np.log(b), n)
+    return float(np.sum(f(np.exp(lnk))) * (lnk[1] - lnk[0]))
+''')
+
+S(solution=r'''
+def sigma_R(P, R=8.0):
+    """rms of the field smoothed on radius R [Mpc/h]. Notes eq. (1.9)."""
+    def integrand(k):
+        x = k*R
+        W = 3*(np.sin(x) - x*np.cos(x))/x**3
+        return k**3 * P(k) * W**2 / (2*np.pi**2)
+    return np.sqrt(logint(integrand, 1e-5, 1e2))
+
+
+def make_pk_lin(T, ns=ns, sigma8=sigma8):
+    """P_L(k) = A k^ns T^2(k), with A fixed so that sigma_8 comes out right.
+
+    Returns a callable k -> P(k) in (Mpc/h)^3, k in h/Mpc.
+    """
+    def unnorm(k):
+        return np.atleast_1d(k)**ns * T(k)**2
+    A = (sigma8/sigma_R(unnorm))**2
+    return lambda k: A*unnorm(k)
+
+
+pk_nw = make_pk_lin(T_nowiggle)
+''', stub=r'''
+def sigma_R(P, R=8.0):
+    """rms of the field smoothed on radius R [Mpc/h]. Notes eq. (1.9)."""
+    def integrand(k):
+        # TODO (3 lines): x = kR; the top-hat window W; return k^3 P W^2 / 2pi^2
+        raise NotImplementedError
+    return np.sqrt(logint(integrand, 1e-5, 1e2))
+
+
+def make_pk_lin(T, ns=ns, sigma8=sigma8):
+    """P_L(k) = A k^ns T^2(k), with A fixed so that sigma_8 comes out right.
+
+    Returns a callable k -> P(k) in (Mpc/h)^3, k in h/Mpc.
+    """
+    def unnorm(k):
+        # TODO (1 line): the shape, k^ns T^2(k), with no amplitude yet
+        raise NotImplementedError
+
+    # TODO (1 line): sigma_R scales as sqrt(A), so solve for A that lands on sigma8
+    A = ...
+    return lambda k: A*unnorm(k)
+
+
+pk_nw = make_pk_lin(T_nowiggle)
+''')
+
+C(r'''
+# --- checkpoint 2 -------------------------------------------------------
+s8_out   = sigma_R(pk_nw)
+kg       = np.logspace(-4, 2, 6000)
+turnover = float(kg[np.argmax(pk_nw(kg))])
+slope_P  = float(np.polyfit(np.log(kk), np.log(pk_nw(kk)), 1)[0])
+
+assert abs(s8_out - 0.81) < 1e-3,      f"sigma_8 should come back at 0.81, got {s8_out:.4f}"
+assert 0.012 < turnover < 0.020,       f"turnover should sit near k_eq = 0.015, got {turnover:.4f}"
+assert abs(slope_P + 2.375) < 0.03,    f"slope over 0.5<k<5 should be -2.38, got {slope_P:.3f}"
+
+print(f"sigma_8 recovered = {s8_out:.4f}")
+print(f"turnover at k     = {turnover:.4f} h/Mpc   (k_eq = 0.0153)")
+print(f"d ln P / d ln k   = {slope_P:.3f}   over 0.5 < k < 5 h/Mpc")
+print(f"consistency: 2 x {slope_T:.3f} + {ns} = {2*slope_T + ns:.3f}")
+''')
+
+M(r'''
+The last line is the point. Since $P_{\rm L} \propto k^{n_s} T^2$, the two
+slopes are locked together: $2 \times (-1.670) + 0.965 = -2.375$. If you fudged
+`T_nowiggle` into passing checkpoint 1, checkpoint 2 catches it.
+
+Now plot it. This is Figure 3 of the notes, right-hand panel, from your code.
+''')
+
+C(r'''
+kplot = np.logspace(-4, 1, 500)
+fig, ax = plt.subplots(1, 2, figsize=(10, 3.8))
+
+ax[0].loglog(kplot, kplot**ns / kplot[0]**ns, label=r"$A\,k^{n_s}$ (inflation)")
+ax[0].loglog(kplot, T_nowiggle(kplot)**2,     label=r"$T^2(k)$ (processing)")
+ax[0].set_ylabel("the two factors (arbitrary scale)")
+ax[0].legend(fontsize=8)
+
+ax[1].loglog(kplot, pk_nw(kplot), color="k")
+ax[1].axvline(0.0153, ls=":", c="0.5")
+ax[1].text(0.0165, 3e2, r"$k_{\rm eq}$", fontsize=9)
+ax[1].set_ylabel(r"$P_{\rm L}(k)\ [(\mathrm{Mpc}/h)^3]$")
+ax[1].set_title("the product")
+
+for a in ax:
+    a.set_xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
+fig.tight_layout()
+plt.show()
+''')
+
 
 if __name__ == "__main__":
     main()
