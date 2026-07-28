@@ -702,15 +702,17 @@ worst measured: cosmic variance is the price of owning one universe.}
 Everything so far has been about how a perturbation \emph{evolves}. Where the
 perturbations came from is the business of the lectures you have just had, and
 we need only their output: a nearly \emph{scale-invariant} spectrum of curvature
-perturbations, quoted as usual in dimensionless form,
+perturbations $\mathcal{R}$, quoted as usual in dimensionless form,
 \begin{equation}
-\Delta^2_\zeta(k) \;\equiv\; \frac{k^3 P_\zeta(k)}{2\pi^2}
+\Delta^2_{\mathcal{R}}(k) \;\equiv\; \frac{k^3 P_{\mathcal{R}}(k)}{2\pi^2}
 = A_s\left(\frac{k}{k_0}\right)^{n_s-1} ,
 \qquad n_s \simeq 0.965 ,
 \label{eq:primordial}
 \end{equation}
 with $A_s$ an amplitude and $k_0$ an arbitrary pivot scale. The exponent is
-written $n_s-1$ so that $n_s = 1$ is exactly the scale-invariant case.
+written $n_s-1$ so that $n_s = 1$ is exactly the scale-invariant case. This is
+Dodelson \& Schmidt's Eq.~(7.99); much of the inflation literature writes $\zeta$
+for the same quantity.
 
 \begin{reading}
 \bait{Why is $n_s$ not exactly $1$?}
@@ -724,7 +726,7 @@ than a fitted convenience, and it is one of the reasons to believe the picture.
 Two consequences carry forward. The primordial field is Gaussian to excellent
 approximation, which is what Section~\ref{sec:stats} assumed. And
 \eqref{eq:primordial} becomes a \emph{matter} spectrum by two steps that all but
-cancel. Reading $P_\zeta$ off the definition divides by $k^3$; the Poisson
+cancel. Reading $P_{\mathcal{R}}$ off the definition divides by $k^3$; the Poisson
 equation relating curvature to density then multiplies by $k^4$, since it costs
 two powers of $k$ in the field and so four in the spectrum. Net one power of
 $k$:
@@ -1369,6 +1371,9 @@ Words used in the lectures without ceremony, in case any are new.
 \begin{tabular}{@{}p{0.20\textwidth}p{0.76\textwidth}@{}}
 \toprule
 Boltzmann code & program integrating the linear relativistic equations for all species (\texttt{CAMB}, \texttt{CLASS}); supplies $\Plin$ and growth quantities \\
+$\mathcal{R}$ & the comoving curvature perturbation, the quantity inflation
+hands over; conserved outside the horizon in any background, which is what makes
+it the anchor. Often written $\zeta$ \\
 transfer function & the resulting ratio of a mode's late-time to primordial amplitude, encoding processing through horizon entry and equality \\
 M\'esz\'aros effect & the near-freezing of CDM growth for modes inside the horizon during radiation domination \\
 $h$ & the Hubble constant in units of $100\,{\rm km\,s^{-1}Mpc^{-1}}$; distances carry $h^{-1}$Mpc so that this choice cancels \\
