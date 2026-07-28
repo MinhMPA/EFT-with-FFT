@@ -29,6 +29,7 @@
 \def\knl{k_{\rm NL}}
 \newcommand{\dd}{\mathrm{d}}
 \def\dirac{\delta_{\rm D}}
+\def\erfc{\mathop{\rm erfc}\nolimits}
 \def\lcdm{$\Lambda$CDM}
 \def\Om{\Omega_m}
 \def\G{\mathcal{G}}
@@ -1064,14 +1065,16 @@ easier to turn into a number?
 \setcounter{exercise}{0}
 
 \begin{plan}
-\noindent\textbf{Plan (64 min at the board, 26 for questions --- this one has
-room).} The Lagrangian picture: label a fluid element and follow it (0--13)
-$\rightarrow$ the Zel'dovich approximation, its recipe and its velocities
-(13--19) $\rightarrow$ \emph{why a web and not a collection of spheres}: three
-unequal eigenvalues, and how the volume divides (19--36) $\rightarrow$ shell
-crossing, where the approximation fails (36--44) $\rightarrow$ 2LPT and what it
-fixes (44--55) $\rightarrow$ linear galaxy bias, as a bridge to what surveys
-measure (55--64). \emph{Read, not
+\noindent\textbf{Plan (71 min at the board, 19 for questions).} The Lagrangian
+picture: label a fluid element and follow it (0--13) $\rightarrow$ the
+Zel'dovich approximation, its recipe and its velocities (13--19) $\rightarrow$
+\emph{why a web and not a collection of spheres}: three unequal eigenvalues, and
+how the volume divides (19--36) $\rightarrow$ shell crossing, where the
+approximation fails (36--44) $\rightarrow$ 2LPT and what it fixes (44--55)
+$\rightarrow$ halos, and why counting them is biased (55--71). \emph{If you are
+short:} the threshold derivation of $b_1$ compresses to
+\eqref{eq:halo_abundance}, \eqref{eq:pbs} and the figure, quoted rather than
+derived, which returns six minutes. \emph{Read, not
 lectured:} the one-dimensional exactness proof (Exercise~\ref{ex:1dza}), the
 Comments, and the practical business of generating initial conditions --- the
 hands-on session does that experimentally. \emph{If you are running behind:} the
@@ -1369,23 +1372,15 @@ kernels from the displacement map.
 Everything so far has been about matter. Surveys measure galaxies, and galaxies
 are not matter.
 
-They form in the deepest potential wells, so they are not a fair sample of the
-density field but a \emph{biased} one. The simplest statement of that --- and the
-only one this course needs --- is that on large scales the galaxy overdensity is
-proportional to the matter overdensity,
+They live in \emph{halos} --- collapsed, virialized lumps of dark matter, the
+objects Section~\ref{sec:shellcross} said the Zel'dovich approximation cannot
+make --- and halos sample the density field unfairly. On large scales,
 \begin{equation}
 \delta_g(\vx) = b_1\,\delta(\vx) ,
 \qquad\Longrightarrow\qquad
 P_g(k) = b_1^2\,\Plin(k) ,
 \label{eq:linear_bias}
 \end{equation}
-with a single number $b_1$, the \emph{linear bias}. It exceeds one for the
-massive halos that host bright galaxies, because a rare peak responds more than
-proportionately to the large-scale density it sits in: raise the background a
-little and the number of regions crossing the threshold to form a galaxy rises a
-lot. Nothing about $b_1$ is predicted by the theory in these lectures. It is
-measured alongside the cosmology.
-
 \begin{quiz}
 Why should $b_1$ exceed one? Galaxies are made of matter --- why do they not
 simply trace it?
@@ -1393,16 +1388,72 @@ simply trace it?
 background slightly: the density barely moved, but how much did the \emph{number
 of sites above threshold} move? Sketch a Gaussian with a cut in its tail and
 slide it right.}
-\answer{Thresholds amplify. Galaxies form only above a threshold sitting in the
-tail of the distribution, so a small shift of the whole field carries a large
-fraction of that tail across the cut. Counts therefore respond more strongly
-than the matter does: $b_1 > 1$, and more strongly still for rarer objects,
-which is why the most massive galaxies are the most biased. This is the
-\emph{peak--background split}.}
+\answer{Thresholds amplify: galaxies form only above a cut sitting in the tail,
+so a small shift of the whole field carries a lot of that tail across it. The
+rest of this section turns that sentence into a number.}
 \end{quiz}
 
+with a single number $b_1$, the \emph{linear bias}. Rather than assert
+$b_1 > 1$, we can derive it, in a model crude enough to do on the board and
+sharp enough to get the mechanism right \cite[\S 2.1]{BiasReview}.
+
+\paragraph{Halos as regions above a threshold.} Smooth the same field
+$\delta^{(1)}(\vq)$ this lecture has been displacing on a scale $R$, and declare
+a halo wherever it exceeds a fixed $\delta_{\rm cr}$. That is the entire model:
+no dynamics, one number, the same initial field as Section~\ref{sec:web} sorted
+by a different criterion. Since $\delta^{(1)}$ is Gaussian with variance
+$\sigma^2(R)$, the fraction of space above the cut is
+\begin{equation}
+\bar n = \tfrac12\,\erfc\!\left(\frac{\nu_c}{\sqrt2}\right) ,
+\qquad
+\nu_c \equiv \frac{\delta_{\rm cr}}{\sigma(R)} ,
+\label{eq:halo_abundance}
+\end{equation}
+so massive halos --- large $R$, hence small $\sigma(R)$, hence large $\nu_c$ ---
+are exponentially rare. And $\sigma(R)$ is nothing new: $\sigma_8$ is this same
+quantity at $R = 8\,h^{-1}$Mpc.
+
+\paragraph{Why the count is biased.} Add a long mode $\delta_L$, constant across
+a patch many halos wide. Lifting the field is the same as lowering the cut, to
+$\delta_{\rm cr} - \delta_L$, so differentiate the abundance:
+\begin{equation}
+b_1^{\rm L} \;=\; \frac{1}{\bar n}\,\frac{\partial n}{\partial\delta_L}
+\;=\; \sqrt{\frac{2}{\pi}}\,
+\frac{e^{-\nu_c^2/2}}{\sigma(R)\,\erfc\!\left(\nu_c/\sqrt2\right)}
+\;\;\xrightarrow[\ \nu_c \gg 1\ ]{}\;\;
+\frac{\delta_{\rm cr}}{\sigma^2(R)} ,
+\label{eq:pbs}
+\end{equation}
+and there is the answer. Rarer objects sit further out in the tail and respond
+harder, which is why the most massive galaxies are the most strongly biased ---
+and why $b_1$ belongs to the tracer, not to the cosmology.
+Figure~\ref{fig:threshold} is \eqref{eq:pbs} measured rather than illustrated.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.96\textwidth]{threshold_bias.pdf}
+\caption{Bias, measured from the same linear field this lecture displaces.
+\emph{Left:} a cut through $\delta^{(1)}$ smoothed on $R = 5\,h^{-1}$Mpc, where
+$\sigma(R) = 0.665$ and so $\nu_c = 2.54$. Adding a long mode of amplitude
+$0.3$ --- barely visible against the small-scale field --- takes this cut from
+$5$ regions above threshold to $18$, and note where the new ones appear:
+clustered where $\delta_L > 0$. The cut was chosen to contain a few peaks,
+because most contain none; at $\bar n \simeq 6\times10^{-3}$ these objects are
+genuinely rare. \emph{Right:} the count against the long mode. Points are
+counted from the field, the curve is \eqref{eq:halo_abundance} with the
+threshold shifted, and the dotted line is its slope at the origin,
+\eqref{eq:pbs}. Measuring that slope from the counts returns $4.31$ against a
+predicted $4.29$. Two cautions the picture makes plain: the curve is convex, so
+a slope fitted across a wide range overestimates $b_1$ --- $5.1$ here --- and
+the asymptotic form $\delta_{\rm cr}/\sigma^2 = 3.81$ is still $11\%$ low at
+this rarity.}
+\label{fig:threshold}
+\end{figure}
+
 Two things are worth knowing about \eqref{eq:linear_bias}. It is the first term
-of an expansion, not a law --- at smaller scales the response stops being linear,
+of an expansion, not a law --- and the threshold model is far too crude to
+predict a real $b_1$, which is measured alongside the cosmology. At smaller
+scales the response stops being linear,
 picks up a dependence on the tidal field, and acquires a stochastic piece. And it
 is written in real space, whereas a survey infers radial positions from
 redshifts, so peculiar velocities distort what is measured along the line of
@@ -1488,6 +1539,12 @@ Astrophys. J. \textbf{496} (1998) 605
 N.-M. Nguyen,
 \emph{The Cosmic Web Sandbox},
 \href{https://minhmpa.github.io/lss-lab/cosmic-web-sandbox/}{minhmpa.github.io/lss-lab/cosmic-web-sandbox}.
+
+\bibitem{BiasReview}
+V.~Desjacques, D.~Jeong and F.~Schmidt,
+\emph{Large-scale galaxy bias},
+Phys. Rept. \textbf{733} (2018) 1
+[\href{https://arxiv.org/abs/1611.09787}{1611.09787}].
 
 \bibitem{Doroshkevich1970}
 A.~G. Doroshkevich,
