@@ -811,6 +811,113 @@ except NameError:
 
 M(r'''
 ---
+## Optional — is that fitting formula any good?
+
+You built $T(k)$ from Eisenstein & Hu's fit. You were told it reproduces a
+Boltzmann code, and you took that on faith. Here is the check.
+
+**CAMB** solves the coupled Boltzmann–Einstein equations for photons, baryons,
+neutrinos and cold dark matter, mode by mode. It is what the fit was fit to.
+The cell below installs it and runs it — about a minute in total, most of it the
+install. If anything goes wrong, or you are offline, the next cell falls back to
+a tabulated CAMB result shipped with these notebooks, and the comparison works
+either way.
+
+Nothing after this point is needed for Session 2.
+''')
+
+C(r'''
+# ~40 s on Colab. Skipped entirely if camb is already present.
+try:
+    import camb
+    print("camb", camb.__version__, "already available")
+except ImportError:
+    import subprocess, sys
+    print("installing camb ...")
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "camb"], check=False)
+    try:
+        import camb
+        print("camb", camb.__version__, "installed")
+    except ImportError:
+        camb = None
+        print("camb unavailable -- the next cell will use the shipped table instead")
+''')
+
+C(r'''
+def T_boltzmann():
+    """CAMB's transfer function, normalised to T -> 1 as k -> 0.
+
+    Returns (k, T). Computes from CAMB when it is importable; otherwise reads
+    the tabulated result shipped alongside this notebook.
+    """
+    if camb is not None:
+        pars = camb.CAMBparams()
+        pars.set_cosmology(H0=100*h, ombh2=Ob*h*h, omch2=(Om - Ob)*h*h,
+                           mnu=0.0, omk=0, num_massive_neutrinos=0)
+        pars.InitPower.set_params(ns=ns, As=2.1e-9)
+        pars.set_matter_power(redshifts=[0.0], kmax=40.0)
+        pars.NonLinear = camb.model.NonLinear_none
+        kh, _, pk = camb.get_results(pars).get_matter_power_spectrum(
+            minkh=1e-4, maxkh=30.0, npoints=1024)
+        T = np.sqrt(pk[0]/kh**ns)
+        return kh, T/T[0], "computed with CAMB"
+
+    import urllib.request
+    url = ("https://raw.githubusercontent.com/MinhMPA/EFT-with-FFT/"
+           "master/handson/T_camb_fiducial.txt")
+    try:
+        tab = np.loadtxt("T_camb_fiducial.txt")
+    except OSError:
+        urllib.request.urlretrieve(url, "T_camb_fiducial.txt")
+        tab = np.loadtxt("T_camb_fiducial.txt")
+    return tab[:, 0], tab[:, 1], "from the shipped CAMB table"
+
+
+kb, T_ref, provenance = T_boltzmann()
+ratio_T = T_full(kb)/T_ref
+
+grid = (kb >= k_f) & (kb <= np.sqrt(3)*k_Nyq)
+worst = int(np.argmax(np.abs(ratio_T - 1)))
+
+print(f"reference {provenance}")
+print(f"max deviation over the whole range   : {100*np.abs(ratio_T-1).max():.2f}%  at k = {kb[worst]:.4f}")
+print(f"max deviation over your grid's k band: {100*np.abs(ratio_T[grid]-1).max():.2f}%")
+
+assert np.abs(ratio_T - 1).max() < 0.05, \
+    f"EH should track CAMB to a few percent, got {100*np.abs(ratio_T-1).max():.1f}%"
+assert abs(T_ref[0] - 1.0) < 1e-3, "reference T should be normalised to 1 at k -> 0"
+
+plt.figure(figsize=(7, 3.6))
+plt.semilogx(kb, ratio_T, color="#2f6ea5")
+plt.axhline(1.0, color="0.6", lw=0.8)
+plt.axhspan(0.99, 1.01, color="0.85", zorder=0)
+plt.axvspan(k_f, np.sqrt(3)*k_Nyq, color="#e8590c", alpha=0.08, zorder=0)
+plt.text(0.03, 1.022, "your grid's k range", fontsize=7, color="#e8590c")
+plt.xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
+plt.ylabel(r"$T_{\rm EH}/T_{\rm CAMB}$")
+plt.title("a twelve-line fit against a Boltzmann code")
+plt.tight_layout(); plt.show()
+''')
+
+M(r'''
+**Under a percent nearly everywhere** — the grey band is $\pm 1\%$ — and the
+worst excursion, about 2.7%, sits near $k \simeq 0.09\,h\,{\rm Mpc}^{-1}$.
+
+That location is not an accident. It is a baryon acoustic peak. The broadband
+shape — the turnover, the $k^{-2}\ln k$ falloff — is what the fit captures
+almost exactly, because it follows from the horizon argument of Lecture 1. The
+wiggles are the hard part: they come from the plasma's acoustic history, and a
+handful of fitted coefficients can only approximate their amplitude and phase.
+
+So the fit is worth what it costs. For everything this course does with
+$P_{\rm L}$ it is fine, and where you would care about the wiggles at the
+percent level — measuring the BAO scale from a survey — you would run the
+Boltzmann code.
+''')
+
+
+M(r'''
+---
 ## What you built
 
 - a transfer function, from a fitting formula, whose $k^{-1.67}$ slope you
