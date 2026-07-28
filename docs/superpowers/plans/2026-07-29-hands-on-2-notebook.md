@@ -605,6 +605,11 @@ claim. It is also why 2LPT will sharpen the filaments and then overshoot.
 ```
 
 - [ ] **Step 3** Execute; confirm `8.0 / 42.1 / 42.0 / 8.0`, `63.86%`, `D1 = 0.1633`.
+  **Also run the simulated student-fill proof** (pattern in task-4-report, round 2):
+  exec the stub cell with its TODO replaced by the correct `npos` line against a
+  namespace built from the prior cells; it must compute without raising. This is
+  the test that caught both guard defects in Task 4 — the automated proofs only
+  exercise unfilled stubs.
 - [ ] **Step 4** Commit.
 
 ---
@@ -674,6 +679,7 @@ assert abs(3/7*r2/r1 - 0.181) < 0.02, "2LPT/1LPT at z=0 should be ~0.18"
 
 - [ ] **Step 2** Add the z=0 comparison figure: Zel'dovich slab beside Zel'dovich+2LPT, same colour scale, with a `# quiz:` on whether the filaments are sharper and whether "sharper" is trustworthy given step 4's 63.9%.
 - [ ] **Step 3** Execute; confirm `0.005` and `0.181`.
+  **Also run the simulated student-fill proof** for the `delta2` stub, as above.
 - [ ] **Step 4** Commit.
 
 ---
