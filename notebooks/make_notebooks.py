@@ -81,33 +81,24 @@ def main():
         print(f"wrote {name}  ({len(CELLS)} cells)")
 
 
-M(r"""
+M(r'''
 # Hands-on 1 — From a cosmology to a density field
 
-By the end of this session you will have coded a linear power spectrum from
-scratch and drawn a three-dimensional Gaussian realization of it. That field is
-where Session 2 starts.
+Code a linear power spectrum, then draw a three-dimensional Gaussian
+realization of it. That field is where Session 2 starts.
 
-Six steps, roughly 90 minutes:
-
-| # | what | ~min |
+| # | step | ~min |
 |---|---|---|
-| 1 | the no-wiggle Eisenstein & Hu transfer function `T(k)` | 15 |
-| 2 | assemble `P_L(k) = A k^{n_s} T²(k)` and normalise it | 10 |
-| 3 | swap in the full `T(k)` and find the BAO | 10 |
-| 4 | draw a Gaussian realization on a 128³ grid | 25 |
-| 5 | look at it, and change the cosmology | 15 |
-| 6 | check your `T(k)` against a Boltzmann code | 15 |
+| 1 | Eisenstein & Hu transfer function `T(k)` | 15 |
+| 2 | assemble and normalise `P_L(k)` | 10 |
+| 3 | the full `T(k)`, and the BAO | 10 |
+| 4 | draw the field on a 128³ grid | 25 |
+| 5 | look at it; change the cosmology | 15 |
+| 6 | check it against a Boltzmann code | 15 |
 
-**The seed is fixed.** Everyone's field is the same field, and it is the one in
-Figure 4 of the notes, the cosmic web. So when you change `n_s` in step 5 and the picture
-changes, that difference is physics — not a different roll of the dice.
-
-Cells marked **you write this** have a `# TODO`. Every one is followed by a
-checkpoint cell that either prints a number or raises `AssertionError`. A wrong
-normalisation is silent — the field looks perfectly plausible and every
-downstream number is wrong — so the checkpoints are not decoration.
-""")
+Cells marked `# TODO` are yours; each is followed by a checkpoint that asserts.
+The seed is fixed, so every difference in step 5 is physics, not luck.
+''')
 
 C(r"""
 import numpy as np
@@ -128,27 +119,13 @@ print(f"k_f   = {k_f:.4f} h/Mpc   (lambda = {2*np.pi/k_f:.0f} Mpc/h)")
 print(f"k_Nyq = {k_Nyq:.4f} h/Mpc   (lambda = {2*np.pi/k_Nyq:.1f} Mpc/h)")
 """)
 
-M(r"""
----
-## Step 1 — The transfer function
+M(r'''
+### Step 1 — The transfer function
 
-Lecture 1 derived what `T(k)` *does*: a mode that enters the horizon during
-radiation domination watches its potential decay while it waits for equality,
-so
-
-$$T(k) \sim \left(\frac{a_{\rm enter}}{a_{\rm eq}}\right)^{2} \propto \left(\frac{k_{\rm eq}}{k}\right)^{2},$$
-
-flat below $k_{\rm eq} \simeq 0.015\,h\,{\rm Mpc}^{-1}$ and falling as $k^{-2}$ above it.
-
-That is the physics, and it is all the physics. What it does not give you is a
-number. For that everyone uses **Eisenstein & Hu (1998)**, a fitting formula —
-tuned to reproduce a Boltzmann code, not derived from anything. Here is the
-smooth ("no-wiggle") version, their eqs (26)–(31). Type it; there is nothing to
-understand in it, and having typed it is what makes the checks below mean
-something.
-
-With $\Theta = T_{\rm CMB}/2.7$, $f_b = \Omega_b/\Omega_m$, and **$k$ in
-$\mathrm{Mpc}^{-1}$** (not $h\,\mathrm{Mpc}^{-1}$ — convert first):
+Lecture 1 gave the shape, $T \propto (k_{\rm eq}/k)^2$, but not a number. For
+that everyone uses the **Eisenstein & Hu (1998)** fit. Code their no-wiggle
+version, eqs (26)–(31), with $\Theta = T_{\rm CMB}/2.7$, $f_b = \Omega_b/\Omega_m$,
+and **$k$ in $\mathrm{Mpc}^{-1}$** — convert first:
 
 $$s = \frac{44.5 \ln(9.83/\Omega_m h^2)}{\sqrt{1 + 10 (\Omega_b h^2)^{3/4}}}\ \mathrm{Mpc}$$
 
@@ -159,7 +136,7 @@ $$\Gamma = \Omega_m h \left[\alpha + \frac{1-\alpha}{1 + (0.43\,k s)^4}\right]$$
 $$q = \frac{k\,\Theta^2}{\Gamma h}, \qquad L_0 = \ln(2e + 1.8 q), \qquad C_0 = 14.2 + \frac{731}{1 + 62.5 q}$$
 
 $$\boxed{T(k) = \frac{L_0}{L_0 + C_0\, q^2}}$$
-""")
+''')
 
 S(solution=r'''
 def T_nowiggle(k, Om=Om, Ob=Ob, h=h, Tcmb=Tcmb):
@@ -213,45 +190,24 @@ assert abs(T_keq - 0.6745) < 0.005, f"T(k_eq) should be 0.675, got {T_keq:.4f}"
 assert abs(slope_T + 1.670) < 0.02, f"slope over 0.5<k<5 should be -1.67, got {slope_T:.3f}"
 """)
 
-M(r"""
-**Stop on that last number.** The board said $T \propto k^{-2}$ above
-$k_{\rm eq}$, so you expected $-2$. You measured $-1.67$.
-
-The gap is the **Mészáros effect**: cold dark matter is not quite frozen while
-the potential decays — it creeps up logarithmically — which softens the falloff
-to $T \propto k^{-2}\ln k$. Exercise 1.3 in the notes works it out. You have
-just measured it, in a fitting formula that knows nothing about the derivation.
-""")
+M(r'''
+The board said $-2$; you measured $-1.67$. The gap is the **Mészáros effect** —
+cold dark matter creeps up logarithmically while the potential decays, softening
+the falloff to $T \propto k^{-2}\ln k$. Exercise 1.5 of the notes works it out.
+''')
 
 M(r'''
----
-## Step 2 — The linear power spectrum
-
-Equation (1.11) of the notes, the boxed one:
+### Step 2 — The linear power spectrum
 
 $$P_{\rm L}(k, z) = A\, k^{n_s}\, T^2(k)\, D_+^2(z)$$
 
-Three factors, three pieces of physics. Inflation supplies $k^{n_s}$;
-$T^2(k)$ is everything that happened between then and now, which you just
-coded; $D_+^2(z)$ carries the time dependence. We work at $z = 0$, where
-$D_+ = 1$, so it drops.
+At $z=0$, $D_+ = 1$. The shape cannot tell you $A$; fix it with $\sigma_8$,
+notes eq. (1.9):
 
-That leaves $A$ — an amplitude, which the shape cannot tell you. It is fixed by
-one measured number, conventionally $\sigma_8$: the rms of the density field
-smoothed with a top-hat sphere of radius $8\,h^{-1}$Mpc, notes eq. (1.9),
+$$\sigma_R^2 = \int \frac{k^3 P(k)}{2\pi^2}\, |W(kR)|^2\, {\rm d}\ln k,
+\qquad W(x) = \frac{3(\sin x - x\cos x)}{x^3}, \qquad R = 8\,h^{-1}{\rm Mpc}.$$
 
-$$\sigma_8^2 = \int \frac{{\rm d}^3k}{(2\pi)^3}\, P_{\rm L}(k)\, |W(kR)|^2, \qquad
-W(x) = \frac{3(\sin x - x\cos x)}{x^3}, \qquad R = 8\,h^{-1}{\rm Mpc}.$$
-
-For an isotropic $P$ that angular integral is trivial, and it is worth writing
-the form you will actually use — with $\mathrm{d}\ln k$, because $P$ spans
-decades and a linear grid would waste all its points at large $k$:
-
-$$\sigma_R^2 = \int \frac{k^3 P(k)}{2\pi^2}\, |W(kR)|^2\, {\rm d}\ln k.$$
-
-The integrand $k^3P/2\pi^2$ is $\Delta^2(k)$, the variance per logarithmic
-interval — the quantity Figure 1 of the notes, the position-space/Fourier-space
-pair, used to argue that small scales carry more.
+Integrate in $\ln k$ — $P$ spans decades.
 ''')
 
 C(r'''
@@ -332,12 +288,9 @@ assert abs(slope_P + 2.375) < 0.03,    f"slope over 0.5<k<5 should be -2.38, got
 ''')
 
 M(r'''
-The last line is the point. Since $P_{\rm L} \propto k^{n_s} T^2$, the two
-slopes are locked together: $2 \times (-1.670) + 0.965 = -2.375$. If you fudged
-`T_nowiggle` into passing checkpoint 1, checkpoint 2 catches it.
-
-Now plot it. This is Figure 3 of the notes, the power-spectrum construction,
-right-hand panel, from your code.
+Since $P_{\rm L} \propto k^{n_s}T^2$, the two slopes are locked:
+$2 \times (-1.670) + 0.965 = -2.375$. Fudging `T_nowiggle` past checkpoint 1
+fails here.
 ''')
 
 C(r'''
@@ -363,19 +316,13 @@ plt.show()
 
 
 M(r'''
----
-## Step 3 — Baryons, and the wiggles they leave
+### Step 3 — Baryons, and the wiggles they leave
 
-The smooth transfer function you coded pretends the matter is all cold dark
-matter. It is not: baryons are about a sixth of it, and before recombination
-they were locked to the photons in a plasma that *rings*. Recombination frees
-the photons and freezes the wave at a single scale, the sound horizon
-$r_d \simeq 100\,h^{-1}$Mpc — leaving an oscillation in $P_{\rm L}(k)$ at the
-few-percent level, the **baryon acoustic oscillations**.
-
-The full Eisenstein & Hu formula has them. It is forty-odd lines and there is
-even less to learn from typing it than the last one, so it is given below.
-Run the cell and move on; the interesting part is the ratio you plot after it.
+Baryons are a sixth of the matter and rang with the photons until
+recombination, which froze the wave at the sound horizon
+$r_d \simeq 100\,h^{-1}$Mpc. That leaves a few-percent oscillation in
+$P_{\rm L}(k)$ — the **baryon acoustic oscillations**. The full EH formula has
+them; it is given, so run it and move on.
 ''')
 
 C(r'''
@@ -459,47 +406,28 @@ assert ratio.min() > 0.93,            f"wiggles should not dominate, got min {ra
 ''')
 
 M(r'''
-Read the wavelength off that first peak: about 80 Mpc/h, which is the sound
-horizon $r_d \simeq 100\,h^{-1}$Mpc seen through the harmonic structure. This
-is the standard ruler that galaxy surveys measure, and it is a few percent
-tall — which is why the inset in Figure 3 of the notes, the power-spectrum
-construction, plots it as a ratio.
-On the spectrum itself you would never see it.
+The first peak sits at $\lambda \simeq 80$ Mpc/h — the sound horizon seen
+through the harmonic structure, and the standard ruler surveys measure. A few
+percent tall, which is why Figure 3 of the notes plots it as a ratio.
 
-**From here on, use `pk_lin` — the full one.** Wiggles and all.
+**Use `pk_lin` from here on.**
 ''')
 
 
 M(r'''
----
-## Step 4 — Draw a universe
+### Step 4 — Draw a universe
 
-This is the step that will eat the session, and it is worth it. The recipe is
-the three lines from §1.3 of the notes:
+Three lines, from §1.3 of the notes: draw each mode with variance
+$P_{\rm L}(k)$, impose reality, inverse transform. `rfftn` on real white noise
+makes the second free.
 
-1. for each mode $\boldsymbol{k}$, draw a complex amplitude with zero mean and
-   variance $P_{\rm L}(k)$;
-2. impose reality, $\delta(-\boldsymbol{k}) = \delta(\boldsymbol{k})^*$, so the
-   field you get back is real;
-3. inverse transform.
+**The trap is the normalisation, and it is silent.** Converting
+$\langle\delta^2\rangle = \int {\rm d}^3k/(2\pi)^3 P(k)$ to a finite grid needs
+factors of $N$ and $L$ that do not announce themselves; get them wrong and the
+field still looks right while every number is off. Figure 4 of the notes was
+first built with this exact bug — $\delta_{\rm rms} = 0.005$ instead of 2.5.
 
-Step 2 is free if you use `np.fft.rfftn` on real white noise — the output of a
-real transform already has the right symmetry, so you cannot get it wrong.
-
-**The trap is step 1, and it is silent.** The continuum statement is
-
-$$\langle \delta^2 \rangle = \int \frac{{\rm d}^3 k}{(2\pi)^3} P(k),$$
-
-but a computer holds a finite grid with a finite box, and the factors of $N$
-and $L$ that convert between the two do not announce themselves. Get them wrong
-and the field still *looks* right — same structure, same texture, plausible
-picture — while every number downstream is off by a constant you will never
-notice. (The figure in these notes was built with exactly this bug the first
-time: $\delta_{\rm rms}$ came out at 0.005 instead of 2.5, and nothing about
-the picture looked odd.)
-
-So here is the line. You are not asked to derive it — you are asked to **check
-it**, below, which is the part that matters:
+So the line is given. Your job is to **check** it:
 
 ```
 delta_k = np.fft.rfftn(white) * np.sqrt(P_grid * N**3 / L**3)
@@ -523,14 +451,11 @@ print(f"grid shape {K2.shape},  |k| from {np.sqrt(K2)[0,0,1]:.4f} to {np.sqrt(K2
 ''')
 
 M(r'''
-Note what the last print says: the largest $|k|$ on the grid is **2.79**, not
-$k_{\rm Nyq} = 1.61$. The grid is a cube and the sphere of radius
-$k_{\rm Nyq}$ does not fill it — the corners reach $\sqrt{3}\,k_{\rm Nyq}$.
-Remember that; it comes back in a moment.
+The largest $|k|$ is **2.79**, not $k_{\rm Nyq} = 1.61$: the grid is a cube, and
+its corners reach $\sqrt{3}\,k_{\rm Nyq}$. That comes back in a moment.
 
-And `P_grid[0,0,0] = 0` is Derivation 1 from the notes, made concrete: the
-$\boldsymbol{k}=0$ mode *is* the mean density, which is not a fluctuation. We
-set it to zero by hand.
+`P_grid[0,0,0] = 0` is Derivation 1 made concrete — the $\boldsymbol{k}=0$ mode
+is the mean density, which is not a fluctuation.
 ''')
 
 S(solution=r'''
@@ -572,29 +497,17 @@ assert abs(delta_x.mean()) < 1e-10,       f"mean should vanish, got {delta_x.mea
 ''')
 
 M(r'''
-**Two things to take from those numbers.**
+**The normalisation is right:** 2.516 against 2.317 from the continuum
+integral. Dropping $N^3/L^3$ would have missed by a factor of thousands, not 9%.
 
-*The normalisation is right.* Your grid says 2.516; integrating
-$\int {\rm d}^3k/(2\pi)^3\,P(k)$ out to the Nyquist frequency says 2.317. Those
-agree to 9%, which for a check spanning a discrete cube and a continuum
-integral is a pass. Had you dropped the $N^3/L^3$ you would be off by a factor
-of thousands, not 9%.
-
-*The residual 9% is itself physics — or rather, geometry.* The grid carries
-those corner modes out to $\sqrt3\,k_{\rm Nyq} = 2.79\,h\,{\rm Mpc}^{-1}$,
-beyond where the continuum integral stopped. Extra power means extra variance,
-so the realized value runs **high**. It is not an error; it is what a cubic
-grid *is*.
-
-Ask yourself: which way would this go if you cut the box to 125 Mpc/h at fixed
-$N$? (Both $k_f$ and $k_{\rm Nyq}$ double: you lose the largest scales and gain
-smaller ones.)
+**The 9% is geometry** — the corner modes reach past where the integral stopped,
+so the realized value runs high. Which way would that go if you halved the box
+at fixed $N$?
 ''')
 
 
 M(r'''
----
-## Step 5 — Look at it
+### Step 5 — Look at it
 
 You have a universe. Slice it.
 ''')
@@ -621,15 +534,11 @@ fig.tight_layout(); plt.show()
 ''')
 
 M(r'''
-The histogram is a Gaussian because we built it from one — that is the whole
-content of "Gaussian initial conditions". Lecture 2 is about what gravity does
-to that symmetry: the field develops a long tail to high $\delta$ (you cannot
-go below $\delta = -1$, but there is no ceiling above), and the picture stops
-looking like noise and starts looking like a web.
+The histogram is Gaussian because we built it that way — that is all "Gaussian
+initial conditions" means. Lecture 2 is what gravity does to that symmetry.
 
-Note also that $\delta$ reaches $\pm 12$ here, which is well past the $|\delta|
-\ll 1$ that assumption A5 asked for. Linear theory has already broken on the
-smallest scales of this grid. Lecture 2 picks that up.
+Note that $\delta$ reaches $\pm 12$, well past the $|\delta| \ll 1$ of
+assumption A4. Linear theory has already broken on the smallest scales here.
 ''')
 
 C(r'''
@@ -667,17 +576,11 @@ fig.tight_layout(); plt.show()
 ''')
 
 M(r'''
-**The right-hand panel is the one to read.** Every curve is pinned near
-$8\,h^{-1}$Mpc, because that is where $\sigma_8$ is defined and we renormalised
-each spectrum to the same 0.81. So none of this is an amplitude difference —
-what you are seeing is shape.
+**Read the right-hand panel.** Every curve is pinned near $8\,h^{-1}$Mpc, where
+$\sigma_8$ is defined, so none of this is amplitude — it is shape.
 
-Changing $n_s$ pivots the spectrum about that pinned scale: more power at small
-scales costs power at large ones. Changing $\Omega_m$ instead slides the
-turnover, because $k_{\rm eq}$ depends on when matter overtook radiation, and
-the whole shape moves with it.
-
-The table below puts numbers on both effects.
+$n_s$ pivots the spectrum about that scale. $\Omega_m$ slides the turnover
+instead, because $k_{\rm eq}$ moves with when matter overtook radiation.
 ''')
 
 C(r'''
@@ -701,35 +604,20 @@ for label, kw, ns_ in VARIANTS:
 ''')
 
 M(r'''
-**Read that table carefully — $\sigma_8$ is renormalised to 0.81 in every
-row.** So none of these differences is an amplitude; they are all *shape*.
+**$\sigma_8$ is renormalised to 0.81 in every row**, so these are shape
+differences only.
 
-Raising $n_s$ tilts power towards small scales, and the grid's rms — which
-integrates out to $k_{\rm Nyq} = 1.61$, i.e. scales of a few Mpc — goes up from
-2.52 to 2.80, even though $\sigma$ at $8\,h^{-1}$Mpc is pinned. More
-small-scale structure at fixed $\sigma_8$.
-
-Raising $\Omega_m$ moves $k_{\rm eq}$ right, because equality happens earlier
-when there is more matter, so the turnover shifts and more of the spectrum sits
-in the steep part. This is the one scale the early universe stamps on the
-spectrum, and you have just moved it by changing the contents of the universe.
-
-Every one of these fields was drawn with **the same seed**. Same phases, same
-random numbers. Every difference you see is the cosmology.
+Raising $n_s$ tilts power to small scales: the grid rms goes 2.52 → 2.80 with
+$\sigma_8$ pinned. Raising $\Omega_m$ moves $k_{\rm eq}$ right, since equality
+comes earlier with more matter — the one scale the early universe stamps on the
+spectrum, and you just moved it. Same seed throughout.
 ''')
 M(r'''
----
-## Step 6 — Is that fitting formula any good?
+### Step 6 — Is that fitting formula any good?
 
-You built $T(k)$ from Eisenstein & Hu's fit. You were told it reproduces a
-Boltzmann code, and you took that on faith. This is where you find out.
-
-**CAMB** solves the coupled Boltzmann–Einstein equations for photons, baryons,
-neutrinos and cold dark matter, mode by mode. It is what the fit was fit to.
-The cell below installs it and runs it — about a minute in total, most of it the
-install. If anything goes wrong, or you are offline, the next cell falls back to
-a tabulated CAMB result shipped with these notebooks, and the comparison works
-either way.
+**CAMB** solves the Boltzmann–Einstein system mode by mode, and is what the fit
+was fit to. The cell below installs it (~40 s); if that fails, the next falls
+back to a shipped CAMB table.
 ''')
 
 C(r'''
@@ -806,24 +694,15 @@ plt.tight_layout(); plt.show()
 ''')
 
 M(r'''
-**Under a percent nearly everywhere** — the grey band is $\pm 1\%$ — and the
-worst excursion, about 2.7%, sits near $k \simeq 0.09\,h\,{\rm Mpc}^{-1}$.
+**Under a percent nearly everywhere** — the grey band is $\pm1\%$ — with the
+worst excursion, 2.7%, near $k \simeq 0.09\,h\,{\rm Mpc}^{-1}$.
 
-That location is not an accident. It is a baryon acoustic peak. The broadband
-shape — the turnover, the $k^{-2}\ln k$ falloff — is what the fit captures
-almost exactly, because it follows from the horizon argument of Lecture 1. The
-wiggles are the hard part: they come from the plasma's acoustic history, and a
-handful of fitted coefficients can only approximate their amplitude and phase.
+That is a baryon acoustic peak, and no accident: the broadband shape follows
+from the horizon argument and the fit captures it, while the wiggles come from
+the plasma's acoustic history, which a dozen coefficients can only approximate.
 
-So the fit is worth what it costs. For everything this course does with
-$P_{\rm L}$ it is fine, and where you would care about the wiggles at the
-percent level — measuring the BAO scale from a survey — you would run the
-Boltzmann code.
-
-That leaves a sharper question, and you have everything needed to answer it.
-The error near the peaks does not just grow — it *oscillates*, changing sign
-several times. Two different failures would do that, and the cell below
-separates them.
+The error *oscillates*. Two failures would do that; the cell below separates
+them.
 ''')
 
 C(r'''
@@ -863,68 +742,47 @@ fig.tight_layout(); plt.show()
 ''')
 
 SM(answer=r'''
-**Both failures are present, and neither dominates.**
+**Both are present, and neither dominates.**
 
-*Amplitude.* Eisenstein & Hu's oscillation comes out at 0.978 of CAMB's — about
-2% too shallow. On its own that would leave a residual exactly in phase with
-the wiggle: largest at the peaks, zero at the nodes.
+*Amplitude.* The EH oscillation is 0.978 of CAMB's, about 2% too shallow. Alone
+that would leave a residual in phase with the wiggle — largest at the peaks.
 
-*Phase.* The acoustic scale is also displaced, by roughly 1% in $k$. The
-formula builds its oscillation as a $\mathrm{sinc}(k\tilde{s})$ whose argument
-uses an analytic approximation to the sound horizon $s = \int c_s\,{\rm d}\tau$,
-and a small error in $s$ misplaces every node. A pure phase error leaves a
-residual that looks like the *derivative* of the wiggle — a quarter-cycle out
-of step, largest where the wiggle crosses zero.
+*Phase.* The acoustic scale is displaced by roughly 1% in $k$. The formula uses
+a $\mathrm{sinc}(k\tilde{s})$ whose argument approximates
+$s = \int c_s\,{\rm d}\tau$, and a small error in $s$ misplaces every node. A
+pure phase error leaves the *derivative* of the wiggle — largest at its zeros.
 
-The right-hand panel is the sum of the two, which is why it neither peaks with
-the wiggles nor with their zeros.
+The right-hand panel is the sum, which is why it peaks at neither.
 
-*And a floor underneath both.* Away from the BAO band entirely the error is
-still about 1.8%, so the 2.7% at the peak is a smooth broadband error with the
-wiggle error stacked on top — not a clean zero baseline that erupts.
+*And a floor under both.* Away from the BAO band the error is still 1.8%, so
+the 2.7% is broadband error with wiggle error stacked on top.
 
-The deeper reason is that the real acoustic solution is a driven, damped
-oscillator with a time-dependent sound speed, decoupling over a finite interval
-rather than instantaneously. That is not a $\mathrm{sinc}$, and no closed form
-of a dozen coefficients makes it one. Which is why Eisenstein & Hu survives in
-modern work mainly as the *no-wiggle* spectrum — a smooth reference to divide
-by, where it is excellent and this failure is irrelevant by construction.
+The real acoustic solution is a driven, damped oscillator with a time-dependent
+sound speed, decoupling over a finite interval. That is not a $\mathrm{sinc}$,
+and no dozen coefficients make it one — which is why EH survives mainly as the
+*no-wiggle* spectrum, where it is excellent and this failure cannot arise.
 ''', bait=r'''
-**Which is it?** Two failures would each make the error oscillate, and the
-panels above tell them apart.
+**Which is it?** Two failures would each make the error oscillate.
 
-If the fit got the wiggle *amplitude* wrong, the leftover would peak where the
-wiggles peak. If it got the acoustic *phase* wrong — the sound horizon setting
-where the nodes fall — the leftover would look like the derivative of the
-wiggle, largest where the wiggle crosses zero.
+A wrong wiggle *amplitude* leaves a residual peaking where the wiggles peak. A
+wrong acoustic *phase* — the sound horizon setting where the nodes fall —
+leaves one shaped like the derivative of the wiggle, largest at its zeros.
 
-Look at the right-hand panel and decide which you see. Then check the printed
-amplitude ratio, and the error away from the BAO band, and ask whether either
-failure alone accounts for the 2.7%.
+Decide which the right-hand panel shows. Then check the printed amplitude ratio
+and the error away from the BAO band, and ask whether either alone accounts for
+the 2.7%.
 ''')
 
 M(r'''
----
-## What you built
+### What you built
 
-- a transfer function, from a fitting formula, whose $k^{-1.67}$ slope you
-  measured against the $k^{-2}$ the board derived;
-- a linear power spectrum with a turnover at $k_{\rm eq}$ and baryon wiggles at
-  the few-percent level;
-- a Gaussian realization on a 128³ grid whose variance you checked against
-  $\int {\rm d}^3k/(2\pi)^3 P(k)$ rather than trusting;
-- evidence, from the same seed run five ways, that the shape of $P_{\rm L}$ is
-  set by the contents of the universe;
-- and a measurement of how far your twelve lines sit from a Boltzmann code,
-  including which of the two ways they fail.
+- a transfer function whose $-1.67$ slope you measured against the board's $-2$;
+- $P_{\rm L}(k)$ with a turnover at $k_{\rm eq}$ and few-percent wiggles;
+- a 128³ realization whose variance you checked rather than trusted;
+- one seed run five ways, showing shape follows the contents of the universe;
+- and how far twelve lines sit from a Boltzmann code, including how they fail.
 
-**Nothing to save.** Session 2 opens by rebuilding this field from the same
-seed and the same tabulated spectrum, so it starts from the field you just
-made whether or not this notebook is still running. That is a convenience of
-working at 128³ with a fixed seed; a real simulation costs hours and the file
-*is* the product.
-
-Session 2 moves it.
+**Nothing to save** — Session 2 rebuilds this field from the same seed.
 ''')
 
 
