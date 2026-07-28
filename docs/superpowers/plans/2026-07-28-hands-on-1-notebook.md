@@ -1382,7 +1382,7 @@ a bit-identical field whether or not H1 went well."
 
 ---
 
-## Task 8: End-to-end verification and the anti-drift guard
+## Task 10: End-to-end verification and the anti-drift guard
 
 **Files:**
 - Create: `handson/verify_notebooks.py`
@@ -1550,7 +1550,7 @@ Expected: `FAIL  notebook T_full matches ptlib._eh_full` and `exit=1`. Revert th
 
 - [ ] **Step 4: Re-run the notes' own checks**
 
-Per `CLAUDE.md`, any edit round touching this repo re-runs the document checks. Task 1 modified `HANDS_ON_SPEC.md` and `figs_src/make_fig_web.py`, not the `.tex`, so the LaTeX should be untouched — verify that rather than assume it:
+Per `CLAUDE.md`, any edit round touching this repo re-runs the document checks. Tasks 1-9 modified `HANDS_ON_SPEC.md` and `figs_src/make_fig_web.py`, not the `.tex`, so the LaTeX should be untouched — verify that rather than assume it:
 
 ```bash
 pdflatex -interaction=nonstopmode PT_lectures.tex > /dev/null && \
