@@ -706,13 +706,15 @@ worst measured: cosmic variance is the price of owning one universe.}
 Everything so far has been about how a perturbation \emph{evolves}. Where the
 perturbations came from is the business of the lectures you have just had, and
 we need only their output: a nearly \emph{scale-invariant} spectrum of curvature
-perturbations,
+perturbations, quoted as usual in dimensionless form,
 \begin{equation}
-\Delta^2_\zeta(k) = A_s\left(\frac{k}{k_0}\right)^{n_s-1} ,
+\Delta^2_\zeta(k) \;\equiv\; \frac{k^3 P_\zeta(k)}{2\pi^2}
+= A_s\left(\frac{k}{k_0}\right)^{n_s-1} ,
 \qquad n_s \simeq 0.965 ,
 \label{eq:primordial}
 \end{equation}
-with $A_s$ an amplitude and $k_0$ an arbitrary pivot scale.
+with $A_s$ an amplitude and $k_0$ an arbitrary pivot scale. The exponent is
+written $n_s-1$ so that $n_s = 1$ is exactly the scale-invariant case.
 
 \begin{reading}
 \bait{Why is $n_s$ not exactly $1$?}
@@ -724,11 +726,19 @@ than a fitted convenience, and it is one of the reasons to believe the picture.
 \end{reading}
 
 Two consequences carry forward. The primordial field is Gaussian to excellent
-approximation, which is what Section~\ref{sec:stats} assumed. And converting
-curvature to matter density costs two powers of $k$ in the field, by the Poisson
-equation, hence four in the spectrum, so the primordial \emph{matter} spectrum is
-a featureless power law, $P_{\rm prim}(k) \propto k^{n_s}$ --- with, note, no
-scale anywhere in it.
+approximation, which is what Section~\ref{sec:stats} assumed. And
+\eqref{eq:primordial} becomes a \emph{matter} spectrum by two steps that all but
+cancel. Reading $P_\zeta$ off the definition divides by $k^3$; the Poisson
+equation relating curvature to density then multiplies by $k^4$, since it costs
+two powers of $k$ in the field and so four in the spectrum. Net one power of
+$k$:
+\begin{equation}
+P_{\rm prim}(k) = A\,k^{n_s} ,
+\label{eq:pprim}
+\end{equation}
+a featureless power law with no scale anywhere in it. Note where scale
+invariance actually sits: $n_s = 1$ means $P_{\rm prim} \propto k$, not
+$P_{\rm prim}$ constant.
 
 \subsection{Horizon crossing, and the shape of \texorpdfstring{$\Plin(k)$}{P(k)}}
 \label{sec:linearpk}
