@@ -280,7 +280,7 @@ it Zel'dovich had no business describing.
 | 4 | classify it, and check the approximation | 16 |
 | 5 | colour the slab | 10 |
 | 6 | second order: 2LPT | 15 |
-| 7 | benchmark against JaxPM | 10 |
+| 7 | benchmark against FlowPM | 10 |
 
 Cells marked `# TODO` are yours. The cell below each one holds the answer and
 is collapsed — expand it if you want it. Everything runs either way.
@@ -779,4 +779,4 @@ Check C is the point: it proves the stubs are load-bearing and the solutions are
 
 **Unmeasured numbers.** Every checkpoint in Tasks 3–8 is a measured value from this session. **Task 9's are not** — JaxPM is not installed here, so the agreement between our `Ψ⁽²⁾` and its `lpt(order=2)` is genuinely unknown. That task is written to measure first and set tolerances second, and flagged as such. This is the one place the plan cannot anchor itself, and the implementer must not invent a tolerance.
 
-**Known risks.** (1) JaxPM's dependency weight, addressed in Task 9 Step 1. (2) `jax_cosmo`'s growth normalisation may differ from `D1(z)` here — must be checked before trusting any displacement comparison. (3) The `...` stubs must actually propagate to a failure when the solution cell is removed; Task 10 Step 1 verifies rather than assumes it. (4) scipy enters H2 for one growth integral, which H1 forbade; the implementer chooses and reports.
+**Known risks.** (1) FlowPM's install (`tensorflow tensorflow_probability tf-keras flowpm`) is proven in a Colab teaching notebook but untimed here; Task 9 Step 1 times it before committing. (2) FlowPM's FFT normalisation (`r2c3d`/`c2r3d` with `norm=nc**3`) and its `fftk` grid-unit wavevectors must be resolved by round-trip experiment, not assumed — this is the likeliest source of a wrong benchmark number. (3) The `...` stubs must actually propagate to a failure when the solution cell is removed; Task 10 Step 1 verifies rather than assumes it. (4) scipy enters H2 for one growth integral, which H1 forbade; the implementer chooses and reports.
