@@ -618,6 +618,54 @@ smallest scales of this grid. Lecture 2 picks that up.
 ''')
 
 C(r'''
+# The five cosmologies we will compare. The table below reuses this list.
+VARIANTS = [("fiducial",  {},            ns),
+            ("ns = 1.10", {},            1.10),
+            ("ns = 0.85", {},            0.85),
+            ("Om = 0.20", {"Om": 0.20},  ns),
+            ("Om = 0.45", {"Om": 0.45},  ns)]
+
+kv = np.logspace(-3.5, 0.7, 400)
+fig, ax = plt.subplots(1, 2, figsize=(10.5, 4.0))
+P_fid = None
+for label, kw, ns_ in VARIANTS:
+    P = make_pk_lin(lambda k: T_full(k, **kw), ns=ns_)
+    Pv = P(kv)
+    if P_fid is None:
+        P_fid = Pv
+    style = dict(lw=2.0, color="k") if label == "fiducial" else dict(lw=1.2)
+    ax[0].loglog(kv, Pv, label=label, **style)
+    ax[1].semilogx(kv, Pv/P_fid, **style)
+
+ax[0].set_ylabel(r"$P_{\rm L}(k)\ [(\mathrm{Mpc}/h)^3]$")
+ax[0].set_title("five universes, all with $\\sigma_8 = 0.81$")
+ax[0].legend(fontsize=8)
+ax[1].axhline(1.0, color="0.6", lw=0.8)
+ax[1].axvline(2*np.pi/8.0, color="0.6", ls=":", lw=0.8)
+ax[1].text(2*np.pi/8.0*1.1, 0.35, r"$k = 2\pi/8\,h\,\mathrm{Mpc}^{-1}$", fontsize=7, color="0.4")
+ax[1].set_ylabel(r"$P_{\rm L}/P_{\rm L}^{\rm fiducial}$")
+ax[1].set_ylim(0.3, 2.2)
+ax[1].set_title("the same, divided by the fiducial")
+for a in ax:
+    a.set_xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
+fig.tight_layout(); plt.show()
+''')
+
+M(r'''
+**The right-hand panel is the one to read.** Every curve is pinned near
+$8\,h^{-1}$Mpc, because that is where $\sigma_8$ is defined and we renormalised
+each spectrum to the same 0.81. So none of this is an amplitude difference —
+what you are seeing is shape.
+
+Changing $n_s$ pivots the spectrum about that pinned scale: more power at small
+scales costs power at large ones. Changing $\Omega_m$ instead slides the
+turnover, because $k_{\rm eq}$ depends on when matter overtook radiation, and
+the whole shape moves with it.
+
+The table below puts numbers on both effects.
+''')
+
+C(r'''
 def realize(T_of_k, ns_=ns, seed=SEED):
     """Re-draw the field for a different cosmology, same seed. -> (rms, turnover)."""
     P = make_pk_lin(T_of_k, ns=ns_)
@@ -630,11 +678,7 @@ def realize(T_of_k, ns_=ns, seed=SEED):
 
 
 print(f"{'variant':12s} {'k_eq':>8s} {'turnover':>10s} {'rms delta':>10s}")
-for label, kw, ns_ in [("fiducial", {}, ns),
-                       ("ns = 1.10", {}, 1.10),
-                       ("ns = 0.85", {}, 0.85),
-                       ("Om = 0.20", {"Om": 0.20}, ns),
-                       ("Om = 0.45", {"Om": 0.45}, ns)]:
+for label, kw, ns_ in VARIANTS:
     Om_ = kw.get("Om", Om)
     keq_ = 7.46e-2*(Om_*h*h)*(Tcmb/2.7)**-2/h
     rms_, turn_ = realize(lambda k: T_full(k, **kw), ns_=ns_)
