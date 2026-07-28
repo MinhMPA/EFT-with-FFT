@@ -361,24 +361,14 @@ order in $\Phi$ (A1),
 The new term is the drag $\cH\dot\vx$, and it is not friction: set $\Phi = 0$
 and \eqref{eq:newtonian_eom} says $\dot\vx \propto 1/a$ --- free particles coast
 to rest in comoving coordinates as their peculiar velocities redshift away.
-There are two routes to it: Derivation~\ref{der:eom} below never leaves
-Newton, and Exercise~\ref{ex:geodesic} comes down to it from the geodesic
-equation of \eqref{eq:newtonian_gauge}. Lecture~2 is built on this equation --- it follows
+Two exercises reach it from opposite directions:
+Exercise~\ref{ex:geodesic} comes down from the geodesic equation of
+\eqref{eq:newtonian_gauge}, and Exercise~\ref{ex:eomnewton} builds up from
+Newtonian momentum conservation without relativity at all. Lecture~2 is built on this equation --- it follows
 elements rather than fields, and that change of variable is the whole of the
 Lagrangian picture. For now we need only its divergence: with $\vu = \dot\vx$
 and $\theta = \nabla\cdot\vu$, at linear order (A4)
 $\dot\theta = -\cH\,\theta - \nabla^2\Phi$.
-
-\begin{derivation}\label{der:eom}
-Get \eqref{eq:newtonian_eom} without leaving Newton. Write momentum
-conservation in \emph{physical} coordinates, $\dd^2\vr/\dd t^2 =
--\nabla_r\Phi_{\rm tot}$ with $\vr = a\vx$, and split $\Phi_{\rm tot}$ into the
-part sourced by $\bar\rho$ and the part sourced by $\bar\rho\,\delta$. You will
-need the Friedmann acceleration equation,
-$\ddot a = -\tfrac{4\pi}{3}G\bar\rho\,a$, and then a change to conformal time.
-Two things to watch: what cancels, and where the drag term comes from --- is it
-a force?
-\end{derivation}
 
 \emph{The Poisson equation.} What closes the system is the field equation, and
 here A3 does its work: every term carrying a factor of $\cH$
@@ -400,6 +390,14 @@ Assembled, at linear order (A4):
 Ma \& Bertschinger \cite[\S 5]{MaBertschinger1995} give the unapproximated
 system; Dodelson \& Schmidt \cite[Ch.~12]{DodelsonSchmidt} set out this same
 starting point with its assumptions listed.
+
+\begin{derivation}\label{der:system}
+Assemble \eqref{eq:newtonian_linear} for yourself: linearize
+\eqref{eq:continuity} to get the first member, take the divergence of
+\eqref{eq:newtonian_eom} to get the second, and write down the third. Keep
+track of which assumption each step spends --- the Comment below is the answer,
+so try it before reading on.
+\end{derivation}
 
 \begin{reading}
 \bait{We used mass conservation and momentum conservation. Where is energy
@@ -855,7 +853,21 @@ broadband shape at the few-percent level rather than dominating it.
 \end{remark}
 
 \begin{exercise}\label{ex:geodesic}
-Derive \eqref{eq:newtonian_eom}: write the geodesic equation for a nonrelativistic particle in the metric \eqref{eq:newtonian_gauge}, keep terms to first order in the potentials and to leading order in $u \ll 1$, and use $\phi = \psi = \Phi$. Careful: conformal time is not an affine parameter.
+\textbf{From above.} Derive \eqref{eq:newtonian_eom}: write the geodesic equation for a nonrelativistic particle in the metric \eqref{eq:newtonian_gauge}, keep terms to first order in the potentials and to leading order in $u \ll 1$, and use $\phi = \psi = \Phi$. Careful: conformal time is not an affine parameter.
+\end{exercise}
+
+\begin{exercise}\label{ex:eomnewton}
+\textbf{From below.} Now reach \eqref{eq:newtonian_eom} with no relativity at
+all. Start from momentum conservation in physical coordinates,
+$\dd^2\vr/\dd t^2 = -\nabla_r\Phi_{\rm tot}$ with $\vr = a\vx$, and split
+$\Phi_{\rm tot}$ into the part sourced by $\bar\rho$ and the part sourced by
+$\bar\rho\,\delta$.
+(i)~Using the Friedmann acceleration equation
+$\ddot a = -\tfrac{4\pi}{3}G\bar\rho\,a$, show that the background gravity
+cancels exactly, so that only the \emph{peculiar} potential survives. Why is
+that cancellation not an accident of $p = 0$?
+(ii)~Convert to conformal time and recover \eqref{eq:newtonian_eom}.
+(iii)~Where did the drag term come from --- and is it a force?
 \end{exercise}
 
 \begin{exercise}\label{ex:subhorizon}

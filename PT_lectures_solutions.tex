@@ -55,41 +55,28 @@ in $\bar\rho$ --- and why the hands-on session sets the $\vk = 0$ mode of a
 generated field to zero by hand.
 \end{solution}
 
-\begin{solution}{Derivation 2 (the equation of motion, from Newton).}
-With $\vr = a\vx$ and overdots meaning $\dd/\dd t$, the physical acceleration is
-\begin{equation*}
-\ddot\vr = \ddot a\,\vx + 2\dot a\,\dot\vx + a\,\ddot\vx .
-\end{equation*}
-Newton's second law is $\ddot\vr = -\nabla_r\Phi_{\rm tot}$. Splitting the
-source, $\nabla_r^2\Phi_{\rm tot} = 4\pi G\bar\rho\,(1+\delta)$, gives a
-background piece $\nabla_r\bar\Phi = \tfrac{4\pi}{3}G\bar\rho\,\vr$ and a
-peculiar piece $\nabla_r\Phi = a^{-1}\nabla_x\Phi$, so
-\begin{equation*}
-\ddot a\,\vx + 2\dot a\,\dot\vx + a\,\ddot\vx
-= -\tfrac{4\pi}{3}G\bar\rho\,a\,\vx - a^{-1}\nabla_x\Phi .
-\end{equation*}
-\emph{What cancels:} the Friedmann acceleration equation for matter is exactly
-$\ddot a = -\tfrac{4\pi}{3}G\bar\rho\,a$, so the first term on each side goes.
-The frame is itself falling with the background, which is why only the
-\emph{peculiar} potential survives --- and the cancellation is not an accident
-of $p = 0$: with pressure both sides carry the same $\bar\rho + 3\bar p$.
-Dividing by $a$,
-\begin{equation*}
-\ddot\vx + 2H\dot\vx = -a^{-2}\nabla_x\Phi .
-\end{equation*}
-Finally $\dd/\dd t = a^{-1}\partial_\tau$ gives
-$\dd^2/\dd t^2 = a^{-2}\big(\partial_\tau^2 - \cH\,\partial_\tau\big)$, so the
-left-hand side is $a^{-2}\big(\vx'' + \cH\vx'\big)$ and
-\begin{equation*}
-\vx'' + \cH\,\vx' = -\nabla_x\Phi ,
-\end{equation*}
-which is the equation of motion in the notes.
+\begin{solution}{Derivation 2 (assembling the linear system).}
+\emph{First member.} Expanding \eqref{eq:continuity},
+$\dot\delta + \nabla\cdot\vu + \nabla\cdot(\delta\vu) = 0$. The last term is a
+product of two first-order quantities, so A4 discards it and
+$\dot\delta = -\theta$.
 
-\emph{Where the drag comes from:} not from a force. The $2\dot a\,\dot\vx$ is
-the chain rule on $\vr = a\vx$, and the change to conformal time turns the $2H$
-into a single $\cH$. Both are artefacts of describing motion in coordinates that
-expand --- which is why setting $\Phi = 0$ leaves $\vx' \propto 1/a$ rather than
-$\vx' = $ constant.
+\emph{Second member.} With $\vu = \dot\vx$, the divergence of
+\eqref{eq:newtonian_eom} is $\dot\theta + \cH\theta = -\nabla^2\Phi$. Strictly
+the acceleration of an element and $\partial_\tau\vu$ at a fixed point differ by
+$(\vu\cdot\nabla)\vu$, again quadratic, so again A4.
+
+\emph{Third member.} Poisson is written down rather than derived here; it is
+the sub-horizon limit of the relativistic energy constraint, which is
+Exercise~\ref{ex:subhorizon}. Note it costs A3, not A4: it is already linear in
+$\delta$.
+
+\emph{The tally.} Continuity spends A4 and, in its relativistic form, one use of
+A3 to drop $3\dot\phi$. Euler spends A2 and A1, and A4 for the advective term,
+but no A3 --- for cold matter it is exact at linear order in this gauge.
+Poisson is where A3 does its real work. And $\phi = \psi$ underwrites the whole
+system rather than any one member, since Euler feels the time--time potential
+while Poisson sources the spatial one.
 \end{solution}
 
 \begin{solution}{Derivation 3 (the smallness of $\Phi$).}
@@ -161,7 +148,44 @@ Einstein constraint to the Poisson equation, which is what makes $\Phi$ the
 Newtonian potential.
 \end{solution}
 
-\begin{solution}{Exercise 1.2 (the sub-horizon limit).}
+\begin{solution}{Exercise 1.2 (the equation of motion, from Newton).}
+With $\vr = a\vx$ and overdots meaning $\dd/\dd t$, the physical acceleration is
+\begin{equation*}
+\ddot\vr = \ddot a\,\vx + 2\dot a\,\dot\vx + a\,\ddot\vx .
+\end{equation*}
+Newton's second law is $\ddot\vr = -\nabla_r\Phi_{\rm tot}$. Splitting the
+source, $\nabla_r^2\Phi_{\rm tot} = 4\pi G\bar\rho\,(1+\delta)$, gives a
+background piece $\nabla_r\bar\Phi = \tfrac{4\pi}{3}G\bar\rho\,\vr$ and a
+peculiar piece $\nabla_r\Phi = a^{-1}\nabla_x\Phi$, so
+\begin{equation*}
+\ddot a\,\vx + 2\dot a\,\dot\vx + a\,\ddot\vx
+= -\tfrac{4\pi}{3}G\bar\rho\,a\,\vx - a^{-1}\nabla_x\Phi .
+\end{equation*}
+\emph{What cancels:} the Friedmann acceleration equation for matter is exactly
+$\ddot a = -\tfrac{4\pi}{3}G\bar\rho\,a$, so the first term on each side goes.
+The frame is itself falling with the background, which is why only the
+\emph{peculiar} potential survives --- and the cancellation is not an accident
+of $p = 0$: with pressure both sides carry the same $\bar\rho + 3\bar p$.
+Dividing by $a$,
+\begin{equation*}
+\ddot\vx + 2H\dot\vx = -a^{-2}\nabla_x\Phi .
+\end{equation*}
+Finally $\dd/\dd t = a^{-1}\partial_\tau$ gives
+$\dd^2/\dd t^2 = a^{-2}\big(\partial_\tau^2 - \cH\,\partial_\tau\big)$, so the
+left-hand side is $a^{-2}\big(\vx'' + \cH\vx'\big)$ and
+\begin{equation*}
+\vx'' + \cH\,\vx' = -\nabla_x\Phi ,
+\end{equation*}
+which is the equation of motion in the notes.
+
+\emph{Where the drag comes from:} not from a force. The $2\dot a\,\dot\vx$ is
+the chain rule on $\vr = a\vx$, and the change to conformal time turns the $2H$
+into a single $\cH$. Both are artefacts of describing motion in coordinates that
+expand --- which is why setting $\Phi = 0$ leaves $\vx' \propto 1/a$ rather than
+$\vx' = $ constant.
+\end{solution}
+
+\begin{solution}{Exercise 1.3 (the sub-horizon limit).}
 \emph{(i)} The two groups in the energy constraint are $k^2\phi$ and
 $3\cH(\dot\phi + \cH\psi)$. With $\phi=\psi=\Phi$ and $\dot\Phi \lesssim \cH\Phi$,
 the second is bounded by $3\cH(\cH\Phi + \cH\Phi) = 6\cH^2\Phi$, so
@@ -191,7 +215,7 @@ wherever the Einstein equations do. Removing an assumption is worth more than
 verifying it, because verification does not travel.
 \end{solution}
 
-\begin{solution}{Exercise 1.3 (the M\'esz\'aros effect).}
+\begin{solution}{Exercise 1.4 (the M\'esz\'aros effect).}
 \emph{(i)} With $\delta = 1 + \tfrac32 y$ we have $\delta' = \tfrac32$ and
 $\delta'' = 0$, so the left-hand side is
 \begin{equation*}
