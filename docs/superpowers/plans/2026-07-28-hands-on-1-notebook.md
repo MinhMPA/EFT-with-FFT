@@ -1734,10 +1734,8 @@ Run from the repo root:  python3 handson/verify_notebooks.py
 """
 import json
 import os
-import shutil
 import subprocess
 import sys
-import tempfile
 
 import numpy as np
 
@@ -1809,14 +1807,16 @@ import matplotlib
 matplotlib.use("Agg")           # headless: the plotting cells must still run
 import ptlib
 
-# Rebuild the notebook's namespace by running every code cell in order, in a
-# scratch directory (the save cell writes a file). Nothing is filtered and
-# nothing is swallowed: a cell that raises here is a real failure, and the
-# traceback is the diagnostic.
+# Rebuild the notebook's namespace by running every code cell in order. The
+# working directory is handson/, because the fallback cells read
+# pk_lin_fiducial.txt and T_camb_fiducial.txt from there by bare name. The save
+# cell drops delta_k_128.npz alongside them; it is git-ignored, and both this
+# check and check 3 produce it, so it is removed afterwards. Nothing is
+# filtered and nothing is swallowed: a cell that raises here is a real
+# failure, and the traceback is the diagnostic.
 ns_ = {"__name__": "__notebook__"}
-scratch = tempfile.mkdtemp(prefix="h1verify-")
 cwd = os.getcwd()
-os.chdir(HANDSON)               # pk_lin_fiducial.txt lives here
+os.chdir(HANDSON)
 try:
     for n, cell in enumerate(v):
         if cell["cell_type"] != "code":
@@ -1829,7 +1829,9 @@ try:
             break
 finally:
     os.chdir(cwd)
-    shutil.rmtree(scratch, ignore_errors=True)
+    runtime_artifact = os.path.join(HANDSON, "delta_k_128.npz")
+    if os.path.exists(runtime_artifact):
+        os.remove(runtime_artifact)
 
 cosmo = ptlib.Cosmo()
 kt = np.logspace(-3, 1, 60)
