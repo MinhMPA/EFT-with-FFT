@@ -48,11 +48,16 @@ Every number below was measured by running the reference implementation. Use the
 
 | variant | `k_eq` | turnover | `rms δ` |
 |---|---|---|---|
-| fiducial | 0.0153 | 0.0162 | 2.516 |
-| `ns=1.10` | 0.0153 | 0.0182 | 2.797 |
-| `ns=0.85` | 0.0153 | 0.0145 | 2.303 |
-| `Om=0.20` | 0.0099 | 0.0113 | 2.195 |
-| `Om=0.45` | 0.0223 | 0.0226 | 2.863 |
+| fiducial | 0.0153 | 0.0166 | 2.516 |
+| `ns=1.10` | 0.0153 | 0.0188 | 2.797 |
+| `ns=0.85` | 0.0153 | 0.0147 | 2.303 |
+| `Om=0.20` | 0.0099 | 0.0112 | 2.195 |
+| `Om=0.45` | 0.0223 | 0.0234 | 2.863 |
+
+The turnover column is measured on the **full** spectrum, because `realize()` builds
+from `T_full`. Task 3's checkpoint quotes `0.01623` for the same cosmology because it
+measures `pk_nw`; the baryon wiggles shift the apparent peak by a few grid points.
+Both numbers are right for their own spectrum — do not reconcile them.
 
 ---
 
@@ -1139,14 +1144,16 @@ Expected table (values from the plan's reference table):
 
 ```
 variant          k_eq   turnover  rms delta
-fiducial       0.0153     0.0162      2.516
-ns = 1.10      0.0153     0.0182      2.797
-ns = 0.85      0.0153     0.0145      2.303
-Om = 0.20      0.0099     0.0113      2.195
-Om = 0.45      0.0223     0.0226      2.863
+fiducial       0.0153     0.0166      2.516
+ns = 1.10      0.0153     0.0188      2.797
+ns = 0.85      0.0153     0.0147      2.303
+Om = 0.20      0.0099     0.0112      2.195
+Om = 0.45      0.0223     0.0234      2.863
 ```
 
 If any row differs by more than 0.002 in `rms delta`, stop — `make_pk_lin`'s renormalization is not being re-run per variant.
+
+The turnover column is measured on the **full** spectrum here, since `realize()` builds from `T_full`. It does not match the `0.01623` in Task 3's checkpoint, which measures `pk_nw`: the baryon wiggles ride on the broadband and move the apparent peak by a few log-grid points. Both are correct for their own spectrum.
 
 - [ ] **Step 4: Commit**
 
