@@ -1535,13 +1535,18 @@ Per `CLAUDE.md`, any edit round touching this repo re-runs the document checks. 
 pdflatex -interaction=nonstopmode PT_lectures.tex > /dev/null && \
 pdflatex -interaction=nonstopmode PT_lectures.tex > /dev/null && \
 pdflatex -interaction=nonstopmode PT_lectures.tex > /dev/null
-grep -c "Warning" PT_lectures.log
+echo "errors:   $(grep -c '^!' PT_lectures.log)"
+echo "warnings: $(grep -c 'Warning' PT_lectures.log)"
 python3 check_lectured_refs.py PT_lectures.tex && echo "refs ok"
 python3 lecture_timing.py
 cd figs_src && python3 make_fig_web.py && cd ..
 ```
 
-Expected: `0` warnings, `refs ok`, timing unchanged from before this branch, and `make_fig_web.py` now printing `expected 2.52` / `expected 5.20` alongside realized values that match.
+Expected: `errors: 0`, `warnings: 0`, `refs ok`, timing unchanged from before this branch, and `make_fig_web.py` now printing `expected 2.52` / `expected 5.20` alongside realized values that match.
+
+**Grep for errors, not only warnings.** Per `CLAUDE.md`, `-interaction=nonstopmode` still writes a PDF after a fatal error, so a clean warning count proves nothing on its own — a dropped `\end{quiz}` once survived four commits that way. `grep -c '^!'` is the check that catches it, and `check_lectured_refs.py` now also verifies environment balance.
+
+This task changes no `.tex`, so all four checks should show the branch has not disturbed the document. If any of them regresses, stop and report — it means a change outside `handson/` leaked in.
 
 - [ ] **Step 5: Record the guideline in CLAUDE.md**
 
