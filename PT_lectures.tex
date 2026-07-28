@@ -277,16 +277,26 @@ perturbed metric in conformal Newtonian (longitudinal) form
 + (1-2\phi)\,\delta_{ij}\,\dd x^i\dd x^j\right] .
 \label{eq:newtonian_gauge}
 \end{equation}
-Here $\psi$ perturbs $g_{00}$ --- it is what a slow particle falls down --- and
-$\phi$ perturbs the spatial metric --- it is what appears in the field equation.
-The factors of $2$ are pure convention, chosen so that $\psi$ \emph{is} the
-Newtonian potential rather than twice it: they give
-$\Gamma^i{}_{00} = \partial_i\psi$, so a slow particle obeys
-$\ddot x^i = -\partial_i\psi$ with no stray factor
-(Exercise~\ref{ex:geodesic}). Writing $1+\psi$ instead would leave a $\tfrac12$
-in Newton's law and another in the Poisson equation. The minus sign in
-$1-2\phi$ is the same kind of choice: it is what makes the no-anisotropic-stress
-condition read $\phi = \psi$ rather than $\phi = -\psi$.
+Here $\psi(\vx,\tau)$ perturbs $g_{00}$ --- it is what a slow particle falls
+down --- and $\phi(\vx,\tau)$ perturbs the spatial metric --- it is what appears
+in the field equation. Both are fields on space and time, exactly like $\delta$:
+they vary from place to place, which is what makes them perturbations, and they
+evolve, which is what the rest of this lecture computes.
+
+\begin{reading}
+\bait{Why the factors of $2$? And why a minus sign on $\phi$ but a plus on
+$\psi$?}
+Both are conventions, and both are chosen to keep every later formula clean.
+The $2$ normalizes $\psi$: with it, $\Gamma^i{}_{00} = \partial_i\psi$ exactly at
+first order, so a slow particle obeys $\ddot x^i = -\partial_i\psi$ and $\psi$
+\emph{is} the Newtonian potential rather than twice it
+(Exercise~\ref{ex:geodesic}). Write $1+\psi$ instead and you get
+$\Gamma^i{}_{00} = \tfrac12\partial_i\psi$, so a factor of one half propagates
+into Newton's law and into the Poisson equation and never leaves. The relative
+minus sign does the analogous job further down: it is what makes vanishing
+anisotropic stress read $\phi = \psi$, rather than $\phi = -\psi$, so that the
+two potentials can be replaced by the single $\Phi$.
+\end{reading}
 \paragraph{A1: weak fields, $|\phi|,\,|\psi| \ll 1$.} Work to first order in
 both potentials. An observation as much as an assumption: the potentials
 are of order $10^{-5}$ on every scale we will meet, at every time. Note what A1
