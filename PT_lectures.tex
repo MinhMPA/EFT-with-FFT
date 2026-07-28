@@ -912,9 +912,21 @@ and has $T = 0.99$ --- but by then $\Phi$ has stopped decaying, so entry costs
 it nothing. Suppression requires entering while radiation still dominates, not
 entering as such. A mode with $k > k_{\rm eq}$ enters during
 radiation domination, at $a_{\rm enter}$, and decays from then until equality.
-The earlier it enters, the longer it decays --- and entry is set by $k = \cH$,
-with $\cH \propto 1/a$ during radiation domination, so $a_{\rm enter} \propto 1/k$. Putting the two together, the suppression a mode accumulates between entry and
-equality is
+Now just evaluate the decay between its two endpoints. Nothing happens before
+$a_{\rm enter}$ and nothing happens after $a_{\rm eq}$, and in between
+$\Phi \propto a^{-2}$, so the \emph{whole} accumulated suppression is that power
+law read across the window,
+\begin{equation*}
+\frac{\Phi(a_{\rm eq})}{\Phi_{\rm prim}}
+= \left(\frac{a_{\rm enter}}{a_{\rm eq}}\right)^{\!2} ,
+\end{equation*}
+and it is frozen in from then on. That is the factor, and it is nothing more
+than $a^{-2}$ evaluated at the ends of the interval. The earlier a mode enters,
+the wider the window and the smaller the survivor. To turn that into a statement
+about $k$, use the entry condition $k = \cH(a_{\rm enter})$ with
+$\cH \propto 1/a$ during radiation domination, so that
+$a_{\rm enter} \propto 1/k$; fixing the normalization by the mode that enters
+exactly at equality, $a_{\rm enter}/a_{\rm eq} = k_{\rm eq}/k$. Hence
 \begin{equation}
 T(k) \;\sim\; \left(\frac{a_{\rm enter}}{a_{\rm eq}}\right)^{2}
 \;\propto\; \left(\frac{k_{\rm eq}}{k}\right)^{2} .
