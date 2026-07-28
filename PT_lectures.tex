@@ -577,13 +577,9 @@ f \equiv \frac{\dd\ln D_+}{\dd\ln a}
 with $f = 1$ in EdS. The often-quoted exponent $0.55$~\cite{Linder2005} agrees
 with $5/9$ at the sub-percent level over viable cosmologies.
 
-\begin{derivation}
-Get those two solutions. Einstein--de Sitter is the case to do by hand, since
-everything else is a numerical perturbation on it. There $\cH = 2/\tau$ and
-$a \propto \tau^2$, so \eqref{eq:growth} reads
-$\ddot D + (2/\tau)\dot D - (6/\tau^2)D = 0$. Try $D \propto \tau^n$, factorize
-the indicial equation, and identify which root is the growing mode.
-\end{derivation}
+Exercise~\ref{ex:eds} gets both solutions by hand in Einstein--de Sitter, which
+is the case worth doing, since everything else is a numerical perturbation on
+it.
 
 Two modes, so the general solution mixes them:
 $\delta = A(\vx)\,D_+(\tau) + B(\vx)\,D_-(\tau)$, with $A$ and $B$ fixed by the
@@ -947,6 +943,18 @@ combining the time--time constraint with the time--space one gives an algebraic
 equation for $\phi$ carrying no time derivative at all, in which the correction
 is manifestly $\mathcal{O}(\cH/k)$ \cite[Ex.~6.7]{DodelsonSchmidt}. Why is
 eliminating an assumption preferable to bounding it?
+\end{exercise}
+
+\begin{exercise}\label{ex:eds}
+\textbf{Growth by hand.} In Einstein--de Sitter ($\Om = 1$), $a \propto \tau^2$
+and $\cH = 2/\tau$, so \eqref{eq:growth} reads
+$\ddot D + (2/\tau)\dot D - (6/\tau^2)D = 0$.
+(i)~Try $D \propto \tau^n$ and factorize the indicial equation.
+(ii)~Identify which root is the growing mode, and express both in terms of $a$
+rather than $\tau$.
+(iii)~A second-order equation has two solutions and the general one mixes them.
+Relative to the growing mode, how fast does the other die --- and what, exactly,
+does that erase?
 \end{exercise}
 
 \begin{exercise}\label{ex:meszaros}
