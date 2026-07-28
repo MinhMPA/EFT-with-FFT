@@ -151,6 +151,79 @@ for z in (49, 9, 1, 0):
 ''')
 
 
+M(r'''
+## Step 2 — The Zel'dovich displacement
+
+Notes §2.2: every particle starts on a grid point $\boldsymbol{q}$ and moves to
+
+$$\boldsymbol{x} = \boldsymbol{q} + D_1(z)\,\boldsymbol{\Psi}^{(1)}(\boldsymbol{q}),
+\qquad \boldsymbol{\Psi}^{(1)}(\boldsymbol{k}) = \frac{i\boldsymbol{k}}{k^2}\,\delta(\boldsymbol{k}).$$
+
+That is the unique curl-free field with $\nabla\cdot\boldsymbol{\Psi}^{(1)} = -\delta$,
+which is what the checkpoint tests.
+''')
+
+SC(stub=r'''
+# TODO: Psi^(1)(k) = i k / k^2 * delta(k), for each of the three axes.
+# Watch the sign: getting it backwards makes matter flow OUT of overdensities,
+# and the rms will not tell you.
+psi1_k = [...,  ...,  ...]
+psi1   = [np.fft.irfftn(p, s=(N, N, N)) for p in psi1_k]
+''', solution=r'''#@title Solution — Psi^(1)
+psi1_k = [1j*Ki/K2*delta_k for Ki in (KX, KY, KZ)]
+psi1   = [np.fft.irfftn(p, s=(N, N, N)) for p in psi1_k]
+''')
+
+C(r'''
+# --- checkpoint: div Psi = -delta ---------------------------------------
+F = np.fft.rfftn
+div = np.fft.irfftn(1j*(KX*F(psi1[0]) + KY*F(psi1[1]) + KZ*F(psi1[2])), s=(N, N, N))
+err = np.abs(div + delta_x).max()/np.abs(delta_x).max()
+
+print(f"max |div.Psi + delta| / max|delta| = {err:.4f}")
+print(f"rms Psi per axis at z=0            = "
+      f"{[round(float(np.std(p)), 3) for p in psi1]}")
+
+assert err < 0.05, f"div.Psi should equal -delta; got {err:.3f}"
+''')
+
+M(r'''
+The residual is **0.028**, not machine zero, and that is the **Nyquist plane**:
+for even $N$ the mode at $k_{\rm Nyq}$ appears once with an ambiguous sign, so
+$ik$ is not exactly antisymmetric there.
+
+Note the three axes give **5.20, 4.83, 6.09** — a ±12% spread on identical
+correct code, because $\Psi$ is dominated by the few longest modes the box holds.
+''')
+
+M(r'''#### What a finite box costs you''')
+
+C(r'''
+kk = np.logspace(-5, np.log10(50), 4000)
+allk = np.sqrt(np.trapz(pk_lin(kk), kk)/(6*np.pi**2))
+kb   = np.logspace(np.log10(k_f), np.log10(k_Nyq), 4000)
+box  = np.sqrt(np.trapz(pk_lin(kb), kb)/(6*np.pi**2))
+below = np.trapz(pk_lin(kk[kk < k_f]), kk[kk < k_f])/np.trapz(pk_lin(kk), kk)
+below2 = (np.trapz(kk[kk < k_f]**2*pk_lin(kk[kk < k_f]), kk[kk < k_f])
+          / np.trapz(kk**2*pk_lin(kk), kk))
+
+print(f"rms Psi_x   realized            {np.std(psi1[0]):.3f} Mpc/h")
+print(f"            continuum, all k    {allk:.3f}   -> you are {100*(1-np.std(psi1[0])/allk):.0f}% LOW")
+print(f"            continuum, k_f..kNy {box:.3f}   -> you are {100*(np.std(psi1[0])/box-1):.0f}% HIGH")
+print(f"\nfraction of int dk P     below k_f: {100*below:5.1f}%")
+print(f"fraction of int dk k^2 P below k_f: {100*below2:5.2f}%")
+# quiz: Psi = delta/k, so the displacement integral has no k-weighting and the
+#       density integral has k^2. Which of the two numbers above explains the 10%?
+''')
+
+M(r'''
+$\langle\Psi_x^2\rangle = \frac{1}{6\pi^2}\int{\rm d}k\,P(k)$ has **no
+$k$-weighting**; $\langle\delta^2\rangle$ carries $k^2$. So the box throws away
+**24%** of what makes displacements and **0.01%** of what makes density
+contrast. Displacement is the quantity that notices a finite box.
+''')
+
+
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
     emit(CELLS, os.path.join(here, "H2_cosmic_web.ipynb"))
