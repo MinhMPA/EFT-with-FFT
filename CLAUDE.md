@@ -43,3 +43,19 @@ Lecture notes for a graduate school: `PT_lectures.tex` (2×90-min lectures +
   `python3 lecture_timing.py`, `python3 check_lectured_refs.py`, and
   `pdftotext` spot-checks of any passage whose surroundings changed. Every
   unverified edit round in this project has introduced ~1 error.
+
+- **Checkpoint numbers belong to a named quantity.** `HANDS_ON_SPEC.md` carried
+  a log-slope of −1.7 attached to `P_L(k)`; the number was right but it is
+  `T(k)`'s slope (`P_L` gives −2.38), lifted from the `remark` at
+  `PT_lectures.tex:762` and reattached to its neighbour. Same failure mode as
+  the lectured-thread bug: a fact migrating away from the equation it belongs
+  to. Any number written as a checkpoint must name what it measures and be
+  produced by running the reference implementation, never by estimation.
+  (2026-07-28.)
+
+- **Generated artifacts get a generator, not a second copy.** The hands-on
+  notebooks are emitted by `handson/make_notebooks.py`; `handson/verify_notebooks.py`
+  checks the notebook's duplicated Eisenstein & Hu code against
+  `figs_src/ptlib.py` to machine precision. Two hand-maintained copies of a
+  fitting formula in a repo with a documented ~1-error-per-edit-round rate will
+  drift. Run `python3 handson/verify_notebooks.py` after touching either.
