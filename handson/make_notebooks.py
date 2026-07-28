@@ -349,5 +349,111 @@ plt.show()
 ''')
 
 
+M(r'''
+---
+## Step 3 — Baryons, and the wiggles they leave
+
+The smooth transfer function you coded pretends the matter is all cold dark
+matter. It is not: baryons are about a sixth of it, and before recombination
+they were locked to the photons in a plasma that *rings*. Recombination frees
+the photons and freezes the wave at a single scale, the sound horizon
+$r_d \simeq 100\,h^{-1}$Mpc — leaving an oscillation in $P_{\rm L}(k)$ at the
+few-percent level, the **baryon acoustic oscillations**.
+
+The full Eisenstein & Hu formula has them. It is forty-odd lines and there is
+even less to learn from typing it than the last one, so it is given below.
+Run the cell and move on; the interesting part is the ratio you plot after it.
+''')
+
+C(r'''
+def T_full(k, Om=Om, Ob=Ob, h=h, Tcmb=Tcmb):
+    """Eisenstein & Hu (1998) transfer function with baryon wiggles.
+
+    Their eqs (1)-(24). Given -- do not type this. k in h/Mpc.
+    """
+    Theta = Tcmb/2.7
+    omh2, obh2 = Om*h*h, Ob*h*h
+    fb = Ob/Om
+    k = np.atleast_1d(k)*h                                     # h/Mpc -> 1/Mpc
+
+    zeq  = 2.50e4*omh2*Theta**-4
+    keq  = 7.46e-2*omh2*Theta**-2
+    b1   = 0.313*omh2**-0.419*(1 + 0.607*omh2**0.674)
+    b2   = 0.238*omh2**0.223
+    zd   = 1291*omh2**0.251/(1 + 0.659*omh2**0.828)*(1 + b1*obh2**b2)
+    Req  = 31.5*obh2*Theta**-4*(1e3/zeq)
+    Rd   = 31.5*obh2*Theta**-4*(1e3/zd)
+    s    = 2.0/(3*keq)*np.sqrt(6.0/Req)*np.log(
+        (np.sqrt(1 + Rd) + np.sqrt(Rd + Req))/(1 + np.sqrt(Req)))
+    ksilk = 1.6*obh2**0.52*omh2**0.73*(1 + (10.4*omh2)**-0.95)
+
+    q  = k/(13.41*keq)
+    a1 = (46.9*omh2)**0.670*(1 + (32.1*omh2)**-0.532)
+    a2 = (12.0*omh2)**0.424*(1 + (45.0*omh2)**-0.582)
+    alpha_c = a1**(-fb)*a2**(-fb**3)
+    bb1 = 0.944/(1 + (458*omh2)**-0.708)
+    bb2 = (0.395*omh2)**-0.0266
+    beta_c = 1.0/(1 + bb1*((1 - fb)**bb2 - 1))
+
+    def Tt(ac, bc):
+        C = 14.2/ac + 386.0/(1 + 69.9*q**1.08)
+        return np.log(np.e + 1.8*bc*q)/(np.log(np.e + 1.8*bc*q) + C*q**2)
+
+    f  = 1.0/(1 + (k*s/5.4)**4)
+    Tc = f*Tt(1.0, beta_c) + (1 - f)*Tt(alpha_c, beta_c)
+
+    y  = (1 + zeq)/(1 + zd)
+    Gy = y*(-6*np.sqrt(1 + y) + (2 + 3*y)*np.log(
+        (np.sqrt(1 + y) + 1)/(np.sqrt(1 + y) - 1)))
+    alpha_b   = 2.07*keq*s*(1 + Rd)**-0.75*Gy
+    beta_b    = 0.5 + fb + (3 - 2*fb)*np.sqrt((17.2*omh2)**2 + 1)
+    beta_node = 8.41*omh2**0.435
+    st = s/(1 + (beta_node/(k*s))**3)**(1.0/3.0)
+
+    Tb = (Tt(1.0, 1.0)/(1 + (k*s/5.2)**2)
+          + alpha_b/(1 + (beta_b/(k*s))**3)*np.exp(-(k/ksilk)**1.4)
+          )*np.sinc(k*st/np.pi)
+    return fb*Tb + (1 - fb)*Tc
+
+
+pk_lin = make_pk_lin(T_full)     # everything from here on uses this one
+''')
+
+C(r'''
+# --- checkpoint 3 -------------------------------------------------------
+kb    = np.logspace(np.log10(0.02), np.log10(0.5), 2000)
+ratio = pk_lin(kb)/pk_nw(kb)
+band  = (kb > 0.03) & (kb < 0.12)
+kpeak = float(kb[band][np.argmax(ratio[band])])
+rpeak = float(ratio[band].max())
+
+assert 0.06 < kpeak < 0.09,           f"first BAO peak should sit near k=0.078, got {kpeak:.4f}"
+assert 1.04 < rpeak < 1.10,           f"peak should be a few percent, got {rpeak:.4f}"
+assert ratio.min() > 0.93,            f"wiggles should not dominate, got min {ratio.min():.4f}"
+
+print(f"first BAO peak at k = {kpeak:.4f} h/Mpc  ->  lambda = {2*np.pi/kpeak:.0f} Mpc/h")
+print(f"amplitude at that peak: {100*(rpeak-1):+.1f}%")
+print(f"full range of the ratio: {ratio.min():.3f} to {ratio.max():.3f}")
+
+plt.figure(figsize=(6, 3.4))
+plt.semilogx(kb, ratio, color="#e8590c")
+plt.axhline(1.0, color="0.6", lw=0.8)
+plt.xlabel(r"$k\ [h\,\mathrm{Mpc}^{-1}]$")
+plt.ylabel(r"$P_{\rm L}/P_{\rm nw}$")
+plt.title("the baryon acoustic oscillations")
+plt.tight_layout(); plt.show()
+''')
+
+M(r'''
+Read the wavelength off that first peak: about 80 Mpc/h, which is the sound
+horizon $r_d \simeq 100\,h^{-1}$Mpc seen through the harmonic structure. This
+is the standard ruler that galaxy surveys measure, and it is a few percent
+tall — which is why the inset in Figure 3 of the notes plots it as a ratio.
+On the spectrum itself you would never see it.
+
+**From here on, use `pk_lin` — the full one.** Wiggles and all.
+''')
+
+
 if __name__ == "__main__":
     main()
