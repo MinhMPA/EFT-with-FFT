@@ -342,6 +342,54 @@ volume — which is §2.4 of the notes, arriving as a measurement rather than a
 claim. It is also why 2LPT will sharpen the filaments and then overshoot.
 ''')
 
+M(r'''
+## Step 5 — Colour the slab
+
+Each particle was classified back at its Lagrangian position $\boldsymbol{q}$
+(step 4) and then displaced to $z=0$ (step 3). Below is the same slab as
+before, but now every particle is drawn in the colour of its class.
+''')
+
+C(r'''
+sel = pos0[2] < 15.0
+sub = np.random.default_rng(1).permutation(np.flatnonzero(sel))[:400000]
+cls = npos.ravel()[sub]
+
+cols = ["#d9d9d9", "#7fbf8f", "#2f6ea5", "#e8590c"]     # void, sheet, filament, knot
+labs = ["void", "sheet", "filament", "knot"]
+
+fig, ax = plt.subplots(figsize=(6, 6))
+for n, (cl, sz) in enumerate(zip(cols, [0.20, 0.28, 0.35, 0.55])):
+    m = cls == n
+    ax.scatter(pos0[0][sub][m], pos0[1][sub][m], c=cl, s=sz, marker=".",
+               linewidths=0, rasterized=True, zorder=2 + n)
+
+ax.set_xlim(0, L)
+ax.set_ylim(0, L)
+ax.set_aspect("equal")
+ax.set_xlabel(r"$x\ [h^{-1}\,{\rm Mpc}]$")
+ax.set_ylabel(r"$y\ [h^{-1}\,{\rm Mpc}]$")
+
+handles = [plt.Line2D([0], [0], marker="s", linestyle="", color=cols[n],
+                       label=f"{labs[n]} ({frac[n]:.0f}%)") for n in range(4)]
+ax.legend(handles=handles, loc="upper right", fontsize=8, facecolor="white")
+plt.tight_layout()
+plt.show()
+
+# quiz: the knots sit at the nodes where filaments meet, and the filaments
+#       connect them. Nothing in step 4 knew about positions -- the classes
+#       came from the INITIAL field. Why does the geometry come out right anyway?
+''')
+
+M(r'''
+Nothing in step 4 knew about positions — the classes were assigned before
+anything moved. Yet the knots land on the nodes and the filaments trace the
+strands, because the tidal field that classifies a region is the same field
+that later collapses it: $\Psi$ and $D_{ij}$ come from the same $\delta(k)$.
+This is the Lecture 2 figure, built here from your own code, and step 6
+sharpens it further.
+''')
+
 
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
