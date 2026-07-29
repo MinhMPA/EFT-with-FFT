@@ -225,6 +225,50 @@ $k$-weighting**; $\langle\delta^2\rangle$ carries $k^2$. So the box throws away
 contrast. Displacement is the quantity that notices a finite box.
 ''')
 
+M(r'''
+## Step 3 — Project a slab
+
+Every particle starts on the grid at $\boldsymbol{q}$ and moves to
+$\boldsymbol{x} = \boldsymbol{q} + D_1(z)\,\boldsymbol{\Psi}^{(1)}(\boldsymbol{q})$.
+Below, that displacement is applied at two epochs — $z=49$, close to the
+initial conditions, and $z=0$, today — and a thin slab of each is projected
+onto the plane.
+''')
+
+C(r'''
+q = (np.arange(N) + 0.5)*(L/N)
+Q = np.meshgrid(q, q, q, indexing="ij")
+
+pos49 = [(Q[i] + D1(49)*psi1[i]).ravel() % L for i in range(3)]
+pos0  = [(Q[i] + D1(0) *psi1[i]).ravel() % L for i in range(3)]
+''')
+
+C(r'''
+TH = 15.0     # h^-1 Mpc slab thickness
+fig, ax = plt.subplots(1, 2, figsize=(9, 4.2))
+for a, pos, z in zip(ax, (pos49, pos0), (49, 0)):
+    sel = pos[2] < TH
+    Hc, _, _ = np.histogram2d(pos[0][sel], pos[1][sel], bins=400, range=[[0, L], [0, L]])
+    a.imshow(np.log10(Hc.T + 1), origin="lower", extent=[0, L, 0, L],
+             cmap="bone_r", interpolation="nearest")
+    a.set_title(f"z = {z}")
+    a.set_xlabel(r"$x\ [h^{-1}\,{\rm Mpc}]$")
+    a.set_ylabel(r"$y\ [h^{-1}\,{\rm Mpc}]$")
+plt.tight_layout()
+plt.show()
+
+# quiz: the left panel looks like a faint grid, the right like a web.
+#       rms displacement is 0.07 cells at z=49 and 2.8 cells at z=0.
+#       What sets the scale of the pattern you see in each panel?
+''')
+
+M(r'''
+At $z=49$ the displacement is about a fifteenth of a cell, so the picture is
+just the Lagrangian grid, barely perturbed. At $z=0$ the web has appeared —
+sheets, filaments, knots — and step 4 asks what kind of place each particle
+landed in.
+''')
+
 
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
