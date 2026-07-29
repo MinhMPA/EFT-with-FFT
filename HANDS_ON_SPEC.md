@@ -76,22 +76,28 @@ deterministic, the file it would have written is one nothing reads.
 
 **Runs after Lecture 2. Target 90 min.**
 
+Shipped as a single notebook, `H2_cosmic_web.ipynb`, not a student/solutions
+pair like H1: the three solution cells sit inline, collapsed, so `Run All`
+reproduces every number below either way (ADR 0002).
+
 ### What students end up with
 
 The figure on the front of Lecture 2, made by their own code: a slab through a
-Zel'dovich-displaced field, and the same particles classified into void, sheet,
-filament and knot.
+Zel'dovich-displaced field, the same particles classified into void, sheet,
+filament and knot, a 2LPT correction on top of it, and that correction checked
+against `flowpm.tfpm.lpt2_source`, a production N-body code.
 
 ### Steps
 
 | # | ~min | task | checkpoint |
 |---|---|---|---|
-| 1 | 10 | Rebuild H1's field from `pk_lin_fiducial.txt` and seed 1234 | `rms δ = 2.516`, matching what H1 measured |
-| 2 | 20 | Compute `Ψ⁽¹⁾(k) = (ik/k²)δ(k)`, transform, displace | rms displacement `≈ 5.2 Mpc/h` per axis |
-| 3 | 15 | Project a `15 h⁻¹Mpc` slab and plot | **a cosmic web appears** — this is the moment |
-| 4 | 20 | Build the deformation tensor `D_ij(k) = k_i k_j δ(k)/k²`, get eigenvalues, count how many are positive | volume fractions `8 / 42 / 42 / 8` per cent |
-| 5 | 15 | Colour the slab by class | knots on the nodes, filaments on the strands |
-| 6 | 10 | Add 2LPT and compare | filaments visibly sharper |
+| 1 | 10 | Rebuild H1's field, live from CAMB (fallback: `pk_lin_fiducial.txt`), seed 1234 | `rms δ = 2.5305` — not H1's `2.516`; CAMB's `T(k)` differs from the hand-rolled Eisenstein & Hu |
+| 2 | 12 | Compute `Ψ⁽¹⁾(k) = (ik/k²)δ(k)`, transform, displace | `\|∇·Ψ + δ\|/\|δ\| = 0.028`, well under the `0.05` bound — the unique curl-free field with `∇·Ψ = −δ` |
+| 3 | 15 | Project a `15 h⁻¹Mpc` slab at `z=49` and `z=0` | at `z=49` it's still the barely-perturbed Lagrangian grid; **the web appears at `z=0`** — this is the moment |
+| 4 | 16 | Build the deformation tensor `D_ij(k) = k_i k_j δ(k)/k²` from the *undisplaced* field, get eigenvalues, count how many are positive; check shell-crossing | volume fractions `8 / 42 / 42 / 8` per cent; **63.9%** of the box has shell-crossed by `z=0`, first crossing at `z ≈ 6.9` |
+| 5 | 10 | Colour the slab by class | knots on the nodes, filaments on the strands |
+| 6 | 15 | Add 2LPT: `δ⁽²⁾ = Σ_{i<j}[φ,ii φ,jj − φ,ij²]`, `Ψ⁽²⁾ = (3/7)D₁²∇∇⁻²δ⁽²⁾` | `(3/7)\|Ψ⁽²⁾\|/\|Ψ⁽¹⁾\|` is `0.005` at `z=49`, `0.181` at `z=0` — 2LPT is trustworthy where that ratio is small, i.e. early, not today |
+| 7 | 10 | Benchmark `δ⁽²⁾` against `flowpm.tfpm.lpt2_source`, both sides on FlowPM's finite-difference gradient | `max\|ours − FlowPM\|/max\|FlowPM\|` measured `~5×10⁻⁷`, asserted `< 1×10⁻⁴` |
 
 ### Why 3D, and not 2D
 
@@ -103,14 +109,28 @@ rendering, and a slab projection handles that in three lines.
 
 ### Checkpoints worth stopping on
 
-- **Step 2**: displacements come out ~10% *low* against the continuum
+- **Step 2**: displacements come out ~11% *low* against the continuum
   `⟨Ψ²⟩ = (1/6π²)∫dk P(k)`, because a 250 Mpc/h box has no power below
-  `k_f = 0.025 h/Mpc`. Physical, not a bug — and a good five-minute discussion of
-  what a finite box costs you.
+  `k_f = 0.025 h/Mpc` — that missing power is 24% of `∫dk P(k)` but only 0.01%
+  of `∫dk k²P(k)`, which is why density is fine and displacement is not.
+  Physical, not a bug — and a good five-minute discussion of what a finite box
+  costs you. The checkpoint itself is `∇·Ψ = −δ`, not the rms of `Ψ`: the three
+  axes individually disagree by ±12% on identical correct code (the box's
+  longest modes dominate `Ψ` and there are few of them), so only the identity
+  that must hold *by construction* is worth asserting on.
 - **Step 4**: the `8/42/42/8` split is Doroshkevich's result, and students get it
-  from their own realization. If they get `25/25/25/25` they have used the wrong
-  sign convention; if they get `0/0/0/100` they have forgotten `k²` in the
-  denominator.
+  from their own realization, classified on the *initial*, undisplaced field —
+  classifying the displaced field instead breaks Gaussianity and the theorem
+  with it. If they get `25/25/25/25` they have used the wrong sign convention;
+  if they get `0/0/0/100` they have forgotten `k²` in the denominator. The same
+  cell measures that **63.9%** of the box has already shell-crossed by `z=0`,
+  which is the honest verdict on step 3's picture: Zel'dovich assumes streams
+  never cross, and by today most of the volume has.
+- **Step 7**: the win isn't that FlowPM matches CAMB and this notebook agree —
+  it's that FlowPM's gradient convention (a hardcoded finite difference, not
+  spectral) has to be reproduced by hand before the comparison means anything.
+  Skip it and you get a package-vs-package number that's actually just a
+  discretisation artifact.
 
 ### Suggested closing
 
