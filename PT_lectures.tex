@@ -1098,7 +1098,25 @@ normalization of its own.}
 \label{fig:lagmap}
 \end{figure}
 
-At first order, \eqref{eq:lpt_master} with $\delta = -\nabla_q\cdot\vPsi^{(1)}$ (from \eqref{eq:jacobian}) says that the divergence of the displacement obeys the linear growth equation \eqref{eq:growth}. Since the flow is irrotational, $\vPsi^{(1)} = -\nabla_q\varphi^{(1)}$ for a Lagrangian potential $\varphi^{(1)}$, and matching to the Eulerian linear density gives
+Take \eqref{eq:lpt_master} to first order, where $\nabla_x$ and $\nabla_q$
+agree because they differ at order $\vPsi$. Write $S \equiv \nabla_q\cdot
+\vPsi^{(1)}$. Expanding the determinant in \eqref{eq:jacobian} gives
+$J \simeq 1 + S$, so $1+\delta \simeq 1-S$ and $\delta^{(1)} = -S$. Substituting
+that on the right of \eqref{eq:lpt_master},
+\begin{equation*}
+\ddot S + \cH\dot S = -\tfrac32\Om\cH^2\,\delta^{(1)} = +\tfrac32\Om\cH^2 S
+\qquad\Longrightarrow\qquad
+\ddot S + \cH\dot S - \tfrac32\Om\cH^2 S = 0 ,
+\end{equation*}
+which is the growth equation \eqref{eq:growth}. So $S$ carries the same time
+dependence as $D_+$: $S(\vq,\tau) = D_+(\tau)\,s(\vq)$, and
+$\delta^{(1)} = -D_+(\tau)s(\vq)$.
+
+That is where $\Om\cH^2$ goes. It fixed \emph{how} both sides grow, and having
+done so it drops out of the relation \emph{between} them, since the common
+$D_+(\tau)$ cancels. What is left holds at every time and contains no cosmology
+at all. Since the flow is irrotational we may also write $\vPsi^{(1)} =
+-\nabla_q\varphi^{(1)}$ for a Lagrangian potential $\varphi^{(1)}$, and then
 \begin{equation}
 \nabla_q\cdot\vPsi^{(1)}(\vq,\tau) = -\,\delta^{(1)}(\vq,\tau)
 \qquad\Longleftrightarrow\qquad
