@@ -390,6 +390,99 @@ This is the Lecture 2 figure, built here from your own code, and step 6
 sharpens it further.
 ''')
 
+M(r'''
+## Step 6 — Second order
+
+Notes §2.5. The second-order displacement is sourced by
+
+$$\delta^{(2)} = \sum_{i<j}\left[\varphi_{,ii}\varphi_{,jj} - \varphi_{,ij}^2\right],
+\qquad \nabla^2\varphi = \delta,$$
+
+and then $\boldsymbol{\Psi}^{(2)} = \tfrac{3}{7}D_1^2\,\nabla\nabla^{-2}\delta^{(2)}$.
+The $3/7$ is the Einstein–de Sitter value of the second-order growth ratio.
+''')
+
+C(r'''
+phi_k = -delta_k/K2                      # lap phi = delta
+phi = {}
+for i in range(3):
+    for j in range(i, 3):
+        phi[(i, j)] = np.fft.irfftn(-ks[i]*ks[j]*phi_k, s=(N, N, N))
+''')
+
+SC(stub=r'''
+# TODO: delta2 = sum over i<j of [ phi_,ii * phi_,jj  -  phi_,ij^2 ]
+# phi[(i,j)] holds phi_,ij for i <= j.
+delta2 = np.zeros((N, N, N))
+...
+''', solution=r'''#@title Solution — the second-order source
+delta2 = np.zeros((N, N, N))
+for i in range(3):
+    for j in range(i + 1, 3):
+        delta2 += phi[(i, i)]*phi[(j, j)] - phi[(i, j)]**2
+''')
+
+C(r'''
+delta2_k = np.fft.rfftn(delta2)
+psi2 = [np.fft.irfftn(-1j*ks[i]/K2*delta2_k, s=(N, N, N)) for i in range(3)]
+
+r1 = np.sqrt(sum(np.var(p) for p in psi1)/3)
+r2 = np.sqrt(sum(np.var(p) for p in psi2)/3)
+print("   z     |Psi1|    (3/7)|Psi2|   ratio")
+for z in (49, 0):
+    d = D1(z)
+    print(f"  {z:3d}   {d*r1:7.3f}   {3/7*d**2*r2:9.3f}   {3/7*d**2*r2/(d*r1):6.3f}")
+
+assert abs(3/7*r2/r1 - 0.181) < 0.02, "2LPT/1LPT at z=0 should be ~0.18"
+# quiz: the ratio is 0.5% at z=49 and 18% at z=0. Which epoch is LPT for?
+''')
+
+M(r'''
+The correction is **0.5%** of $\Psi^{(1)}$ at $z=49$ and **18%** at $z=0$.
+2LPT is a perturbative correction to Zel'dovich, and a perturbative correction
+is trustworthy exactly where it stays small. That is the early-time regime the
+initial conditions sit in, not today. By $z=0$ the "correction" is no longer
+small, and that is the same warning step 4 already gave from a different
+angle: **63.9%** of the box has shell-crossed by $z=0$, so both numbers are
+pointing at the same breakdown of the perturbative expansion.
+''')
+
+C(r'''
+pos2 = [(pos0[i] + 3/7*D1(0)**2*psi2[i].ravel()) % L for i in range(3)]
+
+fig, ax = plt.subplots(1, 2, figsize=(9, 4.2))
+Hs = []
+for pos in (pos0, pos2):
+    sel = pos[2] < 15.0
+    Hc, _, _ = np.histogram2d(pos[0][sel], pos[1][sel], bins=400, range=[[0, L], [0, L]])
+    Hs.append(np.log10(Hc.T + 1))
+vmin, vmax = min(H.min() for H in Hs), max(H.max() for H in Hs)
+for a, Hlog, title in zip(ax, Hs, ("Zel'dovich", "Zel'dovich + 2LPT")):
+    a.imshow(Hlog, origin="lower", extent=[0, L, 0, L], cmap="bone_r",
+              interpolation="nearest", vmin=vmin, vmax=vmax)
+    a.set_title(title)
+    a.set_xlabel(r"$x\ [h^{-1}\,{\rm Mpc}]$")
+    a.set_ylabel(r"$y\ [h^{-1}\,{\rm Mpc}]$")
+plt.tight_layout()
+plt.show()
+
+# quiz: are the filaments and knots on the right sharper than on the left?
+#       Given that 63.9% of the box has already shell-crossed by z=0 (step 4),
+#       is "sharper" here trustworthy, or could 2LPT be oversharpening a
+#       region where the perturbative expansion has already broken down?
+''')
+
+M(r'''
+Yes, the right panel's filaments and knots are visibly thinner and denser than
+the left panel's, because 2LPT sharpens the same single-stream skeleton
+Zel'dovich already traced. That sharpening is not automatically trustworthy.
+2LPT is still a single-stream, perturbative displacement, with no mechanism
+for multi-streaming, and **63.9%** of the box has already shell-crossed by
+$z=0$ (step 4). In that two-thirds of the volume, "sharper" means 2LPT is
+pushing particles further along a trajectory a real particle already left —
+the overshoot step 4 anticipated, not a more correct picture.
+''')
+
 
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
