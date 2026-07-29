@@ -258,9 +258,9 @@ print("\nH2-D. regeneration is a no-op")
 res = subprocess.run(["python3", "make_h2.py"], cwd=NOTEBOOKS, capture_output=True, text=True)
 check("make_h2.py runs clean", res.returncode == 0, res.stderr.strip()[:100] if res.returncode else "")
 res = subprocess.run(
-    ["git", "diff", "--quiet", "--", "notebooks/H2_cosmic_web.ipynb", "notebooks/make_h2.py"],
+    ["git", "diff", "--quiet", "HEAD", "--", "notebooks/H2_cosmic_web.ipynb", "notebooks/make_h2.py"],
     cwd=ROOT)
-check("regenerating H2 leaves the committed files unchanged (git diff --quiet)",
+check("regenerating H2 leaves the committed files unchanged (git diff --quiet HEAD)",
       res.returncode == 0)
 
 print("\nH2-E. no baked-in execution artifacts")
