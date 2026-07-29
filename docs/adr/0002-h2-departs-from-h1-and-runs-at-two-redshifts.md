@@ -42,12 +42,12 @@ one picture.
 | z | D₁ | rms Ψ⁽¹⁾ | in cells | shell-crossed | Ψ⁽²⁾/Ψ⁽¹⁾ |
 |---|---|---|---|---|---|
 | 49 | 0.0255 | 0.137 | 0.07 | 0.00% | 0.5% |
-| 0 | 1.0000 | 5.394 | 2.76 | 63.6% | 18% |
+| 0 | 1.0000 | 5.400 | 2.76 | 63.86% | 18% |
 
 At z = 49 — where LPT is used in practice and what these codes are built for —
 particles move a fifteenth of a cell and there is nothing to see. At z = 0 the
-web appears, and two thirds of the box has shell-crossed; the first crossing is
-at z = 6.8. Neither epoch alone is honest. Splitting them lets the benchmark run
+web appears, and two thirds of the box has shell-crossed (63.9%); the first
+crossing is at z ≈ 6.9. Neither epoch alone is honest. Splitting them lets the benchmark run
 where LPT holds and the picture be drawn where it is visible, with the
 violation stated rather than hidden. The shell-crossing fraction is free: it
 comes from the same eigenvalues step 4 already computes for the web classes.
@@ -87,6 +87,14 @@ and it separates all three cases.
 - What the benchmark validates is the 2LPT *algebra*, not the students' exact
   array: their `δ₂` uses the spectral gradient the lecture derives, and the
   comparison re-computes it with FlowPM's kernel. The notebook must say so.
+- The step-4 quiz originally asserted that `25/25/25/25` flags a sign error
+  and `0/0/0/100` flags a dropped `k²`. Both are false, and measured
+  2026-07-29: a sign error gives `8.0/42.0/42.1/8.0` (identical to the
+  correct split, with every label silently swapped — a zero-mean Gaussian is
+  symmetric under `δ→−δ`), and a dropped `k²` gives `8.2/41.9/41.8/8.2`
+  (nearly identical, because the fractions come from the angular structure of
+  `⟨T_ijT_kl⟩`, not its radial weight). Neither bug is visible to this
+  checkpoint; only the coloured slab in step 5 catches them.
 
 ## Alternatives rejected
 

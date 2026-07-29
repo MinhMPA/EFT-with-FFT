@@ -121,9 +121,15 @@ rendering, and a slab projection handles that in three lines.
 - **Step 4**: the `8/42/42/8` split is Doroshkevich's result, and students get it
   from their own realization, classified on the *initial*, undisplaced field —
   classifying the displaced field instead breaks Gaussianity and the theorem
-  with it. If they get `25/25/25/25` they have used the wrong sign convention;
-  if they get `0/0/0/100` they have forgotten `k²` in the denominator. The same
-  cell measures that **63.9%** of the box has already shell-crossed by `z=0`,
+  with it. The split is robust to the two classic bugs: a wrong sign
+  (`−k_ik_jδ/k²`) measures `8.0/42.0/42.1/8.0`, the same palindrome with every
+  label silently swapped, because a zero-mean Gaussian field is symmetric
+  under `δ→−δ`; a dropped `k²` measures `8.2/41.9/41.8/8.2`, because the
+  fourth moment of `k̂` fixes the angular structure and the radial weight only
+  rescales the variance, which the fractions do not see. The fractions
+  certify statistics, not physics — the coloured slab in step 5 is what
+  certifies that the knots landed on the nodes. The same cell measures that
+  **63.9%** of the box has already shell-crossed by `z=0`,
   which is the honest verdict on step 3's picture: Zel'dovich assumes streams
   never cross, and by today most of the volume has.
 - **Step 7**: the win isn't that FlowPM matches CAMB and this notebook agree —

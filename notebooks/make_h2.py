@@ -64,7 +64,7 @@ except ImportError:
 def pk_from_camb():
     pars = camb.CAMBparams()
     pars.set_cosmology(H0=100*h, ombh2=Ob*h*h, omch2=(Om - Ob)*h*h,
-                       mnu=0.0, omk=0, num_massive_neutrinos=0)
+                       mnu=0.0, omk=0, num_massive_neutrinos=0, TCMB=Tcmb)
     pars.InitPower.set_params(ns=ns, As=2.1e-9)
     pars.set_matter_power(redshifts=[0.0], kmax=60.0)
     pars.NonLinear = camb.model.NonLinear_none
@@ -194,7 +194,7 @@ The residual is **0.028**, not machine zero, and that is the **Nyquist plane**:
 for even $N$ the mode at $k_{\rm Nyq}$ appears once with an ambiguous sign, so
 $ik$ is not exactly antisymmetric there.
 
-Note the three axes give **5.20, 4.83, 6.09** — a ±12% spread on identical
+Note the three axes give **5.203, 4.828, 6.091** — a ±12% spread on identical
 correct code, because $\Psi$ is dominated by the few longest modes the box holds.
 ''')
 
@@ -215,7 +215,7 @@ print(f"            continuum, k_f..kNy {box:.3f}   -> you are {100*(np.std(psi1
 print(f"\nfraction of int dk P     below k_f: {100*below:5.1f}%")
 print(f"fraction of int dk k^2 P below k_f: {100*below2:5.2f}%")
 # quiz: Psi = delta/k, so the displacement integral has no k-weighting and the
-#       density integral has k^2. Which of the two numbers above explains the 10%?
+#       density integral has k^2. Which of the two numbers above explains the 11%?
 ''')
 
 M(r'''
@@ -246,15 +246,22 @@ pos0  = [(Q[i] + D1(0) *psi1[i]).ravel() % L for i in range(3)]
 C(r'''
 TH = 15.0     # h^-1 Mpc slab thickness
 fig, ax = plt.subplots(1, 2, figsize=(9, 4.2))
-for a, pos, z in zip(ax, (pos49, pos0), (49, 0)):
+Hs = []
+for pos in (pos49, pos0):
     sel = pos[2] < TH
     Hc, _, _ = np.histogram2d(pos[0][sel], pos[1][sel], bins=400, range=[[0, L], [0, L]])
-    a.imshow(np.log10(Hc.T + 1), origin="lower", extent=[0, L, 0, L],
-             cmap="bone_r", interpolation="nearest")
+    Hs.append(np.log10(Hc.T + 1))
+vmin, vmax = min(H.min() for H in Hs), max(H.max() for H in Hs)
+ims = []
+for a, Hlog, z in zip(ax, Hs, (49, 0)):
+    im = a.imshow(Hlog, origin="lower", extent=[0, L, 0, L], cmap="bone_r",
+                  interpolation="nearest", vmin=vmin, vmax=vmax)
+    ims.append(im)
     a.set_title(f"z = {z}")
     a.set_xlabel(r"$x\ [h^{-1}\,{\rm Mpc}]$")
     a.set_ylabel(r"$y\ [h^{-1}\,{\rm Mpc}]$")
-plt.tight_layout()
+fig.suptitle(f"{TH:.0f} h$^{{-1}}$ Mpc slab")
+fig.colorbar(ims[-1], ax=ax, label="log10(N + 1)", shrink=0.85)
 plt.show()
 
 # quiz: the left panel looks like a faint grid, the right like a web.
@@ -312,8 +319,12 @@ print("  Doroshkevich (1970):            8.0  42.0  42.0   8.0")
 
 for n, want in enumerate((8.0, 42.0, 42.0, 8.0)):
     assert abs(frac[n] - want) < 1.5, f"{n}: expected {want}, got {frac[n]:.1f}"
-# quiz: 25/25/25/25 means a sign convention is wrong; 0/0/0/100 means you
-#       dropped the k^2. What would classifying the *displaced* field give?
+# quiz: these fractions test Gaussianity and isotropy, almost nothing else.
+#       A sign error gives the SAME numbers with every label silently
+#       swapped -- 8/42/42/8 is a palindrome -- and dropping k^2 barely
+#       moves them either: the fractions ignore the radial weight. Step 5's
+#       coloured picture is the real test: knots must sit on the nodes.
+#       What would classifying the *displaced* field give?
 ''')
 
 M(r'''
@@ -367,6 +378,7 @@ for n, (cl, sz) in enumerate(zip(cols, [0.20, 0.28, 0.35, 0.55])):
 ax.set_xlim(0, L)
 ax.set_ylim(0, L)
 ax.set_aspect("equal")
+ax.set_title("Cosmic web at z = 0, coloured by class")
 ax.set_xlabel(r"$x\ [h^{-1}\,{\rm Mpc}]$")
 ax.set_ylabel(r"$y\ [h^{-1}\,{\rm Mpc}]$")
 
@@ -457,13 +469,16 @@ for pos in (pos0, pos2):
     Hc, _, _ = np.histogram2d(pos[0][sel], pos[1][sel], bins=400, range=[[0, L], [0, L]])
     Hs.append(np.log10(Hc.T + 1))
 vmin, vmax = min(H.min() for H in Hs), max(H.max() for H in Hs)
+ims = []
 for a, Hlog, title in zip(ax, Hs, ("Zel'dovich", "Zel'dovich + 2LPT")):
-    a.imshow(Hlog, origin="lower", extent=[0, L, 0, L], cmap="bone_r",
+    im = a.imshow(Hlog, origin="lower", extent=[0, L, 0, L], cmap="bone_r",
               interpolation="nearest", vmin=vmin, vmax=vmax)
+    ims.append(im)
     a.set_title(title)
     a.set_xlabel(r"$x\ [h^{-1}\,{\rm Mpc}]$")
     a.set_ylabel(r"$y\ [h^{-1}\,{\rm Mpc}]$")
-plt.tight_layout()
+fig.suptitle("15 h$^{-1}$ Mpc slab")
+fig.colorbar(ims[-1], ax=ax, label="log10(N + 1)", shrink=0.85)
 plt.show()
 
 # quiz: are the filaments and knots on the right sharper than on the left?
