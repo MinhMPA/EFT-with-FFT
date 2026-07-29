@@ -483,6 +483,109 @@ pushing particles further along a trajectory a real particle already left —
 the overshoot step 4 anticipated, not a more correct picture.
 ''')
 
+M(r'''
+## Step 7 — Benchmark against FlowPM
+
+[FlowPM](https://github.com/DifferentiableUniverseInitiative/flowpm) is a
+TensorFlow N-body code that implements the same 2LPT you just coded by hand.
+`flowpm.tfpm.lpt2_source` computes exactly
+
+$$\text{source} = \frac{3}{7}\sum_{i<j}\left[\varphi_{,ii}\varphi_{,jj} - \varphi_{,ij}^2\right],$$
+
+your `delta2` with the $3/7$ already folded in — the same quantity, not a
+downstream displacement, so the comparison below is direct.
+
+**One convention has to be matched, not compared.** FlowPM's gradient kernel
+is a hardcoded finite difference, $a(w) = \tfrac{1}{6}(8\sin w - \sin 2w)$
+with $w = kL/N$ in grid units, and `lpt2_source` gives no option to switch it
+to spectral. Its Laplacian, by contrast, is the exact $1/\sum_i w_i^2$ — the
+same formula you used. So the cell below recomputes `delta2` a second time
+using FlowPM's own finite-difference gradient throughout, Laplacian included,
+entirely in grid units: an earlier attempt that kept the Laplacian in
+physical $k$ and swapped only the gradient was off by a clean factor of
+$(L/N)^4$, which is the kind of thing an experiment catches and eyeballing
+does not. With everything on the same footing, what is compared is the
+**2LPT algebra alone** — the gradient convention is held fixed between the
+two sides.
+
+**Be honest about what this validates.** Your `delta2` above used the
+spectral gradient the lecture derived; that is not the array being checked
+here. What is checked is whether the second-order source you assembled —
+$\varphi_{,ii}\varphi_{,jj} - \varphi_{,ij}^2$, summed over $i<j$ — is the
+same algebra an independently developed, production N-body code encodes.
+"Your code matches FlowPM" would overclaim; "the algorithm matches FlowPM's,
+under FlowPM's own gradient" is what is actually shown.
+''')
+
+C(r'''
+try:
+    import flowpm
+except ImportError:
+    import subprocess, sys
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q",
+                    "tensorflow", "tensorflow_probability", "tf-keras", "flowpm"],
+                   check=False)
+    try:
+        import flowpm
+    except ImportError:
+        flowpm = None
+
+if flowpm is not None:
+    import tensorflow as tf
+    print(f"flowpm ready (tensorflow {tf.__version__})")
+else:
+    print("flowpm unavailable -- the benchmark cell below will skip")
+''')
+
+C(r'''
+if flowpm is None:
+    print("flowpm not installed -- skipping the FlowPM benchmark.")
+else:
+    from flowpm.utils import r2c3d, c2r3d
+    from flowpm.tfpm import lpt2_source
+
+    dlin_k = r2c3d(tf.convert_to_tensor(delta_x[None].astype(np.float32)), norm=N**3)
+    theirs = c2r3d(lpt2_source(dlin_k), norm=N**3).numpy()[0]
+
+    # FlowPM's gradient: a(w) = (8 sin w - sin 2w)/6, w = k*L/N (grid units).
+    # Its Laplacian is the exact 1/sum(w_i^2) -- same formula as ours, but
+    # evaluated on the same grid-unit w so both kernels are self-consistent.
+    wgrid = [ki*L/N for ki in ks]
+    agrid = [(8*np.sin(wi) - np.sin(2*wi))/6 for wi in wgrid]
+    W2 = sum(wi**2 for wi in wgrid)
+    W2[0, 0, 0] = 1.0
+    lapgrid = 1.0/W2
+    lapgrid[0, 0, 0] = 0.0
+
+    phiFD = {}
+    for i in range(3):
+        for j in range(i, 3):
+            phiFD[(i, j)] = np.fft.irfftn(-lapgrid*agrid[i]*agrid[j]*delta_k, s=(N, N, N))
+    delta2_FD = np.zeros((N, N, N))
+    for i in range(3):
+        for j in range(i + 1, 3):
+            delta2_FD += phiFD[(i, i)]*phiFD[(j, j)] - phiFD[(i, j)]**2
+    ours = 3/7*delta2_FD
+
+    denom = np.abs(theirs).max()
+    max_rel = np.abs(ours - theirs).max()/denom
+    honesty = np.sqrt(np.mean((3/7*delta2 - theirs)**2))/denom
+
+    print(f"FD-matched agreement:  max|ours - FlowPM| / max|FlowPM| = {max_rel:.2e}")
+    print(f"spectral (yours) vs FlowPM's FD convention: rms diff / max|FlowPM| = {honesty:.3f}")
+    print("  -- the price of a finite grid's gradient convention, not a bug; cf. step 2's Nyquist residual")
+
+    assert max_rel < 2e-6, f"FD-matched delta_2 should match FlowPM to ~1e-6; got {max_rel:.2e}"
+''')
+
+M(r'''
+You built this pipeline yourself, start to finish: a linear power spectrum
+became a field, the field became a displacement, the displacement became the
+cosmic web, the web was classified and coloured by the same tidal field that
+made it — and now the one piece of algebra sitting underneath all of it has
+been checked against a production N-body code.
+''')
+
 
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
