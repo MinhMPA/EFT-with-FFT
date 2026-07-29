@@ -347,7 +347,7 @@ print(f"\nfirst crossing anywhere in the box at D1 = {Dc:.4f}")
 ''')
 
 M(r'''
-**63.9% by z = 0**, and the first crossing at $D_1 = 0.163$, about z ≈ 6.9. The
+**63.9% by z = 0**, and the first crossing at $D_1 = 0.163$, about z ≈ 6.8. The
 picture in step 3 is one where the approximation has failed across most of the
 volume — which is §2.4 of the notes, arriving as a measurement rather than a
 claim. It is also why 2LPT will sharpen the filaments and then overshoot.

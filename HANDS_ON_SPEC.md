@@ -94,7 +94,7 @@ against `flowpm.tfpm.lpt2_source`, a production N-body code.
 | 1 | 10 | Rebuild H1's field, live from CAMB (fallback: `pk_lin_fiducial.txt`), seed 1234 | `rms δ = 2.5305` — not H1's `2.516`; CAMB's `T(k)` differs from the hand-rolled Eisenstein & Hu |
 | 2 | 12 | Compute `Ψ⁽¹⁾(k) = (ik/k²)δ(k)`, transform, displace | `\|∇·Ψ + δ\|/\|δ\| = 0.028`, well under the `0.05` bound — the unique curl-free field with `∇·Ψ = −δ` |
 | 3 | 15 | Project a `15 h⁻¹Mpc` slab at `z=49` and `z=0` | at `z=49` it's still the barely-perturbed Lagrangian grid; **the web appears at `z=0`** — this is the moment |
-| 4 | 16 | Build the deformation tensor `D_ij(k) = k_i k_j δ(k)/k²` from the *undisplaced* field, get eigenvalues, count how many are positive; check shell-crossing | volume fractions `8 / 42 / 42 / 8` per cent; **63.9%** of the box has shell-crossed by `z=0`, first crossing at `z ≈ 6.9` |
+| 4 | 16 | Build the deformation tensor `D_ij(k) = k_i k_j δ(k)/k²` from the *undisplaced* field, get eigenvalues, count how many are positive; check shell-crossing | volume fractions `8 / 42 / 42 / 8` per cent; **63.9%** of the box has shell-crossed by `z=0`, first crossing at `z ≈ 6.8` |
 | 5 | 10 | Colour the slab by class | knots on the nodes, filaments on the strands |
 | 6 | 15 | Add 2LPT: `δ⁽²⁾ = Σ_{i<j}[φ,ii φ,jj − φ,ij²]`, `Ψ⁽²⁾ = (3/7)D₁²∇∇⁻²δ⁽²⁾` | `(3/7)\|Ψ⁽²⁾\|/\|Ψ⁽¹⁾\|` is `0.005` at `z=49`, `0.181` at `z=0` — 2LPT is trustworthy where that ratio is small, i.e. early, not today |
 | 7 | 10 | Benchmark `δ⁽²⁾` against `flowpm.tfpm.lpt2_source`, both sides on FlowPM's finite-difference gradient | `max\|ours − FlowPM\|/max\|FlowPM\|` measured `~5×10⁻⁷`, asserted `< 1×10⁻⁴` |

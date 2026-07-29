@@ -47,7 +47,7 @@ one picture.
 At z = 49 — where LPT is used in practice and what these codes are built for —
 particles move a fifteenth of a cell and there is nothing to see. At z = 0 the
 web appears, and two thirds of the box has shell-crossed (63.9%); the first
-crossing is at z ≈ 6.9. Neither epoch alone is honest. Splitting them lets the benchmark run
+crossing is at z ≈ 6.8. Neither epoch alone is honest. Splitting them lets the benchmark run
 where LPT holds and the picture be drawn where it is visible, with the
 violation stated rather than hidden. The shell-crossing fraction is free: it
 comes from the same eigenvalues step 4 already computes for the web classes.
