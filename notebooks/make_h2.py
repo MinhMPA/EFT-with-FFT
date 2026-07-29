@@ -269,6 +269,79 @@ sheets, filaments, knots — and step 4 asks what kind of place each particle
 landed in.
 ''')
 
+M(r'''
+## Step 4 — What kind of place is each particle in?
+
+Notes §2.3. The deformation tensor is
+$D_{ij}(\boldsymbol{k}) = k_ik_j\,\delta(\boldsymbol{k})/k^2$, and the sign of
+its three eigenvalues says whether a fluid element is collapsing along that
+axis. Count the collapsing axes and you get void, sheet, filament, knot.
+
+**Build it from the field you started with, not the displaced one.**
+Doroshkevich's `8/42/42/8` is a theorem about *Gaussian* fields, and displacing
+destroys Gaussianity. Classify first, move second — each particle carries its
+label to wherever $\Psi$ puts it.
+''')
+
+C(r'''
+ks = (KX, KY, KZ)
+Mt = np.empty((N**3, 3, 3), dtype=np.float32)
+for i in range(3):
+    for j in range(i, 3):
+        Mt[:, i, j] = Mt[:, j, i] = np.fft.irfftn(
+            ks[i]*ks[j]/K2*delta_k, s=(N, N, N)).ravel()
+lam = np.linalg.eigvalsh(Mt)          # ascending: lam[:,0] <= lam[:,1] <= lam[:,2]
+del Mt
+print(f"eigenvalues: {lam.shape},  lam_max over the box = {lam[:,2].max():.2f}")
+''')
+
+SC(stub=r'''
+# TODO: how many of the three eigenvalues are positive, per particle?
+# 0 -> void, 1 -> sheet, 2 -> filament, 3 -> knot.
+npos = ...
+''', solution=r'''#@title Solution — count the collapsing axes
+npos = (lam > 0).sum(axis=1)
+''')
+
+C(r'''
+# --- checkpoint: Doroshkevich ------------------------------------------
+frac = [100*(npos == n).mean() for n in range(4)]
+for n, lab in enumerate(["void", "sheet", "filament", "knot"]):
+    print(f"  {n} collapsing axes   {lab:9s} {frac[n]:5.1f}%")
+print("  Doroshkevich (1970):            8.0  42.0  42.0   8.0")
+
+for n, want in enumerate((8.0, 42.0, 42.0, 8.0)):
+    assert abs(frac[n] - want) < 1.5, f"{n}: expected {want}, got {frac[n]:.1f}"
+# quiz: 25/25/25/25 means a sign convention is wrong; 0/0/0/100 means you
+#       dropped the k^2. What would classifying the *displaced* field give?
+''')
+
+M(r'''
+#### Was any of this legitimate?
+
+Zel'dovich assumes streams never cross. The Jacobian of
+$\boldsymbol{q}\mapsto\boldsymbol{x}$ is $\prod_i(1 - D_1\lambda_i)$, so a
+particle has shell-crossed once $D_1\lambda_{\max} > 1$.
+''')
+
+C(r'''
+print("   z     D1      shell-crossed")
+for z in (49, 9, 1, 0):
+    d = D1(z)
+    print(f"  {z:3d}  {d:.4f}      {100*(d*lam[:, 2] > 1).mean():6.2f}%")
+Dc = 1.0/lam[:, 2].max()
+print(f"\nfirst crossing anywhere in the box at D1 = {Dc:.4f}")
+# quiz: two thirds of the box has shell-crossed by z=0. Why plot it anyway?
+#       And what does an N-body code do that Zel'dovich cannot?
+''')
+
+M(r'''
+**63.9% by z = 0**, and the first crossing at $D_1 = 0.163$, about z ≈ 6.9. The
+picture in step 3 is one where the approximation has failed across most of the
+volume — which is §2.4 of the notes, arriving as a measurement rather than a
+claim. It is also why 2LPT will sharpen the filaments and then overshoot.
+''')
+
 
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
